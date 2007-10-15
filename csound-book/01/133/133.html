@@ -1,0 +1,115 @@
+<html>
+
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<meta name="generator" content="Adobe GoLive 4">
+		<title>instr 133</title>
+	</head>
+
+	<body bgcolor="white">
+		<font face="Times">
+		<table cool width="603" height="626" border="0" cellpadding="0" cellspacing="0" gridx="16" showgridx usegridx gridy="16" showgridy usegridy>
+			<tr height="1" cntrlrow>
+				<td width="1" height="1"></td>
+				<td width="600" height="1"><spacer type="block" width="600" height="1"></td>
+			</tr>
+			<tr height="32">
+				<td width="1" height="32"><spacer type="block" width="1" height="32"></td>
+				<td width="600" height="32" colspan="1" rowspan="1" valign="top" align="left" xpos="0" content csheight="32"><font size="4"><b>instr 133</b></font></td>
+			</tr>
+			<tr height="16">
+				<td width="1" height="16"><spacer type="block" width="1" height="16"></td>
+				<td width="600" height="16" colspan="1" rowspan="1" valign="top" align="left" xpos="0"><embed src="../../../Book%20Audio/0133.mov" width="112" height="16" autoplay="false" controller="true" cache="true"></td>
+			</tr>
+			<tr height="406">
+				<td width="1" height="406"><spacer type="block" width="1" height="406"></td>
+				<td width="600" height="406" colspan="1" rowspan="1" valign="top" align="left" xpos="0"><img src="133.gif" width="360" height="382"></td>
+			</tr>
+			<tr height="169">
+				<td width="1" height="169"><spacer type="block" width="1" height="169"></td>
+				<td width="600" height="169" colspan="1" rowspan="1" valign="top" align="left" xpos="0">
+					<table cellspacing="0" border="0" cellpadding="0" width="600">
+						<tr>
+							<td width="11%" valign="top">&nbsp;</td>
+							<td width="14%" valign="top"><font face="Courier New" size="2">instr</font></td>
+							<td width="15%" valign="top"><font face="Courier New" size="2">133</font></td>
+							<td width="60%" valign="top"><font face="Courier New" size="2">; Lowpass WITH RESONANCE</font></td>
+						</tr>
+						<tr>
+							<td width="11%" valign="top"><font face="Courier New" size="2">idur</font></td>
+							<td width="14%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">p3</font></td>
+						</tr>
+						<tr>
+							<td width="11%" valign="top"><font face="Courier New" size="2">iamp</font></td>
+							<td width="14%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">ampdb(p4)</font></td>
+						</tr>
+						<tr>
+							<td width="11%" valign="top"><font face="Courier New" size="2">ifrq</font></td>
+							<td width="14%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">p5</font></td>
+						</tr>
+						<tr>
+							<td width="11%" valign="top"><font face="Courier New" size="2">icut1</font></td>
+							<td width="14%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">p6</font></td>
+						</tr>
+						<tr>
+							<td width="11%" valign="top"><font face="Courier New" size="2">icut2</font></td>
+							<td width="14%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">p7</font></td>
+						</tr>
+						<tr>
+							<td width="11%" valign="top"><font face="Courier New" size="2">iresgn</font></td>
+							<td width="14%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">p8</font></td>
+						</tr>
+						<tr>
+							<td width="11%" valign="top"><font face="Courier New" size="2">kcut</font></td>
+							<td width="14%" valign="top"><font face="Courier New" size="2">expon</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">icut1, idur, icut2</font></td>
+						</tr>
+						<tr>
+							<td width="11%" valign="top"><font face="Courier New" size="2">aplk</font></td>
+							<td width="14%" valign="top"><font face="Courier New" size="2">pluck</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">iamp, ifrq, ifrq, 0, 1</font></td>
+						</tr>
+						<tr>
+							<td width="11%" valign="top"><font face="Courier New" size="2">abpf</font></td>
+							<td width="14%" valign="top"><font face="Courier New" size="2">butterbp</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">aplk, kcut, kcut*.2</font></td>
+						</tr>
+						<tr>
+							<td width="11%" valign="top"><font face="Courier New" size="2">alpf</font></td>
+							<td width="14%" valign="top"><font face="Courier New" size="2">butterlp</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">aplk, kcut</font></td>
+						</tr>
+						<tr>
+							<td width="11%" valign="top"><font face="Courier New" size="2">amix</font></td>
+							<td width="14%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">alpf+(abpf*iresgn)</font></td>
+						</tr>
+						<tr>
+							<td width="11%" valign="top">&nbsp;</td>
+							<td width="14%" valign="top"><font face="Courier New" size="2">out</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">amix</font></td>
+						</tr>
+						<tr>
+							<td width="11%" valign="top">&nbsp;</td>
+							<td width="14%" valign="top"><font face="Courier New" size="2">dispfft</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">amix, idur, 1024</font></td>
+						</tr>
+						<tr>
+							<td width="11%" valign="top">&nbsp;</td>
+							<td width="14%" valign="top"><font face="Courier New" size="2">endin</font></td>
+							<td valign="top" colspan="2">&nbsp;</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		</font>
+	</body>
+
+</html>

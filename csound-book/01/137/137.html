@@ -1,0 +1,205 @@
+<html>
+
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<meta name="generator" content="Adobe GoLive 4">
+		<title>instr 137</title>
+	</head>
+
+	<body bgcolor="white">
+		<font face="Times">
+		<table cool width="603" height="981" border="0" cellpadding="0" cellspacing="0" gridx="16" showgridx usegridx gridy="16" showgridy usegridy>
+			<tr height="1" cntrlrow>
+				<td width="1" height="1"></td>
+				<td width="600" height="1"><spacer type="block" width="600" height="1"></td>
+			</tr>
+			<tr height="32">
+				<td width="1" height="32"><spacer type="block" width="1" height="32"></td>
+				<td width="600" height="32" colspan="1" rowspan="1" valign="top" align="left" xpos="0" content csheight="32"><font size="4"><b>instr 137</b></font></td>
+			</tr>
+			<tr height="16">
+				<td width="1" height="16"><spacer type="block" width="1" height="16"></td>
+				<td width="600" height="16" colspan="1" rowspan="1" valign="top" align="left" xpos="0"><embed src="../../../Book%20Audio/0137.mov" width="112" height="16" autoplay="false" controller="true" cache="true"></td>
+			</tr>
+			<tr height="545">
+				<td width="1" height="545"><spacer type="block" width="1" height="545"></td>
+				<td width="600" height="545" colspan="1" rowspan="1" valign="top" align="left" xpos="0"><img src="137.gif" width="446" height="534"></td>
+			</tr>
+			<tr height="385">
+				<td width="1" height="385"><spacer type="block" width="1" height="385"></td>
+				<td width="600" height="385" colspan="1" rowspan="1" valign="top" align="left" xpos="0">
+					<table cellspacing="0" border="0" cellpadding="0" width="600">
+						<tr>
+							<td width="13%" valign="top">&nbsp;</td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">instr</font></td>
+							<td width="15%" valign="top"><font face="Courier New" size="2">137</font></td>
+							<td width="60%" valign="top"><font face="Courier New" size="2">; GLOBAL COMB/REVERB LOSCIL</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">idur</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">p3</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">iamp</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">ampdb(p4)</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">ifrq</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">cpspch(p5)</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">ifun</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">p6</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">iatk</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">p7</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">irel</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">p8</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">irvbsnd</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">p9</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">icmbsnd</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">p10</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">kenv</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">linen</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">iamp, iatk, idur, irel</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">asig</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">loscil</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">kenv, ifrq, ifun</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top">&nbsp;</td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">out</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">asig</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">garvb</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">garvb+(asig*irvbsnd)</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">gacmb</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">gacmb+(asig*icmbsnd)</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top">&nbsp;</td>
+							<td valign="top" colspan="3"><font face="Courier New" size="2">endin</font></td>
+						</tr>
+						<tr>
+							<td valign="top" colspan="4">&nbsp;</td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top">&nbsp;</td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">instr</font></td>
+							<td width="15%" valign="top"><font face="Courier New" size="2">198</font></td>
+							<td width="60%" valign="top"><font face="Courier New" size="2">; GLOBAL ECHO</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">idur</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">p3</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">itime</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">p4</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">iloop</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">p5</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">kenv</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">linen</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">1, .01, idur, .01</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">acomb</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">comb</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">gacmb, itime, iloop, 0</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top">&nbsp;</td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">out</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">acomb*kenv</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">gacmb</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">0</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top">&nbsp;</td>
+							<td valign="top" colspan="3"><font face="Courier New" size="2">endin</font></td>
+						</tr>
+						<tr>
+							<td valign="top" colspan="4">&nbsp;</td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top">&nbsp;</td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">instr</font></td>
+							<td width="15%" valign="top"><font face="Courier New" size="2">199</font></td>
+							<td width="60%" valign="top"><font face="Courier New" size="2">; GLOBAL VERB</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">idur</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">p3</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">irvbtim</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">p4</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">ihiatn</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">p5</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">arvb</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">nreverb</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">garvb, irvbtim, ihiatn</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top">&nbsp;</td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">out</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">arvb</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top"><font face="Courier New" size="2">garvb</font></td>
+							<td width="12%" valign="top"><font face="Courier New" size="2">=</font></td>
+							<td valign="top" colspan="2"><font face="Courier New" size="2">0</font></td>
+						</tr>
+						<tr>
+							<td width="13%" valign="top">&nbsp;</td>
+							<td valign="top" colspan="3"><font face="Courier New" size="2">endin</font></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+		</font>
+	</body>
+
+</html>

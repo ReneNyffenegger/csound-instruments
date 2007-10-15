@@ -1,0 +1,1 @@
+; ... my_clarinet#define	FLUTE(I)	#	instr $I.	ipanl	=	sqrt(p6)ipanr	=	sqrt(1-p6)ka	linen	p4, .01, p3, .1kv	linseg	0, 0.5, 0, 1, 1, p3-0.5, 1a1	wgflute	ka, p5, -0.2, 0.15, 0.1, 0.25, 5.735, kv*0.01, 1	outs	a1*ipanl, a1*ipanr	endin	#

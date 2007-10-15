@@ -1,0 +1,1 @@
+; my_fx	instr 597	a1 butterlp	gabas*1.2, 100	outs	a1, a1	garvb = 0	endin	instr 598	a1 comb	gacmb*.2, 2.6, 1.3	outs	a1, a1	garvb = 0	endin	instr 599	a1 nreverb	garvb*.2, 2.6, .8	outs	a1, a1	garvb = 0	endin
