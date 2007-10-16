@@ -33,34 +33,34 @@ kalimba-low.pvx: kalimba-low.aif
 crashcym.pvx: crashcym.wav
 
 wind1.lp: thewind.wav
-	lpanal -p 34 -h 500 -P 100 -Q 200 $< $(SADIR)/$@
+	lpanal -p 34 -h 500 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
 wind2.lp: thewind.wav
-	lpanal -p 20 -h 500 -P 100 -Q 200 $< $(SADIR)/$@
+	lpanal -p 20 -h 500 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
 wind3.lp: thewind.wav
-	lpanal -p 32 -h 300 -P 100 -Q 200 $< $(SADIR)/$@
+	lpanal -p 32 -h 300 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
 wind4.lp: thewind.wav
-	lpanal -p 28 -h 500 -P 150 -Q 250 $< $(SADIR)/$@
+	lpanal -p 28 -h 500 -P 150 -Q 250 $< $(SADIR)/$@ $(OUTPUT)
 
 wind5.lp: thewind.wav
-	lpanal -p 24 -h 500 -P 70 -Q 200 $< $(SADIR)/$@
+	lpanal -p 24 -h 500 -P 70 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
 wind6.lp: thewind.wav
-	lpanal -p 26 -h 500 -P 70 -Q 200 $< $(SADIR)/$@
+	lpanal -p 26 -h 500 -P 70 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
 wind7.lp: thewind.wav
-	lpanal -p 28 -h 500 -P 70 -Q 200 $< $(SADIR)/$@
+	lpanal -p 28 -h 500 -P 70 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
 wind8.lp: thewind.wav
-	lpanal -p 26 -h 500 -P 100 -Q 200 $< $(SADIR)/$@
+	lpanal -p 26 -h 500 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
 wind9.lp: thewind.wav
-	lpanal -p 50 -h 400 -P 100 -Q 200 $< $(SADIR)/$@
+	lpanal -p 50 -h 400 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
 wind10.lp: thewind.wav
-	lpanal -p 50 -h 500 -P 100 -Q 200 $< $(SADIR)/$@
+	lpanal -p 50 -h 500 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
 cello44.pvx: cello44.wav
 plkpnolp.pvx: plkpnolp.wav
@@ -68,18 +68,18 @@ wavest44.pvx: wavest44.wav
 eroi.pvx: eroi.wav
 
 wind1.pvx: thewind.wav
-	pvanal -n 256 -w 4 $< $(SADIR)/$(SADIR)/$@
+	pvanal -n 256 -w 4 $< $(SADIR)/$@ $(OUTPUT)
 
 wind2.pvx: thewind.wav
-	pvanal -n 128 -w 4 $< $(SADIR)/$(SADIR)/$@
+	pvanal -n 128 -w 4 $< $(SADIR)/$@ $(OUTPUT) 
 
 wind3.pvx: thewind.wav
-	pvanal -n 1024 -w 4 $< $(SADIR)/$(SADIR)/$@
+	pvanal -n 1024 -w 4 $< $(SADIR)/$@ $(OUTPUT)
 
 wind4.pvx: thewind.wav
 
 fire1m44.pvx: fire1m44.wav
-	pvanal -n 1024 -w 4 $< $(SADIR)/$(SADIR)/$@
+	pvanal -n 1024 -w 4 $< $(SADIR)/$@ $(OUTPUT)
 
 tamtam.pvx: tamtam.aif
 highbell.pvx: highbell.aif
@@ -105,21 +105,21 @@ vowchord.conv: vowchord.wav
 bees1.conv: bees1.wav
 
 cello.hetro: cello44.wav
-	hetro -f175 -h30 $^ $(SADIR)/$@
+	hetro -f175 -h30 $^ $(SADIR)/$@ $(OUTPUT)
 
 wind.hetro: thewind.wav
-	hetro -h50 $^ $(SADIR)/$@
+	hetro -h50 $^ $(SADIR)/$@ $(OUTPUT)
 
 c2a.hetro: c2.aiff
-	hetro -f65 -h60 -M24000 $^ $(SADIR)/$@
+	hetro -f65 -h60 -M24000 $^ $(SADIR)/$@ $(OUTPUT)
 
 c2b.hetro: c2.aiff
-	hetro -f32.7032 -h100 -n512 -M30000 $^ $(SADIR)/$@
+	hetro -f32.7032 -h100 -n512 -M30000 $^ $(SADIR)/$@ $(OUTPUT)
 
 c2c.hetro: c2.aiff
-	hetro -f32.7032 -h100 -n1000 -M30000 $^ $(SADIR)/$@
+	hetro -f32.7032 -h100 -n1000 -M30000 $^ $(SADIR)/$@ $(OUTPUT)
 
 c5.hetro: c5.aiff
-	hetro -f261 -h100 -n1000 -M30000 $^ $(SADIR)/$@
+	hetro -f261 -h100 -n1000 -M30000 $^ $(SADIR)/$@ $(OUTPUT)
 
 include ../../rules.mk
