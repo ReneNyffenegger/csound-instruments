@@ -1,0 +1,2 @@
+;dumb score to convince Csound to execute for 2 minutes while playing bachinv.mid
+f0	120
