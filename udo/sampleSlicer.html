@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>sampleSlicer</h1>
+<p>Reads a function table in incremental slices.</p>
+<a href="cache/sampleSlicer.udo">Download UDO File</a><h3>Description</h3>
+<p>Reads a function table in incremental slices.  Frequency is independent.<br>Uses lposcil, allowing GEN01 function tables with zero size.</p>
+<h3>Syntax</h3>
+<p>asig <b>sampleSlicer</b> kamp, kfreq, kminslice, kmaxslice, kmininc, kmaxinc, ifn</p>
+<h3>Initialization</h3>
+<p>ifn -- the function table containing sample to be sliced.  can be zero size.</p>
+<h3>Performance</h3>
+<p>kamp -- amplitude<br>kfreq -- .5 = half speed, 2 = double speed... same as lposcil<br>kminslice/kmaxslice -- minimum/maximum length of slice in seconds<br>kmininc/kmaxinc -- minimum/maximum length of increment per slice in seconds</p>
+<h3>Code</h3>
+<pre>	opcode sampleSlicer, a, kkkkkki
+kamp, kfreq, kminslice, kmaxslice, kmininc, kmaxinc, ifn xin
+isize = ftlen(ifn)
+kphase init 0
+kslice random kminslice, kmaxslice
+kinc random kmininc, kmaxinc
+
+redo:
+timout 0, i(kslice), continue
+kphase = (kphase &lt; (isize - i(kslice) * sr)?kphase + kinc * sr:0)
+reinit redo
+
+continue:
+aenv linseg 0, .01, 1, i(kslice) - .02, 1, .01, 0
+asig lposcil3 kamp, kfreq, 0, 0, ifn, i(kphase)
+rireturn
+asig = asig * aenv
+xout asig
+	endop</pre>
+<h3>Examples</h3>
+<pre>/* .orc */
+nchnls=2
+
+instr 1
+al sampleSlicer 32000, .5, .101, .23, .1, .4, 1
+ar sampleSlicer 32000, .5, .105, .21, .1, .4, 1
+outs al, ar
+endin
+
+instr 2
+asig sampleSlicer 32000, 1, .1, .1, .005, .005, 1
+outs asig, asig
+endin
+
+/*.sco*/
+f1 0 0 1 &quot;soundfile.aif&quot; 0 0 0
+i1 0 5
+i2 6 5</pre>
+<h3>Credits</h3>
+<p>credits</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=52">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=74">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		Residual	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		scale	</td>
+  </tr>  
+</table>
+</body>
+</html>

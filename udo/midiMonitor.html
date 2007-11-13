@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>midiMonitor</h1>
+<p>monitors midi input</p>
+<a href="cache/midiMonitor.udo">Download UDO File</a><h3>Description</h3>
+<p>This opcode monitors incoming midi data and prints the messages to the console in a similar fashion to MIDI-OX. Useful if you want too see what 'ichan' and 'ictlno' parameters need to be passed to ctrl7 for a given slider or rotary pot.</p>
+<h3>Syntax</h3>
+<p>kMidiSig <b>midiMonitor</b></p>
+<h3>Performance</h3>
+<p>kMidiSig will be 1 if there is midi being input, otherwise it will be 0. Remember that you must use the -M flag to specify your MIDI device. </p>
+<h3>Code</h3>
+<pre>opcode midiMonitor, k,o
+kMidiSig = 0
+kstatus, kchan, kdata1, kdata2 midiin
+k1 changed kstatus
+k2 changed kchan
+k3 changed kdata1
+k4 changed kdata2
+if((k1==1)||(k2==1)||(k3==1)||(k4==1)) then
+printks &quot;Value:%d ChanNo:%d CtrlNo:%d\n&quot; , 0, kdata2, kchan, kdata1  
+kMidiSig = 1   
+endif 
+xout kMidiSig
+endop</pre>
+<h3>Examples</h3>
+<pre>instr 1
+kMidiSig midiMonitor 
+endin</pre>
+<h3>Credits</h3>
+<p>Rory Walsh, 2006</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=94">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=80">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		midi2cps_i	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		mode	</td>
+  </tr>  
+</table>
+</body>
+</html>

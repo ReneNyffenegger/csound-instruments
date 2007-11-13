@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>MTXget</h1>
+<p>Get a value from an MTX* matrix</p>
+<a href="cache/MTXget.udo">Download UDO File</a><h3>Description</h3>
+<p>Get a value from an MTX* matrix</p>
+<h3>Syntax</h3>
+<p>ival <b>MTXget</b> imtxnum, ix [, iy, iz]</p>
+<h3>Initialization</h3>
+<p>ival - Value returned by the matrix<br>imtxnum - ftable number of the MTX* matrix to be read<br>ix - Position in the first dimension of the table <br>iy - (optional, default = 0) Position in the second dimension of the table <br>iz - (optional, default = 0) Position in the third dimension of the table <br>The value ival is read from position ix, iy, iz of table imtxnum at init-time. If the table has two dimensions, do not give any value to iz. <br>Please note that there are currently no bound checks, so your position values must be valid, otherwise errors may occur. <br>Please note that the first position in any dimension has a value of 0.</p>
+<h3>Code</h3>
+<pre>	opcode MTXget,i,iioo
+
+imtxnum, ix, iy, iz xin
+isizex tablei 0, imtxnum
+isizey tablei 1, imtxnum
+isizez tablei 2, imtxnum
+ipos = (iz*isizex*isizey) + (iy*isizex) + ix + 3
+ivalue tablei ipos, imtxnum
+xout ivalue
+
+	endop</pre>
+<h3>Examples</h3>
+<pre>idiscard MTXget imtxnum, 10, 1, 1, 2</pre>
+<h3>Credits</h3>
+<p>Andres Cabrera</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=85">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=83">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		MTXdestroy	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		MTXinit	</td>
+  </tr>  
+</table>
+</body>
+</html>

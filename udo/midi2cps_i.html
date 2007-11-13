@@ -1,0 +1,169 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>midi2cps_i</h1>
+<p>Converts MIDI Note Number to Cycles per second (Hz). (i-rate version)</p>
+<a href="cache/midi2cps_i.udo">Download UDO File</a><h3>Description</h3>
+<p>Takes a MIDI note number input and converts to Cycles per second (Hz).</p>
+<h3>Syntax</h3>
+<p>icps  <b>midi2cps_i</b>  inum</p>
+<h3>Initialization</h3>
+<p>inum  --  Expects MIDI Note # In<br><br>icps  --  Returns equivelent of MIDI Note # in Cycles per second (Hz).</p>
+<h3>Code</h3>
+<pre>opcode	midi2cps_i, i, i
+
+imid	xin
+
+#define MIDI2CPS(xmidi) # (440.0*exp(log(2.0)*(($xmidi)-69.0)/12.0)) #
+icps	=	$MIDI2CPS(imid)
+
+	xout	icps
+
+		endop</pre>
+<h3>Examples</h3>
+<pre>;----------------------------------------------------------------------
+; string printing test instrument, requires midi input
+instr	1
+
+inum	notnum
+
+iout	midi2cps	inum
+
+	printk2	inum
+	printk2	iout
+
+		endin
+;----------------------------------------------------------------------
+
+&lt;CsoundSynthesizer&gt;
+&lt;CsOptions&gt;
+; linux
+;-m0 -odac -iadc -d -+rtaudio=alsa -+rtmidi=null
+;
+; mac osx
+;-m0 -odac -iadc -d -+rtaudio=coreaudio -+rtmidi=null
+;
+; win xp
+;-m0 -odac -iadc -d -+rtaudio=mme -+rtmidi=null
+&lt;/CsOptions&gt;
+&lt;CsInstruments&gt;
+
+sr	=	44100
+ksmps	=	128
+nchnls	=	2
+
+; MIDI note to play
+;-----------------------------------  F3,      Bb4,     G4,      C5
+ipitches	ftgen	1, 0, 4, -2,  53,      67,      70,      72
+;----------------------------------- 174.614, 466.614, 391.995, 523.251
+; Hz values to be displayed         --^
+
+opcode	midi2cps_i, i, i
+imid	xin
+#define MIDI2CPS(xmidi) # (440.0*exp(log(2.0)*(($xmidi)-69.0)/12.0)) #
+icps	=	$MIDI2CPS(imid)
+	xout	icps
+		endop
+
+/*--- ---*/
+
+		instr	1
+
+
+; Read our previously allocated table of Hz
+; using p4.
+itab	table	p4, 1
+
+; Do the conversion!
+iview	midi2cps_i	itab
+
+; Print the value each second.
+;  The +0.001 is needed because
+;  otherwise we would see rounding
+;  errors with the int() conversion.
+	printk2	iview
+
+; How about some audio??
+aout	vco2	8000, iview
+kenv	loopseg	0.5, 0, 0.2, 1, 0.2, 0.5, 0.3, 0
+aout	=	aout*kenv
+alpf	moogvcf	aout, (kenv*4200)+220, 0.707, 0dbfs
+
+	outs	alpf, alpf
+
+		endin
+
+/*--- ---*/
+&lt;/CsInstruments&gt;
+&lt;CsScore&gt;
+; p4 represents which pitch
+; in the table to use.
+i1	0	1	1
+i1	+	.	2
+i1	.	.	3
+i1	.	.	0
+s
+
+i1	0	1	2
+i1	+	.	3
+i1	.	.	0
+i1	.	.	1
+s
+
+i1	0	1	2
+i1	+	.	3
+i1	.	.	1
+i1	.	.	0
+s
+
+i1	0	1	2
+i1	+	.	1
+i1	.	.	3
+i1	.	.	0
+
+i1	.	.	2
+
+; etc...
+
+e
+&lt;/CsScore&gt;
+&lt;/CsoundSynthesizer&gt;
+</pre>
+<h3>Credits</h3>
+<p>David Akbari - 2005</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=64">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=92">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		midi2cps	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		midiMonitor	</td>
+  </tr>  
+</table>
+</body>
+</html>

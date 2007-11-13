@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>hysteresis</h1>
+<p>Implements classic 2-threshold hysteresis. Useful for performance controllers.</p>
+<a href="cache/hysteresis.udo">Download UDO File</a><h3>Description</h3>
+<p>This User Defined Opcode implements the classic HIT / RESET threshold idea. Based on a Max/MSP implementation which is the work of Eric Singer (c) 1994.</p>
+<h3>Syntax</h3>
+<p>kboth, khi_tru, klo_tru  <b>hysteresis</b>  kin, khi_thresh, klo_thresh</p>
+<h3>Performance</h3>
+<p>kin  --  The input value which is subject to the hysteresis thresholds.<br><br>khi_thresh  --  This is the HIGH threshold. When the value at kin exceeds this, a 1 outputs at khi_tru and kboth.<br><br>klo_thresh  --  This is the LOW threshold. When the value at kin exceeds this, a 1 is output at klo_tru.<br><br>khi_tru  --  Outputs a 1 if kin exceeds the HIGH threshold else 0.<br><br>klo_tru  --  Again, boolean output of kin exceeding LOW threshold.<br><br>kboth  --  Outputs a 1 if kin exceeds both thresholds.</p>
+<h3>Code</h3>
+<pre>opcode	hysteresis, kkk, kkk
+
+kin, khi, klo	xin
+
+if	(kin &gt; klo) then
+klotr	=	1
+kout	=	1
+	if	(kin &gt;= khi) then
+	kout	=	1
+	khitr	=	1
+	else
+	kout	=	0
+	khitr	=	0
+	endif
+else
+kout	=	0
+klotr	=	0
+	endif
+
+	xout	kout, khitr, klotr
+
+		endop</pre>
+<h3>Examples</h3>
+<pre>instr	1	;  demonstrate hysteresis
+
+kin	ctrl7	1, 1, 0, 127
+khi	ctrl7	1, 7, 0, 127
+klo	=	khi - 45
+
+koot, khitr, klotr	hysteresis	kin, khi, klo
+
+	printks	&quot;out: %d\\n\\n&quot;, 0.25, koot
+	printks	&quot;in: %d, hi: %d, lo: %d\\n\\nhitr: %d, lotr: %d\\n\\n&quot;, 0.25, kin, khi, klo, khitr, klotr
+		endin</pre>
+<h3>Credits</h3>
+<p>David Akbari  -  2005</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=78">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=23">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		GutoPitchTracker	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		linearPointer	</td>
+  </tr>  
+</table>
+</body>
+</html>

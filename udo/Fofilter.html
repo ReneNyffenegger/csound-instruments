@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>Fofilter</h1>
+<p>A formant filter version of the FOF opcode.</p>
+<a href="cache/Fofilter.udo">Download UDO File</a><h3>Description</h3>
+<p>This filter generates a stream of overlapping sinewave grains, when fed with a pulse train. Each grain is the<br>impulse response of a combination of two BP filters. The grains are defined by their attack time (determining the skirtwidth of the formant region at <br>-60dB) and decay time (-6dB bandwidth). Overlapping will occur when 1/freq &lt;  decay, but, unlike FOF, there is no upper limit on the number of overlaps.<br>The original idea for this opcode came from J McCartney\'s formlet class in SuperCollider, but this is<br>possibly implemented differently (?).</p>
+<h3>Syntax</h3>
+<p>ar   <b>Fofilter</b>   asig, kcf, kris, kdec</p>
+<h3>Performance</h3>
+<p>asig - input signal <br>kcf - formant center frequency (Hz)<br>kris - impulse response attack time (secs)<br>kdec - impulse response decay time (to -60dB, in secs)</p>
+<h3>Code</h3>
+<pre>opcode Fofilter, a, akkk
+
+   setksmps 1
+
+ipiosr = 4*taninv(1)/sr  /* pi/sr */
+af1z1 init 0             /* filter delays */
+af1z2 init 0
+af2z1 init 0
+af2z2 init 0
+
+asig,kcf,kris,kdec  xin
+
+kang = 2*ipiosr*kcf   /* pole angle */
+kfsc = sin(kang) - 3  /* freq scl   */
+krad1 =  10^(kfsc/(kdec*sr))  /* filter radii */
+krad2 =  10^(kfsc/(kris*sr))
+
+aw1  = asig + 2*krad1*cos(kang)*af1z1 - krad1*krad1*af1z2
+adec =  aw1 - af1z2
+af1z2 = af1z1
+af1z1 = aw1
+
+aw2  = asig + 2*krad2*cos(kang)*af2z1 - krad2*krad2*af2z2
+att =  aw2 - af2z2
+af2z2 = af2z1
+af2z1 = aw2
+       
+        xout  adec - att     
+	
+endop</pre>
+<h3>Examples</h3>
+<pre>instr 1
+	
+kfe         expseg 10, p3*0.9, 180, p3*0.1, 175
+kenv        linen  1000, 0.05, p3, 0.05
+asig        buzz   kenv, kfe, sr/(2*kfe), 1
+afil        fofilter  asig, 900, 0.007, 0.04
+             
+            out afil 
+	
+endin</pre>
+<h3>Credits</h3>
+<p>Victor Lazzarini</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=62">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=71">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		flip	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		footarray	</td>
+  </tr>  
+</table>
+</body>
+</html>

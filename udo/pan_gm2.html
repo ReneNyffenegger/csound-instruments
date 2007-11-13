@@ -1,0 +1,128 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>pan_gm2</h1>
+<p>Equal Power Panning scheme defined by MIDI Association for GM2 in RP-036</p>
+<a href="cache/pan_gm2.udo">Download UDO File</a><h3>Description</h3>
+<p>An implementation of the MIDI Association Recommend Practice for GM2 - RP-036 (Default Pan Curve). <br><br>For more information, see: http://www.midi.org/about-midi/specshome.shtml<br><br>Note: This code requires Csound 5.04 or higher</p>
+<h3>Syntax</h3>
+<p>aleft, aright pan_midi ain, kspace</p>
+<h3>Performance</h3>
+<p>kspace - location of signal, from -1 (hard left) to 1 (hard right)<br><br>ain - input signal to pan</p>
+<h3>Code</h3>
+<pre>	opcode pan_midi,aa,ak
+
+ain, kspace xin
+
+klast init -2
+kleft init 0
+kright init 0
+
+;from MIDI GM-2 Default Pan Curve (RP-036)
+;Left Channel Gain [dB] = 20*log (cos (Pi/2* max(0,CC#10 – 1)/126)
+;Right Channel Gain [dB] = 20*log (sin (Pi /2* max(0,CC#10 – 1)/126)
+
+if (kspace != klast) then
+ kpercent = (kspace + 1) / 2
+ kleft = ampdb(20 * log(cos($M_PI_2 * kpercent)))
+ kright = (kpercent == 0) ? 0 : ampdb(20 * log(sin($M_PI_2 * kpercent)))
+endif
+
+aleft = ain * kleft
+aright = ain * kright
+
+xout aleft, aright
+
+	endop</pre>
+<h3>Examples</h3>
+<pre>&lt;CsoundSynthesizer&gt;
+
+&lt;CsInstruments&gt;
+sr=44100
+ksmps=1
+nchnls=2
+
+	opcode pan_midi,aa,ak
+
+ain, kspace xin
+
+klast init -2
+kleft init 0
+kright init 0
+
+;from MIDI GM-2 Default Pan Curve (RP-036)
+;Left Channel Gain [dB] = 20*log (cos (Pi/2* max(0,CC#10 – 1)/126)
+;Right Channel Gain [dB] = 20*log (sin (Pi /2* max(0,CC#10 – 1)/126)
+
+if (kspace != klast) then
+ kpercent = (kspace + 1) / 2
+ kleft = ampdb(20 * log(cos($M_PI_2 * kpercent)))
+ kright = (kpercent == 0) ? 0 : ampdb(20 * log(sin($M_PI_2 * kpercent)))
+endif
+
+aleft = ain * kleft
+aright = ain * kright
+
+xout aleft, aright
+
+	endop
+
+
+	instr 1	;untitled
+aout vco2 10000, 440, 12
+
+kspace linseg -1, 1, -1, (p3 - 3)* .5, 1, 1, 1, (p3 -3) * .5, -1, 1, -1
+
+aleft, aright pan_midi aout, kspace
+
+outs aout, aout
+	endin
+
+
+&lt;/CsInstruments&gt;
+
+&lt;CsScore&gt;
+i1	0.0	7.140625	
+e
+
+&lt;/CsScore&gt;
+
+&lt;/CsoundSynthesizer&gt;</pre>
+<h3>Credits</h3>
+<p>Steven Yi</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=4">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=1">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		pan_equal_power	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		pan_simple	</td>
+  </tr>  
+</table>
+</body>
+</html>

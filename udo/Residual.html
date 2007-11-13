@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>Residual</h1>
+<p>extracts stochastic components (transients etc) from a sound (using csound 5 opcodes)</p>
+<a href="cache/Residual.udo">Download UDO File</a><h3>Description</h3>
+<p>Residual takes in a signal, analyses it in terms of stable partials and then subtracts the stochastic, noise-based, components of the sound, which form the output of the opcode. This UDO uses new opcodes found in csound 5 only.</p>
+<h3>Syntax</h3>
+<p>asig <b>Residual</b>  ain, ifftsize</p>
+<h3>Initialization</h3>
+<p>ifftsize - length of the FFT analysis in samples</p>
+<h3>Performance</h3>
+<p>asig - residual output<br>ain - signal input</p>
+<h3>Code</h3>
+<pre>opcode Residual, a, ai
+
+ain,isiz  xin 
+ihsiz = isiz/4
+ffr,fphs  pvsifd   ain, isiz, ihsiz, 1
+ftrk      partials ffr, fphs, 0, 1, 3, 500
+aout      sinsyn   ftrk, 2, 500, 1
+asd       delayr   isiz/sr
+asig      deltapn  isiz-ihsiz
+          delayw   ain
+          xout     asig-aout
+
+endop</pre>
+<h3>Examples</h3>
+<pre>instr 1
+
+ain  inch 1
+ares Residual ain, 2048
+     out  ares
+endin</pre>
+<h3>Credits</h3>
+<p>Victor Lazzarini, 2005</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=8">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=21">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		RecursiveDiskin	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		sampleSlicer	</td>
+  </tr>  
+</table>
+</body>
+</html>

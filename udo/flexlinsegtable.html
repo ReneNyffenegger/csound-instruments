@@ -1,0 +1,109 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>flexlinsegtable</h1>
+<p>Envelope UDO that reads from 1 to 31 parameters from a table.</p>
+<a href="cache/flexlinsegtable.udo">Download UDO File</a><h3>Description</h3>
+<p>An envelope UDO that reads from 1 to 31 parameters from a table.  Use GEN02 to create your tables and it will automatically fill the rest of the table elements with 0.  eg.  f10 0 32 -2  0.0  0.1 1.0  0.1 0.7  0.8 0.0<br></p>
+<h3>Syntax</h3>
+<p>kenv  <b>flexlinsegtable</b>  iftablenum</p>
+<h3>Initialization</h3>
+<p>iftablenum is the number of a table containing the envelope parameters.  The table must be at least size 32.</p>
+<h3>Performance</h3>
+<p>kenv is the output envelope.</p>
+<h3>Code</h3>
+<pre>opcode  flexlinsegtable, k, i
+	iftablenum xin
+	
+	; I don't think using tb15() will cause a problem with using multiple
+	; instances of this UDO since all of the table accesses happen at
+	; init-time.  But be careful!  If you use tb15() in your own code,
+	; it could be problematic.
+	       tb15_init  iftablenum
+
+	kenv   linseg	tb15(0), tb15(1), tb15(2), tb15(3), tb15(4), \
+	                  tb15(5), tb15(6), tb15(7), tb15(8), tb15(9), \
+	                  tb15(10), tb15(11), tb15(12), tb15(13), tb15(14), \
+	                  tb15(15), tb15(16), tb15(17), tb15(18), tb15(19), \
+	                  tb15(20), tb15(21), tb15(22), tb15(23), tb15(24), \
+	                  tb15(25), tb15(26), tb15(27), tb15(28), tb15(29), \
+				tb15(30)
+	xout   kenv
+endop
+</pre>
+<h3>Examples</h3>
+<pre>; flexenv2.csd
+; An instrument that reads a flexible number of envelope
+; parameters from a table.
+
+&lt;CsoundSynthesizer&gt;
+&lt;CsOptions&gt;
+
+&lt;/CsOptions&gt;
+&lt;CsInstruments&gt;
+
+#include &quot;flexlinsegtable&quot;  ;  or paste the UDO code here
+
+instr 1	
+	kenv   flexlinsegtable  p4		; envelope params are in table p4
+	aout   oscili  kenv*15000, 256, 1
+
+	out	   aout
+endin
+
+&lt;/CsInstruments&gt;
+&lt;CsScore&gt;
+f1  0 8192 10 1
+
+; envelopes
+f10 0 32 -2  0.0 1.0 1.0 1.0 0.0
+f11 0 32 -2  0.0 0.1 1.0 1.0 1.0 0.1 0.0
+f12 0 32 -2  0.0 1.0 0.0 0.95 1.0 0.05 0.0	
+f13 0 32 -2  0.0  3.0 1.0  0.3 0.1  0.3 1.0  0.3 0.1  0.3 1.0  0.3 0.1  0.8 0.9  5.0 0.0
+
+i1  0 2   10
+i1  2 2   11
+i1  4 2   12
+i1  6 10  13
+e
+&lt;/CsScore&gt;
+&lt;/CsoundSynthesizer&gt;
+</pre>
+<h3>Credits</h3>
+<p>Anthony Kozar, 2006</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=95">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=62">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		flexlinseg	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		flip	</td>
+  </tr>  
+</table>
+</body>
+</html>

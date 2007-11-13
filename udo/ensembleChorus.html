@@ -1,0 +1,115 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>ensembleChorus</h1>
+<p>A stereo chorus opcode with multiple voices.</p>
+<a href="cache/ensembleChorus.udo">Download UDO File</a><h3>Description</h3>
+<p>A stereo chorus opcode with multiple voices.<br>User can control how many voices.</p>
+<h3>Syntax</h3>
+<p>al, ar <b>ensembleChorus</b> ain, kdelay, kdpth, kminrate, kmaxrate, inumvoice, iwave</p>
+<h3>Initialization</h3>
+<p>inumvoice -- number of voices<br>iwave -- function table for the lfo wave (sine, triangle, etc).  </p>
+<h3>Performance</h3>
+<p>kdelay -- delay time in seconds<br>kdepth -- chorus depth in seconds<br>kminrate/kmaxrate -- min and max lfo rates (cps)</p>
+<h3>Code</h3>
+<pre>	opcode ensembleChorus, aa, akkkkiip
+ain, kdelay, kdpth, kmin, kmax, inumvoice, iwave, icount xin
+incr = 1/(inumvoice)
+
+if (icount == inumvoice) goto out
+ainl, ainr ensembleChorus ain, kdelay, kdpth, kmin, kmax, inumvoice, iwave, icount + 1
+
+out:
+
+max:
+imax = i(kmax)
+if (kmax != imax) then 
+reinit max
+endif
+
+iratemax unirand imax
+rireturn
+alfo oscil kdpth, iratemax + kmin, iwave
+adel vdelay3 ain/(inumvoice * .5), (kdelay + alfo) * 1000, 1000
+al = ainl + adel * incr * icount
+ar = ainr + adel * (1 - incr * icount)
+xout al, ar
+	endop</pre>
+<h3>Examples</h3>
+<pre>/* .orc */
+nchnls = 2
+
+	opcode ensembleChorus, aa, akkkkiip
+;kdpth 0 - kdelay, kmin/max = cps
+ain, kdelay, kdpth, kmin, kmax, inumvoice, iwave, icount xin
+incr = 1/(inumvoice)
+
+if (icount == inumvoice) goto out
+ainl, ainr ensembleChorus ain, kdelay, kdpth, kmin, kmax, inumvoice, iwave, icount + 1
+
+out:
+
+max:
+imax = i(kmax)
+if (kmax != imax) then 
+reinit max
+endif
+
+iratemax unirand imax
+rireturn
+alfo oscil kdpth, iratemax + kmin, iwave
+adel vdelay3 ain/(inumvoice * .5), (kdelay + alfo) * 1000, 1000
+al = ainl + adel * incr * icount
+ar = ainr + adel * (1 - incr * icount)
+xout al, ar
+	endop
+
+instr 1
+ain  buzz 20000, 120, 100, 1
+al, ar ensembleChorus ain, .01, .005, .75, 1, 12, 10
+outs al, ar
+endin
+
+/* .sco */
+f1 0 65536 10 1
+f10 0 65536 10 1 0 0 0 0 0 0 0 0 .05
+
+i1 0 10</pre>
+<h3>Credits</h3>
+<p>bhob rainey</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=63">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=91">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		Deflutter	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		envelope	</td>
+  </tr>  
+</table>
+</body>
+</html>

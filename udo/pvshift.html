@@ -1,0 +1,128 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>pvshift</h1>
+<p>Pitch shifting and spectral stretching with pvs streams</p>
+<a href="cache/pvshift.udo">Download UDO File</a><h3>Syntax</h3>
+<p><b>pvshift</b> kpitch, kstretch, inumbins, iampin, iampout, ifreqin, ifreqout</p>
+<h3>Code</h3>
+<pre>	opcode pvshift, 0, kkiiiii
+
+; our input values are:
+; kpitch - pitch shift amount [.5=down octave,
+; 1=noshift, 2=up octave, etc]
+; kstretch - spectral shift amount [ususal range is
+; .99-1.01, where 1=nostretch]
+; inumbins - number of fft bins [size of tables]
+; iampin - table containing amp data
+; iampout - table to write modified amp data
+; ifreqin - table containing freq data
+; ifreqout - table to write modified freq data
+
+kpitch, kstretch, inumbins, iampin, iampout, ifreqin, ifreqout xin
+
+; make sure we start with an empty table
+iclear 	ftgen 0, 0, inumbins, 2, 0
+	tablecopy iampout, iclear
+	tablecopy ifreqout, iclear
+
+; perform a do-while loop, cycling through the tables and shifting pitch
+kcount = 0
+loop:
+kindex 	= kcount/kpitch
+
+if (kindex &lt; inumbins) then
+kval 	table kindex, iampin
+kamp 	table kcount, iampout
+	tablew kval+kamp, kcount, iampout
+
+kval 	table kindex, ifreqin
+	tablew kval*kpitch, kcount, ifreqout
+endif
+
+kcount = kcount + 1
+kpitch = kpitch * kstretch
+
+if (kcount &lt; inumbins) kgoto loop
+
+endop</pre>
+<h3>Examples</h3>
+<pre>instr 2 ; to test the pvshift opcode
+
+; get input and do pvanal
+ifftsize = 1024
+iNumBins = ifftsize/2 + 1
+
+ainl, ainr ins
+fsigl pvsanal ainl, ifftsize, ifftsize/4, ifftsize*2, 0
+; [ or alternatively use pvsfread with a pvoc-ex file here ]
+
+; make ftables
+iampin ftgen 0,0,iNumBins,2,0
+iampout ftgen 0,0,iNumBins,2,0
+ifreqin ftgen 0,0,iNumBins,2,0
+ifreqout ftgen 0,0,iNumBins,2,0
+
+; our gui controls
+kfiltl invalue &quot;filtl&quot;
+kfilth invalue &quot;filth&quot;
+kpitch invalue &quot;pitch&quot;
+kstretch invalue &quot;stretch&quot;
+
+; export fsig to tables
+kflag pvsftw fsigl, iampin, ifreqin
+if (kflag &gt; 0) then ; only proc when frame is ready
+
+; pitch shift/stretch
+pvshift kpitch, kstretch, iNumBins, iampin, iampout, ifreqin, ifreqout
+
+; read modified data back to fsrc
+pvsftr fsigl, iampout, ifreqout
+
+endif
+
+
+; resynthesize and output - compare with untouched right channel
+aoutl pvsynth fsigl
+
+outs aoutl, ainr
+
+endin</pre>
+<h3>Credits</h3>
+<p>Author: Matt Ingalls</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=79">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=48">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		pgmin	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		quadBformat	</td>
+  </tr>  
+</table>
+</body>
+</html>

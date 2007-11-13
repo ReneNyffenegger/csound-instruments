@@ -1,0 +1,123 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>cps2midi</h1>
+<p>Converts Cycles per second (Hz) to MIDI note number. (k-rate version)</p>
+<a href="cache/cps2midi.udo">Download UDO File</a><h3>Description</h3>
+<p>This opcode converts a Cycles per second (Hz) value into a MIDI note number (in range 0-127).</p>
+<h3>Syntax</h3>
+<p>knotnum  <b>cps2midi</b>  kcps</p>
+<h3>Performance</h3>
+<p>knotnum  --  MIDI note number output based on Cycles per second (Hz) input.<br><br>kcps  --  Cycles per second (Hz) input.</p>
+<h3>Code</h3>
+<pre>opcode cps2midi, k, k
+kcps    xin
+        xout    logbtwo(kcps / 440) * 12 + 69
+    endop</pre>
+<h3>Examples</h3>
+<pre>&lt;CsoundSynthesizer&gt;
+&lt;CsOptions&gt;
+; linux
+;-odac -iadc -d -+rtaudio=alsa -+rtmidi=null
+;
+; mac osx
+;-odac -iadc -d -+rtaudio=coreaudio -+rtmidi=null
+;
+; win xp
+;-odac -iadc -d -+rtaudio=mme -+rtmidi=null
+&lt;/CsOptions&gt;
+&lt;CsInstruments&gt;
+
+sr	=	44100
+ksmps	=	128
+nchnls	=	2
+
+; Hz values to display
+; MIDI note # of
+;-----------------------------------  A3,  C4,     A4,  C5
+ipitches	ftgen	1, 0, 4, -2, 220, 261.626, 440, 523.251
+;-----------------------------------  57,  60,     69,  72
+; MIDI note numbers to be displayed --^
+
+opcode cps2midi, k, k
+kcps    xin
+        xout    logbtwo(kcps / 440) * 12 + 69
+    endop
+
+/*--- ---*/
+
+		instr	1
+
+; Generate a series of random numbers at k-rate.
+krand	randh	4, 1
+
+; Read our previously allocated table of Hz
+ktab	table	abs(krand), 1
+
+; Do the conversion!
+kview	cps2midi	ktab
+
+; Print the value each second.
+;  The +0.001 is needed because
+;  otherwise we would see rounding
+;  errors with the int() conversion.
+	printk2	int(kview+0.001)
+
+; How about some audio??
+kretrig	changed	int(kview+0.001)
+aout	vco2	8000, ktab
+kenv	loopseg	0.5, kretrig, 0.2, 1, 0.2, 0.5, 0.3, 0
+aout	=	aout*kenv
+alpf	moogvcf	aout, (kenv*4200)+220, 0.707, 0dbfs
+
+	outs	alpf, alpf
+
+		endin
+
+/*--- ---*/
+&lt;/CsInstruments&gt;
+&lt;CsScore&gt;
+i1	0	45
+
+e
+&lt;/CsScore&gt;
+&lt;/CsoundSynthesizer&gt;
+</pre>
+<h3>Credits</h3>
+<p>Istvan Varga - 2006, Example by David Akbari</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=24">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=82">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		boomerangPointer	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		cps2midi_i	</td>
+  </tr>  
+</table>
+</body>
+</html>

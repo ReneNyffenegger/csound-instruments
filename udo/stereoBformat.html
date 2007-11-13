@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>stereoBformat</h1>
+<p>Converts b-format ambisonics to uhj stereo.</p>
+<a href="cache/stereoBformat.udo">Download UDO File</a><h3>Description</h3>
+<p>Converts b-format ambisonics to uhj stereo.</p>
+<h3>Syntax</h3>
+<p>aleft, aright <b>stereoBformat</b> aW, aX, aY, aZ</p>
+<h3>Initialization</h3>
+<p>aW, aX, aY, aZ -- the b-format signal</p>
+<h3>Code</h3>
+<pre>opcode stereoBformat, aa, aaaa
+
+	aW, aX, aY, aZ xin	
+
+	aWcos, aWsin hilbert aW
+	aXcos, aXsin hilbert aX
+	aYcos, aYsin hilbert aY
+
+	aleft = 0.0928* aXcos + 0.255*aXsin + 0.4699* aWcos - 0.171* aWsin + 0.3277* aYcos
+	aright = 0.0928* aXcos - 0.255*aXsin + 0.4699* aWcos + 0.171* aWsin - 0.3277 * aYcos
+
+	xout aleft, aright
+
+endop</pre>
+<h3>Credits</h3>
+<p>Joseph Anderson and ma++, jan 2005</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=20">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=22">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		Statevar	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		stereoGrain	</td>
+  </tr>  
+</table>
+</body>
+</html>

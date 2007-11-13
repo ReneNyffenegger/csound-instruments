@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>MTXinit</h1>
+<p>Initializaes MTX (matrix) engine</p>
+<a href="cache/MTXinit.udo">Download UDO File</a><h3>Description</h3>
+<p>This UDO initializes a simple matrix engine. This UDO is designed to be used with other MTX* family UDOs like MTXcreate, MTXget and MTXset.</p>
+<h3>Syntax</h3>
+<p>idiscard <b>MTXinit</b> [iMTXftnumoffset]</p>
+<h3>Initialization</h3>
+<p>idiscard- Serves no purpose, always outputs 0<br>iMTXftnumoffset - (optional) Ftable number in which to start creating matrices (default = 200)<br>Matrices are created inside ftables using MTXcreate, and can be easily accessed using MTXget and MTXset</p>
+<h3>Code</h3>
+<pre>	opcode MTXinit,i,o
+
+ioffset xin
+ioffset = (ioffset == 0 ? 200: ioffset)
+giMTXUDOtabnumoffset init ioffset
+giMTXUDOnum init 0
+xout 0
+
+	endop</pre>
+<h3>Examples</h3>
+<pre>idiscard MTXinit</pre>
+<h3>Credits</h3>
+<p>Andres Cabrera</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=87">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=88">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		MTXget	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		MTXnormalizerows	</td>
+  </tr>  
+</table>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>mode</h1>
+<p>filter that simulates a mass-spring-damper system</p>
+<a href="cache/mode.udo">Download UDO File</a><h3>Description</h3>
+<p>Filters the incomming signal with the specified resonance frequency and quality factor.<br><br>It can also be seen as a signal generator for high quality factor, with an impulse for the excitation.<br><br>You can combine several modes to built complex instruments, as bells, or guitar table.</p>
+<h3>Syntax</h3>
+<p>aout <b>mode</b> ain, ifreq, iQ</p>
+<h3>Performance</h3>
+<p>aout  -- filtered signal<br>ain   -- signal to filter<br>ifreq -- resonant frequency of the filter (!!!!! WARNING !!!! Becomes unstable if sr/ifreq &lt; pi (e.g ifreq&gt;14037 Hz @44kHz) !!!!!!!)<br>iQ    -- quality factor of the filter<br><br>resonance time is roughly proportionnal to iQ/ifreq</p>
+<h3>Code</h3>
+<pre>opcode mode, a,aii
+
+ain,ifreq,iQ xin;Inputs args : signal to filter, resonant frequency, quality factor
+
+setksmps 1
+ipi init 355/113 ;approximation of pi = 3.14....
+ay1 init 0
+ay2 init 0
+ax1 init 0
+
+ax1 delay1 ain
+ifreq  = ifreq*2*ipi
+ialpha = (sr/ifreq)
+ibeta  = ialpha*ialpha;
+
+
+
+aout = (-(1-2*ibeta)*ay1 + ax1 - (ibeta-ialpha/(2*iQ))*ay2)/(ibeta+ialpha/(2*iQ));
+
+ay2 = ay1
+ay1 = aout
+
+aout = aout*sr/(2*ifreq)
+
+xout aout
+
+endop</pre>
+<h3>Examples</h3>
+<pre>instr 1 
+    idur = p3
+    ifreq = p4
+    iQ    = p5 
+    iamp  = p6 
+
+    aexc mpulse 3,0 ; generates an impulsion
+
+    aout mode aexc,ifreq,iQ
+    aout = aout*iamp
+
+    out aout
+    
+endin</pre>
+<h3>Credits</h3>
+<p>François Blanc, 2006</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=92">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=32">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		midiMonitor	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		Moogladder	</td>
+  </tr>  
+</table>
+</body>
+</html>

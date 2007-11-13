@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>MTXcreate</h1>
+<p>Creates a matrix for use with the other MTX* UDOs</p>
+<a href="cache/MTXcreate.udo">Download UDO File</a><h3>Description</h3>
+<p>This UDO creates a new matrix, or a matrix from an existant ftable, with up to 3 dimensions, for use with other MTX* UDOs, like MTXget or MTXset.</p>
+<h3>Syntax</h3>
+<p>imtxnum <b>MTXcreate</b> ix [,iy, iz, idefault, iftnum]</p>
+<h3>Initialization</h3>
+<p>imtxnum- Ftable containing the matrix<br>ix - Number of elements in the x dimension<br>iy - (optional, default = 0) Number of elements in the y dimension<br>iz - (optional, default = 0) Number of elements in the z dimension<br>idefault - (optional, default = 0) A scalar to fill a newly created table with.<br>iftnum - (optional, default = 0) Number of ftable to convert to matrix.</p>
+<h3>Performance</h3>
+<p>MTXcreate creates a new matrix if iftnum is 0. If iftnum is given, MTXcreate will convert the table into a matrix usable by other MTX* opcodes. The dimensions of the table are determined by ix, iy and iz. If you want a two-dimensional table, do not specify iz or use a value of 0.<br>Please note that if an existing table is converted using MTXcreate, the table will be modified.<br>MTXinit must have been called (and defined in the orchestra) before MTXcreate.</p>
+<h3>Code</h3>
+<pre>	opcode MTXcreate,i,ioooo
+
+ix, iy, iz, idefault, iftnum xin
+
+giMTXUDOnum = giMTXUDOnum +1
+if (iftnum==0) then
+iftnum = giMTXUDOnum + giMTXUDOtabnumoffset
+isize = powoftwo(int(logbtwo((ix*iy*iz)+3))+1)
+ifno ftgen iftnum, 0, isize, -16, idefault, isize-1, idefault
+else
+vcopy_i iftnum,iftnum, (ix*iy*iz), 3, 0
+endif
+tableiw ix, 0, iftnum
+tableiw iy, 1, iftnum
+tableiw iz, 2, iftnum
+xout iftnum
+
+	endop</pre>
+<h3>Examples</h3>
+<pre>gimtxsizex = 56
+gimtxsizey = 14
+gimtxsizez = 14
+imtxsize = powoftwo(int(logbtwo((gimtxsizex*gimtxsizey*gimtxsizez)+3))+1)
+gimtx1	ftgen	0, 0, imtxsize, -23, &quot;matrix/A0&quot;
+iinit MTXinit
+
+imtxnum MTXcreate gimtxsizex, gimtxsizey, gimtxsizez, 0, gimtx1
+</pre>
+<h3>Credits</h3>
+<p>Andres Cabrera</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=57">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=85">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		msrOsc	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		MTXdestroy	</td>
+  </tr>  
+</table>
+</body>
+</html>

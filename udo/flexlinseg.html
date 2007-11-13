@@ -1,0 +1,114 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>flexlinseg</h1>
+<p>Envelope that reads parameters from a flexible number of pfields</p>
+<a href="cache/flexlinseg.udo">Download UDO File</a><h3>Description</h3>
+<p>flexlinseg is an envelope UDO that reads from 1 to 21 parameters from the pfields of a note event, starting with the specified pfield.  Any segments of the envelope that are not given in the pfields are set to zero.  It relies on another small UDO (mypvalue), also included below.  <br><br></p>
+<h3>Syntax</h3>
+<p>kenv  <b>flexlinseg</b>  ipstart</p>
+<h3>Initialization</h3>
+<p>ipstart is the number of the first pfield containing the envelope parameters.  flexlinseg reads the remaining pfields (up to 21 of them) and passes them to a linseg opcode.  If you need more than 21 parameters, the UDO is easy to modify.</p>
+<h3>Performance</h3>
+<p>kenv is the output envelope.  </p>
+<h3>Code</h3>
+<pre>; This UDO returns a pfield value but returns 0 if it does not exist.
+opcode  mypvalue, i, i
+	index  xin
+	inum   pcount
+	if	  (index &gt; inum)  then
+		iout = 0.0
+	else
+		iout pindex index
+	endif
+	
+	xout	iout
+endop
+	
+; Envelope UDO that reads parameters from a flexible number of pfields
+; Syntax:   kenv  flexlinseg  ipstart
+;           ipstart is the first pfield of the envelope
+;               parameters.  Reads remaining pfields (up to 21 of them).
+;           kenv is the output envelope.
+
+opcode  flexlinseg, k, i
+	ipstart xin
+	
+	iep1   mypvalue	ipstart
+	iep2   mypvalue	ipstart + 1
+	iep3   mypvalue	ipstart + 2
+	iep4   mypvalue	ipstart + 3
+	iep5   mypvalue	ipstart + 4
+	iep6   mypvalue	ipstart + 5
+	iep7   mypvalue	ipstart + 6
+	iep8   mypvalue	ipstart + 7
+	iep9   mypvalue	ipstart + 8
+	iepa   mypvalue	ipstart + 9
+	iepb   mypvalue	ipstart + 10
+	iepc   mypvalue	ipstart + 11
+	iepd   mypvalue	ipstart + 12
+	iepe   mypvalue	ipstart + 13
+	iepf   mypvalue	ipstart + 14
+	iepg   mypvalue	ipstart + 15
+	ieph   mypvalue	ipstart + 16
+	iepi   mypvalue	ipstart + 17
+	iepj   mypvalue	ipstart + 18
+	iepk   mypvalue	ipstart + 19
+	iepl   mypvalue	ipstart + 20
+
+	kenv   linseg	 iep1, iep2, iep3, iep4, iep5, iep6, iep7, iep8, \
+	                   iep9, iepa, iepb, iepc, iepd, iepe, iepf, iepg, \
+	                   ieph, iepi, iepj, iepk, iepl
+	
+	xout   kenv
+endop
+</pre>
+<h3>Examples</h3>
+<pre>instr 1
+	; This instrument only requires 3 pfields but can accept up to 24.
+	; (You will still get warnings about more than 3).
+	
+	kenv   flexlinseg  4			; envelope params start at p4
+	aout   oscili  kenv*15000, 256, 1
+
+	out	   aout
+endin
+</pre>
+<h3>Credits</h3>
+<p>Anthony Kozar, 2006</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=19">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=96">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		findPowerOfTwo	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		flexlinsegtable	</td>
+  </tr>  
+</table>
+</body>
+</html>

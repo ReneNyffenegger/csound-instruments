@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>pan_delay_and_filtered</h1>
+<p>Pan using delay and filters</p>
+<a href="cache/pan_delay_and_filtered.udo">Download UDO File</a><h3>Description</h3>
+<p>Panning User Defined Opcodes<br>Conversion of Hans Mikelson's examples in the Csound Magazine<br>Autumn 1999<br>   http://csounds.com/ezine/autumn1999/beginners/</p>
+<h3>Syntax</h3>
+<p>a1, a2    <b>pan_delay_and_filtered</b>    asig, kpan, kfco, iq</p>
+<h3>Code</h3>
+<pre>	opcode pan_delay_and_filtered, aa, akki
+asig, kpan, kfco, iq	xin
+
+aflt	moogvcf asig, kfco, iq  
+
+kdclki	linseg  0, .002, 1, p3-.002, 1                ; Fade in  envelope
+kdclko	linseg  1, p3-.002, 1, .002, 0                ; Fade out envelope
+
+
+kangle	= kpan * 3.14159265359 * .5 ; Compute pan*pi/2
+
+kpanl	= sin(kangle)          ; Left pan value
+kpanr	= cos(kangle)          ; Right pan value
+
+kpl	= kpanl*.5+.5                   ; Generate a value between .5 and 1
+kpr	= kpanr*.5+.5                   ; Generate a value between .5 and 1
+
+adell	vdelay3 aflt*kdclki, kpanr*.7+.05, 2 ; Delay left  side .05 to .7 msec
+adelr	vdelay3 aflt*kdclki, kpanl*.7+.05, 2 ; Delay right side .05 to .7 msec
+
+afltl	butterlp adell, 4000+kpanl*10000     ; Generate a low pass filtered signal
+afltr	butterlp adelr, 4000+kpanr*10000     ; Same for the right side
+
+aoutl	= adell*kpan+afltl*(1-kpan)     ; Crossfade between delayed and filtered signal
+aoutr	= adelr*(1-kpan)+afltr*kpan     ; Same for the right side
+
+	xout    aoutl*kpl*kdclko, aoutr*kpr*kdclko ; Declick and output
+	endop
+</pre>
+<h3>Credits</h3>
+<p>Author: Hans Mikelson, converted by Steven Yi</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=58">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=4">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		p5glove	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		pan_equal_power	</td>
+  </tr>  
+</table>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>footarray</h1>
+<p>Interface for a foot array which outputs program change MIDI messages. Can be used with any MIDI program change capable device.</p>
+<a href="cache/footarray.udo">Download UDO File</a><h3>Description</h3>
+<p>This opcode is an interpreter for a foot array which outputs MIDI program change messages. It is feasible to use this opcode with any hardware or software application that is capable of generating MIDI program change messages. A diagram of the foot array is something like<br><br>--------------------<br>|  0  |  1  |  2  |  3  |  4  |<br>|  5  |  6  |  7  |  8  |  9  |<br>--------------------<br><br>where the numbers correspond to the decimal equivelent of the Data Byte 1 of the MIDI message.</p>
+<h3>Syntax</h3>
+<p>knum, kval  <b>footarray</b></p>
+<h3>Performance</h3>
+<p>knum  --  Number of the Program Change message.<br><br>kval  --  True / False (0/1). Sends a 1 each time a controller message and immediately resets.</p>
+<h3>Code</h3>
+<pre>opcode	footarray, kk, 0
+
+kstatus, kchan, kd1, kd2	midiin
+
+kval  =  0
+
+if	(kstatus == 176 &amp;&amp; kd1 == 32) then
+kval	=	0
+elseif	(kstatus == 192) then
+knum	=	kd1
+kval	=	1
+	endif
+
+	xout	knum, kval
+
+	endop</pre>
+<h3>Examples</h3>
+<pre>/*--- ---*/
+
+		instr	1
+
+knum, kval	footarray
+
+if	(knum == 1 &amp;&amp; kval == 1) kgoto one
+if	(knum == 2 &amp;&amp; kval == 1) kgoto two
+if	(knum == 3 &amp;&amp; kval == 1) kgoto three
+	kgoto	contin
+
+one:
+	event	&quot;i&quot;, 2, 0, 2, 8.02, 0.25
+kgoto	contin
+
+two:
+	event	&quot;i&quot;, 2, 0, 2, 8.07, 0.75
+kgoto contin
+
+three:
+	event	&quot;i&quot;, 2, 0, 2, 8.00, 1.00
+kgoto contin
+
+contin:
+knum	=	0
+		endin
+
+/*--- ---*/
+
+		instr	2
+
+kpan	=	p5
+a1	oscil	10000, cpspch(p4), 1
+
+kenv	linseg	0.000001, 0.05, 1, p3, 1, 0.05, 0.000001
+
+aout	=	a1 * kenv
+
+	outs	aout * (1 - kpan), aout * kpan
+
+		endin
+
+/*--- ---*/</pre>
+<h3>Credits</h3>
+<p>David Akbari  -  2005. Thanks to Istvan Varga for suggesting an improvement!</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=31">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=50">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		Fofilter	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		freqShift	</td>
+  </tr>  
+</table>
+</body>
+</html>

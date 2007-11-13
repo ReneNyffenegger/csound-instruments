@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>quadBformat</h1>
+<p>Converts b-format to quadrophonic.</p>
+<a href="cache/quadBformat.udo">Download UDO File</a><h3>Description</h3>
+<p>Converts b-format to quadrophonic.</p>
+<h3>Syntax</h3>
+<p>aFL, aFR , aRL, aRR <b>quadBformat</b> aW, aX, aY, aZ</p>
+<h3>Code</h3>
+<pre>opcode quadBformat, aaaa, aaaa
+	aW, aX, aY, aZ xin
+
+	; ignore z channel, as no height information in quad
+	aFL     =  aW + aX + aY         /* front left           */
+	aFR     =  aW + aX - aY         /* front right          */
+	aRL     =  aW - aX + aY         /* rear left            */
+	aRR     =  aW - aX - aY         /* rear right           */
+
+	xout aFL, aFR , aRL, aRR
+endop</pre>
+<h3>Credits</h3>
+<p>Joseph Anderson and ma++, jan 2005</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=10">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=39">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		pvshift	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		RandomWalkA	</td>
+  </tr>  
+</table>
+</body>
+</html>

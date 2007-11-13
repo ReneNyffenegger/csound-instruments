@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>getFrequency</h1>
+<p>Returns frequency whether being passed in pch or frequency</p>
+<a href="cache/getFrequency.udo">Download UDO File</a><h3>Description</h3>
+<p>Returns frequency whether being passed in PCH notation or frequency.  This code is commonly found in instruments designed to take in either pch or frequency values. Assumes that values lower than 15 are pch, and those higher than that are frequency.</p>
+<h3>Syntax</h3>
+<p>ifreq    <b>getFrequency</b> ival</p>
+<h3>Initialization</h3>
+<p>ival - input value, either pch or frequency<br><br>ifreq - output frequency</p>
+<h3>Code</h3>
+<pre>	opcode getFrequency, i, i
+
+ipch 	xin
+iout	= (ipch &lt; 15 ? cpspch(ipch) : ipch)	
+	xout	iout
+
+	endop</pre>
+<h3>Credits</h3>
+<p>Steven Yi</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=59">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=78">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		gainslider	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		GutoPitchTracker	</td>
+  </tr>  
+</table>
+</body>
+</html>

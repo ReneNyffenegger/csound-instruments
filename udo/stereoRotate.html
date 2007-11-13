@@ -1,0 +1,86 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>stereoRotate</h1>
+<p>The proper way to do stereo 'panning'.</p>
+<a href="cache/stereoRotate.udo">Download UDO File</a><h3>Description</h3>
+<p>Rotates a stereo image.  It uses M/S methods to create a natural-sounding way to rotate the stereo image, as if you were rotating a stand holding a stereo microphone.  </p>
+<h3>Syntax</h3>
+<p>al, ar <b>stereoRotate</b> ainl, ainr, kangle</p>
+<h3>Initialization</h3>
+<p>ainl, ainr -- input audio signal<br><br>kangle -- the angle of rotation in degrees, usually in the range of -45 to +45</p>
+<h3>Performance</h3>
+<p>This opcode uses the stereoMS UDO.</p>
+<h3>Code</h3>
+<pre>opcode stereoRotate, aa, aak
+
+	ainl, ainr, ktheta xin
+
+	; constants
+	ipi		=	3.1416
+	iradfac	=	ipi/180
+
+	;compute coeffs
+	ktheta	=	iradfac*ktheta
+	kstheta	=	sin(ktheta)
+	kctheta	=	cos(ktheta)
+
+	;Matrix L/R to M/S
+	ainm, ains	stereoMS	ainl, ainr
+	
+	;Do Rotate
+	aimagm	=	kctheta*ainm - kstheta*ains
+	aimags	=	kstheta*ainm + kctheta*ains
+	
+	;Matrix	back	to	L/R
+	aoutl, aoutr stereoMS	aimagm, aimags
+
+	xout aoutl, aoutr
+
+endop	</pre>
+<h3>Examples</h3>
+<pre>instr 1
+
+ainl, ainr ins
+aoutl, aoutr stereoRotate ainl, ainr, -45 ; rotate 45 degrees to the left
+outs aoutl, aoutr
+
+endin</pre>
+<h3>Credits</h3>
+<p>Joseph Anderson and ma++, jan 2005</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=44">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=89">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		stereoMS	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		tap_tubewarmth	</td>
+  </tr>  
+</table>
+</body>
+</html>

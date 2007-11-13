@@ -1,0 +1,75 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>lowpass</h1>
+<p>A k-rate smoothing UDO that is useful for averaging performance controller data.</p>
+<a href="cache/lowpass.udo">Download UDO File</a><h3>Description</h3>
+<p>This opcode implements a smoothing algorithm which is intended for use with alternate controllers. It takes a data-value input and a power (filter strength) input outputting of course, the smoothed data.</p>
+<h3>Syntax</h3>
+<p>kout  <b>lowpass</b>  kin, kpow</p>
+<h3>Performance</h3>
+<p>kin  --  Data to be smoothed.<br><br>kpow  --  Strength of the filter.<br><br>kout  -- Smoothed data.</p>
+<h3>Code</h3>
+<pre>opcode	lowpass, k, kk
+
+klp	init	0
+
+kval, kpowr	xin
+
+kpow	pow	1.037, kpowr
+kpow	=	kpow - 1
+
+klp	=	((kpow * klp) + kval)/(kpow+1)
+
+	xout	klp
+
+		endop</pre>
+<h3>Examples</h3>
+<pre>instr	2	;  demonstrate lowpass filter
+
+kin	ctrl7	1, 1, 0, 127
+kpow	ctrl7	1, 7, 0, 127
+
+kpass	lowpass	kin, kpow
+
+	printks	&quot;\\nraw: %d\\npow: %d\\nfilt: %d\\n&quot;, 0.25, kin, kpow, kpass
+
+		endin</pre>
+<h3>Credits</h3>
+<p>David Akbari  -  2005</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=61">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=64">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		LogCurve	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		midi2cps	</td>
+  </tr>  
+</table>
+</body>
+</html>

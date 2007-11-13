@@ -1,0 +1,117 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>smooth</h1>
+<p>smooths k-rate MIDI-controlled signals</p>
+<a href="cache/smooth.udo">Download UDO File</a><h3>Syntax</h3>
+<p>kin <b>smooth</b> kin</p>
+<h3>Code</h3>
+<pre>    opcode smooth, k, k
+
+  kin       xin
+  kport	    linseg    0, 0.0001, 0.01, 1, 0.01
+  kin       portk     kin, kport
+            xout      kin
+
+    endop</pre>
+<h3>Examples</h3>
+<pre>&lt;CsoundSynthesizer&gt;
+
+&lt;CsOptions&gt;
+
+&lt;/CsOptions&gt;
+
+&lt;CsInstruments&gt;
+
+
+  sr	    =  48000
+  ksmps	    =  8
+  nchnls    =  1
+
+  gisin	    ftgen     1, 0, 16384, 10, 1
+
+    opcode smooth, k, k
+
+  kin       xin
+  kport	    linseg    0, 0.0001, 0.01, 1, 0.01
+  kin       portk     kin, kport
+            xout      kin
+
+    endop
+
+    instr 1
+
+  kcps	    cpsmidib
+  ivel	    veloc     0, 1
+
+  iatt	    ctrl7     1, 21, 0.002, 0.256
+  idec	    ctrl7     1, 22, 0.01, 1.28
+  isus	    ctrl7     1, 23, 0.01, 0.99
+  irel	    ctrl7     1, 24, 0.02, 2.56
+
+  kdb	    ctrl7     1, 25, -90, -10
+  kdb	    smooth    kdb
+  kamp	    =  ampdbfs   (kdb)
+
+  isus	    =  isus * ivel
+
+  aenv	    linsegr   0, iatt, ivel, idec, isus, irel, 0
+
+  aosc	    oscil     aenv, kcps, gisin
+
+  aosc	    =  aosc * kamp
+
+	    out	      aosc
+
+    endin
+
+
+&lt;/CsInstruments&gt;
+
+&lt;CsScore&gt;
+
+f0 360
+e
+
+&lt;/CsScore&gt;
+
+&lt;/CsoundSynthesizer&gt;
+</pre>
+<h3>Credits</h3>
+<p>Coded by Iain McCurdy, Implemented as a UDO by Jonathan Murphy</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=6">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=20">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		sittinginaroom	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		Statevar	</td>
+  </tr>  
+</table>
+</body>
+</html>

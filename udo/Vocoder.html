@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>Vocoder</h1>
+<p>channel vocoder with user-specified number of bands</p>
+<a href="cache/Vocoder.udo">Download UDO File</a><h3>Description</h3>
+<p>Vocoder is a channel vocoder using 4th order butteworth filters. It takes an input signal and analyses it with a user-specified number of log-spaced (constant-Q) filter bands (between a min and max) and  frequency) and then applies the analysed spectral envelope to an excitation signal.</p>
+<h3>Syntax</h3>
+<p>asig <b>Vocoder</b> aexc, ain, kminf, kmaxf, kq, ibands</p>
+<h3>Initialization</h3>
+<p>ibands - number of filter bands between kminf and kmaxf</p>
+<h3>Performance</h3>
+<p>asig - output<br>aexc - excitation signal, generally a broadband source (ie. lots of spectral components)<br>ain - input signal, generally a signal with a strong spectral envelope or contour, formants, etc. (such as vocal sound)<br>kminf - lowest analysis frequency<br>kmaxf - highest analysis frequency<br>kq - filter Q <br></p>
+<h3>Code</h3>
+<pre>opcode Vocoder, a, aakkkpp
+
+as1,as2,kmin,kmax,kq,ibnd,icnt  xin
+
+if kmax &lt; kmin then
+ktmp = kmin
+kmin = kmax
+kmax = ktmp
+endif
+
+if kmin == 0 then 
+kmin = 1
+endif
+
+if (icnt &gt;= ibnd) goto bank
+abnd   Vocoder as1,as2,kmin,kmax,kq,ibnd,icnt+1
+
+bank:
+kfreq = kmin*(kmax/kmin)^((icnt-1)/(ibnd-1))
+kbw = kfreq/kq
+an  butterbp  as2, kfreq, kbw
+an  butterbp  an, kfreq, kbw
+as  butterbp  as1, kfreq, kbw
+as  butterbp  as, kfreq, kbw
+ao balance as, an
+
+amix = ao + abnd
+
+     xout amix
+
+endop</pre>
+<h3>Examples</h3>
+<pre>instr 1
+	asig inch 1
+        imax = 7000
+        imin = 300
+        ifun = imin/2
+        kra  randh  .05, 2
+        kfun = abs(1-kra)*ifun 
+        anoi buzz 1000, kfun, imax/ifun, 1
+	aout Vocoder anoi, asig,imin,imax,25,32
+	outs aout,aout
+
+endin</pre>
+<h3>Credits</h3>
+<p>Victor Lazzarini, 2005</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=98">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=77">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		tunkb	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		vowel	</td>
+  </tr>  
+</table>
+</body>
+</html>

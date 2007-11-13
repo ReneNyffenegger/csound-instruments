@@ -1,0 +1,170 @@
+<html>  
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="alternate" type="text/xml" title="RSS 2.0" href="http://www.csounds.com/udo/rss.php" />
+
+<style>
+#loginBox {
+    position: absolute; 
+    right: 10px; 
+    top: 10px; 
+    /* width: 100px; 
+    height: 50px; */ 
+    z-index: 5; 
+    border-top: 1px solid gray;
+    border-left: 1px solid gray;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    padding: 5px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 80%;
+}
+
+.category {
+    font-weight: bold;
+}
+
+</style>
+
+</head>  
+<body>
+<div id="loginBox">
+    <a href="login.php">Login</a><br>
+    <a href="register.php">Register</a><br><br>
+	<!--<a href="forgotPassword.php">Forgot Password?</a>-->
+    <a href="about.html">About</a><br><br>
+    <a href="http://www.csounds.com/udo/rss.php"><img src="rss20.gif" width="80" height="15" border="0"></a>
+</div>
+
+
+<h1> User-Defined Opcode Database</h1>
+<h4>Edited by</h4>
+<h3>Steven Yi </h3>
+<hr>
+<p>This is a repository of User-Defined Opcodes for the <a href="http://www.csounds.com">Csound</a> music
+synthesis software. User-Defined Opcodes are opcodes for Csound created using
+  Csound orchestra text. More information about User-Defined Opcodes can be found
+  <a href="http://kevindumpscore.com/docs/csound-manual/opcode.html">here</a>. </p>
+<p>
+<h2>Opcodes</h2>
+	<blockquote>
+<dl><dt class='category'>Signal Generators</dt>
+<dd>
+<dl>
+<dt><a href="displayOpcode.php?opcode_id=71">footarray</a> - Interface for a foot array which outputs program change MIDI messages. Can be used with any MIDI program change capable device.</dt>
+<dt><a href="displayOpcode.php?opcode_id=78">GutoPitchTracker</a> - Returns amplitude and cycles per second of the most prominent complex tone in the spectrum of arbitrary audio input.</dt>
+<dt><a href="displayOpcode.php?opcode_id=57">msrOsc</a> - Simple Generator</dt>
+<dt><a href="displayOpcode.php?opcode_id=58">p5glove</a> - Unit generator for P5 data glove</dt>
+<dt><a href="displayOpcode.php?opcode_id=79">pgmin</a> - Reports MIDI program change messages at k-rate.</dt>
+<dt><a href="displayOpcode.php?opcode_id=39">RandomWalkA</a> - Generate random walk at a-rate</dt>
+<dt><a href="displayOpcode.php?opcode_id=40">RandomWalkK</a> - Generate random walk at k-rate</dt>
+<dt><a href="displayOpcode.php?opcode_id=69">rbatonPercPad</a> - Senses trigger/whack strength as well as X and Y coordinates of the two batons in a Max Mathew's Radio Baton system.</dt>
+<dt><a href="displayOpcode.php?opcode_id=68">rbatonPot</a> - Implements a sensor for the 4 pots, 2 footswitches and B15+ button on the Max Mathew's Radio Baton unit.</dt>
+<dt><a href="displayOpcode.php?opcode_id=65">rbatonXYZ</a> - polls X, Y, and Z coordinates of a Max Mathew's Radio Baton.</dt>
+<dt><a href="displayOpcode.php?opcode_id=22">stereoGrain</a> - Granular synthesis similar to granule but in stereo with control rate parameters and unlimited transpositions.</dt>
+<dt><a href="displayOpcode.php?opcode_id=93">tunk</a> - k-rate microtunable MIDI to cps</dt>
+<dt><a href="displayOpcode.php?opcode_id=98">tunkb</a> - k-rate microtunable MIDI to cps with pitchbend</dt>
+<dt><a href="displayOpcode.php?opcode_id=76">vowgen</a> - fof-based vocal generator with morfable vowels</dt>
+</dl>
+</dd></dl>
+<dl><dt class='category'>Signal Modifiers</dt>
+<dd>
+<dl><dt class='category'>Effects</dt>
+<dd>
+<dl>
+<dt><a href="displayOpcode.php?opcode_id=73">decimator</a> - Sample rate / Bit depth reduce. Based on the work of Steven Cook. k-rate parameters.</dt>
+<dt><a href="displayOpcode.php?opcode_id=25">ensembleChorus</a> - A stereo chorus opcode with multiple voices.</dt>
+<dt><a href="displayOpcode.php?opcode_id=50">freqShift</a> - Detunes an audio signal</dt>
+<dt><a href="displayOpcode.php?opcode_id=70">SCReverb</a> - 8 delay line stereo FDN reverb</dt>
+<dt><a href="displayOpcode.php?opcode_id=55">SigRec</a> - A table-based signal recorder (looping sampler), with pitch control</dt>
+<dt><a href="displayOpcode.php?opcode_id=54">SigReverse</a> - A table-based reversing opcode.</dt>
+<dt><a href="displayOpcode.php?opcode_id=89">tap_tubewarmth</a> - A port of Tom Szilagyi's TAP TubeWarmth LADSPA plugin to a Csound User-Defined Opcode</dt>
+</dl>
+</dd></dl>
+<dl><dt class='category'>Filters</dt>
+<dd>
+<dl>
+<dt><a href="displayOpcode.php?opcode_id=31">Fofilter</a> - A formant filter version of the FOF opcode.</dt>
+<dt><a href="displayOpcode.php?opcode_id=32">Moogladder</a> - An improved implementation of the Moog ladder filter</dt>
+<dt><a href="displayOpcode.php?opcode_id=20">Statevar</a> - A digital version of the analogue state variable filter.</dt>
+<dt><a href="displayOpcode.php?opcode_id=53">Vocoder</a> - channel vocoder with user-specified number of bands</dt>
+<dt><a href="displayOpcode.php?opcode_id=77">vowel</a> - vowel filter with morfable vowels</dt>
+</dl>
+</dd></dl>
+<dl><dt class='category'>Panning and Spatialization</dt>
+<dd>
+<dl>
+<dt><a href="displayOpcode.php?opcode_id=49">bformatQuad</a> - Converts quadrophonic to b-format.</dt>
+<dt><a href="displayOpcode.php?opcode_id=47">bformatStereo</a> - Converts stereo to b-format ambisonics.</dt>
+<dt><a href="displayOpcode.php?opcode_id=5">pan_delay_and_filtered</a> - Pan using delay and filters</dt>
+<dt><a href="displayOpcode.php?opcode_id=4">pan_equal_power</a> - Equal Power Panning</dt>
+<dt><a href="displayOpcode.php?opcode_id=90">pan_gm2</a> - Equal Power Panning scheme defined by MIDI Association for GM2 in RP-036</dt>
+<dt><a href="displayOpcode.php?opcode_id=1">pan_simple</a> - Simple Linear Pan</dt>
+<dt><a href="displayOpcode.php?opcode_id=3">pan_sin</a> - Pan using Sin/Cos to create more even power between channels</dt>
+<dt><a href="displayOpcode.php?opcode_id=2">pan_sqrt</a> - sqrt method for panning</dt>
+<dt><a href="displayOpcode.php?opcode_id=48">quadBformat</a> - Converts b-format to quadrophonic.</dt>
+<dt><a href="displayOpcode.php?opcode_id=46">stereoBformat</a> - Converts b-format ambisonics to uhj stereo.</dt>
+<dt><a href="displayOpcode.php?opcode_id=44">stereoMS</a> - Converts Stereo to MS and MS to Stereo.</dt>
+<dt><a href="displayOpcode.php?opcode_id=45">stereoRotate</a> - The proper way to do stereo 'panning'.</dt>
+</dl>
+</dd></dl>
+<dl>
+<dt><a href="displayOpcode.php?opcode_id=9">declick</a> - removes clicks from signal start and end</dt>
+<dt><a href="displayOpcode.php?opcode_id=91">envelope</a> - MIDI adsr envelope, variable release times for multiple instances.</dt>
+<dt><a href="displayOpcode.php?opcode_id=95">flexlinseg</a> - Envelope that reads parameters from a flexible number of pfields</dt>
+<dt><a href="displayOpcode.php?opcode_id=96">flexlinsegtable</a> - Envelope UDO that reads from 1 to 31 parameters from a table.</dt>
+<dt><a href="displayOpcode.php?opcode_id=80">mode</a> - filter that simulates a mass-spring-damper system</dt>
+<dt><a href="displayOpcode.php?opcode_id=52">Residual</a> - extracts stochastic components (transients etc) from a sound (using csound 5 opcodes)</dt>
+<dt><a href="displayOpcode.php?opcode_id=99">smooth</a> - smooths k-rate MIDI-controlled signals</dt>
+</dl>
+</dd></dl>
+<dl><dt class='category'>Utilities</dt>
+<dd>
+<dl>
+<dt><a href="displayOpcode.php?opcode_id=42">ampdbN</a> - Normalized conversion from db to amplitude.</dt>
+<dt><a href="displayOpcode.php?opcode_id=43">ampSlider</a> - Converts a scaled (0-1) value to a value resembling a hardware mixer slider.</dt>
+<dt><a href="displayOpcode.php?opcode_id=81">cps2midi</a> - Converts Cycles per second (Hz) to MIDI note number. (k-rate version)</dt>
+<dt><a href="displayOpcode.php?opcode_id=82">cps2midi_i</a> - Converts Cycles per second (Hz) to MIDI note number. (i-rate version)</dt>
+<dt><a href="displayOpcode.php?opcode_id=63">Deflutter</a> - deflutter k-rate input (data smoothing)</dt>
+<dt><a href="displayOpcode.php?opcode_id=60">ExpCurve</a> - Normalised exponential curve with variable steepness.</dt>
+<dt><a href="displayOpcode.php?opcode_id=19">findPowerOfTwo</a> - Given a value in seconds, finds a power of two size equal to or greater than it in samples</dt>
+<dt><a href="displayOpcode.php?opcode_id=62">flip</a> - Flips an incoming floating point value at k-rate.</dt>
+<dt><a href="displayOpcode.php?opcode_id=100">ftreverse</a> - reverses an ftable's contents in place at k-rate</dt>
+<dt><a href="displayOpcode.php?opcode_id=59">gainslider</a> - Logarithmic gain slider</dt>
+<dt><a href="displayOpcode.php?opcode_id=38">getFrequency</a> - Returns frequency whether being passed in pch or frequency</dt>
+<dt><a href="displayOpcode.php?opcode_id=66">hysteresis</a> - Implements classic 2-threshold hysteresis. Useful for performance controllers.</dt>
+<dt><a href="displayOpcode.php?opcode_id=61">LogCurve</a> - Normalised logarithmic curve with variable steepness.</dt>
+<dt><a href="displayOpcode.php?opcode_id=67">lowpass</a> - A k-rate smoothing UDO that is useful for averaging performance controller data.</dt>
+<dt><a href="displayOpcode.php?opcode_id=64">midi2cps</a> - Converts MIDI Note Number to Cycles per second (Hz). (k-rate version)</dt>
+<dt><a href="displayOpcode.php?opcode_id=94">midi2cps_i</a> - Converts MIDI Note Number to Cycles per second (Hz). (i-rate version)</dt>
+<dt><a href="displayOpcode.php?opcode_id=92">midiMonitor</a> - monitors midi input</dt>
+<dt><a href="displayOpcode.php?opcode_id=84">MTXcreate</a> - Creates a matrix for use with the other MTX* UDOs</dt>
+<dt><a href="displayOpcode.php?opcode_id=85">MTXdestroy</a> - Destroys an ftable containing an MTX* matrix</dt>
+<dt><a href="displayOpcode.php?opcode_id=87">MTXget</a> - Get a value from an MTX* matrix</dt>
+<dt><a href="displayOpcode.php?opcode_id=83">MTXinit</a> - Initializaes MTX (matrix) engine</dt>
+<dt><a href="displayOpcode.php?opcode_id=88">MTXnormalizerows</a> - Normalizes all rows in a matrix so the sum of each row is 1</dt>
+<dt><a href="displayOpcode.php?opcode_id=86">MTXset</a> - Sets the value of an element in a MTX* matrix</dt>
+<dt><a href="displayOpcode.php?opcode_id=74">scale</a> - Scales incoming value to user-definable range. Similar to scale object found in popular dataflow languages.</dt>
+<dt><a href="displayOpcode.php?opcode_id=56">tieStatus</a> - Returns the status of a note in a group of tied notes</dt>
+</dl>
+</dd></dl>
+<dl><dt class='category'>Uncategorized</dt>
+<dd>
+<dl>
+<dt><a href="displayOpcode.php?opcode_id=97">bends</a> - Pitchbend with center 1 suitable for use with microtonal scales (see tunk, tunkb)</dt>
+<dt><a href="displayOpcode.php?opcode_id=24">boomerangPointer</a> - Pointer to read a function table forwards then backwards or vice versa.</dt>
+<dt><a href="displayOpcode.php?opcode_id=7">filterBank</a> - Defines a bank of bandpass filters in parallel whose outputs can be scaled using a function table.</dt>
+<dt><a href="displayOpcode.php?opcode_id=23">linearPointer</a> - Pointer to read a function table linearly, forwards or backwards.</dt>
+<dt><a href="displayOpcode.php?opcode_id=10">pvshift</a> - Pitch shifting and spectral stretching with pvs streams</dt>
+<dt><a href="displayOpcode.php?opcode_id=8">RecursiveDiskin</a> - Alters kpitch and iskiptime each time it calls itself to create a little bit of texture.</dt>
+<dt><a href="displayOpcode.php?opcode_id=21">sampleSlicer</a> - Reads a function table in incremental slices.</dt>
+<dt><a href="displayOpcode.php?opcode_id=6">sittinginaroom</a> - A simple,recursive opcode that has pleasant effects.  The name pretty much describes what it does.</dt>
+</dl>
+</dd></dl>
+  
+   
+</blockquote>
+<hr>
+</body>  
+</html>  

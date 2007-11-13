@@ -1,0 +1,102 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>Statevar</h1>
+<p>A digital version of the analogue state variable filter.</p>
+<a href="cache/Statevar.udo">Download UDO File</a><h3>Description</h3>
+<p>This filter implements the state variable filter <br>design, with individual controls for centre/cutoff<br>frequency and resonance. It outputs four filter signals simultaneously: high-pass, low-pass, band-pass and band-reject.<br><br>This is version 2 of this UDO (revised 25/nov/04). In order to make this an all-frequency stable filter, there is a damping limiter, which will impose a limit on the resonance factor of the filter, usually at high frequencies.<br></p>
+<h3>Syntax</h3>
+<p>ahp,alp,abp,abr   <b>Statevar</b>  asig, kcf, kres</p>
+<h3>Performance</h3>
+<p>asig - input signal<br>kcf  - filter cutoff/centre frequency<br>kres - filter resonance </p>
+<h3>Code</h3>
+<pre>opcode Statevar, aaaa, akk
+
+    setksmps 1
+
+abpd init 0
+alpd init 0
+alp  init 0
+ipi = 4.*taninv(1);
+
+asig,kcf,kres   xin
+
+kf = 2*sin(ipi*kcf/(3*sr))
+kq = 1/kres
+klim = ((2-kf)/2)*0.33
+
+if kq &lt; klim then
+kq = klim
+endif
+
+ahp = asig - kq*abpd - alp 
+abp = ahp*kf + abpd
+alp = abpd*kf + alpd
+abr = alp + ahp
+abpd = abp
+alpd = alp 
+
+ahp = asig - kq*abpd - alp 
+abp = ahp*kf + abpd
+alp = abpd*kf + alpd
+abr = alp + ahp
+abpd = abp
+alpd = alp  
+
+ahp = asig - kq*abpd - alp 
+abp = ahp*kf + abpd
+alp = abpd*kf + alpd
+abr = alp + ahp
+abpd = abp
+alpd = alp 
+  
+      xout  ahp,alp,abp,abr
+	
+endop</pre>
+<h3>Examples</h3>
+<pre>instr 1
+kenv               linseg 0,0.1,1, p3-0.2,1, 0.1, 0
+asig               buzz 16000*kenv, 100, 100, 1;  
+kf                 expseg 100, p3/2, 5000, p3/2, 1000
+ahp,alp,abp,abr    statevar  asig, kf, 200
+                   outs alp,ahp
+	
+endin</pre>
+<h3>Credits</h3>
+<p>Author: Victor Lazzarini</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=99">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=46">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		smooth	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		stereoBformat	</td>
+  </tr>  
+</table>
+</body>
+</html>

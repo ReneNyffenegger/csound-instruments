@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>gainslider</h1>
+<p>Logarithmic gain slider</p>
+<a href="cache/gainslider.udo">Download UDO File</a><h3>Description</h3>
+<p>This opcode implements a logarithmic gain curve which is based on the gainslider~ object from Cycling 74 Max / MSP.</p>
+<h3>Syntax</h3>
+<p>kout  <b>gainslider</b>  kin</p>
+<h3>Performance</h3>
+<p>kin  --  expected range from 0-152. A range from 0-127 will give you a range of -inf to -0.0 dB. A range of 0-152 will give you a range from -inf to +18.0 dB.<br><br>kout  --  scaled output.</p>
+<h3>Code</h3>
+<pre>		opcode	gainslider, k, k
+kin	xin
+
+kout	=	(0.000145 * exp(kin * 0.06907))
+
+	xout	kout
+
+		endop</pre>
+<h3>Examples</h3>
+<pre>		instr	1 ; midi controlled gain slider of realtime input
+
+kvol	ctrl7	1, 7, 0, 127
+kgs  gainslider  kvol
+
+ain	in
+
+aout	=	ain * kgs
+
+	out	aout
+
+		endin</pre>
+<h3>Credits</h3>
+<p>David Akbari, 2005</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=100">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=38">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		ftreverse	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		getFrequency	</td>
+  </tr>  
+</table>
+</body>
+</html>

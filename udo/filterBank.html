@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>filterBank</h1>
+<p>Defines a bank of bandpass filters in parallel whose outputs can be scaled using a function table.</p>
+<a href="cache/filterBank.udo">Download UDO File</a><h3>Description</h3>
+<p>Defines a bank of bandpass filters in parallel whose outputs can be scaled using a function table.  Kind of like resony, but with scaling.  <br><br>Storing the scaling values in a function table allows you to do some pretty cool things without writing a lot of code.  You can have several different 'eq' settings in different function tables and ftmorf through them with an lfo or step sequencer.  You can put values into the ftable using pvsftw and do some nice cross-synthesis.  then you can modulate klow/khigh (the lowest and highest cf's) and/or kres, and seriously distort the original fsig; etc.  </p>
+<h3>Syntax</h3>
+<p>asig <b>filterBank</b> klow, khigh, kres, ifn, inum, icount</p>
+<h3>Code</h3>
+<pre>	opcode	filterBank, a, akkkiip
+
+asig, klow, khigh, kres, ifn, inum, icount	xin
+
+if icount&gt; inum	goto	out
+
+ain 	filterBank asig, klow, khigh, kres, ifn, inum, icount+ 1
+
+out:
+
+kcf 	= klow+ (((khigh-klow)/inum)* (icount-1))
+
+kscale 	table icount-1, ifn
+abp 	butterbp asig, kcf,kcf * kres
+aout 	= ain+ abp* kscale
+
+	xout aout
+	
+	endop</pre>
+<h3>Credits</h3>
+<p>Author: Bhob Rainey</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=60">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=19">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		ExpCurve	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		findPowerOfTwo	</td>
+  </tr>  
+</table>
+</body>
+</html>

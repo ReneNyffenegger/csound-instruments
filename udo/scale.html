@@ -1,0 +1,158 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>scale</h1>
+<p>Scales incoming value to user-definable range. Similar to scale object found in popular dataflow languages.</p>
+<a href="cache/scale.udo">Download UDO File</a><h3>Description</h3>
+<p>This opcode expects floating point input in range 0-1 and will scale this input to a minimum and maximum value variable definable at k-rate. <br><br>This opcode is based on a formula from the Csound opcode &quot;ctrl7&quot; and the source formula originates in <br><br>OOps/midiops2.c (of the Csound source tree)<br><br>and is Copyright (C) 1997 Gabriel Maldonado.<br><br>Csound source code is under the GNU Lesser General Public License and should be reviewed here:<br><br>http://www.gnu.org/copyleft/lesser.html</p>
+<h3>Syntax</h3>
+<p>kscl  <b>scale</b>   kin, kmin, kmax</p>
+<h3>Performance</h3>
+<p>kin  --  Input value. Can originate from any k-rate source as long as that source's output is in range 0-1.<br><br>kmin  --  Minimum value of the resultant scale operation.<br><br>kmax  --  Maximum value of the resultant scale operation.</p>
+<h3>Code</h3>
+<pre>	opcode	scale, k, kkk
+
+kval, kmin, kmax	xin
+
+kscl	=	kval * (kmax - kmin) + kmin
+
+	xout	kscl
+
+	endop</pre>
+<h3>Examples</h3>
+<pre>&lt;CsoundSynthesizer&gt;
+&lt;CsInstruments&gt;
+;//  example 1 - print the data to make sure it works
+
+sr	=	44100
+kr	=	441
+ksmps	=	100
+nchnls	=	2
+
+/*--- ---*/
+
+	opcode	scale, k, kkk
+
+kval, kmin, kmax	xin
+
+kscl	=	kval * (kmax - kmin) + kmin
+
+	xout	kscl
+
+	endop
+
+/*--- ---*/
+
+		instr	1
+
+ktest	ctrl7	1, 1, 0, 1
+
+kscaled	scale	itest, 0.5, 0.618
+
+	printk2	kscaled
+
+		endin
+
+/*--- ---*/
+&lt;/CsInstruments&gt;
+&lt;CsScore&gt;
+i1	0	3600
+
+e
+&lt;/CsScore&gt;
+; # EOF
+&lt;/CsoundSynthesizer&gt;
+
+&lt;CsoundSynthesizer&gt;
+&lt;CsInstruments&gt;
+;//  example 2 - more involved.
+;//    _udo.h is just references to all the UDO's contained in this database.
+
+sr	=	44100
+kr	=	441
+ksmps	=	100
+nchnls	=	2
+
+itmp	ftgen	1, 0, 16384, 10, 1
+
+#include	&quot;_udo.h&quot;
+
+/*--- ---*/
+
+		instr	1
+
+/*  substitute with midi controll if you do not have a p5 glove ! */
+ka, kb, kc, kf1, kf2, kf3, kf4, kf5, kx, ky, kz		p5glove
+;//  scale raw input in range 0-1
+kavg	=	(((kf1+kf2+kf3+kf4+kf5)/5)/63)
+kzee	=	((kz+400)/800)
+/*                                                                */
+
+;//  rescale to desired range
+kscl	scale	kavg, 4.0, 12.0
+kscl2	scale	kzee, 0, 8
+
+;//  volume control
+kamp	ctrl7	1, 7, 0, 150
+kvol	gainslider	kamp
+
+;//  sound synthesis
+aosc	oscil	12000, cpspch(kscl), 1
+aset	waveset	aosc, kscl2-1
+aout	=	aset*kvol
+
+aclp	clip	aout, 2, 32767
+
+;	printk2	kscl ; for debugging
+	outs	aclp, aclp
+
+		endin
+
+/*--- ---*/
+&lt;/CsInstruments&gt;
+&lt;CsScore&gt;
+;//  fun !
+i1	0	1000
+
+e
+&lt;/CsScore&gt;
+; # EOF
+&lt;/CsoundSynthesizer&gt;</pre>
+<h3>Credits</h3>
+<p>David Akbari  -  2005. OOps/midiops2.c - Copyright (C) 1997 Gabriel Maldonado</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=21">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=70">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		sampleSlicer	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		SCReverb	</td>
+  </tr>  
+</table>
+</body>
+</html>

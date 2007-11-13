@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>bformatStereo</h1>
+<p>Converts stereo to b-format ambisonics.</p>
+<a href="cache/bformatStereo.udo">Download UDO File</a><h3>Description</h3>
+<p>Converts stereo to b-format ambisonics.</p>
+<h3>Syntax</h3>
+<p>aW, aX, aY, aZ <b>bformatStereo</b> aleft, aright</p>
+<h3>Code</h3>
+<pre>opcode bformatStereo, aaaa, aa
+    aL, aR xin
+
+    aLcos, aLsin hilbert aL
+    aRcos, aRsin hilbert aR
+
+    aW = .5 * (.982* aLcos + .982* aRcos + .164* aLsin - .164* aRsin)
+    aX = .5 * (.419* aLcos + .419* aRcos - .828* aLsin + .828* aRsin)
+    aY = .5 * (.763* aLcos - .763* aRcos + .385* aLsin + .385* aRsin)
+    aZ = 0 ; no height information in uhj
+
+    xout aW, aX, aY, aZ
+endop</pre>
+<h3>Credits</h3>
+<p>Joseph Anderson and ma++, jan 2005-- based on M. Gerzon paper 1985</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=49">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=24">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		bformatQuad	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		boomerangPointer	</td>
+  </tr>  
+</table>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>decimator</h1>
+<p>Sample rate / Bit depth reduce. Based on the work of Steven Cook. k-rate parameters.</p>
+<a href="cache/decimator.udo">Download UDO File</a><h3>Description</h3>
+<p>This opcode implements one possible algorithm for sample rate / bit depth reduction. It is based on the work of Steven Cook but varies in that it utilizes the local ksmps feature of the UDO and has k-rate input parameters (the original was i-rate and can be viewed here http://www.csounds.com/cook/csound/Decimator.orc)</p>
+<h3>Syntax</h3>
+<p>aout  <b>decimator</b>  ain, kbitdepth, ksrate</p>
+<h3>Performance</h3>
+<p>ain  -  Audio input signal.<br><br>kbitdepth  -  The bit depth of signal aout. Typically in range (1-16). Floats are OK.<br><br>ksrate  -  The sample rate of signal aout. Non-integer values are OK.</p>
+<h3>Code</h3>
+<pre>opcode	decimator, a, akk
+	setksmps	1
+ain, kbit, ksrate		xin
+
+kbits    = 2^kbit			; Bit depth (1 to 16)
+kfold    = (sr/ksrate)			; Sample rate
+kin      downsamp  ain			; Convert to kr
+kin      = (kin + 32768)		; Add DC to avoid (-)
+kin      = kin*(kbits / 65536)		; Divide signal level
+kin      = int(kin)			; Quantise
+aout     upsamp  kin			; Convert to sr
+aout     = aout * (65536/kbits) - 32768	; Scale and remove DC
+
+a0ut     fold  aout, kfold		; Resample
+
+	xout      a0ut
+
+		endop</pre>
+<h3>Examples</h3>
+<pre>&lt;CsoundSynthesizer&gt;
+&lt;CsInstruments&gt;
+
+sr	=	44100
+kr	=	441
+ksmps	=	100
+nchnls	=	2
+
+#include &quot;decimator.udo&quot;
+
+/*--- ---*/
+
+		instr	1
+
+kbet	ctrl7	1, 1, 1, 16
+kser	ctrl7	1, 7, 11025, 44100
+
+asig	diskin	&quot;/loops/dl_break2.aif&quot;, 1, 0, 1
+
+aout	decimator	asig, kbet, kser
+
+	printk2	kbet
+	printk2	kser
+
+	outs	aout, aout
+
+		endin
+
+/*--- ---*/
+&lt;/CsInstruments&gt;
+&lt;CsScore&gt;
+i1	0	100
+
+e
+&lt;/CsScore&gt;
+
+&lt;/CsoundSynthesizer&gt;
+</pre>
+<h3>Credits</h3>
+<p>Steven Cook. Implemented as a UDO by David Akbari - 2005.</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=82">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=9">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		cps2midi_i	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		declick	</td>
+  </tr>  
+</table>
+</body>
+</html>

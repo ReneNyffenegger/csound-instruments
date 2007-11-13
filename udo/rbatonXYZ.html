@@ -1,0 +1,86 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>rbatonXYZ</h1>
+<p>polls X, Y, and Z coordinates of a Max Mathew's Radio Baton.</p>
+<a href="cache/rbatonXYZ.udo">Download UDO File</a><h3>Description</h3>
+<p>This opcode implements a signal interpreter from polyphonic aftertouch MIDI messages to k-rate Csound arguments. It is based on Gabriel Maldonado's implementation in CsoundAV. Unlike CsoundAV however, this implementation does NOT return normalised values and instead returns raw data bytes from the MIDI messages themselves in range 00-7F (0-127).</p>
+<h3>Syntax</h3>
+<p>kx1, ky1, kz1, kx2, ky2, kz2  <b>rbatonXYZ</b></p>
+<h3>Performance</h3>
+<p>kx1  --  Corresponds to the X-Axis coordinate of the Baton plugged into the stick 1 input.<br><br>ky1  --  Corresponds to the Y-Axis coordinate of the Baton plugged into the stick 1 input.<br><br>kz1  --  Corresponds to the Z-Axis coordinate of the Baton plugged into the stick 1 input.<br><br>kx2  --  Corresponds to the X-Axis coordinate of the Baton plugged into the stick 2 input.<br><br>ky2  --  Corresponds to the Y-Axis coordinate of the Baton plugged into the stick 2 input.<br><br>kz2  --  Corresponds to the Z-Axis coordinate of the Baton plugged into the stick 2 input.<br><br>It is important to note that these opcodes poll at k-rate so care must be taken in this regard.</p>
+<h3>Code</h3>
+<pre>opcode	rbatonXYZ, kkkkkk, 0
+
+kstatus, kchan, kd1, kd2	midiin
+
+;  stick 1 - red
+if	(kstatus == 160 &amp;&amp; kd1 == 8) then
+kx1	=	kd2
+elseif	(kstatus == 160 &amp;&amp; kd1 == 9) then
+ky1	= 	kd2
+elseif	(kstatus == 160 &amp;&amp; kd1 == 10) then
+kz1	=	kd2
+else
+	endif
+
+;  stick 2 - gray
+if	(kstatus == 160 &amp;&amp; kd1 == 11) then
+kx2	=	kd2
+elseif	(kstatus == 160 &amp;&amp; kd1 == 12)	then
+ky2	= 	kd2
+elseif	(kstatus == 160 &amp;&amp; kd1 == 13)	then
+kz2	=	kd2
+else
+	endif
+
+	xout	kx1, ky1, kz1, kx2, ky2, kz2
+
+	endop</pre>
+<h3>Examples</h3>
+<pre>instr	3	; string printing test instrument
+
+kx1,ky1,kz1,kx2,ky2,kz2		rbatonXYZ
+
+	printks	&quot;kx1: %d, ky1: %d, kz1: %d\\nkx2: %d, ky2: %d, kz2: %d\\n\&quot;,\
+			 0.25, kx1, ky1, kz1, kx2, ky2, kz2
+
+		endin</pre>
+<h3>Credits</h3>
+<p>David Akbari  -  2005</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=68">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=8">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		rbatonPot	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		RecursiveDiskin	</td>
+  </tr>  
+</table>
+</body>
+</html>

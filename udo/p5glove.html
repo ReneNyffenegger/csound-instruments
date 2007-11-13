@@ -1,0 +1,144 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>p5glove</h1>
+<p>Unit generator for P5 data glove</p>
+<a href="cache/p5glove.udo">Download UDO File</a><h3>Description</h3>
+<p>Based on the Max Mathews Radio Baton opcodes from CsoundAV, this Csound5 opcode implements an OSC receiver intended for use with the P5 dataglove. <br><br>General information on the p5 dataglove can be found here: http://www.vrealities.com/P5.html</p>
+<h3>Syntax</h3>
+<p>kA, kB, kC, kf1, kf2, kf3, kf4, kf5, kX, kY, kZ    <b>p5glove</b>    ihandle</p>
+<h3>Initialization</h3>
+<p>ihandle  --  Handle reference to a port to listen to from previous instance of the OSCinit opcode.</p>
+<h3>Performance</h3>
+<p>kA  --  glove data from Button A (0 or 1)<br>kB  --  glove data from Button B (0 or 1)<br>kC  --  glove data from Button C (0 or 1)<br><br>kf1  --  THUMB bend data (in range 0-63)<br>kf2  --  INDEX finger bend data (in range 0-63)<br>kf3  --  MIDDLE finger bend data (in range 0-63)<br>kf4  --  RING finger bend data (in range 0-63)<br>kf5  --  PINKY finger bend data (in range 0-63)<br><br>kX  --  proximity of glove to sensor stand X-AXIS<br>kY  --  proximity of glove to sensor stand Y-AXIS<br>kZ  --  proximity of glove to sensor stand Z-AXIS<br><br>NOTE : All values are returned as integers by default. It is recommended to scale the data in your .orc</p>
+<h3>Code</h3>
+<pre>opcode   p5glove, kkkkkkkkkkk, i	; p5 glove UDO
+
+kf1 init 0         
+kf2 init 0       
+kf3 init 0         
+kf4 init 0       
+kf5 init 0         
+kf6 init 0       
+kf7 init 0         
+kf8 init 0       
+kf9 init 0         
+kf10 init 0       
+kf11 init 0         
+
+ihandle  xin
+
+	kk  OSClisten ihandle, &quot;/p5glove_data&quot;, &quot;fffffffffff&quot;, kf1, kf2, kf3, kf4, kf5, kf6, kf7, kf8, kf9, kf10, kf11
+
+if kk =0 goto ex
+
+	xout	kf1,kf2,kf3,kf4,kf5,kf6,kf7,kf8,kf9,kf10,kf11
+
+	ex:
+		endop</pre>
+<h3>Examples</h3>
+<pre>&lt;CsoundSynthesizer&gt;
+&lt;CsOptions&gt;
+; your options here
+-odac -iadc -d
+&lt;/CsOptions&gt;
+&lt;CsInstruments&gt;
+
+sr  =  44100
+ksmps = 128
+nchnls = 2
+
+giport  OSCinit  47110
+
+;//-- --//
+opcode   p5glove, kkkkkkkkkkk, i	; p5 glove UDO
+
+kf1 init 0         
+kf2 init 0       
+kf3 init 0         
+kf4 init 0       
+kf5 init 0         
+kf6 init 0       
+kf7 init 0         
+kf8 init 0       
+kf9 init 0         
+kf10 init 0       
+kf11 init 0         
+
+ihandle  xin
+
+	kk  OSClisten ihandle, &quot;/p5glove_data&quot;, &quot;fffffffffff&quot;, kf1, kf2, kf3, kf4, kf5, kf6, kf7, kf8, kf9, kf10, kf11
+
+if kk =0 goto ex
+
+	xout	kf1,kf2,kf3,kf4,kf5,kf6,kf7,kf8,kf9,kf10,kf11
+
+	ex:
+		endop
+
+;//-- --//
+
+instr	1	; p5 udo controlling a simple pvscale idea
+
+kf1,kf2,kf3,kf4,kf5,kf6,kf7,kf8,kf9,kf10,kf11	p5glove  giport
+
+kamp	=	(kf5 / 63.0) * ampdb(89)
+kpch	=	((kf6 / 63.0) * 24) - 12
+kpch	=	(2 ^ (kpch / 12))
+kcps	=	cpspch(7.08)
+
+a1	oscil	kamp, kcps, 1
+
+f1	pvsanal	a1, 1024, 256, 1024, 1
+fs	pvscale	f1, kpch
+
+aout	pvsynth fs
+
+	outs	aout, aout
+
+		endin
+&lt;/CsInstruments&gt;
+&lt;CsScore&gt;
+i1 0 360
+
+e
+&lt;/CsScore&gt;
+&lt;/CsoundSynthesizer&gt;</pre>
+<h3>Credits</h3>
+<p>David Akbari - 2005</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=86">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=5">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		MTXset	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		pan_delay_and_filtered	</td>
+  </tr>  
+</table>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>MTXset</h1>
+<p>Sets the value of an element in a MTX* matrix</p>
+<a href="cache/MTXset.udo">Download UDO File</a><h3>Description</h3>
+<p>Sets the value of an element in a MTX* matrix</p>
+<h3>Syntax</h3>
+<p>idiscard <b>MTXset</b> imtxnum, ival, ix [, iy, iz]</p>
+<h3>Initialization</h3>
+<p>idiscard - Serves no purpose, always outputs 0<br>imtxnum - ftable number of the MTX* matrix to be modified <br>ival - Value to be inserted in the table<br>ix - Position in the first dimension of the table<br>iy - (optional, default = 0) Position in the second dimension of the table<br>iz - (optional, default = 0) Position in the third dimension of the table<br>The value ival is written to position ix, iy, iz of table imtxnum at init-time. If the table has two dimensions, do not give any value to iz.<br>Please note that there are currently no bound checks, so your position values must be valid, otherwise errors may occur.<br>Please note that the first position in any dimension has a value of 0.</p>
+<h3>Code</h3>
+<pre>	opcode MTXset,i,iiioo
+
+imtxnum, ival, ix, iy, iz xin
+isizex tablei 0, imtxnum
+isizey tablei 1, imtxnum
+isizez tablei 2, imtxnum
+ipos = (iz*isizex*isizey) + (iy*isizex) + ix + 3
+tableiw ival, ipos, imtxnum
+xout 0
+
+	endop</pre>
+<h3>Examples</h3>
+<pre>idiscard MTXget imtxnum, 10, 1, 2, 0</pre>
+<h3>Credits</h3>
+<p>Andres Cabrera</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=88">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=58">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		MTXnormalizerows	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		p5glove	</td>
+  </tr>  
+</table>
+</body>
+</html>

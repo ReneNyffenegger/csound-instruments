@@ -1,0 +1,176 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>tieStatus</h1>
+<p>Returns the status of a note in a group of tied notes</p>
+<a href="cache/tieStatus.udo">Download UDO File</a><h3>Description</h3>
+<p>Determines if a note is a part of a group of tied notes, and if it is, return a number indicating if it is the first note, a middle note, or the last note of a group of tied notes. (Runs at i-time.)<br><br>Value Status<br>-1    This note is a stand-alone note and not a part of a group of tied notes<br>0     This note is the first note of a group of tied notes<br>1     This note is middle note within a group of tied notes<br>2     This note is an end note of a group of tied notes</p>
+<h3>Syntax</h3>
+<p>itiestatus <b>tieStatus</b></p>
+<h3>Code</h3>
+<pre>	opcode tieStatus,i,0
+
+itie tival
+
+if (itie == 0 &amp;&amp; p3 &lt; 0) then
+    ; this is an initial note within a group of tied notes
+    itiestatus = 0
+       
+elseif (p3 &lt; 0 &amp;&amp; itie == 1) then
+    ; this is a middle note within a group of tied notes 
+    itiestatus = 1
+
+elseif (p3 &gt; 0 &amp;&amp; itie == 1) then
+    ; this is an end note out of a group of tied notes
+    itiestatus = 2
+
+elseif (p3 &gt; 0 &amp;&amp; itie == 0) then
+    itiestatus = -1
+
+endif  
+
+	xout	itiestatus
+
+	endop</pre>
+<h3>Examples</h3>
+<pre>&lt;CsoundSynthesizer&gt;
+
+&lt;CsInstruments&gt;
+sr=44100
+ksmps=1
+nchnls=2
+
+
+
+
+
+	opcode tieStatus,i,0
+
+itie tival
+
+if (itie == 0 &amp;&amp; p3 &lt; 0) then
+    ; this is an initial note within a group of tied notes
+    itiestatus = 0
+       
+elseif (p3 &lt; 0 &amp;&amp; itie == 1) then
+    ; this is a middle note within a group of tied notes 
+    itiestatus = 1
+
+elseif (p3 &gt; 0 &amp;&amp; itie == 1) then
+    ; this is an end note out of a group of tied notes
+    itiestatus = 2
+
+elseif (p3 &gt; 0 &amp;&amp; itie == 0) then
+    itiestatus = -1
+
+endif  
+
+	xout	itiestatus
+
+	endop
+
+
+	instr 1	;Simple VCO2 Instrument
+
+idur	= abs(p3)
+ipch	= cpspch(p4)
+iamp	= ampdb(p5)
+
+itiestatus tieStatus
+iskip 	tival
+
+if (iskip == 0) then
+    ioldpch init ipch
+endif
+
+inewpch 	= ipch
+kpchline	linseg	ioldpch, .1, inewpch, idur - .1,  inewpch
+ioldpch	= inewpch
+
+print itiestatus
+
+if (itiestatus == -1) then
+    kenv	adsr	.2, .05, .9, .5
+
+elseif (itiestatus == 0) then	
+    kenv	linseg	0, .2, 1,  .2, 1
+
+elseif (itiestatus == 1) then	
+    kenv line 1, 0, 1
+
+elseif (itiestatus == 2) then
+    kenv linseg	1, p3 - 1, 1, 1, 0
+
+endif
+
+kvibEnv	linseg	0, .2, 3, p3 - .2, 4
+
+kvib	lfo    	kvibEnv, 4.5
+
+aout	vco2 	1, kpchline + kvib, iskip
+aout	moogladder		aout, 4000, 0.5, iskip
+
+aout = aout * iamp
+
+outs aout, aout
+
+
+	endin
+
+
+&lt;/CsInstruments&gt;
+
+&lt;CsScore&gt;
+i1	0.0	1.0	8.00	80	
+i1	1.0	1.0	8.07	80	
+i1	2.0	1.0	8.02	80	
+i1	3.0	1.0	8.00	80	
+i1	4.0	2.0	8.04	80	
+i1	6.96875	-1.0	8.00	80	
+i1	7.96875	-1.0	8.07	80	
+i1	8.96875	-1.0	8.02	80	
+i1	9.96875	-1.0	8.00	80	
+i1	10.96875	2.0	8.04	80	
+e
+
+&lt;/CsScore&gt;
+
+&lt;/CsoundSynthesizer&gt;</pre>
+<h3>Credits</h3>
+<p>Steven Yi</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=89">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=93">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		tap_tubewarmth	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		tunk	</td>
+  </tr>  
+</table>
+</body>
+</html>

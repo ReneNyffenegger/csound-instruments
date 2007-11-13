@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>ExpCurve</h1>
+<p>Normalised exponential curve with variable steepness.</p>
+<a href="cache/ExpCurve.udo">Download UDO File</a><h3>Description</h3>
+<p>This opcode implements a formula for generating a normalised exponential curve in range 0 - 1. It is based on the Max / MSP work of Eric Singer (c) 1994.</p>
+<h3>Syntax</h3>
+<p>kout  <b>ExpCurve</b>  kfloat, ksteepness</p>
+<h3>Performance</h3>
+<p>kfloat  --  A normalised floating point value in range 0 - 1.<br><br>ksteepness  --  Steepness index of the resulting curve. This should be &gt; 1. There exists a safeguard in the opcode to help minimize errors related to Not-a-Number (NaN) as a result of having a steepness index of &lt;= 1.</p>
+<h3>Code</h3>
+<pre>opcode	ExpCurve, k, kk
+
+kfloat, ksteep	xin
+
+if (ksteep &gt; 1) then
+	ksteep = ksteep
+elseif (ksteep &lt; 1) then
+	ksteep = 1
+endif
+
+kout	=	(exp(kfloat * log(ksteep)) - 1)/(ksteep - 1)
+
+	xout	kout
+
+		endop</pre>
+<h3>Examples</h3>
+<pre>sr	=	44100
+kr	=	441
+ksmps	=	100
+nchnls	=	2
+	OSCinit	4200
+
+#include &quot;ExpCurve.udo&quot;
+
+
+		instr	1
+
+kf1 init 0         
+kf2 init 0       
+
+kk  OSClisten &quot;/expcurve/params&quot;, &quot;ff&quot;, kf1, kf2
+
+if kk =0 goto ex
+
+kout	ExpCurve	kf1, kf2
+
+	printk2	kout
+
+     ex:
+		endin</pre>
+<h3>Credits</h3>
+<p>David Akbari - 2005</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=91">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=7">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		envelope	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		filterBank	</td>
+  </tr>  
+</table>
+</body>
+</html>

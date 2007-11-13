@@ -1,0 +1,129 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>tunk</h1>
+<p>k-rate microtunable MIDI to cps</p>
+<a href="cache/tunk.udo">Download UDO File</a><h3>Description</h3>
+<p>converts MIDI note numbers to microtunable cps at k-rate, also provides k-rate velocity and allows tuning changes</p>
+<h3>Syntax</h3>
+<p>kcps, kvel <b>tunk</b> kfn</p>
+<h3>Code</h3>
+<pre>    opcode tunk, kk, k
+
+  kfn	    xin
+	      
+  kkey	    init      0
+  kvel	    init      0
+	    midinoteonkey   kkey, kvel
+
+  kcps	    cpstun    kvel, kkey, kfn
+
+	    xout      kcps, kvel
+
+    endop</pre>
+<h3>Examples</h3>
+<pre>&lt;CsoundSynthesizer&gt;
+
+&lt;CsOptions&gt;
+
+&lt;/CsOptions&gt;
+
+&lt;CsInstruments&gt;
+
+  sr	    =  48000
+  ksmps	    =  16
+  nchnls    =  1
+
+	    ; sine wave
+  gisin	    ftgen     1, 0, 16384, 10, 1
+            ; tuning ratios based upon Scala files, http://www.xs4all.nl/~huygensf/scala/
+	    ; Basic Just Intonation with 7-limit tritone
+  giji_12   ftgen     2, 0, 32, -2, 12, 2, 256, 60, 1, 16/15, 9/8, 6/5, 5/4, 4/3, 7/5, 3/2, 8/5, 5/3, 9/5, 15/8, 2
+	    ; LaMonte Young's Well-Tuned Piano
+  gilmy	    ftgen     3, 0, 32, -2, 12, 2, 311.12698, 63, 1, 567/512, 9/8, 147/128, 21/16, 1323/1024, \
+                      189/128, 3/2, 49/32, 7/4, 441/256, 63/32, 2
+
+
+
+
+    opcode tunk, kk, k
+
+  kfn	    xin
+	      
+  kkey	    init      0
+  kvel	    init      0
+	    midinoteonkey   kkey, kvel
+
+  kcps	    cpstun    kvel, kkey, kfn
+
+	    xout      kcps, kvel
+
+    endop
+
+
+    instr 1
+
+	    ; switch tuning at k-rate
+  kfn	    ctrl7     1, 21, 2, 3
+
+  kcps, kvel   tunk   kfn
+
+  aenv	    linsegr   0, 0.01, 63, 0.05, 0
+
+  aosc	    oscil     aenv, kcps, 1
+
+  aosc	    =  aosc * kvel
+
+	    out	      aosc
+
+
+    endin
+
+
+&lt;/CsInstruments&gt;
+
+&lt;CsScore&gt;
+i1 0 360
+e
+&lt;/CsScore&gt;
+
+&lt;/CsoundSynthesizer&gt;
+</pre>
+<h3>Credits</h3>
+<p>Jonathan Murphy</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=56">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=98">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		tieStatus	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		tunkb	</td>
+  </tr>  
+</table>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>pgmin</h1>
+<p>Reports MIDI program change messages at k-rate.</p>
+<a href="cache/pgmin.udo">Download UDO File</a><h3>Description</h3>
+<p>This opcode polls MIDI input and reports program change messages and the respective channel they were transmitted on at its output.</p>
+<h3>Syntax</h3>
+<p>kpgm, kchan  <b>pgmin</b></p>
+<h3>Performance</h3>
+<p>kpgm  -  The program change message that was sent.<br><br>kchan  -  The channel this program change message was received on.</p>
+<h3>Code</h3>
+<pre>	opcode	pgmin, kk, 0
+
+kstatus, kchan, kdata1, kdata2	midiin
+
+if	(kstatus == 192 &amp;&amp; (kchan &gt; 0 &amp;&amp; kchan &lt;= 16)) then
+kpgm	=	kdata1
+else
+        kpgm    =       -1
+        kchan   =       0
+	endif
+
+	xout	kpgm, kchan
+
+		endop</pre>
+<h3>Examples</h3>
+<pre>&lt;CsoundSynthesizer&gt;
+&lt;CsInstruments&gt;
+
+/* first we should check and make sure that it works, by using a simple string printing instrument. */
+
+sr	=	44100
+kr	=	441
+ksmps	=	100
+nchnls	=	2
+	massign		-1, -1 ; disable triggering of instr
+	pgmassign	-1, -1 ; send pgm to all instr
+
+/*--- ---*/
+
+	opcode	pgmin, kk, 0
+
+kstatus, kchan, kdata1, kdata2	midiin
+
+if	(kstatus == 192 &amp;&amp; kchan == 1) then
+kpgm	=	kdata1
+else
+	endif
+
+	xout	kpgm, kchan
+
+		endop
+
+/*--- ---*/
+
+		instr	1
+
+; by default (prints midi pgm #) - 1
+;  since pgm 00 is special, bank select
+kpgm, kchan		pgmin
+
+	printk2	1+kpgm
+	printk2	kchan
+
+		endin
+
+/*--- ---*/
+&lt;/CsInstruments&gt;
+&lt;CsScore&gt;
+
+i1 0 1000
+
+e
+&lt;/CsScore&gt;
+; #EOF
+&lt;/CsoundSynthesizer&gt;
+
+
+
+&lt;CsoundSynthesizer&gt;
+&lt;CsInstruments&gt;
+
+/* this example uses a SoundFont. The pgmin opcode in this case is a way to change the preset index. */
+
+sr	=	44100
+kr	=	441
+ksmps	=	100
+nchnls	=	2
+	massign		1, 1
+	pgmassign	-1, -1
+
+/* change soundfont here */
+gi2 sfload &quot;/Library/Audio/Sounds/Banks/synthgms.sf2&quot;
+
+gipres	init	1
+gkpres	init	1
+
+	sfilist	gi2
+	sfplist	gi2
+	sfpassign	0, gi2
+
+;//
+	opcode	pgmin, kk, 0
+
+kstatus, kchan, kdata1, kdata2	midiin
+
+if	(kstatus == 192 &amp;&amp; (kchan &gt; 0 &amp;&amp; kchan &lt;= 16)) then
+kpgm	=	kdata1
+else
+	endif
+
+	xout	kpgm, kchan
+
+		endop
+;//
+/*--- ---*/
+
+		instr 1
+
+ifreq	cpsmidi
+iamp	ampmidi 2
+inum	notnum
+ivel	veloc 
+kfreq	init	1
+
+kvol	ctrl7	1, 7, -2, 8
+
+gipres	=	i(gkpres)
+
+;	printk2	gipres
+
+kamp	linsegr	1, 1, 1, 0.618, 0 ; adjust the release time to suit the sample set
+a1,a2	sfplay	ivel, inum, kamp*(iamp+kvol), kfreq, gipres, 0
+
+	outs	a1,a2
+
+		endin
+
+/*--- ---*/
+
+		instr	2
+
+kmodw	ctrl7	1, 1, 0, 2
+
+kpgm, kchan		pgmin
+
+gkpres	=	kpgm
+
+if	(kmodw &gt;= 1) then
+	printks	&quot;\nPreset index: %i\n\n&quot;, 2, kpgm+1
+else
+	endif
+
+		endin
+
+/*--- ---*/
+&lt;/CsInstruments&gt;
+&lt;CsScore&gt;
+
+i1	0	3600
+i2	0	3600
+
+e
+&lt;/CsScore&gt;
+; #EOF
+&lt;/CsoundSynthesizer&gt;</pre>
+<h3>Credits</h3>
+<p>David Akbari - 2006</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=2">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=10">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		pan_sqrt	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		pvshift	</td>
+  </tr>  
+</table>
+</body>
+</html>

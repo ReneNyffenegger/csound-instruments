@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>ampSlider</h1>
+<p>Converts a scaled (0-1) value to a value resembling a hardware mixer slider.</p>
+<a href="cache/ampSlider.udo">Download UDO File</a><h3>Description</h3>
+<p>Converts a scaled (0-1) value to a scaled amplitude value resembling a volume slider attenuation on a hardware mixer (-inf dbfs to +10dbfs). </p>
+<h3>Syntax</h3>
+<p>kamp <b>ampSlider</b> kdb</p>
+<h3>Initialization</h3>
+<p>kdb -- a normalized value 0 - 1</p>
+<h3>Performance</h3>
+<p>Actual range of values returned are around (0-3), with a value of 1 (0dbfs) being<br>returned when the input is around .85.  <br><br>This opcode uses the ampdbN UDO.</p>
+<h3>Code</h3>
+<pre>opcode ampSlider, k, k
+	
+	kvalue xin
+	kvalue ampdbN kvalue/.87
+	kvalue pow kvalue, .8
+	xout kvalue
+
+endop</pre>
+<h3>Examples</h3>
+<pre>instr 2
+
+	kdb linen	1, p3*.5, p3, p3*.5
+	kamp ampSlider kdb
+	asig rand 	kamp*0dbfs
+	out asig
+
+endin</pre>
+<h3>Credits</h3>
+<p>ma++, jan 2005</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=42">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=97">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		ampdbN	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		bends	</td>
+  </tr>  
+</table>
+</body>
+</html>

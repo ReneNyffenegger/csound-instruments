@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>RecursiveDiskin</h1>
+<p>Alters kpitch and iskiptime each time it calls itself to create a little bit of texture.</p>
+<a href="cache/RecursiveDiskin.udo">Download UDO File</a><h3>Description</h3>
+<p>Alters kpitch and iskiptime each time it calls itself to create a little bit of texture.</p>
+<h3>Syntax</h3>
+<p>aout    <b>RecursiveDiskin</b> ifile, kpitch, iskiptime, iwrap, iformat, inum, icnt</p>
+<h3>Code</h3>
+<pre>	opcode RecursiveDiskin, a, ikiiiip
+
+ifile, kpitch, iskiptime, iwrap, iformat, inum, icnt      xin
+
+if (icnt &gt; inum) goto skip1
+
+;ar1 [,ar2] [, ar3] [, ar4] diskin ifilcod, kpitch [, iskiptim]
+;    [,iwraparound] [, iformat]
+
+ar1 	diskin ifile, kpitch, iskiptime, iwrap, iformat
+ar1 	= ar1 * .2 ; scale amplitude for recrusive calls
+ 
+a1 	RecursiveDiskin ifile, kpitch + .3, iskiptime + .2, iwrap, iformat, inum, 
+
+icnt + 1
+
+skip1:
+
+xout ar1 + a1
+	
+	endop</pre>
+<h3>Credits</h3>
+<p>Author: Jim Hearon</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=65">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=52">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		rbatonXYZ	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		Residual	</td>
+  </tr>  
+</table>
+</body>
+</html>

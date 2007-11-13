@@ -1,0 +1,119 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>Moogladder</h1>
+<p>An improved implementation of the Moog ladder filter</p>
+<a href="cache/Moogladder.udo">Download UDO File</a><h3>Description</h3>
+<p>This is an new digital implementation of the Moog ladder filter based on the work of Antti Huovilainen,<br>described in the paper \&quot;Non-Linear Digital Implementation of the Moog Ladder Filter\&quot; (Proceedings of DaFX04, Univ of Napoli). <br>This implementation is probably a more accurate digital representation of the original analogue filter.<br>This is version 2 (revised 14/DEC/04), with improved amplitude/resonance scaling and frequency correction using a couple of polynomials,as suggested by Antti.</p>
+<h3>Syntax</h3>
+<p>ar  <b>Moogladder</b>  asig, kcf, kres</p>
+<h3>Performance</h3>
+<p>asig - input signal<br>kcf - cutoff frequency (Hz)<br>kres - resonance (0 - 1).</p>
+<h3>Code</h3>
+<pre>opcode Moogladder, a, akk
+
+   setksmps 1
+
+ipi = 4*taninv(1)
+az1 init 0             /* filter delays */
+az2 init 0
+az3 init 0
+az4 init 0
+az5 init 0
+ay4 init 0
+amf init 0
+
+asig,kcf,kres  xin
+
+if kres &gt; 1 then
+kres = 1
+elseif kres &lt; 0 then
+kres = 0
+endif
+
+i2v = 40000   /* twice the \'thermal voltage of a transistor\' */
+ 
+kfc = kcf/sr  /* sr is half the actual filter sampling rate  */
+kf =  kcf/(sr*2)
+/* frequency &amp; amplitude correction  */ 
+kfcr = 1.8730*(kfc^3) + 0.4955*(kfc^2) - 0.6490*kfc + 0.9988
+kacr = -3.9364*(kfc^2) + 1.8409*kfc + 0.9968;
+k2vg = i2v*(1-exp(-2*ipi*kfcr*kf)) /* filter tuning  */
+
+/* cascade of 4 1st order sections         */
+ay1 = az1 + k2vg*(tanh((asig - 4*kres*amf*kacr)/i2v) - tanh(az1/i2v))
+az1 = ay1
+ay2 = az2 + k2vg*(tanh(ay1/i2v) - tanh(az2/i2v ))
+az2 = ay2
+ay3 = az3 + k2vg*(tanh(ay2/i2v) - tanh(az3/i2v))
+az3 = ay3
+ay4 = az4 + k2vg*(tanh(ay3/i2v) - tanh(az4/i2v))
+az4 = ay4
+/* 1/2-sample delay for phase compensation  */
+amf = (ay4+az5)*0.5
+az5 = ay4
+
+/* oversampling  */
+ay1 = az1 + k2vg*(tanh((asig - 4*kres*amf*kacr)/i2v) - tanh(az1/i2v))
+az1 = ay1
+ay2 = az2 + k2vg*(tanh(ay1/i2v) - tanh(az2/i2v ))
+az2 = ay2
+ay3 = az3 + k2vg*(tanh(ay2/i2v) - tanh(az3/i2v))
+az3 = ay3
+ay4 = az4 + k2vg*(tanh(ay3/i2v) - tanh(az4/i2v))
+az4 = ay4
+amf = (ay4+az5)*0.5
+az5 = ay4
+        
+        xout  amf
+	
+endop</pre>
+<h3>Examples</h3>
+<pre>instr 1
+	
+kfe         expseg 500, p3*0.9, 1800, p3*0.1, 3000
+kenv        linen  10000, 0.05, p3, 0.05
+asig        buzz   kenv, 100, sr/(200), 1
+afil        moogladder  asig, kfe, 1
+             
+            out afil 
+	
+endin</pre>
+<h3>Credits</h3>
+<p>Victor Lazzarini</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=80">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=57">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		mode	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		msrOsc	</td>
+  </tr>  
+</table>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>tunkb</h1>
+<p>k-rate microtunable MIDI to cps with pitchbend</p>
+<a href="cache/tunkb.udo">Download UDO File</a><h3>Description</h3>
+<p>tunkb is the microtunable equivalent of cpsmidib</p>
+<h3>Syntax</h3>
+<p>kcps, kvel <b>tunkb</b> kfn, ibnd</p>
+<h3>Initialization</h3>
+<p>ibnd: must be greater than zero and less than two. A value of 0.5 will give a bend range of -/+ a fifth<br></p>
+<h3>Code</h3>
+<pre>    opcode tunkb, kk, ki
+
+  kfn, ibnd xin
+  kkey	    init      0
+  kvel	    init      0
+	    midinoteonkey   kkey, kvel
+  kcps	    cpstun    kvel, kkey, kfn
+  kbend	    bends     ibnd
+  kcps	    =  kcps * kbend
+	    xout      kcps, kvel
+
+    endop
+</pre>
+<h3>Examples</h3>
+<pre>&lt;CsoundSynthesizer&gt;
+
+&lt;CsOptions&gt;
+
+&lt;/CsOptions&gt;
+
+&lt;CsInstruments&gt;
+
+  sr	    =  48000
+  ksmps	    =  8
+  nchnls    =  2
+
+  giji_12   ftgen     202, 0, 32, -2, 12, 2, 256, 60, 1, 16/15, 9/8, 6/5, 5/4, 4/3, 7/5, 3/2, 8/5, 5/3, 9/5, 15/8, 2
+
+    opcode bends, k, i
+
+  ibnd	    xin
+  kbend	    init      1
+  ihi	    =  1 + ibnd
+  ilo	    =  1 - (ibnd * 0.5)
+  gilo	    ftgen     0, 0, 64, -16, ilo, 63, 0, 1
+  gihi	    ftgen     0, 0, 64, -16, 1, 63, 0, ihi
+  kst, kch, kd1, kd2  midiin
+if (kst == 224) then
+  kbnd	    =  kd1 + (kd2 * 127)
+  kbnd	    =  kbnd/128
+if (kbnd &lt; 64) then 
+  kbend	    table     kbnd, gilo
+elseif (kbnd &gt;= 64) then
+  kbend	    table     kbnd - 64, gihi
+endif
+endif
+	    xout      kbend
+
+    endop
+
+    opcode tunkb, kk, ki
+
+  kfn, ibnd xin
+  kkey	    init      0
+  kvel	    init      0
+	    midinoteonkey   kkey, kvel
+  kcps	    cpstun    kvel, kkey, kfn
+  kbend	    bends     ibnd
+  kcps	    =  kcps * kbend
+	    xout      kcps, kvel
+
+    endop
+
+
+
+    instr 1
+
+  kcps, kvel   tunkb  giji_12, 0.5
+	    printk2   kcps
+
+    endin
+
+
+&lt;/CsInstruments&gt;
+
+&lt;CsScore&gt;
+i1 0 60
+e
+&lt;/CsScore&gt;
+
+&lt;/CsoundSynthesizer&gt;
+</pre>
+<h3>Credits</h3>
+<p>Jonathan Murphy</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=93">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=53">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		tunk	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		Vocoder	</td>
+  </tr>  
+</table>
+</body>
+</html>

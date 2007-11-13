@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>stereoMS</h1>
+<p>Converts Stereo to MS and MS to Stereo.</p>
+<a href="cache/stereoMS.udo">Download UDO File</a><h3>Description</h3>
+<p>Converts Stereo to Middle/Side and Middle/Side to Stereo.</p>
+<h3>Syntax</h3>
+<p>aout1, aout2 <b>stereoMS</b> ain1, ain2</p>
+<h3>Initialization</h3>
+<p>ain1 -- left or middle audio channel<br>ain2 -- right or side audio channel</p>
+<h3>Performance</h3>
+<p>Converts Stereo to Middle/Side and Middle/Side to Stereo.  The math is the same so this opcode can be used in both directions.</p>
+<h3>Code</h3>
+<pre>opcode stereoMS, aa, aa
+
+	ain1, ain2	xin
+
+	ifac	=	.5 * sqrt(2)
+	aout1	=	ifac * (ain1 + ain2)
+	aout2	=	ifac * (ain1 - ain2)
+
+	xout aout1, aout2
+
+endop</pre>
+<h3>Examples</h3>
+<pre>instr 1
+
+ainl, ainr ins   ; input signal
+am, as stereoMS ainl, ainr  ;convert to ms
+aoutl, aoutr  stereoMS  am, as*.25  ; and back to l/r but with reduced side
+outs aoutl, aoutr
+
+endin</pre>
+<h3>Credits</h3>
+<p>Joseph Anderson and ma++, jan 2005</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=22">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=45">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		stereoGrain	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		stereoRotate	</td>
+  </tr>  
+</table>
+</body>
+</html>

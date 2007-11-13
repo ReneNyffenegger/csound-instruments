@@ -1,0 +1,190 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>msrOsc</h1>
+<p>Simple Generator</p>
+<a href="cache/msrOsc.udo">Download UDO File</a><h3>Description</h3>
+<p>Generators simplified. De-clicked envelopes.</p>
+<h3>Syntax</h3>
+<p>aout  msrosc iamp, ifreq, ifn</p>
+<h3>Initialization</h3>
+<p>include the UDO in your instrument 0 space. Several F tables are created and used to make noises.<br><br>the Half wave functions have a range of 0 to 1.<br>all other functions have a range of -1 to 1<br><br>iamp -- Amplitude, must be greater than zero. If out of range it is set to zero.<br><br>ifreq -- Frequcency. If 20 or less, is assumed to need convertion<br>	 from pitch to Hz<br><br>ifn   -- 1 Sine<br>	 2 Triangle<br>	 3 Saw<br>	 4 Square<br>	 5 Tube Distortion<br>	 6 Half Triangle<br>	 7 Half Square<br>	 8 Half Saw<br>	 9 White Noise<br></p>
+<h3>Performance</h3>
+<p>Generates indicated wave with amplitude declick ramps of .02 sec on each end. In the<br>case of White Noise, frequency has no meaning.<br><br>Note that I prepended my initials, msr on this code for easy use. Please rename it and morph it to suit your own ideas.<br>send ideas, additions and comments on the csound@lists.bath.ac.uk news group.</p>
+<h3>Code</h3>
+<pre>;Sine 
+gimsrsin	ftgen 0, 0, 8193, 10, 1
+
+;Triangle 
+gimsrtri	ftgen 0, 0, 8193, 7, -1, 4096,1,4096,-1
+
+;Square
+gimsrsqr	ftgen 0, 0, 8193, 7, 1,  4096, 1, 0, -1, 4096, -1
+
+;Saw
+gimsrsaw	ftgen 0,0, 8193, 7, -1, 8192,1
+
+;Tube Distortion from Hans Mikelson\\\'s multi-effects
+gimsrtub        	ftgen 0, 0,  8193, 7, -.8, 934, -.79, 934, -.77, 934, -.64, 1034, -.48, 520, .47, 2300, .48, 1536, .48 
+
+;Half Triangle
+gimsrhtr	ftgen 0, 0, 8193, 7, 0, 4096,1,4096,0
+
+;Half Square	
+gimsrhsq	ftgen 0, 0, 8193, 7, 1,  4096, 1, 0, 0, 4096, 0
+
+;Half Saw
+gimsrhsw	ftgen 0, 0, 8193, 7, 0, 8192,1
+
+; Noise
+gimsrnse        	ftgen 0, 0, 8193, 21, 1
+
+        opcode  msrosc, a,iii
+iamp, ifreq, ifn xin
+ifunc	= ifn
+	if ifn &gt;=1 igoto ifnok1
+	ifunc = 1
+ifnok1:
+	if ifn &lt; 10 igoto ifnok2
+	ifunc = 1
+ifnok2:
+ifr	= ifreq
+	if ifreq &gt; 20 igoto freqok
+		ifr = cpspch(ifreq)
+freqok:
+idur	= p3-.04
+	if idur &lt; 0 igoto durok
+		idur = 0
+durok:
+iam	= iamp
+	if iamp &gt;= 0 igoto ampok
+		iam = 0
+ampok:
+
+idur	= p3-.04
+
+kamp      linseg    0, .02, 1, idur, 1, .02, 0                ; Declick
+; Figure out asin depending on the oscilator type.
+; the conditional structure is fairly efficient, testing max 3 conditions.
+	if ifunc &gt;4 goto tube
+	if ifunc &gt; 2 goto square
+	if ifunc &gt; 1 goto triangle  
+;1
+sine:
+asin    oscil	iam, ifr, gimsrsin
+
+	goto done
+
+;2
+triangle:
+asin	oscil	iam, ifr, gimsrtri
+	goto done
+;3
+square:
+	if ifunc &gt; 3 goto saw
+asin	oscil	iam, ifr, gimsrsqr
+	goto done
+;4
+saw:
+	; no test	
+asin	oscil	iam, ifr, gimsrsaw
+	goto done
+;5
+tube:
+	if ifunc &gt; 7 goto hsaw
+	if ifunc &gt; 5 goto htriangle
+asin	oscil	iam, ifr, gimsrtub
+	goto done
+;6
+htriangle:
+	if ifunc &gt; 6 goto hsquare
+asin	oscil	iam, ifr, gimsrhtr
+	goto done
+;7
+hsquare:
+asin	oscil	iam, ifr, gimsrhsq
+	goto done
+;8
+hsaw:
+	if ifunc &gt; 8 goto noise
+asin	oscil	iam, ifr, gimsrhsw
+	goto done
+;9
+noise:
+a2      oscil           iam,ifr,gimsrnse
+asin      =( a2*2)-p4
+
+done:
+        xout      asin*kamp
+        endop
+
+</pre>
+<h3>Examples</h3>
+<pre>&lt;CsoundSynthesizer&gt;
+&lt;CsOptions&gt;
+
+&lt;/CsOptions&gt;
+&lt;CsInstruments&gt;
+
+sr = 44100
+kr = 22050
+ksmps = 2
+nchnls = 2
+
+; All you need to use the osc
+#include \\\&quot;msrosc.udo\\\&quot;
+        instr 1
+;aout  msrosc iamp, ifreq, ifn
+a1    msrosc p4,p5,p6
+      outs a1,a1
+        endin
+
+&lt;/CsInstruments&gt;
+&lt;CsScore&gt;
+;       Strt   Dur    Amp      Freq      Fn
+i1      .1      2       18000    5.3        1
+i1      3       2       18000    5.3        2
+i1      6       2       8000      5.3        3
+i1      9       2       8000      5.3        4
+i1      12     2        8000     5.3        9
+&lt;/CsScore&gt;
+&lt;/CsoundSynthesizer&gt;
+</pre>
+<h3>Credits</h3>
+<p>Michael Rempel Author, freely pagerized from many sources.</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=32">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=84">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		Moogladder	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		MTXcreate	</td>
+  </tr>  
+</table>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>ampdbN</h1>
+<p>Normalized conversion from db to amplitude.</p>
+<a href="cache/ampdbN.udo">Download UDO File</a><h3>Description</h3>
+<p>Converts a normalized (0 -1) db value to a normalized (0-1) amplitude value.</p>
+<h3>Syntax</h3>
+<p>kamp <b>ampdbN</b> kdb</p>
+<h3>Initialization</h3>
+<p>kdb -- a normalized db value to be converted to a normaized amplitude value, where 0 will be converted to 0 amp and 1 will be converted to 0dbfs. </p>
+<h3>Performance</h3>
+<p>This opcode is useful in many situations involving amplitude scaling like envelopes.</p>
+<h3>Code</h3>
+<pre>opcode ampdbN, k, k
+
+	kdb xin
+	kamp = (kdb &lt;= 0 ? 0 : ampdb(dbamp(0dbfs) * kdb)/0dbfs )
+	xout kamp
+
+endop</pre>
+<h3>Examples</h3>
+<pre>instr 2
+
+	kdb linen	1, p3*.5, p3, p3*.5
+	kamp ampdbN kdb
+	asig rand 	kamp*0dbfs
+	out asig
+
+endin</pre>
+<h3>Credits</h3>
+<p>ma++, jan 2005</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=43">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+			</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		ampSlider	</td>
+  </tr>  
+</table>
+</body>
+</html>

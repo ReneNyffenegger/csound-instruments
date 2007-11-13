@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>Deflutter</h1>
+<p>deflutter k-rate input (data smoothing)</p>
+<a href="cache/Deflutter.udo">Download UDO File</a><h3>Description</h3>
+<p>Deflutters k-rate input. If you are using a controller to control Csound that tends to jump erratically from one value to the next, this opcode may be useful to you.<br><br>It is based on the Max / MSP work of Eric Singer (c) 1994.</p>
+<h3>Syntax</h3>
+<p>kout  <b>Deflutter</b>  kin</p>
+<h3>Performance</h3>
+<p>kout  --  k-rate defluttered output.<br><br>kin  --  input to deflutter.</p>
+<h3>Code</h3>
+<pre>opcode Deflutter, k, k
+
+kval	xin
+
+ki1	=	int(kval)
+ki2	=	int(kval)
+ki3	=	int(kval)
+ki4	delayk	ki3, 0.1
+
+;;
+ki2	=	ki2 - ki3
+
+if	(ki2 != 1) then
+	kb1	=	1
+else
+	kb1	=	0
+endif
+
+if	(ki2 != -1) then
+	kb3	=	1
+else
+	kb3	=	0
+endif
+
+;;
+ki3	=	ki3 - ki4
+
+if	(ki3 != -1)	then
+	kb2	=	1
+else
+	kb2	=	0
+endif
+
+if	(ki3 != 1) then
+	kb4	=	1
+else
+	kb4	=	0
+endif
+
+;;
+if	(kb1 == 1 || kb2 == -1) then
+	kL	=	1
+else
+	kL	=	0
+endif
+
+if	(kb3 == 1 || kb4 == 1) then
+	kR	=	1
+else
+	kR	=	0
+endif
+
+if	(kL == 1 &amp;&amp; kR == 1) then
+	kgate	=	1
+else
+	kgate	=	0
+endif
+
+if	(kgate == 1) then
+	kval	=	kval
+else
+	kval	=	0
+endif
+
+	xout	kval
+
+		endop</pre>
+<h3>Examples</h3>
+<pre>instr	1
+
+kin	ctrl7	1, 1, 0, 127
+kout	Deflutter	kin
+
+	printk2	kin
+	printk2	kout
+
+		endin</pre>
+<h3>Credits</h3>
+<p>David Akbari - 2005</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=9">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=25">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		declick	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		ensembleChorus	</td>
+  </tr>  
+</table>
+</body>
+</html>

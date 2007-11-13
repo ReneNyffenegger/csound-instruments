@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>rbatonPercPad</h1>
+<p>Senses trigger/whack strength as well as X and Y coordinates of the two batons in a Max Mathew's Radio Baton system.</p>
+<a href="cache/rbatonPercPad.udo">Download UDO File</a><h3>Description</h3>
+<p>Based on the CsoundAV opcodes by Gabriel Maldonado, this UDO reads the whack strength of the two batons as well as their respective coordinate data.</p>
+<h3>Syntax</h3>
+<p>kstr1, kcx1, kcy1, kstr2, kcx2, kcy2  <b>rbatonPercPad</b></p>
+<h3>Performance</h3>
+<p>** All values are integers returned in range 0-127 **<br><br>kstr1  --  The strength of the stick hitting the surface of the stick that's plugged in to the stick 1 jack.<br><br>kcx1  --  Coordinate data for the X-AXIS of stick 1.<br><br>kcy1  --  Coordinate data for the Y-AXIS of stick 1.<br><br>kstr2  --  Strength of the whack of the stick plugged into the stick 2 jack.<br><br>kcx2  --  Coordinate data for the whack of stick 2 on the X-AXIS.<br><br>kcy2  --  Coordinate data for the whack of stick 2 on the Y-AXIS.</p>
+<h3>Code</h3>
+<pre>opcode	rbatonPercPad, kkkkkk, 0
+
+kstatus, kchan, kd1, kd2	midiin
+
+;  trigger and whack strength - both sticks
+if	(kstatus == 160 &amp;&amp; kd1 == 1) then
+kstr1	=	kd2
+elseif	(kstatus == 160 &amp;&amp; kd1 == 2) then
+kstr2	=	kd2
+	endif
+
+;  stick coordinates
+if	(kstatus == 160 &amp;&amp; kd1 == 15) then
+kx1	=	kd2
+elseif	(kstatus == 160 &amp;&amp; kd1 == 17) then
+kx2	=	kd2
+elseif	(kstatus == 160 &amp;&amp; kd1 == 16) then
+ky1	=	kd2
+elseif	(kstatus == 160 &amp;&amp; kd1 == 18) then
+ky2	=	kd2
+	endif
+
+	xout	kstr1, kx1, ky1, kstr2, kx2, ky2
+
+	endop</pre>
+<h3>Examples</h3>
+<pre>instr	3	; string printing test instrument
+
+kstr1,kcx1,kcy1,kstr2,kcx2,kcy2	rbatonPercPad
+
+	printks	&quot;kstr1: %d, kcx1: %d, kcy1: %d\\nkstr2: %d, kcx2: %d, kcy2: %d\\n\&quot;,
+			 0.25, kstr1, kcx1, kcy1, kstr2, kcx2, kcy2
+
+		endin</pre>
+<h3>Credits</h3>
+<p>David Akbari  -  2005</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=40">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=68">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		RandomWalkK	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		rbatonPot	</td>
+  </tr>  
+</table>
+</body>
+</html>

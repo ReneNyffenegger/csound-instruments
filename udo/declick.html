@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>declick</h1>
+<p>removes clicks from signal start and end</p>
+<a href="cache/declick.udo">Download UDO File</a><h3>Description</h3>
+<p>Given a signal, it will DeClick will apply an envelope to it to ensure there is no clicking at the start or end of the sound<br><br>(Taken from the Csound Reference Manual)</p>
+<h3>Syntax</h3>
+<p>aout    <b>declick</b>    ain</p>
+<h3>Performance</h3>
+<p>ain - signal to declick<br>aout - declicked signal</p>
+<h3>Code</h3>
+<pre>        opcode declick, a, a
+
+ain     xin
+aenv    linseg 0, 0.02, 1, p3 - 0.05, 1, 0.02, 0, 0.01, 0
+        xout ain * aenv         ; apply envelope and write output
+
+        endop</pre>
+<h3>Credits</h3>
+<p>Author: Istvan Varga</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=73">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=63">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		decimator	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		Deflutter	</td>
+  </tr>  
+</table>
+</body>
+</html>

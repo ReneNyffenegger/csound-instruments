@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>sittinginaroom</h1>
+<p>A simple,recursive opcode that has pleasant effects.  The name pretty much describes what it does.</p>
+<a href="cache/sittinginaroom.udo">Download UDO File</a><h3>Description</h3>
+<p>A simple,recursive opcode that has pleasant effects.  The name pretty much describes what it does.<br><br>imix should be pretty low, (.1 and lower, depending on the ir), andicount &gt; 5 with a room-type ir usually produces the end of &quot;i amsitting in a room&quot;.  there's a delay at the beginning of the renderedfile, equal to the usual convolve delay * icount.  i tried to do itwith pconvolve, but got mysterious performance errors.  </p>
+<h3>Syntax</h3>
+<p>aout <b>sittinginaroom</b> 
+asig, imix, icount</p>
+<h3>Code</h3>
+<pre>	opcode	sittinginaroom, a, aii
+
+asig, imix, icount	xin
+
+if icount==0 goto skip
+
+asig sittinginaroom asig, imix, icount- 1
+
+skip:
+
+aout	convolve 	asig*imix, &quot;impulse.cv&quot;
+
+xout	aout
+
+	endop</pre>
+<h3>Credits</h3>
+<p>Author: Bhob Rainey</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=54">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=99">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		SigReverse	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		smooth	</td>
+  </tr>  
+</table>
+</body>
+</html>

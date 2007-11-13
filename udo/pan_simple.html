@@ -1,0 +1,53 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>pan_simple</h1>
+<p>Simple Linear Pan</p>
+<a href="cache/pan_simple.udo">Download UDO File</a><h3>Description</h3>
+<p>Panning User Defined Opcodes<br>Conversion of Hans Mikelson's examples in the Csound Magazine<br>Autumn 1999<br>   http://csounds.com/ezine/autumn1999/beginners/</p>
+<h3>Syntax</h3>
+<p>a1, a2    <b>pan_simple</b>    ain, kpanl</p>
+<h3>Code</h3>
+<pre>	opcode pan_simple, aa, ak
+asig, kpanl	xin
+kpanr 	= 1 - kpanl         
+      	xout   kpanl*asig, kpanr*asig 
+	endop</pre>
+<h3>Credits</h3>
+<p>Author: Hans Mikelson, converted by Steven Yi</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=90">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=3">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		pan_gm2	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		pan_sin	</td>
+  </tr>  
+</table>
+</body>
+</html>

@@ -1,0 +1,359 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>GutoPitchTracker</h1>
+<p>Returns amplitude and cycles per second of the most prominent complex tone in the spectrum of arbitrary audio input.</p>
+<a href="cache/GutoPitchTracker.udo">Download UDO File</a><h3>Description</h3>
+<p>Returns amplitude and cycles per second of the most prominent complex tone in the spectrum of arbitrary audio input signal.<br><br>Internally, this opcode makes use of the rarely used w-sig via the specptrk opcode.<br><br>See also:<br><br>http://csounds.com/manual/html/spectrum<br>http://csounds.com/manual/html/specptrk</p>
+<h3>Syntax</h3>
+<p>kcps, kamp  <b>GutoPitchTracker</b>  ain</p>
+<h3>Performance</h3>
+<p>kcps  --  Cycles per second converted from octave class notation.<br><br>kamp  --  Decimal octave and summed dB representation of amplitude.<br><br>ain  --  Audio signal input. This can be realtime, soundfile, or from one of Csound's many unit generators. Any valid audio signal can be passed as input here.</p>
+<h3>Code</h3>
+<pre>	opcode	GutoPitchTracker,	kk, a
+
+/*
+Guto Caminhoto
+guto@sercomtel.com.br
+http://members.tripod.com/Guto001/index.html
+Guto 03/2000
+-- UDOization and examples by David Akbari - May 2006
+*/
+
+ain    xin
+ain    dcblock   ain	; adjust DC
+ 
+iocts   =	8
+iprd    =	0.002
+ifrqs   =	24
+iq      =	32
+ihann   =	0
+idbout  =	3
+idsprd  =	0
+idsines =	0
+
+wsig     spectrum	ain,	iprd, iocts, ifrqs , iq, ihann, idbout, idsprd, idsines
+krms     rms		ain, 20      ; find a monaural rms value
+kvar     =  0.6 + krms/8000      	 ; &amp; use to gate the pitch variance
+
+ilo      =	7.0
+ihi      =	10.0
+istrt    =	8.0
+idbthres =	10
+inptls   =	4
+irolof   =	0.75
+iodd     =	1
+iconf    =	12
+intrp    =	1
+ifprd    =	0
+iwtflg   =	0
+ 
+koct, kamp  specptrk  wsig, kvar, ilo, ihi, istrt, idbthres, inptls, irolof, iodd, iconf, intrp, ifprd,iwtflg
+
+kcps  = cpsoct(koct)	; convert
+
+	xout	kcps, kamp
+
+		endop
+</pre>
+<h3>Examples</h3>
+<pre>&lt;CsoundSynthesizer&gt;
+&lt;CsInstruments&gt;
+ 
+sr	=	48000
+kr	=	4800
+ksmps	=	10
+nchnls	=	2
+
+/* this file can be anything and only needs to be changed here. */
+#define	SOUNDFILE	# &quot;/home/daveakbari/loops/mu_marimba.aif&quot; #
+
+;//
+	opcode	GutoPitchTracker,	kk, a
+
+/*
+Guto Caminhoto
+guto@sercomtel.com.br
+http://members.tripod.com/Guto001/index.html
+Guto 03/2000
+-- UDOization and examples by David Akbari - May 2006
+*/
+
+ain    xin
+ain    dcblock   ain	; adjust DC
+ 
+iocts   =	8
+iprd    =	0.002
+ifrqs   =	24
+iq      =	32
+ihann   =	0
+idbout  =	3
+idsprd  =	0
+idsines =	0
+
+wsig     spectrum	ain,	iprd, iocts, ifrqs , iq, ihann, idbout, idsprd, idsines
+krms     rms		ain, 20      ; find a monaural rms value
+kvar     =  0.6 + krms/8000      	 ; &amp; use to gate the pitch variance
+
+ilo      =	7.0
+ihi      =	10.0
+istrt    =	8.0
+idbthres =	10
+inptls   =	4
+irolof   =	0.75
+iodd     =	1
+iconf    =	12
+intrp    =	1
+ifprd    =	0
+iwtflg   =	0
+ 
+koct, kamp  specptrk  wsig, kvar, ilo, ihi, istrt, idbthres, inptls, irolof, iodd, iconf, intrp, ifprd,iwtflg
+
+kcps  = cpsoct(koct)	; convert
+
+	xout	kcps, kamp
+
+		endop
+;//
+	opcode Vocoder, a, aakkkpp
+
+/*
+channel vocoder with user-specified number of bands
+  by Victor Lazzarini, 2005
+
+as saved from http://www.csounds.com/udo/
+*/
+
+as1,as2,kmin,kmax,kq,ibnd,icnt  xin
+
+if kmax &lt; kmin then
+ktmp = kmin
+kmin = kmax
+kmax = ktmp
+endif
+
+if kmin == 0 then 
+kmin = 1
+endif
+
+if (icnt &gt;= ibnd) goto bank
+abnd   Vocoder as1,as2,kmin,kmax,kq,ibnd,icnt+1
+
+bank:
+kfreq = kmin*(kmax/kmin)^((icnt-1)/(ibnd-1))
+kbw = kfreq/kq
+an  butterbp  as2, kfreq, kbw
+an  butterbp  an, kfreq, kbw
+as  butterbp  as1, kfreq, kbw
+as  butterbp  as, kfreq, kbw
+ao balance as, an
+
+amix = ao + abnd
+
+	xout amix
+
+		endop
+;//
+/*--- ---*/
+
+		instr 1	; pitch tracker, realtime input
+
+ain	in
+
+kcps, kamp	GutoPitchTracker	ain
+
+kcar  = 1
+kmod  = 1
+kamp1 = kamp*120			; scale amplitude
+kamp2	port	kamp1, 0.001		; declick
+kndx  = kamp*0.12			; changes kndx with amplitude
+ifn   = 1				; 
+iphs  = 0
+
+afm1	foscili  kamp2, kcps, kcar, kmod, kndx, ifn, iphs     ; fm
+aind	delay    ain, 0.245   ; adjust to pitch tracker delay
+aenv	linen	1, 0.01, p3, 0.246
+
+aout1 = afm1*aenv
+aout2 = afm1*aenv
+
+/* --- */
+
+	outs   aout1, aout2
+
+		endin
+
+/*--- ---*/
+
+		instr 2	; pitch tracker, soundfile input
+
+/* soundfile instead of input */
+ichnls	filenchnls	$SOUNDFILE.
+
+  if (ichnls == 1) then
+
+ain		diskin2	$SOUNDFILE., 1, 0, 1
+
+  elseif (ichnls == 2) then
+
+ainl, ainr	diskin2 $SOUNDFILE, 1, 0, 1
+
+else
+  endif
+
+/* pitch tracking, mono or stereo */
+  if (ichnls == 1) then
+
+kcps, kamp	GutoPitchTracker	ain
+
+kcar  = 1
+kmod  = 1
+kamp1 = kamp*120			; scale amplitude
+kamp2	port	kamp1, 0.001		; declick
+kndx  = kamp*0.12			; changes kndx with amplitude
+ifn   = 1				; 
+iphs  = 0
+
+  elseif (ichnls == 2) then
+
+kcpsl, kampl	GutoPitchTracker	ainl
+kcpsr, kampr	GutoPitchTracker	ainr
+
+kcar  = 1
+kmod  = 1
+kam1  = kampl*120			; scale amplitude
+kam2  = kampr*120
+kamp1	port	kam1, 0.001		; declick
+kamp2   port    kam2, 0.001
+kndxl = kampl*0.12			; changes kndx with amplitude
+kndxr = kampr*0.12			; changes kndx with amplitude
+ifn   = 1				; 
+iphs  = 0
+
+else
+  endif
+
+
+  if (ichnls == 1) then
+
+afm1	foscili  kamp2, kcps, kcar, kmod, kndx, ifn, iphs     ; fm
+aind	delay    ain, 0.245   ; adjust to pitch tracker delay
+aenv	linen	1, 0.01, p3, 0.246
+
+aout1 = afm1*aenv
+aout2 = afm1*aenv
+
+  elseif (ichnls == 2) then
+
+afm1	foscili  kamp1, kcpsl, kcar, kmod, kndxl, ifn, iphs     ; fm
+afm2	foscili  kamp2, kcpsr, kcar, kmod, kndxr, ifn, iphs
+ainld	delay    ainl, 0.245   ; adjust to pitch tracker delay
+ainrd   delay    ainr, 0.245
+aenv	linen	1, 0.01, p3, 0.246
+
+aout1 = afm1*aenv
+aout2 = afm2*aenv
+
+else
+  endif
+
+/* --- */
+
+	outs   aout1, aout2
+
+		endin
+
+/*--- ---*/
+
+		instr 3	; pitch tracker, channel vocoder
+
+ain	in
+
+kcps, kamp	GutoPitchTracker	ain
+
+/* --- */
+
+imax = 7000
+imin = 300
+ifun = imin/2
+
+kcps1	=	kcps*(2^(-12/12))
+kcps2	=	kcps*(2^(-7/12))
+kcps3	=	kcps*(2^(-3/12))
+kcps4	=	kcps*(2^(-2/12))
+kcps5	=	kcps*(2^(2/12))
+
+kamp	=	kamp*1000
+
+anoi1	buzz	kamp, kcps1*2, imax/ifun, 2
+anoi2	buzz	kamp, kcps2*2, imax/ifun, 2
+anoi3	buzz	kamp, kcps3*2, imax/ifun, 2
+anoi4	buzz	kamp, kcps4*2, imax/ifun, 2
+anoi5	buzz	kamp, kcps5*2, imax/ifun, 2
+
+anoi	=	(anoi1+anoi2+anoi3+anoi4+anoi5)/5
+
+aout Vocoder anoi,ain,imin,imax,25,32
+
+a0l	=	aout
+a0r	=	aout
+
+	outs   a0l, a0r
+
+		endin
+
+/*--- ---*/
+&lt;/CsInstruments&gt;
+&lt;CsScore&gt;
+
+f1 0 8192 10 1 0.002 0.2 0.06 0.025 0.002
+f2 0 16384 10 1
+
+;p1	p2	p3
+;i#	ini	dur
+
+;i 1	0	30 ; realtime input
+i 2	0	30 ; soundfile input, mono/stereo
+;i 3	0	30 ; channel vocoder (realtime input)
+
+e
+&lt;/CsScore&gt;
+&lt;/CsoundSynthesizer&gt;</pre>
+<h3>Credits</h3>
+<p>Original implementation by Guto Caminhoto, 03/2000. UDO-ization and examples by David Akbari, 05/2006. Special thanks to Victor Lazzarini for the Vocoder UDO.</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=38">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=66">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		getFrequency	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		hysteresis	</td>
+  </tr>  
+</table>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>ftreverse</h1>
+<p>reverses an ftable's contents in place at k-rate</p>
+<a href="cache/ftreverse.udo">Download UDO File</a><h3>Description</h3>
+<p>reverses an ftable's contents in place at k-rate</p>
+<h3>Syntax</h3>
+<p><b>ftreverse</b> itablenum</p>
+<h3>Initialization</h3>
+<p>itablenum - number of ftable to reverse</p>
+<h3>Code</h3>
+<pre>       opcode ftreverse,0,i
+
+itablenum xin
+
+ilen = ftlen(itablenum)
+
+kleft = 0
+kright = ilen - 1
+
+loopStart:
+
+ktemp   table kright, itablenum
+kval    table kleft, itablenum
+
+tablew  ktemp, kleft, itablenum
+tablew  kval, kright, itablenum
+
+kleft = kleft + 1
+kright = kright - 1
+
+if (kleft &lt; kright) goto loopStart
+
+       endop</pre>
+<h3>Examples</h3>
+<pre>(from email from Hector Centeno)
+
+kflag           pvsftw  fsigoutl, giSWMtab6
+kflag           pvsftw  fsigoutr, giSWMtab7
+
+if kflag == 0 kgoto continue
+
+               ftreverse giSWMtab6
+               ftreverse giSWMtab7
+               pvsftr  fsigoutl, giSWMtab6
+               pvsftr  fsigoutr, giSWMtab7
+
+continue:
+
+aoutl           pvsynth         fsigoutl
+aoutr           pvsynth         fsigout</pre>
+<h3>Credits</h3>
+<p>Steven Yi</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=50">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=59">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		freqShift	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		gainslider	</td>
+  </tr>  
+</table>
+</body>
+</html>

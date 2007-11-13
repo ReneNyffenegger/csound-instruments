@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>flip</h1>
+<p>Flips an incoming floating point value at k-rate.</p>
+<a href="cache/flip.udo">Download UDO File</a><h3>Description</h3>
+<p>This opcode is mostly intended for use with MIDI and OSC controllers but it can likely be used for other things as well.</p>
+<h3>Syntax</h3>
+<p>kval  <b>flip</b>  kin, kmax</p>
+<h3>Performance</h3>
+<p>kmax  --  Maximum value to flip.<br><br>kin  --  Input floating point variable.<br><br>kval  --  Resulting flipped output.<br><br>For example, if your kmax was 0, and your MIDI controller is sending values in range 0 - 127, putting it through flip would return values in range -0.000000 to -127.000000.</p>
+<h3>Code</h3>
+<pre>opcode	flip, k, kk
+kin, kmax	xin
+
+kout	=	(kmax - kin)
+
+	xout	kout
+		endop</pre>
+<h3>Examples</h3>
+<pre>instr	1
+
+kval	ctrl7	1, 1, 0, 127
+
+kdisp	flip	kval, 127
+
+	printk2	kdisp
+
+		endin</pre>
+<h3>Credits</h3>
+<p>David Akbari - 2005</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=96">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=31">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		flexlinsegtable	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		Fofilter	</td>
+  </tr>  
+</table>
+</body>
+</html>

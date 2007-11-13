@@ -1,0 +1,115 @@
+<html>
+<head>
+<title>User-Defined Opcode Database</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<style>
+pre { border: 1px solid gray; padding: 10px; background-color: #FEFEFF;}
+
+</style>
+
+</head>
+
+<body>
+<TABLE WIDTH="100%" BORDER="0" CELLPADDING="0" CELLSPACING="0">
+	<TR><TH COLSPAN="3" ALIGN="center">User-Defined Opcode Database</TH></TR>
+</table>
+<hr>
+<h1>SigRec</h1>
+<p>A table-based signal recorder (looping sampler), with pitch control</p>
+<a href="cache/SigRec.udo">Download UDO File</a><h3>Description</h3>
+<p>This opcode records an input signal into a table and then plays it back in a loop with pitch control.</p>
+<h3>Syntax</h3>
+<p>asig <b>SigRec</b> ain, kpitch, ktrig, ifn, idur, ifad</p>
+<h3>Initialization</h3>
+<p>ifn - function table to hold the recorded signal (must<br>be long enough to hold all the requested duration)<br>idur - recording duration in secs<br>ifad - crossfade in secs</p>
+<h3>Performance</h3>
+<p>asig - output (looped playback)<br>ain - input signal<br>kpitch - loop playback pitch<br>ktrig - trigger signal, 1 or above starts recording;<br>below 1 stops loop playback (ready for another recording).<br><br></p>
+<h3>Code</h3>
+<pre>opcode SigRec, a,akkiii
+
+    setksmps 1
+
+ap   init 0
+kp   init 0
+
+/* sig, pitch, trigger, ftable, dur, crossfd */
+ain,kpit,ktr,ifn,ilen,ic xin 
+
+icft = ic*sr  /* crossfade samples */
+iend = ilen*sr /* end point */
+icft1 = icft+iend /* plus end */
+kt trigger ktr, 1, 0 /* trigger */
+if kt &gt; 0 then
+ktrig = 1        /* rec ON */
+kp = 0
+endif
+
+if ktrig &gt; 0 then  /* recording block */
+ap = kp
+    if kp &lt; iend then /* fill in the duration */
+    tablew ain, ap, ifn 
+    endif
+    if kp &gt;= iend then /* crossfade block */
+      if kp &lt; icft1 then
+       kfd = (kp-iend)/icft       
+       aout  table  ap-iend, ifn
+       aout = aout*kfd
+       tablew ain*(1-kfd)+aout, ap-iend, ifn
+       else            /* rec OFF */
+       ktrig = 0   
+      endif 
+   endif
+kp = kp + 1
+endif             /* end recording block */
+
+if ktrig == 0 then  /* playback block    */
+aout table kp, ifn  
+kp = kp + kpit            
+   if kp &gt; iend then  /* modulus */
+   kp = kp - iend
+   elseif kp &lt; 0 then
+   kp = iend - 1
+   endif          
+endif              /* end playback block */
+
+   xout aout 
+endop
+</pre>
+<h3>Examples</h3>
+<pre>instr 1
+
+asig in
+ktr line 0, 0.1, 1.1  /* send in a trigger */
+as SigRec asig,1,ktr,1,5, 0.025
+
+    out  as+asig
+    endin
+
+[score]
+f1 0 524288 7 0 524288 0 /*enough space for 11 secs*/
+i1 2 60</pre>
+<h3>Credits</h3>
+<p>Victor Lazzarini, 2005</p>
+<hr>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="33%">
+					<a href="displayOpcode.php?opcode_id=70">Previous</a>
+			</td>
+    <td width="33%" align="center"><a href="index.php">Home</a></td>
+    <td width="33%" align="right">
+					<a href="displayOpcode.php?opcode_id=54">Next</a>
+			
+	</td>
+  </tr>
+  <tr>
+    <td width="33%">
+		SCReverb	</td>
+    <td width="33%" align="center">&nbsp;</td>
+    <td width="33%" align="right">
+		SigReverse	</td>
+  </tr>  
+</table>
+</body>
+</html>
