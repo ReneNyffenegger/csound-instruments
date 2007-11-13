@@ -1,0 +1,65 @@
+
+include files and macros for spatial stereo sound
+=================================================
+
+version 1.1.x
+
+installation:	./install.sh
+uninstall:	./uninstall.sh
+
+include files
+-------------
+
+spat.h.orc - this file should be included to use macros.
+
+spat_def.h.orc - this file is used internally by spat.h.orc. Do not include it
+  from .orc files.
+
+Effects.Header.orc
+Delays.include.orc
+Plain_Stereo.include.orc
+Spatial_Stereo.include.orc
+HRTF_Stereo.include.orc - these are included for compatibility with old .orc
+  files; these files may not be used together with the new spat.h.orc.
+
+macros
+------
+
+There are three types of spatializer macros:
+
+  xxxxStereo: sound source position is set at i-time; input and output
+              variables are:
+                i_az_: azimuth in degrees
+                i_el_: elevation
+                i_d_:  distance in meters
+                a_:    input signal
+                a_L_:  output / left channel
+                a_R_:  output / right channel
+                The variables i_1_ - i_6_, and a_1_ - a_6_ are also used
+                internally.
+              Output delay is $DELAYOFFS1 + i_d_/340 seconds (the value of
+              $DELAYOFFS1 is 0.02). Amplitude is scaled by 1 / (0.1 + i_d_).
+  xxxxStereoDyn: sound source position can be changed at k-rate; variables
+              are the same as in the case of xxxxStereo, but all i-rate
+              variables are now k-rate.
+  xxxxStereoDynHQ: same as xxxxStereoDyn, but with higher interpolation
+              quality. Uses more memory and slower.
+
+xxxx can be:
+
+    Mono: mono output (a_L_ = a_R_)
+    Base: intensity stereo
+    Spat: simulates a pair of microphones
+    UHJ_: output is in UHJ format
+    Phse: stereo with +/- 90 degrees phase shift (similar to UHJ)
+    HRTF: binaural sound using HRTFs. The HRTF macros have some limitations:
+          sample rate is fixed to 44100 Hz, room simualtion is not supported,
+          elevation has to be at least -40 degrees, and ksmps has to be a power
+          of two value not more than 64. Additional limitations of
+          HRTFStereoDyn and HRTFStereoDynHQ: k_az_, k_el_, and k_d_ has to be
+          set at i-time with the init opcode, and only one instance of these
+          macros can be used in an instrument. HRTF macros also use more temp
+          variables: a_1_ - a_7_, k_1_ - k_7_, and i_1_ - i_7_.
+
+Room parameters are set in ftable 225 (see documentation of spat3d opcode).
+

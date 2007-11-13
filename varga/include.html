@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+<!-- This page was written by Istvan Varga, 2002 -->
+<HEAD>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+	<TITLE>Include files and samples required for compiling instruments</TITLE>
+	<META NAME="author" CONTENT="Istvan Varga">
+	<META NAME="keywords" CONTENT="Csound, CSound, csound, csounds, cSounds.com, computer music,
+				       Csound Catalog, The Csound Book, Csound Book, The Csound Catalog with Audio,
+				       The Csound Catalog, Sound, Audio, DSP, Digital Signal Processing,
+				       Software Synthesis, Sampling, Free Music Software, Istvan Varga">
+	<META NAME="description" CONTENT="cSounds.com -- almost everything about Csound and computer music,
+					  the csound magazine, catalog, book and manual, and much more.">
+	<LINK REL="stylesheet" HREF="../style.css" TYPE="text/css">
+</HEAD>
+<BODY>
+<P CLASS="banner">
+	<A HREF="http://csounds.com/"><IMG CLASS="banner" SRC="../images/banner-760x111.png" ALT="cSounds.com"></A>
+</P>
+<H1 CLASS="cs">Include files and samples required for compiling instruments</H1>
+<P CLASS="left">
+	The following packages are needed by various instruments to compile, so it is recommended
+	to download and install them. Also, a recent version of Csound is required by many of
+	the instruments (a Linux binary that should work is available
+	<SPAN CLASS="cs-code"><A HREF="../html/cspatches.html">here</A></SPAN>).
+	<BR>
+	Additionally, <A HREF="../html/util.html">utilities</A> from this page may be useful,
+	although not required for compiling the orc/sco files.
+</P>
+<P CLASS="left">
+	<SPAN CLASS="cs-color2">[+] </SPAN>
+	<SPAN CLASS="cs-filename"><A HREF="../archive/include/base_macros-1.2.1.tar.gz">base_macros-1.2.1.tar.gz</A></SPAN> (8567 bytes)
+</P>
+<P CLASS="left">
+	Contains include files with basic macros (get note parameters, create band-limited tables,
+	read MIDI controllers, conversions, formant tables, and more) without which most instruments
+	will not compile. To install the include files, copy all files with
+	<SPAN CLASS="cs-filename">.orc</SPAN> and <SPAN CLASS="cs-filename">.sco</SPAN> extension
+	to <SPAN CLASS="cs-env">INCDIR</SPAN>.
+</P>
+<P CLASS="left">
+	<SPAN CLASS="cs-color2">[+] </SPAN>
+	<SPAN CLASS="cs-filename"><A HREF="../archive/include/Effects.Include-1.1.0.tar.gz">Effects.Include-1.1.0.tar.gz</A></SPAN> (5779 bytes)
+</P>
+<P CLASS="left">
+	The orc files from this package are needed by many instruments that produce stereo output.<BR>
+	<BR>
+	There is also a
+	<SPAN CLASS="cs-code"><A HREF="../archive/include/Effects.Include-1.1.1.tar.gz">1.1.1</A></SPAN>
+	version (8405 bytes) that uses <SPAN CLASS="cs-color2">convolve</SPAN> files for 90 degree
+	phase shifters (this allows a linear phase response, and slightly improved sound quality,
+	but is unfortunately slower to render). Note that it uses an install script that works only
+	on Unix-like systems to generate impulse responses, although
+	<SPAN CLASS="cs-color2">convolve</SPAN> files for the 32-bit floats x86 versions of Csound
+	can be downloaded from <A HREF="../archive/include/cv_90_shift-1.1.1.x86.float.tar.gz">here</A> (71024 bytes).
+	<BR>
+	The 1.1.0 and 1.1.1 versions are identical with the exception of the phase shifters, and are
+	fully compatible, so you can use any of them.
+</P>
+<P CLASS="left">
+	<SPAN CLASS="cs-color2">[+] </SPAN>
+	<SPAN CLASS="cs-filename"><A HREF="../archive/samples/drumsamples3.tar.gz">drumsamples3.tar.gz</A></SPAN> (4041295 bytes)
+</P>
+<P CLASS="left">
+	A collection of TR-808 and 909 drum samples, used by some instruments. Installation can be done
+	by simply copying the <SPAN CLASS="cs-filename">drums</SPAN> directory to
+	<SPAN CLASS="cs-env">SSDIR</SPAN>.
+	<BR>
+	This sample set is based on <SPAN CLASS="cs-filename">tr909kit.krz</SPAN> and
+	<SPAN CLASS="cs-filename">tr808909.krz</SPAN> available from
+	<SPAN CLASS="cs-code"><A HREF="ftp://ftp.sweetwater.com/">ftp.sweetwater.com</A></SPAN>,
+	and the TR-808 samples by Michael Fischer (see also <A HREF="../html/tr808-1.txt">this</A>
+	text file).
+</P>
+<P CLASS="left">
+	<SPAN CLASS="cs-color2">[+] </SPAN>
+	<SPAN CLASS="cs-filename"><A HREF="../archive/samples/s770_samples-1.0.1.tar.gz">s770_samples-1.0.1.tar.gz</A></SPAN> (5835768 bytes)
+</P>
+<P CLASS="left">
+	Another set of samples that is useful to have (although not used as frequently as the 808
+	and 909 collection). To install the sample files, copy everything from the
+	<SPAN CLASS="cs-filename">data</SPAN> subdirectory to
+	<SPAN CLASS="cs-env">SSDIR</SPAN><SPAN CLASS="cs-filename">/s770_samples</SPAN>.
+</P>
+<P CLASS="link1">
+	<A HREF="../html/instr.html">Back to instruments page</A>
+</P>
+<P CLASS="link2">
+	<A HREF="../default.html">Back to home page</A>
+</P>
+<P CLASS="copyright">
+	&copy; Istvan Varga, 2002
+</P>
+</BODY>
+</HTML>

@@ -1,0 +1,154 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+<!-- This page was written by Istvan Varga, 2002 -->
+<HEAD>
+	<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+	<TITLE>Drums</TITLE>
+	<META NAME="author" CONTENT="Istvan Varga">
+	<META NAME="keywords" CONTENT="Csound, CSound, csound, csounds, cSounds.com, computer music,
+				       Csound Catalog, The Csound Book, Csound Book, The Csound Catalog with Audio,
+				       The Csound Catalog, Sound, Audio, DSP, Digital Signal Processing,
+				       Software Synthesis, Sampling, Free Music Software, Istvan Varga">
+	<META NAME="description" CONTENT="cSounds.com -- almost everything about Csound and computer music,
+					  the csound magazine, catalog, book and manual, and much more.">
+	<LINK REL="stylesheet" HREF="../style.css" TYPE="text/css">
+</HEAD>
+<BODY>
+<P CLASS="banner">
+	<A HREF="http://csounds.com/"><IMG CLASS="banner" SRC="../images/banner-760x111.png" ALT="cSounds.com"></A>
+</P>
+<H1 CLASS="cs">Drums</H1>
+<P CLASS="left">
+	These instruments use the include files available in the <A HREF="../html/archive.html">archive</A>
+	(<SPAN CLASS="cs-color3">note:</SPAN> see also <A HREF="../html/include.html">this</A> page).
+	It is also recommended to install
+	<SPAN CLASS="cs-color2"><A HREF="../html/resample.html">resample</A></SPAN> and
+	<SPAN CLASS="cs-color2"><A HREF="../archive/util/maximizer-1.1.0.tar.gz">maximizer</A></SPAN>.
+	If all the necessary tools are installed (<SPAN CLASS="cs-color2">make</SPAN>,
+	<SPAN CLASS="cs-color2">bash</SPAN>, etc.), the instruments can be compiled by simply
+	running <SPAN CLASS="cs-code">make</SPAN>.<BR>
+	<BR>
+	<SPAN CLASS="cs-color2">[+] </SPAN><A HREF="../archive/instr/bd.tar.gz">bd.tar.gz</A><BR>
+	<BR>
+	A collection of bass drums.<BR>
+	<BR>
+	<SPAN CLASS="cs-color2">[+] </SPAN><A HREF="../archive/instr/drums.tar.gz">drums.tar.gz</A>
+	(requires Csound 4.18 or later)<BR>
+	<BR>
+	Contains hand clap, snare, tom, rim shot, and various cymbal, and hi-hat instruments. The samples
+	used by the cymbals and hats can be generated with the following commands
+	(<SPAN CLASS="cs-color2">resample</SPAN> utility is required; it may be possible to use
+	<SPAN CLASS="cs-color2">srconv</SPAN>, however the current version does not work correctly):
+</P>
+<PRE CLASS="cs-code">csound -d -f -J -o tmp.sf cym_sample.orc cym_sample-crash.sco
+snd_resample -v -q256 -F 4.0 -i tmp.sf -o cym_sample-crash.pcm
+csound -d -f -J -o tmp.sf cym_sample.orc cym_sample-hihat1.sco
+snd_resample -v -q256 -F 4.0 -i tmp.sf -o cym_sample-hihat1.pcm
+csound -d -f -J -o tmp.sf cym_sample.orc cym_sample-hihat2.sco
+snd_resample -v -q256 -F 4.0 -i tmp.sf -o cym_sample-hihat2.pcm
+csound -d -f -J -o tmp.sf cym_sample.orc cym_sample-ride1.sco
+snd_resample -v -q256 -F 4.0 -i tmp.sf -o cym_sample-ride1.pcm
+csound -d -f -J -o tmp.sf cym_sample.orc cym_sample-ride2.sco
+snd_resample -v -q256 -F 4.0 -i tmp.sf -o cym_sample-ride2.pcm
+csound -d -f -J -o tmp.sf cym_sample.orc cym_sample-crash2.sco
+snd_resample -v -q256 -F 4.0 -i tmp.sf -o cym_sample-crash2.pcm
+csound -d -f -J -o tmp.sf cym_sample.orc cym_sample-hihat1a.sco
+snd_resample -v -q256 -F 4.0 -i tmp.sf -o cym_sample-hihat1a.pcm</PRE>
+<P CLASS="left">
+	If <SPAN CLASS="cs-color2">resample</SPAN> is not available, the sample files can be rendered
+	by setting the sample rate in <SPAN CLASS="cs-filename">cym_sample.orc</SPAN> to 192000 Hz,
+	and running these commands (this is considerably slower to compile):
+</P>
+<PRE CLASS="cs-code">csound -d -f -h -o cym_sample-crash.pcm cym_sample.orc cym_sample-crash.sco
+csound -d -f -h -o cym_sample-hihat1.pcm cym_sample.orc cym_sample-hihat1.sco
+csound -d -f -h -o cym_sample-hihat2.pcm cym_sample.orc cym_sample-hihat2.sco
+csound -d -f -h -o cym_sample-ride1.pcm cym_sample.orc cym_sample-ride1.sco
+csound -d -f -h -o cym_sample-ride2.pcm cym_sample.orc cym_sample-ride2.sco
+csound -d -f -h -o cym_sample-crash2.pcm cym_sample.orc cym_sample-crash2.sco
+csound -d -f -h -o cym_sample-hihat1a.pcm cym_sample.orc cym_sample-hihat1a.sco</PRE>
+<P CLASS="left">
+	<SPAN CLASS="cs-color2">[+] </SPAN><A HREF="../archive/instr/drums2.tar.gz">drums2.tar.gz</A>
+	(requires Csound 4.19 or later)<BR>
+	<BR>
+	A new, improved drum collection, with many new instruments, including TR-808 bass drum,
+	cymbal, and hats, tambourine, and more. It is recommended to try this package instead
+	of the older <SPAN CLASS="cs-filename"><A HREF="../archive/instr/drums.tar.gz">drums.tar.gz</A></SPAN>
+	if you have a recent Csound version (see also <A HREF="../html/cspatches.html">this</A>
+	page). Also, these instruments do not use external include files from other packages, and
+	are easier to compile.<BR>
+	<SPAN CLASS="cs-color2">Note:</SPAN> there may be an error when using Csound 4.20; this
+	can be fixed by adding the missing <SPAN CLASS="cs-code">ksmps</SPAN> definition to
+	<SPAN CLASS="cs-filename">drums.orc</SPAN> (<SPAN CLASS="cs-code">ksmps = 48</SPAN>).<BR>
+	<BR>
+	Without reverb, compilation can be done with a single command:
+</P>
+<PRE CLASS="cs-code">csound -d -m7 -H1 -s -W -o drums.wav drums.orc drums.sco</PRE>
+<P CLASS="left">
+	To get reverb, a few more commands are needed:
+</P>
+<PRE CLASS="cs-code">csound -d -m7 -H1 -f -J -o cvgen.sf cvgen.orc cvgen.sco
+csound -U cvanal cvgen.sf reverb.cv
+csound -d -m7 -H1 -f -J -o drums.sf drums.orc drums.sco
+csound -d -m7 -H1 -s -W -o drums.wav reverb.orc reverb.sco</PRE>
+<P CLASS="left">
+	If all the required tools are installed, it is possible to render with reverb and limiter
+	(the output <A HREF="../sound/drums.ogg">sample</A> is available for download in Vorbis
+	format) by simply running:
+</P>
+<PRE CLASS="cs-code">make rvb_l.wav</PRE>
+<H2 CLASS="cs">Samples</H2>
+<P CLASS="left">
+	Some samples of the instruments can be downloaded by clicking on the links below:<BR>
+	<BR>
+	<SPAN CLASS="cs-color2">[+]</SPAN>
+	<SPAN CLASS="cs-filename"><A HREF="../sound/drums.ogg">drums.ogg</A></SPAN>
+	(664675 bytes)<BR>
+	<BR>
+	<SPAN CLASS="cs-color2">[+]</SPAN>
+	<SPAN CLASS="cs-filename"><A HREF="../sound/drum_08.ogg">drum_08.ogg</A></SPAN>
+	(6846 bytes)<BR>
+	<SPAN CLASS="cs-color2">[+]</SPAN>
+	<SPAN CLASS="cs-filename"><A HREF="../sound/clap1.ogg">clap1.ogg</A></SPAN>
+	(15866 bytes)<BR>
+	<SPAN CLASS="cs-color2">[+]</SPAN>
+	<SPAN CLASS="cs-filename"><A HREF="../sound/crash.ogg">crash.ogg</A></SPAN>
+	(26540 bytes)<BR>
+	<SPAN CLASS="cs-color2">[+]</SPAN>
+	<SPAN CLASS="cs-filename"><A HREF="../sound/crash2.ogg">crash2.ogg</A></SPAN>
+	(25862 bytes)<BR>
+	<SPAN CLASS="cs-color2">[+]</SPAN>
+	<SPAN CLASS="cs-filename"><A HREF="../sound/hihat1.ogg">hihat1.ogg</A></SPAN>
+	(26301 bytes)<BR>
+	<SPAN CLASS="cs-color2">[+]</SPAN>
+	<SPAN CLASS="cs-filename"><A HREF="../sound/hihat1a.ogg">hihat1a.ogg</A></SPAN>
+	(26631 bytes)<BR>
+	<SPAN CLASS="cs-color2">[+]</SPAN>
+	<SPAN CLASS="cs-filename"><A HREF="../sound/hihat2.ogg">hihat2.ogg</A></SPAN>
+	(25130 bytes)<BR>
+	<SPAN CLASS="cs-color2">[+]</SPAN>
+	<SPAN CLASS="cs-filename"><A HREF="../sound/ride1.ogg">ride1.ogg</A></SPAN>
+	(15392 bytes)<BR>
+	<SPAN CLASS="cs-color2">[+]</SPAN>
+	<SPAN CLASS="cs-filename"><A HREF="../sound/ride2.ogg">ride2.ogg</A></SPAN>
+	(15783 bytes)<BR>
+	<SPAN CLASS="cs-color2">[+]</SPAN>
+	<SPAN CLASS="cs-filename"><A HREF="../sound/rimshot.ogg">rimshot.ogg</A></SPAN>
+	(49631 bytes)<BR>
+	<SPAN CLASS="cs-color2">[+]</SPAN>
+	<SPAN CLASS="cs-filename"><A HREF="../sound/snare1.ogg">snare1.ogg</A></SPAN>
+	(19643 bytes)<BR>
+	<SPAN CLASS="cs-color2">[+]</SPAN>
+	<SPAN CLASS="cs-filename"><A HREF="../sound/tom.ogg">tom.ogg</A></SPAN>
+	(21126 bytes)<BR>
+</P>
+<P CLASS="link1">
+	<A HREF="../html/instr.html">Back to instruments page</A>
+</P>
+<P CLASS="link2">
+	<A HREF="../default.html">Back to home page</A>
+</P>
+<P CLASS="copyright">
+	&copy; Istvan Varga, 2002
+</P>
+</BODY>
+</HTML>
