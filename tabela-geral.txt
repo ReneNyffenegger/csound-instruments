@@ -1,0 +1,34 @@
+[no] comajuncosas
+[no] costello
+[no] diffamator
+
+[ok] accci       
+[ok] cook (erros)
+[ok] csound-book
+[ok] dobson
+[ok] dodge
+[ok] dx7-pinkston-varo
+[ok] eastman (erros)
+[ok] hamel (erros)
+[ok] noorden
+[ok] pinkston
+[ok] risset (erros)
+[ok] rossing (erros)
+[ok] smaragdis (erros)
+
+-lyon
+-maldonado
+-mccurdy
+-mikelson
+-nyffenegger
+-oi
+-spjut
+!compositions
+!varios
+!students
+dx7
+pavan
+udo
+varga
+vectro
+xscanned
