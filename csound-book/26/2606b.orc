@@ -4,11 +4,11 @@
 
             strset    11, "hello.aif"
 
-            strset    17, "highPass300Hz.con"
+            strset    17, "highpass300hz.con"
 
-            strset    18, "highPass1kHz.con"
+            strset    18, "highpass1khz.con"
 
-            strset    19, "highPass3kHz.con"
+            strset    19, "highpass3khz.con"
 
             strset    20, "cymbal.aif"
 

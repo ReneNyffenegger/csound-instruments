@@ -2,15 +2,15 @@
 
             strset    11, "hello.aif"
 
-            strset    12, "lowPass3kHz.con"
+            strset    12, "lowpass3khz.con"
 
-            strset    13, "lowPass1kHz.con"
+            strset    13, "lowpass1khz.con"
 
-            strset    14, "lowPass300Hz.con"
+            strset    14, "lowpass300hz.con"
 
-            strset    15, "rimShot.con"
+            strset    15, "rimshot.con"
 
-            strset    16, "bassDrum.con"
+            strset    16, "bassdrum.con"
 
 
 

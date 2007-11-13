@@ -14,7 +14,7 @@ instr     1         ; DIRECTCONVOLUTION
   i6        =  0.153256114                        ;smpl 6 of signal b
   i7        =  0.032279228                        ;smpl 7 of signal b
   i8        =  0.002177629                        ;smpl 8 of signal b
-  a1        soundin   "Fox.aif"                   ;signal a
+  a1        soundin   "fox.aif"                   ;signal a
   a2        delay1    a1
   a3        delay1    a2
   a4        delay1    a3
@@ -27,6 +27,6 @@ endin
 
 instr     2         ;FFT CONVOLUTION
   a1        soundin   "fox.aif"                   ;signal a
-  a2        convolve  a1,"eightPoint.con"         ; SIGNAL B, USE cvanal TO MAKE
+  a2        convolve  a1,"eightpoint.con"         ; SIGNAL B, USE cvanal TO MAKE
             out       a2*p4                       ; p4 IS SCALING FACTOR
 endin                              

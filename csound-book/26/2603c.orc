@@ -2,17 +2,17 @@
 
             strset    2, "fox.con"
 
-            strset    3, "oneEcho.aif"
+            strset    3, "oneecho.aif"
 
-            strset    4, "twoEchos.aif"
+            strset    4, "twoechos.aif"
 
-            strset    5, "fiveEchos.aif"
+            strset    5, "fiveechos.aif"
 
-            strset    6, "gaussReverb.aif"
+            strset    6, "gaussreverb.aif"
 
-            strset    7, "uniformReverb.aif"
+            strset    7, "uniformreverb.aif"
 
-            strset    8, "whiteNoise.aif"
+            strset    8, "whitenoise.aif"
 
 
 

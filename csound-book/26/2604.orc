@@ -1,5 +1,5 @@
             strset    9,      "fox.aif"
-            strset    10,     "gaussReverb.con"
+            strset    10,     "gaussreverb.con"
 
 instr   2604    ; MIX REVERB, DELAY & DARKEN
   iscale    =  p4
