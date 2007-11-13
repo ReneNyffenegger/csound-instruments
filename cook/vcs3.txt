@@ -1,0 +1,54 @@
+Notes for Csound VCS3 / Synthi A Emulator by Steven Cook :
+
+
+stevencook@appleonline.net
+
+
+http://www.appleonline.net/stevencook/csound.html
+
+
+* This is my attempt at a realistic emulation of an EMS VCS3 (or Synthi A, which is the same instrument except fitted into a briefcase). I should say that I have never seen a VCS3 in the flesh, let alone used one, so I make no claims as to sonic accuracy!
+
+
+* My emulator is a Mk.II VCS3 (which has a different layout of the Patch Matrix than a Mk.I) except that I have not emulated triggering of the Trapezoid from the external inputs (I only found out about this function recently!).
+
+
+* The VCS3's Meter, used to measure signal or control voltages, is obviously impossible to emulate, (except by using a print statement?) so the first column of the Patch Matrix is a dummy.
+
+
+* I've included three different emulations of the Joystick; the default one uses 'randi' to produce a pair of randomly moving outputs, the second one is the same but the outputs are constrained within a circle, the third uses 'xyin' to sense the position of the mouse pointer in a window. As 'xyin' is intended for realtime use and my computer is slow, this is untested.
+
+
+* My Trapezoid generator produces a positive-going output, i.e. it attacks upwards, which is actually the opposite of a real VCS3. Inverting the Trapezoid output is a common modification to the VCS3.
+
+
+* On the real VCS3, setting the Trapezoid 'Off' time to more than 7 should stop the Trapezoid repeating (re-triggering). I didn't copy this; if you don't want the Trapezoid to repeat, set the 'Off' time to something longer than the output soundfile length.
+
+
+* Oscillators 2 and 3 can be hard synced to Oscillator 1. Again, this is a common VCS3 modification.
+
+
+* Oscillator 3 can be switched between LFO (as in the real VCS3) and audio rate. Another modification.
+
+
+* Outputs are normalized to produce a maximum signal of +32767 to -32767 (give or take a bit!) when set at 1.
+
+
+* All the controls have a range of 0 to 1 except Oscillator 'Freq' (standard Csound cpspch, give or take an octave) and Trapezoid 'attack', 'on', 'decay' and 'off' (seconds).
+
+
+* To make a connection using the Patch Matrix insert a 1 in place of a 0.
+
+
+* Commenting out sections that are not being used in a patch, or setting p3s to zero will speed up rendering.
+
+
+* To alter the length of the output soundfile, it's easier to vary the tempo (t 0 xx) than the note lengths, although the Trapezoid times will need adjusting separately as they are calibrated in seconds.
+
+
+* The Patch Matrix should have been easy to copy using the zak patching system, but turned out to be surprisingly difficult. I could not find a way to patch 'backwards' between instruments, i.e. from the output of a higher numbered instrument to the input of a lower numbered one. If I could have done this, it would have been possible to produce a Patch Matrix consisting of a single Patch Pin (which could be duplicated as many times as necessary) with selectable input and output destinations, which would have been simpler and run faster.
+
+
+* Further information on the real VCS3 / Synthi A / Synthi AKS is available from:
+
+http://www.ems-synthi.demon.co.uk/index.html

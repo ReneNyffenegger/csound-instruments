@@ -1,0 +1,33 @@
+
+;**************************************   TEMPORAL INTEGRATION   *************************************
+
+; HOW DOES THE LOUDNESS OF AN IMPULSIVE SOUND COMPARE WITH THE LOUDNESS OF A STEADY SOUND AT THE SAME
+; LEVEL? NUMEROUS EXPERIMENTS HAVE PRETTY WELL ESTABLISHED THAT THE EAR AVERAGES SOUND ENERGY OVER A-
+; BOUT 0.2S (200MS), SO LOUDNESS GROWS WITH DURATION UP TO THIS VALUE. STATED ANOTHER WAY, LOUDNESS 
+; LEVEL INCREASES BY 10DB WHEN THE DURATION IS INCREASED BY A FACTOR OF 10. THE LOUDNESS LEVEL OF 
+; BROADBAND NOISE SEEMS TO DEPEND SOMEWHAT MORE STRONGLY ON STIMULUS DURATION THAN THE LOUDNESS LEVEL
+; OF PURE TONES.
+; IN THIS DEMONSTRATION, BURSTS OF BROADBAND NOISE HAVING DURATIONS OF 1000, 300,100, 30, 10, 3, AND
+; 1MS ARE PRESENTED AT 8 DECREASING LEVELS (0,-16,-20,-24,-28,-32,-36,AND -40DB) IN THE PRESENCE OF
+; A BROADBAND MASKING NOISE. 
+
+;***************************************   HEADER   **************************************************
+
+
+
+sr             =         44100
+kr             =         4410
+ksmps          =         10
+nchnls         =         2
+
+ instr         1
+
+ iamp          =         ampdb(p4)                     ;P4 = AMPLITUDE IN DB
+
+
+ k1            linen     iamp,.01,p3,.01
+ anoise        randi     k1, .998 * 10010              ;BROADBAND NOISE 20 - 20KHZ
+ asig          oscil     anoise,anoise,1     
+               outs      asig,asig
+ endin
+ 

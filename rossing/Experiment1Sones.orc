@@ -1,0 +1,46 @@
+;**************************************   DOUBLING OF LOUDNESS  ***************************************
+; THE "SONE" IS DEFINED AS THE LOUDNESS OF A 1000HZ TONE AT 40DB( A LOUDNESS LEVEL OF 40 PHONS). FOR 
+; LOUDNESS LEVELS OF 40 PHONS OR GREATER, THE RELATIONSHIP BETWEEN LOUDNESS S IN SONES AND LOUDNESS 
+; LEVEL L(S) IN PHONS RECOMMENDED BY THE INTERNATIONAL STANDARDS ORGANIZATION (ISO) IS S = 2 RAISED TO
+; {L(S) - 40}/10. AN EQUIVALENT EXPRESSION FOR LOUDNESS S THAT AVOIDS THE USE OF L(S) IS S = CP RAISED 
+; TO THE 0.6, WHERE P IS THE SOUND PRESSURE AND C DEPENDS ON THE FREQUENCY. THE ABOVE EQUATIONS ARE 
+; BASED ON THE WORK OF S.S. STEVENS, WHICH INDICATED A DOUBLING OF LOUDNESS FOR A 10DB INCREASES IN 
+; SOUND PRESSURE LEVEL. SOME INVESTIGATORS, HOWEVER, HAVE FOUND A DOUBLING OF LOUDNESS FOR A 6DB IN-
+; CREASE IN SOUND PRESSURE LEVEL (WARREN, 1970). THIS SUGGESTS THE USE OF THE FORMULA IN WHICH LOUDNESS
+; IS PROPORTIONAL TO SOUND PRESSURE (HOWES, 1974): SS = K{P - P(0)}, WHERE P IS THE SOUND PRESSURE AND 
+; P(0) IS THE PRESSURE AT SOME THRESHOLD LEVEL. 
+; THIS CONTROVERSY ACTUATED ME TO CONDUCT MY OWN EXPERIMENT, EVALUATE THE RESULTS, AND DRAW MY "OWN" 
+; CONCLUSIONS. WHAT IS PRESENTED TO THE LISTENER IS NOISE AND 5000HZ TONE PAIRS AT VARIED DECIBEL 
+; LEVELS. THE FIRST TONE WILL REMAIN AT A CONSTANT OF 70DB, WHILE THE SECOND OF THE TONE PAIR WILL VARY
+; FROM +6DB - +15DB. THE TONES ARE .3 SECONDS EACH. A CALIBRATION TONE OF 7 SECONDS IS PROVIDED BEFORE
+; EACH SECTION WITH NOISE AND 5000HZ. 
+;*****************************************   HEADER   *************************************************
+
+
+sr             =         44100
+kr             =         4410
+ksmps          =         10
+nchnls         =         2 
+ 
+ 
+ instr         1
+
+ iamp          =         ampdb(p4)                ;P4 = AMPLITUDE IN DB 
+ ifreq         =         p5                       ;P5 = FREQUENCY
+ 
+ k1            linen     iamp,.01,p3,.01         
+ a1            oscili    k1,ifreq,1             
+               outs      a1,a1
+ endin  
+ 
+ instr         2
+
+ iamp          =         ampdb(p4)                ;P4 = AMPLITUDE IN DB
+
+
+ k1            linen     iamp,.01,p3,.01
+ anoise        randi     k1, .998 * 10010         ;BROADBAND NOISE 20 - 20KHZ
+ asig          oscil     anoise,anoise,1       
+               outs      asig,asig
+ endin
+
