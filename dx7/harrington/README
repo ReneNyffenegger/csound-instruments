@@ -1,0 +1,26 @@
+
+Credits:
+
+Original by: Jeff Harrington (idealord@dorsai.org)
+Modified by: Doug Walter (walter.doug@ic.gc.ca) on January 1997
+Modified by: Sylvain Marchand (sm@labri.u-bordeaux.fr) on April 1997
+
+Notes:
+
+Algorithms 01, 02, 03, 04, 05, 06, 07, 08, 10, 12, 13, 14, 15, 17, 18, 19, 24
+and 31 are perfect (I hope so!).
+
+Algorithms 16, 21, 23, 25, 26, 27, 28, 29, 30, 32 should be perfect too,
+but I am not sure.
+
+I am not so self-confident for algorithms 09, 11, and especially 20 and 22.
+
+I will be extremely happy if someone could test them with a real DX7
+and send me some comments (and compare them with Doug Walter's versions).
+
+A "little" problem with algorithm 06 still remains...
+But I hope a Csound-wizard will solve it for me ;-)
+
+Have fun with DX72Csound!
+
+Sylvain Marchand (sm@labri.u-bordeaux.fr) [21-April-1997]
