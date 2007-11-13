@@ -8,6 +8,6 @@ instr     2703
   iamod     =  p4
   ifmod     =  p5
   ismod     =  p6
-  asig      adsyn     iamod, ifmod, ismod, 2
+  asig      adsyn     iamod, ifmod, ismod, "a3_2.het"
             out       asig
 endin

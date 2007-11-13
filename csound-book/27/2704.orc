@@ -9,7 +9,7 @@ instr     2704
   ifmodnd   =  p6
   ismod     =  p7
   kfmod     line      ifmodst, p3, ifmodnd
-  asig      adsyn     iamod, kfmod, ismod, 2
+  asig      adsyn     iamod, kfmod, ismod, "a3_2.het"
             out       asig
 endin
 

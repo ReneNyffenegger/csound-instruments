@@ -7,7 +7,7 @@ instr     2706
   iamod     =  p4
   ifmod     =  p5
   ismod     =  p6
-  asig      adsyn     iamod, ifmod, ismod, 4      ; "glass_2.het"
+  asig      adsyn     iamod, ifmod, ismod, "glass_2.het"
             out       asig
         
 endin

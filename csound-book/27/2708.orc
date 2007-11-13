@@ -8,6 +8,6 @@ instr     2708
   iamod     =  p4
   ifmod     =  p5
   ismod     =  p6
-  asig      adsyn     iamod, ifmod, ismod, 6      ; "gong_2.het"
+  asig      adsyn     iamod, ifmod, ismod, "gong1_2.het"
             out       asig
 endin
