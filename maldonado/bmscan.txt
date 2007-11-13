@@ -1,0 +1,20 @@
+Bmscan.orc is an example of bitmap images used to control the
+amplitude of a bank of oscillators (additive synthesis).
+There are 10 different pictures used in this example, and the user can
+switch the reading from a picture to another.
+
+Also there are other parameters controllable by means of MIDI control change
+messages:
+
+MIDI Control 1 controls bitmap picture scanning speed (phasor rate)
+MIDI Control 2 selects frequency table. 2 tables are provided, the first
+               contains linear Hertz distance for each element 
+               (harmonic progression), the second exponential (geometric progression)
+MIDI Control 3 adjusts frequency range expansion/compression
+MIDI Control 4 controls absolute phase of horizontal dimension (or starting point of scanning)
+MIDI Control 5 selects the image (10 different images are provided)
+MIDI Control 6 controls base frequency offset (transposition to obtain 
+               best results for each configuration)
+MIDI Control 7 selects audio waveform (sine and other waveforms are provided)
+MIDI Control 8 controls amplitude envelope attack time
+MIDI Control 9 controls vibrato depth

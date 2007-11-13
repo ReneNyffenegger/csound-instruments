@@ -1,0 +1,89 @@
+<HTML>
+<HEAD>
+  <!-- Created by AOLpress/1.2 -->
+  <TITLE>CSound Preface By Barry Vercoe and Richard Boulanger</TITLE>
+</HEAD>
+<BODY BGCOLOR="#ffffff" BACKGROUND="fons.jpg">
+<P>
+<B><I>DirectCsound is a realtime version of Csound, the most famous &nbsp;sound
+synthesis language. <BR>
+It can be considered one of the most powerful synths in the world.</I></B>
+<P ALIGN=Left>
+<IMG SRC="orecchio.jpg" WIDTH="30" HEIGHT="42"><BIG><BIG><BIG><FONT COLOR="#804040"><B>Csound
+PREFACE</B></FONT> </BIG></BIG></BIG>
+<P ALIGN=Left>
+<I>by Richard Boulanger and Barry Vercoe</I>
+<P>
+Unlike today's commercial hardware synthesizers, which have a limited set
+of oscillators, envelope generators, filters, and a fixed number of ways
+in which these can be interconnected, Csound's power is not limited. If you
+want an instrument with hundreds of oscillators, envelope generators, and
+filters you just type them in. More important is the freedom to interconnect
+the modules, and to interrelate the parameters which control them. Like acoustic
+instruments, Csound instruments can exhibit a sensitivity to the musical
+context, and display a level of "musical intelligence" to which hardware
+synthesizers can only aspire...<BR>
+R.B. 
+  <HR SIZE=10>
+<P>
+...Realizing music by digital computer involves synthesizing audio signals
+with discrete points or samples that are representative of continuous waveforms.
+There are several ways of doing this, each affording a different manner of
+control. Direct synthesis generates waveforms by sampling a stored function
+representing a single cycle; additive synthesis generates the many partials
+of a complex tone, each with its own loudness envelope; subtractive synthesis
+begins with a complex tone and filters it. Non-linear synthesis uses frequency
+modulation and waveshaping to give simple signals complex characteristics,
+while sampling and storage of natural sound allows it to be used at will.
+<P>
+Since comprehensive moment-by-moment specification of sound can be tedious,
+control is gained in two ways: 1) from the instruments in an orchestra, and
+&nbsp;2) from the events within a score.
+<P>
+An orchestra is really a computer program that can produce sound, while a
+score is a body of data which that program can react to. Whether a rise-time
+characteristic is a fixed constant in an instrument, or a variable of each
+note in the score, depends on how the user wants to control it.
+<P>
+The instruments in a Csound orchestra are defined in a simple syntax that
+invokes complex audio processing routines. A score passed to this orchestra
+contains numerically coded pitch and control information, in standard numeric
+score format. Although many users are content with this format, higher level
+score processing languages are often convenient.
+<P>
+The programs making up the Csound system have a long history of development,
+beginning with the Music 4 program written at Bell Telephone Laboratories
+in the early 1960's by Max Mathews. That initiated the stored table concept
+and much of the terminology that has since enabled computer music researchers
+to communicate. Valuable additions were made at Princeton by the late Godfrey
+Winham in Music 4B; my own Music 360 (1968) was very indebted to his work.
+With Music 11 (1973) I took a different tack: the two distinct networks of
+control and audio signal processing stemmed from my intensive involvement
+in the preceding years in hardware synthesizer concepts and design. This
+division has been retained in Csound.
+<P>
+Because it is written entirely in C, Csound is easily installed on any machine
+running Unix or C. At MIT it runs on VAX/DECstations under Ultrix 4.2, on
+SUNs under OS 4.1, SGIs under 4.1, and on the Macintosh under ThinkC 4.0.
+With this single language for audio signal processing, users move easily
+from machine to machine.
+<P>
+The 1991 version included many new features. I am indebted to others for
+the contribution of the phase vocoder and FOF synthesis modules. That release
+also charted a new direction with the addition of a spectral data type, holding
+much promise for future development. The 1992 release is even more significant
+for its addition of MIDI converter and control units, enabling Csound to
+be run from MIDI score-files and from external MIDI keyboards. Since the
+newest RISC processors bring to computer music an order of magnitude more
+speed than did those on which it was born, researchers and composers now
+have access to workstations on which realtime software synthesis with sensing
+and control is now a reality. This is perhaps the single most important
+development for people working in the field. This new Csound is designed
+to take maximum advantage of realtime audio processing, and to encourage
+interactive experiments in this exciting new domain.<BR>
+B.V.
+<P>
+<A HREF="index.htm" target="_top"><IMG SRC="home.gif" WIDTH="40" HEIGHT="40"></A>
+<P>
+  <HR SIZE=10>
+</BODY></HTML>

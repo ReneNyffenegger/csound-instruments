@@ -1,0 +1,428 @@
+<HTML>
+<HEAD>
+  <!-- Created with AOLpress/2.0 -->
+  <TITLE>VMCI Plus</TITLE>
+</HEAD>
+<BODY BACKGROUND="fons.jpg">
+<H1 ALIGN=Left>
+  <FONT COLOR="#800000"><B>VMCI Plus (2.03)</B></FONT>
+</H1>
+<P ALIGN=Left>
+<IMG SRC="3dsmallplus2.jpg" WIDTH="472" HEIGHT="366"> 
+  <HR SIZE=10>
+<P>
+<A HREF="#general">General</A>
+<P>
+<A HREF="#diff">Differences beetween VMCI Plus and previous versions</A>
+<P>
+<A HREF="#install">How to install VMCI</A>
+<P>
+<A HREF="#register">Registering</A>
+<P>
+<A HREF="#download">Download area</A>
+<H2>
+    <HR SIZE=10>
+  <A NAME="general"><!-- --></A><FONT COLOR="#000080">General</FONT>
+</H2>
+<P>
+<I><B>VMCI</B></I> (Virtual Midi Control Interface) <I><B>Plus</B></I> is
+a shareware program which allows to send most MIDI data to a MIDI device
+by means of gestural actions on the computer keyboard and mouse. VMCI Plus
+is fully configurable and provides a total control of MIDI messages, even
+without any MIDI interface card and without any external MIDI keyboard or
+controller. This program is primarily designed to control real-time versions
+of Csound (DirectCsound in particular), &nbsp;however it can also be used
+with any internal or external MIDI device or computer programs such as
+sequencers. It provides several panels with virtual sliders, virtual joysticks
+and virtual piano-keyboard. The newer version of the program (VMCI Plus 2)
+allows to change more than one parameter at the same time by means of the
+new <B>Hyper-Vectorial Synthesis control</B>. VMCI supports 7-bit data as
+well as the higher resolution 14-bit data that can be handled by the newer
+versions of Csound.
+<H4>
+  VMCI Plus requirements:
+</H4>
+<UL>
+  <LI>
+    Windows 95 or NT.<BR>
+  <LI>
+    800x600 monitor resolution or higher (You can also use 640x480, but some
+    windows might not displayed entirely). 1024x768 pixels are recommended to
+    work comfortably with VMCI Plus.<BR>
+  <LI>
+    Though DirectCsound is optional (you can use VMCI also together with other
+    programs such as sequencers etc.), the best of VMCI is reached when it is
+    used together with DirectCsound itself. So be sure to have DirectCsound installed
+    in your computer.<BR>
+  <LI>
+    A virtual midi Loopback device such as HUBI'S Midi Loopback, included in
+    the package (thanks to Hubert Winkler). It is optional if you intend to control
+    only external hardware MIDI instruments, but required when using Csound or
+    sequencers.<BR>
+  <LI>
+    A fast computer&nbsp;(when DirectCsound is used at the same time in real-time;
+    Pentium II or higher processors are recommended).
+</UL>
+<H4>
+  VMCI Plus features:
+</H4>
+<OL>
+  <LI>
+    An arbitrary number of completely configurable&nbsp;<I><B>7-bit slider
+    panels</B></I>. Each panel can handle up to 2048 controllers (16 MIDI channel
+    X 128 controllers = 2048). The user can modify each controller by means of
+    a slider. &nbsp;When moving a slider, a stream of MIDI control change messages
+    are sent to the MIDI out port, according to slider position. Most sliders
+    are hidden from current view, because a maximum of 64 sliders can be visualized
+    at the same time in each panel (assuming the screen resolution is big enough).
+    The user The number of visualized sliders can be adjusted by the user for
+    each panel.<BR>
+  <LI>
+    An arbitrary number of completely configurable <B><I>14-bit slider</I></B>
+    <I><B>panels</B></I>. Each panel can handle up to 1024 parameter. Similar
+    to 7-bit slider panels, but offers a double data resolution. Each parameter
+    is handled by means of two controllers, the first handling the most significant
+    data byte, the second the less significant one. Up to 32 sliders can be
+    visualized at the same time in each panel (assuming the screen resolution
+    is big enough). The number of visualized sliders can be adjusted by the user
+    for each panel.<BR>
+  <LI>
+    An arbitrary number of <I><B>7-bit virtual joystick</B></I> (mouse-sensitive
+    areas) panels. It is possible to modify two parameter at the same time by
+    dragging the mouse pointer inside a mouse-sensitive area. These areas are
+    similar to the 'xyin' opcode of Csound. Each panel can handle up to 2048
+    controllers. Up to 10 joystick areas can be visualized at the same time in
+    each panel,&nbsp;handling 20 controllers. The number of visualized joystick
+    areas can be adjusted by the user, for each panel.<BR>
+  <LI>
+    An arbitrary number of <I><B>14-bit virtual joystick</B></I> (mouse-sensitive
+    areas) panels. &nbsp;Each panel can handle up to 1024 parameters. Similar
+    to 7-bit joystick panels, but offers a double data resolution. Each panel
+    can visualize up to 2 areas a time, handling 4 parameters. The number of
+    visualized joystick areas can be adjusted by the user for each panel.<BR>
+  <LI>
+    Each slider panel can be instantly converted into a virtual joystick panel
+    and vice-versa, preserving all current parameter values and positions.<BR>
+  <LI>
+    Each slider (or joystick) of a panel can be moved not only by the mouse,
+    but also by incoming MIDI control-change messages. This allows remote control
+    of sliders (joysticks). The assignments of each remote MIDI message can be
+    freely configured by the user.<BR>
+  <LI>
+    <I><B>Snapshots</B></I>. All the slider (joystick) positions of each panel
+    can be stored into a '<I>snapshot</I>'. Up to 128 snapshots can be created
+    in each panel. Each one of these snapshots can be instantly recalled by pushing
+    a button. &nbsp;When a snapshot is recalled, all slider positions are updated
+    according to the corresponding snapshot content, and all MIDI control-change
+    messages, corresponding to the new slider positions, are sent to the MIDI
+    OUT port. Each snapshot can be also associated to an incoming MIDI note-on
+    or program-change message, in order to allow remote recalling of any snapshot,
+    belonging to any panel.<BR>
+  <LI>
+    <I><B>HVS</B></I> <I><B>(Hyper Vectorial Synthesis)</B></I>. VMCI Plus allows
+    to modify hundreds of parameters with a single mouse motion, according to
+    a structure configured by the user. This control method is called <I>Hyper
+    Vectorial Synthesis Control </I>(see below). Each slider/joystick panel has
+    an HVS&nbsp;panel associated to it. In each HVS panel there are two HVS areas:
+    a one-dimensional area and a two-dimensional one. Normally the user interacts
+    with these areas with the mouse, however a remote MIDI control is possible,
+    by assigning the pointer motion inside each area to one or more incoming
+    MIDI control-change messages.<BR>
+  <LI>
+    <B><I>Virtual Keyboard</I></B>. This keyboard looks piano-like, but each
+    button can be reconfigured in order to send any &nbsp;kind of MIDI messages.
+    The buttons can also activate a snapshot belonging to any slider/joystick
+    panel. Each button can be associated to a key of the alphanumeric keyboard,
+    as well as to an incoming MIDI message, allowing remote control of events
+    joined with each button.
+</OL>
+<P>
+  <HR SIZE=10>
+<H2>
+  <A NAME="diff"><!-- --></A><FONT COLOR="#800000">Differences between VMCI
+  Plus <BR>
+  and previous versions</FONT>
+</H2>
+<P>
+<TABLE BORDER CELLSPACING="4" CELLPADDING="4">
+  <TR>
+    <TD><B><BIG><BIG>program version</BIG></BIG></B></TD>
+    <TD><B><BIG><BIG>VMCI Lite</BIG></BIG></B></TD>
+    <TD><B><BIG><BIG>VMCI Pro </BIG></BIG></B></TD>
+    <TD><FONT COLOR="#0000a0"><B><BIG><BIG>VMCI Plus</BIG></BIG></B></FONT></TD>
+  </TR>
+  <TR>
+    <TD>Copyright</TD>
+    <TD>Freeware &nbsp; &nbsp;</TD>
+    <TD>Donationware</TD>
+    <TD><FONT COLOR="#000080">Shareware</FONT></TD>
+  </TR>
+  <TR>
+    <TD>number of controllers <BR>
+      per 7-bit slider panel</TD>
+    <TD>8</TD>
+    <TD>64</TD>
+    <TD><FONT COLOR="#000080">2048</FONT></TD>
+  </TR>
+  <TR>
+    <TD>number of controllers <BR>
+      per 14-bit slider panels</TD>
+    <TD>2</TD>
+    <TD>32</TD>
+    <TD><FONT COLOR="#000080">1024</FONT></TD>
+  </TR>
+  <TR>
+    <TD>number of 7-bit<BR>
+      slider panels</TD>
+    <TD>2</TD>
+    <TD>4</TD>
+    <TD><FONT COLOR="#000080">64 (actually limited by <BR>
+      computer memory)</FONT></TD>
+  </TR>
+  <TR>
+    <TD>number of 14-bit <BR>
+      slider panels</TD>
+    <TD>1</TD>
+    <TD>2</TD>
+    <TD><FONT COLOR="#000080">64 (actually limited by <BR>
+      computer memory)</FONT></TD>
+  </TR>
+  <TR>
+    <TD>number of 7-bit <BR>
+      joystick panels</TD>
+    <TD>1</TD>
+    <TD>2</TD>
+    <TD><FONT COLOR="#000080">64 (actually limited by <BR>
+      computer memory)</FONT></TD>
+  </TR>
+  <TR>
+    <TD>number of 14-bit <BR>
+      joystick panels</TD>
+    <TD>not available</TD>
+    <TD>not available</TD>
+    <TD><FONT COLOR="#000080">64 (actually limited by <BR>
+      computer memory)</FONT></TD>
+  </TR>
+  <TR>
+    <TD>Controllers can be <BR>
+      individually assigned <BR>
+      for each slider/joystick</TD>
+    <TD>control number <BR>
+      only</TD>
+    <TD>control number only</TD>
+    <TD><FONT COLOR="#000080">control number <BR>
+      and MIDI channel</FONT></TD>
+  </TR>
+  <TR>
+    <TD><B>Snapshots</B></TD>
+    <TD>not available</TD>
+    <TD>not available</TD>
+    <TD><FONT COLOR="#000080">128 for each panel, each <BR>
+      snapshot can be triggered<BR>
+      by pressing a key of the <BR>
+      alphanumeric keyboard</FONT></TD>
+  </TR>
+  <TR>
+    <TD>Virtual Keyboard panel</TD>
+    <TD>limited to <BR>
+      24 keys</TD>
+    <TD>yes</TD>
+    <TD><FONT COLOR="#000080">yes, enhanced <BR>
+      (with snapshot <BR>
+      switching trigger <BR>
+      support)</FONT></TD>
+  </TR>
+  <TR>
+    <TD>7-bit panel <B>Hyper Vectorial <BR>
+      Synthesis </B>Control</TD>
+    <TD>not available</TD>
+    <TD>not available</TD>
+    <TD><FONT COLOR="#000080">yes</FONT></TD>
+  </TR>
+  <TR>
+    <TD>14-bit panel <B>Hyper <BR>
+      Vectorial Synthesis </B>Control</TD>
+    <TD>not available</TD>
+    <TD>not available</TD>
+    <TD><FONT COLOR="#000080">yes</FONT></TD>
+  </TR>
+  <TR>
+    <TD><B>MIDI remote control</B> for <BR>
+      slider and joystick panel</TD>
+    <TD>not available</TD>
+    <TD>not available</TD>
+    <TD><FONT COLOR="#000080">yes</FONT></TD>
+  </TR>
+  <TR>
+    <TD><B>MIDI remote control </B><BR>
+      for HVS panels</TD>
+    <TD>not available</TD>
+    <TD>not available</TD>
+    <TD><FONT COLOR="#000080">yes</FONT></TD>
+  </TR>
+  <TR>
+    <TD><B>MIDI remote control </B><BR>
+      for Virtual Keyboard</TD>
+    <TD>not available</TD>
+    <TD>not available</TD>
+    <TD><FONT COLOR="#000080">yes</FONT></TD>
+  </TR>
+</TABLE>
+<P>
+N.B. Previous versions are still available
+<P>
+  <HR SIZE=10>
+<H2>
+  <A NAME="install"><!-- --></A><FONT COLOR="#000080">How to install VMCI</FONT>
+  <FONT COLOR="#000080">Plus</FONT>
+</H2>
+<P>
+To install MSVC you must follow the next steps:
+<OL>
+  <LI>
+    Download the zipped archive, create a folder named "c:\csound\" and unzip
+    the archive in that directory, preserving the directory structure.<BR>
+  <LI>
+    Create a shortcut of the executable file (VMCI Plus.exe) in the desktop and/or
+    in the start menu in order to make it faster to start it.
+</OL>
+<P>
+Here is the installation procedure to use VMCI Plus with DirectCsound:<BR>
+<OL>
+  <LI>
+    If DirectX (version 5.0 or higher) is not already present on your computer,
+    then download and Install Microsoft DirectX package. This step isn't necessary
+    with Windows 98.<BR>
+  <LI>
+    Download DirectCsound at the following url:<BR>
+    &nbsp; &nbsp; &nbsp;
+    <A HREF="http://www.tiscalinet.it/G-Maldonado/download.htm">http://www.tiscalinet.it/G-Maldonado/download.htm</A><BR>
+    then &nbsp;unzip and copy all content of DirectCsound archive in the folder
+    named &nbsp;"c:\csound\".<BR>
+  <LI>
+    Install Hubi's Loopback virtual MIDI device. It is included in the VMCI Plus
+    zipped archive. Create a folder named c:\csound\MidiCable\ and unzip the
+    content of archive mdlpbk25.zip in that folder. <BR>
+    The loopback device must be installed as a device. Here is a quote from the
+    installation notes. <BR>
+    <BR>
+    Windows 95: Start-&gt;Settings-&gt;ControlPanel-&gt;Hardware Continue-&gt;
+    [No] -&gt;Continue -&gt; [ Audio/Video/Game Controller ] -&gt;Continue
+    -&gt;Diskette -&gt; [ enter the unzipped directory (c:\csound\MidiCable)
+    ] ... <BR>
+    <BR>
+    Then you will see a list with "Hubi's Loopback v250", select this, some OK
+    and restart Windows when asked about it.<BR>
+    <BR>
+    (See Hubi's loopback manual for more information).<BR>
+  <LI>
+    Create a shortcut to &nbsp;hwmdcabl.exe on the desktop and/or in the start
+    menu in order to make it faster to start it.<BR>
+  <LI>
+    Start VMCI and configure the MIDI port (button "MIDI setup"), the Csound
+    Settings (button" CsoundSettings") and start a real-time orc/sco pair to
+    test it.<BR>
+  <LI>
+    OPTIONAL: Download and install MIDI-OX program (available separately; it
+    is useful to monitor incoming/outgoing MIDI messages) by clicking on midioxe.exe
+    file.
+</OL>
+<H2>
+  <A NAME="register"><!-- --></A><FONT COLOR="#000080">Copyright, Registering
+  and Magic Code</FONT>
+</H2>
+<P>
+The this program is copyright shareware, it is not freeware. 
+<P>
+You&nbsp;can copy the unregistered version of the program and give it to
+your friends or to any other person as long as for no charge. This program
+cannot be distributed in shareware compilations CDs&nbsp;without prior written
+approval from the author.
+<P>
+The evaluation perid expires after 90 days after you install the program
+on your computer, if you intend to continue to use it, you have to register.
+<P>
+No responsibility is taken for any damage or losses caused by this package.
+<P>
+All program trademarks belongs to its respective author.
+<P>
+Csound is copyright of MIT, and is not included in the package. DirectCsound
+version can be downloaded separately at the following URL:
+<P>
+<A HREF="http://www.tiscalinet.it/G-Maldonado/download.htm">http://www.tiscalinet.it/G-Maldonado/download.htm</A>
+<P>
+<B>Registering</B>
+<P>
+A key-code will convert the program from unregistered version to a registered
+one. You have not to reinstall the program. The key-conde will be communicated
+to all people who register the program. To receive the key-code you must
+send to the author your complete name. He will send you the key-code as soon
+as he receives notification of the payment.
+<P>
+See the included <A HREF="register.txt">register.txt</A>&nbsp;file to get
+more information about registering.
+<P>
+Notice that now you can register with the <B>credit card </B>(VISA, MASTECARD,
+AMERICAN EXPRESS, DISCOVER) via Internet secure transaction at this
+<A HREF="https://www.regnow.com/softsell/nph-softsell.cgi?item=2859-1">URL</A>
+<A HREF="https://www.regnow.com/softsell/nph-softsell.cgi?item=2859-1"><IMG
+    WIDTH="190" BORDER = 0 HEIGHT="39" SRC="cards-accepted-horiz.gif"></A>
+<P>
+<B>Important</B>
+<P>
+When you receive the key code you have to fill the dialog box opened by clicking
+the "About - Set Registration Key" menu. You must put your exact first and
+family name. The string containing your name&nbsp;is linked to the key code,
+so, if you type an incorrect name, the magic code will not allow to switch
+to Registered mode. Uppercase letters are significant. After typing name
+and key-code, you must close and restart VMCI Plus in order the key code
+have effect.
+<P>
+<A NAME="address"><!-- --></A>You can send any question to the following
+email address:
+<P>
+<A HREF="mailto:g.maldonado@agora.stm.it">g.maldonado@agora.stm.it</A> 
+<P>
+and you can get the latest version of this program at my WEB site:
+<P>
+<A HREF="http://web.tiscalinet.it/G-Maldonado">http://web.tiscalinet.it/G-Maldonado</A>
+<P>
+  <HR SIZE=10>
+<P ALIGN=Center>
+<A NAME="download"><!-- --></A><IMG SRC="animbar.gif" WIDTH="398" HEIGHT="4"><IMG
+    SRC="animbar.gif" WIDTH="398" HEIGHT="4"><IMG SRC="animbar.gif" WIDTH="398"
+    HEIGHT="4">
+<P ALIGN=Center>
+<IMG SRC="animbar.gif" WIDTH="398" HEIGHT="4">
+<H1>
+  <P ALIGN=Center>
+  <I>VMCI</I> <A NAME="DOWNLOAD"><!-- --></A><I>Plus DOWNLOAD AREA</I> &nbsp;
+  <SMALL><SMALL><SMALL><SMALL><SMALL><SMALL><SMALL><SMALL><SMALL><SMALL>&nbsp;</SMALL></SMALL></SMALL></SMALL></SMALL></SMALL></SMALL></SMALL></SMALL></SMALL>
+</H1>
+<P>
+<A HREF="csound/VmciPlus.zip"><B>Download &nbsp;VMCI Plus (shareware)</B></A>
+<P>
+<B><A HREF="vmci.html">Goto download page of the older (freeware) version
+of VMCI</A></B>
+<P>
+<BR>
+<B><BIG>MIDI UTILITIES to use together with VMCI Plus</BIG></B>
+<P>
+Also I recommend you to download &nbsp;MIDI-OX, a very useful midi monitor
+to view the midi message flow:
+<P>
+<A HREF="http://members.xoom.com/MIDIOX/midiox.htm" ><IMG SRC="midiox.gif"
+    BORDER=0 WIDTH="35" HEIGHT="39"> Midi-ox</A>
+<P ALIGN=Center>
+<IMG SRC="animbar.gif" WIDTH="398" HEIGHT="4"><IMG SRC="animbar.gif" WIDTH="398"
+    HEIGHT="4"><IMG SRC="animbar.gif" WIDTH="398" HEIGHT="4"><IMG SRC="animbar.gif"
+    WIDTH="398" HEIGHT="4"> 
+  <HR SIZE=10>
+<P ALIGN=Center>
+<A HREF="home.htm"><IMG SRC="home.gif" WIDTH="40" HEIGHT="40"></A> &nbsp;
+<P>
+You are &nbsp;visitor number:
+<IMG src="http://www.pianeta.it/cgi-shl/counter.exe?link=gab2&amp;style=odometer&amp;width=7&amp;inc=4">
+  <HR SIZE=10>
+<P ALIGN=Left>
+</BODY></HTML>
