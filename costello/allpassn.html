@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<TITLE>ALLPASSN</TITLE>
+</HEAD>
+<BODY>
+<IMG SRC="portfolio.gif" BORDER=0 USEMAP="#portfolio">
+<MAP NAME="portfolio">
+<AREA SHAPE="RECT" ALT="portfolio" COORDS="23,1,152,34" HREF="portfolio.html">
+<AREA SHAPE="RECT" ALT="resume" COORDS="164,0,278,33" HREF="resume.html">
+<AREA SHAPE="RECT" ALT="links" COORDS="289,1,379,31" HREF="links.html">
+<AREA SHAPE="RECT" ALT="home" COORDS="391,1,488,32" HREF="index.html">
+<AREA SHAPE="DEFAULT" NOHREF>
+</MAP>
+<P>
+<h2>allpassn</h2>
+<P>
+<PRE>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; aout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>allpassn</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ain, iorder, kcoeff, kfeedback
+</PRE>
+<P>
+<HR>
+<P>
+
+<H4>DESCRIPTION</H4>
+An implementation of <I>n</I> number of 1st order allpass filters connected in series.
+<P>
+<H4>INITIALIZATION</H4>
+<I>iorder</I> - used to specify the number of allpass stages in series. This can range from 1 to 4999. With higher orders, the computation time increases.
+<P>
+<H4>PERFORMANCE</H4>
+<B>allpassn</B> implements <I>n</I> number of single-order allpass sections, serially connected, all sharing the same coefficient. Each allpass section can be represented by the following difference equation:
+<P>
+y(n) = C * x(n) + x(n-1) - C * y(n-1)
+<P>
+where x(n) is the input, x(n-1) is the previous input, y(n) is the output, y(n-1) is the previous output, and C is a coefficient in the range -1 < C < 1.
+<P>
+<I>kcoeff</I> - coefficient in the range -1 < <I>kcoeff</I> < 1.
+<P>
+<I>kfeedback</I> - amount of the output which is fed back into the input of the allpass chain. With larger amounts of feedback, notches appear in the spectrum of the output (1 notch for every 2 allpass stages), so that with <I>iorder</I> = 6, 3 notches will be in the output. <I>kfeedback</I> must be in the range -1 < <I>kfeedback</I> < 1.
+<P>
+By slowly varying <I>kcoeff</I>, and mixing the output of <B>allpassn</B> with the input, the classic "phase shifter" effect is created, with notches moving up and down in frequency (this works best with <I>iorder</I> between 4 and 16). With higher values for <I>iorder</I>, modulating <I>kcoeff</I> will result in pitch modulation. 
+<P>
+<H4>NOTES</H4>
+<B>allpassn</B> was a rather early implementation of an allpass filter series in Csound, and was the basis for the internal structure of the <A HREF="hilbert.html">hilbert</A> unit generator.  I have recently completed two new unit generators, <A HREF="phaser2.html">phaser1</A> and <A HREF="phaser2.html">phaser2</A>, that retain the functionality of <B>allpassn</B>, while providing more useful control variables. 
+<P>
+<B>phaser1</B> is similar to <B>allpassn</B>, with <I>n</I> number of 1st-order allpass filters in series, each sharing the same coefficient. Instead of a raw coefficient, the 90 degree phase shift frequency is specified in Hertz. This allows for more precise control of vibrato and other effects where the frequency change needs to be linear, as well as making it easier to control the sweep range of phase shifting effects.  A similar allpass-based phase shifter is described in <A HREF=#Beigel>Beigel 1979</A>.
+<P>
+<B>phaser2</B> is a cascade of 2nd-order allpass filters, as described in <A HREF=#Smith>Smith 1982</A>, <A HREF=#Chamberlin>Chamberlin 1985</A>.  The use of 2nd-order allpass filters allows precise control over the frequency, depth and width of each notch generated in the spectrum.  <B>phaser2</B> has two modes for controlling the frequency of the <I>n</I> notches: 
+<UL>
+<LI>In the first mode, the frequency of the first notch is specified, and the subsequent notches are multiples of the input parameter <I>ksep</I> times the initial notch frequency, thus allowing the generation of comb filtering effects, as well as more traditional phase shifting effects. 
+<LI>In the second mode, the frequency of the first notch is specified, and the subsequent notches are <I>powers</I> of the input parameter <I>ksep</I> times the inital notch frequency.  This can be used to set the notch frequencies to octaves and other musical intervals. With <I>ksep</I> set to 2, the result is n notches, each spaced at octaves of the original notch frequency. Sweeping the notch frequencies results in a sound very similar to Risset's endless glissando.
+</UL>
+<P>
+A general description of the differences between flanging and phasing can be found in <A HREF=#Hartmann>Hartmann 1977</A>.
+<P>
+<H4>REFERENCES</H4>
+<P>
+<A NAME="Beigel">Beigel, Michael I. "A Digital 'Phase Shifter' for Musical Applications, Using the Bell Labs (Alles-Fischer) Digital Filter Module." <I>Journal of the Audio Engineering Society</I>, Vol. 27, No. 9, pp. 673-676, September 1979.</A><P>
+<A NAME="Chamberlin">Chamberlin, Hal. <I>Musical Applications of Microprocessors.</I> 2nd edition. Indianapolis, Indiana: Hayden Books, 1985.<P>
+<A NAME="Hartmann">Hartmann, W.M. "Flanging and Phasers." <I>Journal of the Audio Engineering Society</I>, Vol. 26, No. 6, pp. 439-443, June 1978.</A>
+<P>
+<A NAME="Smith">Smith, Julius O. "An Allpass Approach to Digital Phasing and Flanging." <I>Proceedings of the 1984 ICMC</I>, p. 103-108.<P>
+<H4>AUTHOR</H4>
+Sean Costello<BR>
+Seattle, Washington<BR>
+1999
+<P>
+<P>
+</BODY>
+</HTML>
+

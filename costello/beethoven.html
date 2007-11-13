@@ -1,0 +1,62 @@
+<HTML>
+<HEAD>
+<TITLE>beethoven</TITLE> 
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#ffffff">
+<FONT FACE="Arial, Helvetica">
+<IMG SRC="portfolio.gif" BORDER=0 USEMAP="#portfolio">
+<MAP NAME="portfolio">
+<AREA SHAPE="RECT" ALT="portfolio" COORDS="23,1,152,34" HREF="portfolio.html">
+<AREA SHAPE="RECT" ALT="resume" COORDS="164,0,278,33" HREF="resume.html">
+<AREA SHAPE="RECT" ALT="links" COORDS="289,1,379,31" HREF="links.html">
+<AREA SHAPE="RECT" ALT="home" COORDS="391,1,488,32" HREF="index.html">
+<AREA SHAPE="DEFAULT" NOHREF>
+</MAP>
+<P>
+<H1>beethoven</H1>
+<P>
+<B><A HREF="http://www.haint.com/sounds/beethoven.mp3">beethoven.mp3</A></B> (128 kbps, 1860 KB)<BR>
+<A HREF="beethoven.orc">beethoven.orc</A><BR>
+<A HREF="beethoven.sco">beethoven.sco</A><P>
+
+
+<H2>Inspiration</H2>
+I created <B>beethoven</B> as a demonstration of some of the signal processing techniques I had developed during the spring of 1999. I had recently completed my <A HREF="hilbert.html">hilbert</A> and <A HREF="allpassn.html">allpassn</A> ugens, and was looking for a way to present these new ugens to my Computer Music class at the University of Washington. I had compiled a number of very dry test files, where I would run a <B>gbuzz</B> pulse wave through orchestras based around <B>hilbert</B> and <B>allpassn</B>. The results certainly demonstrated the sonic effects of the new unit generators: the "detuning" of a sound that could be achieved through <B>hilbert</B>-based frequency shifting, the swept notch filter effects of phase shifting that could be produced with <B>allpassn</B>, and the strange paradoxical "barberpole phasing" that could be generated with a combination of the two unit generators. Unfortunately, the examples were also rather uninteresting.  Effects such as frequency shifting and phase shifting tend to have the most dramatic effects on "natural" sounds; "detuning" a <B>gbuzz</B> waveform is not nearly as exciting as "detuning" a classical orchestra.
+<P>
+Therefore, I decided to process a well-known classical piece with the new unit generators, as I figured that people in the class would know the piece well enough to recognize what timbral transformations had occured.  The 2nd movement of Beethoven's 9th Symphony seemed like a good choice.  The homage to Wendy Carlos was unintentional, but appropriate.
+<P>
+<H2>Technical Overview</H2>
+<P>
+The initial sound file was a 2 minute fragement taken from a compact disc recording of Beethoven's Ninth Symphony. I used Sound Forge to edit the sound into 2 parts, one only a few seconds long, the other about 1'40' in length. The natural breaks in the first part of the second symphony dictated the edit points.
+<P>
+Once the piece had been broken into 2 files, I used Sound Forge to analyze the piece, and pinpoint the exact times in each file at which I wanted to begin and end various timbral changes. These time pointers were written down on a piece of paper (this is where a graphic interface to Csound would come in handy), and were used to create <B>linseg</B> envelopes that would enable a smooth transition between processing techniques.
+<P>
+For the first part of the piece, I wanted to create an "explosion" of sound. I had been working on some new reverb structures in Csound, and was really intrigued by the lengthy reverberation times (>60 seconds) that I was achieving. I ended up constructing a sound where the first notes of the 2nd movement were dry, until the point where the tympanis first come in. At that point, the reverberation enters, sustaining the last notes of the phrase for the greater part of a minute. The reverberation is processed by two frequency shifters which are slowly shifting downwards, so that the pitch of the reverberation seems to drop as the note decays.
+<UL>
+<LI>The sound file is processed through two Feedback Delay Network (FDN) reverberation structures, based on <A HREF=#Stautner>[Stautner and Puckette 1982]</A>. My implementation of this is highly simplified, as Csound does not currently have the equivalent of the <B>pipad</B> ugen used in the original Music 11 orchestra.  I used two parallel implementations of the FDN reverb, each with different delay times in the main delay lines. This helped to reduce any metallic resonances that might have been present with a single implementation of the reverberator.
+<LI>Each reverberator is run through a seperate frequency shifter, based around my <B>hilbert</B> unit generator.  The pitch envelope for each frequency shifter is slightly different - one sinks to a lower pitch than the other.
+</UL>
+<P>
+For the second part of the piece, I wanted a rather straight demonstration of what the <B>hilbert</B>-based frequency shifter could do. I also wanted to incorporate the "barberpole phasing" sounds that were possible with a frequency shifter that was based on an IIR Hilbert transformer (as opposed to the more standard FIR Hilbert transformer).  The main instrument for the second part of the piece, <B>instr 2</B>, is a rather straight implementation of a <B>hilbert</B>-based frequency shifter, with <B>linseg</B> envelopes used to control the shifting frequency, amount of feedback, and which output (upshift or downshift) would be heard in which stereo channel.
+<UL>
+<LI>In the first part of the piece, the sound file is frequency shifted downwards in pitch; the pitch trajectory starts at 0 (normal pitch), and slowly shifts down to about 500 Hz, before rising back up in pitch.  I was pleasantly surprised to hear how the downshifting produced sounds that strongly suggested pan pipes.  Even though the harmonics of the piece were being shifted inharmonically, the results still retained a sense of pitch contour - it was clearly recognizable as Beethoven's 9th, just <I>wrong</I>.
+<LI>The middle section features the "barberpole phasing" or "Shepard Tone Phasing" that can be achieved using an IIR-based frequency shifter. This sound is similar to Risset's endless glissando, in that several notches continually sweep upwards (or downwards) in the spectrum, producing a filtering effect that is similar to the eternal ascension of the stripes in a barber pole. To get this effect, the shift frequency is set to about .4 Hz, and the upshift output is fed back into the input of the frequency shifter.  I also incorporated a 12-stage allpass filter in the feedback loop, based around <B>allpassn</B>. The additional phase shift stages add extra notches to the barberpole effect. This effect was originally inspired by a <A HREF=#Bode>Harald Bode</A> patent.
+<LI>The transition between straight frequency shifting and barberpole phasing is created by having the feedback amount controlled by a <B>linseg</B> envelope. For the majority of the piece, feedback is set at zero.  Right before the "barberpole" section, the feedback is turned up to .9 or so. Some weird sounds can be heard as the feedback kicks in while the shifting frequency changes. I originally tried to minimize these strange sounds, but I decided that they added a lot of character, and put them back in.
+<LI>During the middle section, both the upshift and downshift outputs of the frequency shifter are used, one in each channel. This produces a nice stereo effect - the "barberpole phasing" not only sweeps upwards in frequency, but also continually pans from left to right.
+<LI>In the final part of the piece, the sound is shifted upwards in frequency. Again, the general pitch contour is still present, but the notes become increasingly inharmonic.  Near the end, reverberation is slowly brought in, so that the last notes are sustained for several seconds.
+</UL>
+<P>
+<H2>References</H2>
+<P>
+<A NAME="Bode">Bode, Harald.</A> US Patent # <A HREF = "http://www.patents.ibm.com/details?pn=US04399326__">4399326</A>.<P>
+<A NAME="Stautner">Stautner, John and Puckette, Miller. "Designing Multi-Channel Reverberators." <I>Computer Music Journal</I>, Vol. 6, No 1, Spring 1982.</A>
+<P>
+<HR>
+<P>
+<I>Questions? Comments? Email me at <A HREF="mailto:costello@seanet.com">costello@seanet.com</A>.
+<P>
+
+</BODY>
+</HTML>
+
+

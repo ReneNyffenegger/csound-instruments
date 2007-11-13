@@ -1,0 +1,51 @@
+<HTML>
+<HEAD>
+<TITLE>choir</TITLE>
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#FFFFFF" LINK="#33OOCC" VLINK="#3300CC"
+ALINK="#0000FF">
+<FONT FACE="arial, helvetica">
+<IMG SRC="portfolio.gif" BORDER=0 USEMAP="#portfolio">
+<MAP NAME="portfolio">
+<AREA SHAPE="RECT" ALT="portfolio" COORDS="23,1,152,34" HREF="portfolio.html">
+<AREA SHAPE="RECT" ALT="resume" COORDS="164,0,278,33" HREF="resume.html">
+<AREA SHAPE="RECT" ALT="links" COORDS="289,1,379,31" HREF="links.html">
+<AREA SHAPE="RECT" ALT="home" COORDS="391,1,488,32" HREF="index.html">
+<AREA SHAPE="DEFAULT" NOHREF>
+</MAP>
+<P>
+
+<H1>choir</H1>
+<P>
+<B><A HREF="http://www.haint.com/sounds/choir.mp3">choir.mp3</A></B> (128 kbps, 344k download)<BR>
+<A HREF="choir.orc">choir.orc</A><BR>
+<A HREF="choir.sco">choir.sco</A><P>
+
+
+<H2>Inspiration</H2>
+<P>
+This simple but effective vocal orchestra was originally inspired by the soundtrack for the movie "Aguirre: The Wrath of God." The main theme for the movie, composed by Popol Vuh, features a haunting theme played on what has been described as a "choir organ." As far as I can tell, this instrument was an early precursor to the Mellotron (perhaps a Chamberlin or some custom device) that used pre-recorded tapes of an actual choir, one note per key. Instead of using a sampled choir, I decided to create an instrument that was more closely based on the "Choir" settings on the Roland VP-330 Vocoder, a string ensemble/vocoder instrument that was used extensively by Vangelis for the "Blade Runner" soundtrack.
+
+<H2>Technical Overview</H2>
+<P>
+The basic concept of the orchestra is loosely based on the "string-ensembles" that were developed in the early 1970's, in an attempt to use divide-down organ technology to create a polyphonic string section sound.  Instead of creating a single complex vocal instrument that is duplicated for each note in polyphonic performance, the orchestra is seperated into two sections. One section generates the pitch for each note; the second section is a global effects processor that provides both the animation (the "chorusing" and vibrato) and the vocal formants for all of the notes at once.  The result is a suprisingly convincing vocal sound that uses a minimum of computational resources, where each additional note of polyphony only adds a small amount of computation to the orchestra.<P>
+<UL>
+<LI>The sound source for each note is a simple bandwidth-limited pulse wave with an attack/release volume envelope, using the Csound <B>gbuzz</B> unit generator. 
+<LI>The pulse waves for all of the notes are summed together, and sent to a global processing section consisting of four parallel delay lines. Each of the short (~12 msec) delay lines is modulated by a seperate low-frequency oscillator, running at different rates (between 4 and 6 Hz). 
+<LI>The outputs of the delay lines are summed together, resulting in a "thickening" of the sound that is very similar to several instruments playing together. The summed delay line outputs are then run through a bank of five parallel two-pole resonant filters, with the frequencies and bandwidths of the filters set to correspond to the first five formants in the vocal sound "ah."  The outputs of the resonant filters are scaled (to account for the volume of each formant), and summed together.
+<LI>The summed outputs of the resonant filters are then sent into a global reverberator, which is based on the feedback delay nework described by Stautner and Puckette. The outputs of the reverberator and the resonant filters are summed and sent to the main outputs.
+</UL>
+<P>
+Originally, the orchestra used five <B>reson</B> filters in parallel; <B>reson</B> is the simple Csound two-pole resonant bandpass filter, implemented by the filter equation<P>
+<CENTER><IMG SRC="resoneq4.gif"></CENTER>
+<P>
+However, after I implemented the <A HREF="resonrz.html">resonr/resonz</A> filters as Csound unit generators, I found that these filters added a more defined "vocal" quality to the sound. In particular, <A HREF="resonrz.html">resonr</A> and <A HREF="resonrz.html">resonz</A> brought out an "airy" nature, due to the increased attenuation of frequencies between the cutoff and 0 Hz. The ideal combination seems to be to use a <B>reson</B> filter for the lowest formant filter to add some increased energy to the fundamental of the sound, and to use <A HREF="resonrz.html">resonr</A> or <A HREF="resonrz.html">resonz</A> filters for the higher formants.
+<P>
+The most realistic vocal sounds are obtained by using "sawtooth"-like or pulse waves as an input, but other sounds can be processed by the global chorusing/filtering section to produce a vocal effect. In <B><A HREF="http://www.haint.com/sounds/choirstretch.mp3">choirstretch.mp3</A></B>, I used <B>sndwarp</B>, a granular timestretching unit generator, to process an acoustic guitar sample. The results were then sent through two of the global chorus/formant banks, with one bank's formants set to produce a tenor "ah" sound, and the other producing a soprano "ah" sound.
+<P>
+<HR>
+<P>
+<I>Questions? Comments? Email me at <A HREF="mailto:costello@seanet.com">costello@seanet.com</A>.
+<P>
+</BODY>
+</HTML>

@@ -1,0 +1,124 @@
+<HTML>
+<HEAD>
+<TITLE>RESONR, RESONZ</TITLE>
+</HEAD>
+<BODY>
+<IMG SRC="portfolio.gif" BORDER=0 USEMAP="#portfolio">
+<MAP NAME="portfolio">
+<AREA SHAPE="RECT" ALT="portfolio" COORDS="23,1,152,34" HREF="portfolio.html">
+<AREA SHAPE="RECT" ALT="resume" COORDS="164,0,278,33" HREF="resume.html">
+<AREA SHAPE="RECT" ALT="links" COORDS="289,1,379,31" HREF="links.html">
+<AREA SHAPE="RECT" ALT="home" COORDS="391,1,488,32" HREF="index.html">
+<AREA SHAPE="DEFAULT" NOHREF>
+</MAP>
+<P>
+<h2>resonr, resonz</h2>
+<P>
+<PRE>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>resonr</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; asig, kcf, kbw[,iscl, istor]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>resonz</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; asig, kcf, kbw[,iscl, istor]
+</PRE>
+<P>
+<HR>
+<P>
+
+<H4>DESCRIPTION</H4>
+Implementations of a second-order, two-pole two-zero bandpass filter with variable frequency response.
+<H4>INITIALIZATION</H4>
+The optional initialization variables for <B>resonr</B> and <B>resonz</B> are identical to the i-time variables for <B>reson</B>.
+<P>
+<I>istor</I> - initial disposition of internal data space. Since filtering
+incorporates a feedback loop of previous output, the initial status of
+the storage space used is significant. A zero value will clear the space;
+a non-zero value will allow previous information to remain. The default
+value is 0.
+
+<P><I>iscl</I> - coded scaling factor for resonators. A value of 1 signifies
+a peak response factor of 1, i.e. all frequencies other than kcf are attenuated
+in accordance with the (normalized) response curve. A value of 2 raises
+the response factor so that its overall RMS value equals 1. (This intended
+equalization of input and output power assumes all frequencies are physically
+present; hence it is most applicable to white noise.) A zero value signifies
+no scaling of the signal, leaving that to some later adjustment (such as <B>balance</B>). The default value is 0.
+<H4>PERFORMANCE</H4>
+<B>resonr</B> and <B>resonz</B> are variations of the classic two-pole bandpass resonator (<B>reson</B>). Both <B>resonr</B> and <B>resonz</B> have two zeroes in their transfer functions, in addition to the two poles. <B>resonz</B> has its zeroes located at z = 1 and z = -1. <B>resonr</B> has its zeroes located at +sqrt(R) and -sqrt(R), where R is the radius of the poles in the complex z-plane. The addition of zeroes to <B>resonr</B> and <B>resonz</B> results in the improved selectivity of the magnitude response of these filters at cutoff frequencies close to 0, at the expense of less selectivity of frequencies above the cutoff peak.  <B>resonr</B> and <B>resonz</B> have very close to constant-gain as the center frequency is swept, resulting in a more efficient control of the magnitude response than with traditional two-pole resonators such as <B>reson</B>. <B>resonr</B> and <B>resonz</B> produce a sound that is considerably different from <B>reson</B>, especially for lower center frequencies; trial and error is the best way of determining which resonator is best suited for a particular application.
+<P>
+<I>asig</I> - Input signal to be filtered.
+<P>
+<I>kcf</I> - Cutoff or resonant frequency of the filter, measured in cps.
+<P>
+<I>kbw</I> - Bandwidth of the filter (the cps difference between the upper and lower half-power points).
+<P>
+
+<H4>EXAMPLE</H4>
+<PRE>
+; Orchestra file for resonant filter sweep of a sawtooth-like waveform. 
+; Orchestra file for resonant filter sweep of a sawtooth-like waveform. 
+; The outputs of reson, resonr, and resonz are scaled by coefficients
+; specified in the score, so that each filter can be heard on its own
+; from the same instrument.
+sr = 44100
+kr = 4410
+ksmps = 10
+nchnls = 1
+
+instr 1
+
+idur = p3
+ibegfreq = p4   ; beginning of sweep frequency
+iendfreq = p5   ; ending of sweep frequency
+ibw = p6        ; bandwidth of filters in Hz
+ifreq = p7      ; frequency of gbuzz that is to be filtered
+iamp = p8       ; amplitude to scale output by
+ires = p9     	; coefficient to scale amount of reson in output
+iresr = p10   	; coefficient to scale amount of resonr in output
+iresz = p11   	; coefficient to scale amount of resonz in output
+
+; Frequency envelope for reson cutoff
+kfreq   linseg  ibegfreq, idur * .5, iendfreq, idur * .5, ibegfreq
+
+; Amplitude envelope to prevent clicking
+kenv    linseg  0, .1, iamp, idur - .2, iamp, .1, 0
+
+; Number of harmonics for gbuzz scaled to avoid aliasing
+iharms = (sr*.4) / ifreq
+
+asig    gbuzz   1, ifreq, iharms, 1, .9, 1      ; "Sawtooth" waveform
+ain = kenv * asig                               ; output scaled by amp envelope
+ares    reson  ain, kfreq, ibw, 1
+aresr  	resonr ain, kfreq, ibw, 1
+aresz  	resonz ain, kfreq, ibw, 1
+
+out     ares * ires + aresr * iresr + aresz * iresz
+
+endin
+
+; Score file for above
+f1 0 8192 9 1 1 .25     ; cosine table for gbuzz generator
+
+i1  0 10 1 3000 200 100 4000 1 0 0 	; reson  output with bw = 200
+i1 10 10 1 3000 200 100 4000 0 1 0	; resonr output with bw = 200
+i1 20 10 1 3000 200 100 4000 0 0 1	; resonz output with bw = 200
+i1 30 10 1 3000  50 200 8000 1 0 0 	; reson  output with bw = 50
+i1 40 10 1 3000  50 200 8000 0 1 0	; resonr output with bw = 50
+i1 50 10 1 3000  50 200 8000 0 0 1	; resonz output with bw = 50
+
+</PRE>
+<P>
+<H4>TECHNICAL HISTORY</H4>
+<B>resonr</B> and <B>resonz</B> were originally described in an article by Julius O. Smith and James B. Angell (<A HREF=#smith>1</A>). Smith and Angell recommended the <B>resonz</B> form (zeros at +1 and -1) when computational efficiency was the main concern, as it has one less multiply per sample, while <B>resonr</B> (zeroes at + and - the square root of the pole radius R) was recommended for situations when a perfectly constant-gain center peak was required. Ken Steiglitz, in a later article (<A HREF=#steiglitz1>2</A>), demonstrated that <B>resonz</B> had constant gain at the true <I>peak</I> of the filter, as opposed to <B>resonr</B>, which displayed constant gain at the pole <I>angle</I>. Steiglitz also recommended <B>resonz</B> for its sharper notches in the gain curve at zero and Nyquist frequency. Steiglitz's recent book (<A HREF=#steiglitz2>3</A>) features a thorough technical discussion of <B>reson</B> and <B>resonz</B>, while Dodge and Jerse's textbook (<A HREF=#dodgejerse>4</A>) illustrates the differences in the response curves of <B>reson</B> and <B>resonz</B>.
+<H4>AUTHOR</H4>
+Sean Costello<BR>
+Seattle, Washington<BR>
+1999
+<P>
+<H4>REFERENCES</H4>
+<A NAME="smith">1. Julius O. Smith and James B. Angell, "A Constant-Gain Resonator Tuned by a Single Coefficient," <I>Computer Music Journal</I>, vol. 6, no. 4, pp. 36-39, Winter 1982.</A><BR>
+<A NAME="steiglitz1">2. Ken Steiglitz, "A Note on Constant-Gain Digital Resonators," <I>Computer Music Journal</I>, vol. 18, no. 4, pp. 8-10, Winter 1994. </A><BR>
+<A NAME="steiglitz2">3. Ken Steiglitz, <I>A Digital Signal Processing Primer, with Applications to Digital Audio and Computer Music.</I> Addison-Wesley Publishing Company, Menlo Park, CA, 1996.</A><BR>
+<A NAME="dodgejerse">4. Charles Dodge and Thomas A. Jerse, <I>Computer Music: Synthesis, Composition, and Performance</I> (New York: Schirmer Books, 1997), 2nd edition, pp. 211-214.
+<P>
+<P>
+
+</BODY>
+</HTML>

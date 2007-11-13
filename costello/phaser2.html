@@ -1,0 +1,190 @@
+<HTML>
+<HEAD>
+<TITLE>PHASER1/PHASER2</TITLE>
+</HEAD>
+<BODY>
+<IMG SRC="portfolio.gif" BORDER=0 USEMAP="#portfolio">
+<MAP NAME="portfolio">
+<AREA SHAPE="RECT" ALT="portfolio" COORDS="23,1,152,34" HREF="portfolio.html">
+<AREA SHAPE="RECT" ALT="resume" COORDS="164,0,278,33" HREF="resume.html">
+<AREA SHAPE="RECT" ALT="links" COORDS="289,1,379,31" HREF="links.html">
+<AREA SHAPE="RECT" ALT="home" COORDS="391,1,488,32" HREF="index.html">
+<AREA SHAPE="DEFAULT" NOHREF>
+</MAP>
+<P>
+<h2>phaser1, phaser2</h2>
+<P>
+<PRE>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; aout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>phaser1</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ain, kfreq, iorder, kfeedback[, istor]
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; aout&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>phaser2</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ain, kbf, kq, iorder, imode, ksep, kfeedback
+</PRE>
+<P>
+<HR>
+<P>
+
+<H4>DESCRIPTION</H4>
+An implementation of <I>n</I> number of 1st or 2nd-order allpass filters in series.
+<P>
+<H4>INITIALIZATION</H4>
+<P>
+<I>iorder</I> - For <B>phaser1</B>, used to specify the number of 1st-order allpass stages in series. This can range from 1 to 4999. For <B>phaser2</B>, used to specify the number of 2nd-order filters in series; this can range from 1 to 2499. With higher orders, the computation time increases. 
+<P>
+<I>istor</I> - optional variable for <B>phaser1</B> only, used to control initial disposition of internal data space. Since filtering incorporates a feedback loop of previous output, the initial status of the storage space used is significant. A zero value will clear the space; a non-zero value will allow previous information to remain. The default value is 0. 
+<P>
+<I>imode</I> - <B>phaser2</B> only, used in calculation of notch frequencies. See <I>ksep</I> for details.
+<P>
+<H4>PERFORMANCE</H4>
+<B>phaser1</I> implements <I>n</I> number of single-order allpass sections, serially connected, all sharing the same coefficient. Each allpass section can be represented by the following difference equation:
+<P>
+y(n) = C * x(n) + x(n-1) - C * y(n-1)
+<P>
+where x(n) is the input, x(n-1) is the previous input, y(n) is the output, y(n-1) is the previous output, and C is a coefficient which is calculated from the value of <I>kfreq</I>, using the bilinear z-transform.
+<P>
+<I>kfreq</I> - frequency (in cycles per second) at which each filter in the series shifts its input by 90 degrees.
+<P>
+<I>kfeedback</I> - amount of the output which is fed back into the input of the allpass chain. With larger amounts of feedback, more prominent notches appear in the spectrum of the output. <I>kfeedback</I> must be in the range -1 < <I>kfeedback</I> < 1.
+<P>
+By slowly varying <I>kfreq</I>, and mixing the output of <B>allpassn</B> with the input, the classic "phase shifter" effect is created, with notches moving up and down in frequency (this works best with <I>iorder</I> between 4 and 16). When the input to the allpass chain is mixed with the output, 1 notch is generated for every 2 allpass stages, so that with <I>iorder</I> = 6, there will be 3 notches in the output. With higher values for <I>iorder</I>, modulating <I>kcoeff</I> will result in a form of nonlinear pitch modulation. 
+<P>
+<B>phaser2</B> implements <I>n</I> number of 2nd order allpass sections, connected in series. The use of 2nd order allpass sections allows for the precise placement of the frequency, width, and depth of notches in the frequency spectrum. <I>iorder</I> is used to directly determine the number of notches in the spectrum; e.g. for <I>iorder</I> = 6, there will be 6 notches in the output spectrum.
+<P>
+<I>kbf</I> - center frequency (in cycles-per-second) of the notch of the first allpass filter in the series. This frequency is used as the base frequency from which the frequencies of the other notches are derived.
+<P>
+<I>kq</I> - Q of each notch. Higher Q values result in narrow notches. A Q between 0.5 and 1 results in the strongest "phasing" effect, but higher Q values can be used for special effects.
+<P>
+<I>ksep</I> - scaling factor used, in conjunction with <I>imode</I>, to determine the frequencies of the additional notches in the output spectrum. There are 2 possible modes for determining the notch frequencies:
+<UL>
+<LI>When <I>imode</I> = 1, the notch frequencies are determined the following function:
+<P>
+frequency of notch N = <I>kbf</I> + (<I>ksep</I> * <I>kbf</I> * N-1)
+<P>
+For example, with <I>imode</I> = 1 and <I>ksep</I> = 1, the notches will be in harmonic relationship with the notch frequency determined by <I>kbf</I> (i.e. if there are 8 notches, with the first at 100 Hz, the next notches will be at 200, 300, 400, 500, 600, 700, and 800 Hz). This is useful for generating a "comb filtering" effect, with the number of notches determined by <I>iorder</I>. Different values of <I>ksep</I> allow for inharmonic notch frequencies and other special effects. <I>ksep</I> can be swept to create an expansion or contraction of the notch frequencies.  A useful visual analogy for the effect of sweeping <I>ksep</I> would be the bellows of an accordion as it is being played - the notches will be seperated, then compressed together, as <I>ksep</I> changes.
+<P>
+<LI>When <I>imode</I> = 2, the subsequent notches are <I>powers</I> of the input parameter <I>kscale</I> times the inital notch frequency specified by <I>kbf</I>.  This can be used to set the notch frequencies to octaves and other musical intervals. For example, the following lines will generate 8 notches in the output spectrum, with the notches spaced at octaves of <I>kbf</I>:
+<P>
+<PRE>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; aphs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<B>phaser2</B>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ain, kbf, 0.5, 8, 2, 2, 0
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; aout = ain + aphs
+</PRE>
+<P>
+When <I>imode</I> = 2, the value of <I>ksep</I> must be greater than 0. <I>ksep</I> can be swept to create a compression and expansion of notch frequencies (with more dramatic effects than when <I>imode</I> = 1).
+</UL>
+<P>
+<I>kfeedback</I> - amount of the output which is fed back into the input of the allpass chain. Increases the prominence of the notches. <I>kfeedback</I> must be in the range -1 < <I>kfeedback</I> < 1 for stability.
+<P>
+<H4>EXAMPLE</H4>
+<P>
+<PRE>
+; Orchestra for demonstration of phaser1 and phaser2
+sr = 44100
+kr = 4410
+ksmps = 10
+nchnls = 1
+
+instr 1	; demonstration of phase shifting abilities of phaser1.
+	; Input mixed with output of phaser1 to generate notches.
+	; Shows the effects of different iorder values on the
+	; sound. 
+
+idur = p3                     
+iamp = p4 * .05
+iorder = p5	; number of 1st-order stages in phaser1 network.
+		; Divide iorder by 2 to get the number of notches.
+ifreq = p6	; frequency of modulation of phaser1
+ifeed = p7	; amount of feedback for phaser1
+
+kamp	linseg	0, .2, iamp, idur - .2, iamp, .2, 0
+
+iharms = (sr*.4) / 100
+
+asig    gbuzz   1, 100, iharms, 1, .95, 2      ; "Sawtooth" waveform
+
+; modulation oscillator for phaser1 ugen.
+kfreq	oscili	5500, ifreq, 1
+kmod = kfreq + 5600
+
+aphs	phaser1 asig, kmod, iorder, ifeed
+
+out (asig + aphs) * iamp
+
+endin
+
+
+instr 2	; demonstration of phase shifting abilities of phaser2.
+	; Input mixed with output of phaser2 to generate notches.
+	; Demonstrates the interaction of imode and ksep.
+
+idur = p3                     
+iamp = p4 * .04
+iorder = p5	; number of 2nd-order stages in phaser2 network
+ifreq = p6	; not used
+ifeed = p7	; amount of feedback for phaser2
+imode = p8	; mode for frequency scaling
+isep = p9	; used with imode to determine notch frequencies
+
+kamp	linseg	0, .2, iamp, idur - .2, iamp, .2, 0
+
+iharms = (sr*.4) / 100
+
+asig    gbuzz   1, 100, iharms, 1, .95, 2      ; "Sawtooth" waveform
+
+; exponentially decaying function, to control notch frequencies
+kline	expseg	1, idur, .005
+
+aphs    phaser2  asig, kline * 2000, .5, iorder, imode, isep, ifeed
+out (asig + aphs) * iamp
+
+endin
+
+
+; score file for above
+f1 0 16384 9 .5 -1 0	; inverted half-sine, used
+			; for modulating phaser1 frequency
+f2 0 8192 9 1 1 .25	; cosine wave for gbuzz
+
+; phaser1
+i1  0  5 7000 4  .2 .9
+i1  6  5 7000 6  .2 .9
+i1  12 5 7000 8  .2 .9
+i1  18 5 7000 16 .2 .9
+i1  24 5 7000 32 .2 .9
+i1  30 5 7000 64 .2 .9
+
+; phaser2, imode=1
+i2  37 10 7000 8  .2 .9 1 .33
+i2  48 10 7000 8  .2 .9 1 2 
+
+; phaser2, imode=2
+i2  60 10 7000 8  .2 .9 2 .33
+i2  72 10 7000 8  .2 .9 2 2
+
+e
+
+
+</PRE>
+<P>
+<H4>TECHNICAL HISTORY</H4>
+<P>
+A general description of the differences between flanging and phasing can be found in <A HREF=#Hartmann>Hartmann 1978</A>. <A HREF=#Beigel>Beigel 1979</A> presents an early implementation of 1st order allpass filters connected in series, with the bilinear z-transform used for determining the phase shift frequency of each stage; a similar implementation can be found in <A HREF=#Cronin>Cronin 1994</A>. <A HREF=#Chamberlin>Chamberlin 1985</A> and <A HREF=#Smith>Smith 1984</A> both discuss using 2nd-order allpass sections for greater control over notch depth, width, and frequency.
+<P>
+<H4>REFERENCES</H4>
+<P>
+<A NAME="Beigel">Beigel, Michael I. "A Digital 'Phase Shifter' for Musical Applications, Using the Bell Labs (Alles-Fischer) Digital Filter Module." <I>Journal of the Audio Engineering Society</I>, Vol. 27, No. 9, pp. 673-676, September 1979.</A>
+<P>
+<A NAME="Chamberlin">Chamberlin, Hal. <I>Musical Applications of Microprocessors.</I> 2nd edition. Indianapolis, Indiana: Hayden Books, 1985.
+<P>
+<A NAME="Cronin">Cronin, Dennis. "Examining Audio DSP Algorithms." <I>Dr. Dobb's Journal</I>, July 1994, p. 78-83.
+<P>
+<A NAME="Hartmann">Hartmann, W.M. "Flanging and Phasers." <I>Journal of the Audio Engineering Society</I>, Vol. 26, No. 6, pp. 439-443, June 1978.</A>
+<P>
+<A NAME="Smith">Smith, Julius O. "An Allpass Approach to Digital Phasing and Flanging." <I>Proceedings of the 1984 ICMC</I>, p. 103-108.
+<P>
+<H4>AUTHOR</H4>
+Sean Costello<BR>
+Seattle, Washington<BR>
+1999
+<P>
+<P>
+</BODY>
+</HTML>
+

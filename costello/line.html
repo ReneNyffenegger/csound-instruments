@@ -1,0 +1,42 @@
+<HTML>
+<HEAD>
+<TITLE>line</TITLE> 
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#ffffff">
+<FONT FACE="Arial, Helvetica">
+<IMG SRC="portfolio.gif" BORDER=0 USEMAP="#portfolio">
+<MAP NAME="portfolio">
+<AREA SHAPE="RECT" ALT="portfolio" COORDS="23,1,152,34" HREF="portfolio.html">
+<AREA SHAPE="RECT" ALT="resume" COORDS="164,0,278,33" HREF="resume.html">
+<AREA SHAPE="RECT" ALT="links" COORDS="289,1,379,31" HREF="links.html">
+<AREA SHAPE="RECT" ALT="home" COORDS="391,1,488,32" HREF="index.html">
+<AREA SHAPE="DEFAULT" NOHREF>
+</MAP>
+<P>
+<H1>line</H1>
+<P>
+<B><A HREF="http://www.haint.com/sounds/line.mp3">line.mp3</A></B> (128 kbps, 800 kb download)<BR>
+<A HREF="line.orc">line.orc</A><BR>
+<A HREF="line.sco">line.sco</A><P>
+
+
+<H2>Inspiration</H2>
+The original inspiration for <I>line</I> was a lack of inspiration. I had limited myself to using a single sample of William S. Burroughs saying the word <A HREF="http://www.haint.com/sounds/apocalypse.aiff">"apocalypse"</A> for all three of the compositions in the project (line, <A HREF="surface.html">surface</A>, <A HREF="space.html">space</A>). Initially, all of my attempts at creating a "linear" composition out of this sound were unsuccessful. Frustrated, I sat down at the computer and dashed off the most annoying idea I could think of - a chorus of gibbering voices repeating the word "Apocalypse" over and over and over again at different rates and pitches. The result was somewhere in between early Steven Reich and a broken record. Then I slapped some <B>reson</B> filters on the piece. All of a sudden it sounded pretty good.  At this point, I started experimenting with envelopes controlling the bandwidths and cutoff frequencies of the <B>reson</B> filters, and delays on the outputs of the <B>reson</B> filters. Eventually, the annoying gibberish was transformed into a rather complex and compelling little piece.
+<P>
+<H2>Technical Overview</H2>
+<P>
+The piece consists of several identical instruments, all playing their notes at the exact same time. Each instrument has a different pitch value to form some suspended chords.
+<UL>
+<LI>The initial sound source for each instrument is the 1.3 second sample of "Apocalypse." This sample is used as the wavetable for an <B>oscili</B> unit generator. The pitch value of the <B>oscili</B> determines the playback rate of the sample. As the sample is looping over and over, the pitch value will affect not only the pitch of the sample, but the duration as well as the timbre (higher values will produce the "chipmunk" effect). For this piece, I felt it was important to maintain the standard interconnection of pitch, duration, and timbre, as I planned to break these interconnections in <A HREF="surface.html">surface</A> and <A HREF="space.html">space</A>.
+<LI>For each instrument, the output of the <B>oscili</B> is processed by two <B>reson</B> filters. The bandwidths of both of the <B>reson</B> filters are modulated by a <B>linseg</B> envelope so that the filters begin the piece with very narrow bandwidths, gradually "open up" until the bandwidths are fairly large about 40 seconds into the piece, and then narrow in bandwidth until the end of the piece. The two <B>reson</B> filters have their center frequency controlled by <B>linseg</B> envelopes that are moving in opposite directions; as one filter's center frequency moves upwards the other moves downwards (and vice versa). The two <B>reson</B> filters are panned hard left and right, creating a nice stereo effect. To make things more complex, the center frequencies of the <B>reson</B> filters are also multiplied by the relative pitch value of the instrument's note, so each instrument will be sweeping through different frequencies.
+<LI>Each of the two <B>reson</B> filters for each instrument is sent to its own <B>delay</B> line with a delay of .6 seconds. The delay of each <B>reson</B> filter is sent to the stereo channel of the other <B>reson</B> filter's direct output, creating a stereo delay effect.
+</UL>
+It is worth noting that this composition relies heavily on the frequency response and idiosyncracities of the <B>reson</B> unit generator. As an experiment, after I had programmed the <A HREF="resonrz.html">resonr/resonz</A> resonant filters into Csound, I replaced all of the <B>reson</B> filters with <B>resonz</B> filters. The result sounded nothing like the original piece. In particular, all of the low frequency murk at the beginning of the piece was gone; there was no sense of the voices emerging out of a swampy morass. The <B>resonz</B> filters gave a clarity that would be useful in many situations (such as in my <A HREF="choir.html">choir</A> orchestra), but in this composition was out of place.
+<P>
+<HR>
+<P>
+<I>Questions? Comments? Email me at <A HREF="mailto:costello@seanet.com">costello@seanet.com</A>.
+<P>
+
+</BODY>
+</HTML>

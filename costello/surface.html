@@ -1,0 +1,58 @@
+<HTML>
+<HEAD>
+<TITLE>surface</TITLE> 
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#ffffff">
+<FONT FACE="Arial, Helvetica">
+<IMG SRC="portfolio.gif" BORDER=0 USEMAP="#portfolio">
+<MAP NAME="portfolio">
+<AREA SHAPE="RECT" ALT="portfolio" COORDS="23,1,152,34" HREF="portfolio.html">
+<AREA SHAPE="RECT" ALT="resume" COORDS="164,0,278,33" HREF="resume.html">
+<AREA SHAPE="RECT" ALT="links" COORDS="289,1,379,31" HREF="links.html">
+<AREA SHAPE="RECT" ALT="home" COORDS="391,1,488,32" HREF="index.html">
+<AREA SHAPE="DEFAULT" NOHREF>
+</MAP>
+<P>
+<H1>surface</H1>
+<P>
+<B><A HREF="http://www.haint.com/sounds/surface.mp3">surface.mp3</A></B> (128 kbps, 953 KB)<BR>
+<A HREF="surface.orc">surface.orc</A><BR>
+<A HREF="surface.sco">surface.sco</A><P>
+
+<H2>Inspiration</H2>
+The initial intent for <b>surface</b> was to explore the surface of a sound. I had the concept that <A HREF="line.html">line</A> would be an exploration of the melodic line inherent within a sound, while <b>surface</B> would delve into the timbral dimensions of the sound.  I had recently begun to experiment with <B>sndwarp</B>, a granular timestretching unit generator written by Richard Karpen. In my experiments I subjected small snippets of speech to extreme timestretching - on the order of 200X the original duration. At this level, the reverbed vocal samples I was using turned into strange and mysterious choirs, with Ligeti-esque tonal clusters as the pitch contours of the speech were echoed and sustained by the reverberation. My goal was to find and stretch all of the "sweet spots" of the <A HREF="http://www.haint.com/sounds/apocalypse.aiff">apocalypse</A> sample, and create a composition out of these newly discovered tones. 
+<P>
+Another inspiration for <B>surface</B> was a book by Richard Ellis, "The Search for the Giant Squid," that I was reading at the time. When I played an early draft of the composition for my fiance, she said that it reminded her of flying over the surface of the water. As I already had watery depths on the mind, the composition soon took on much more of an aquatic edge. Eventually, the composition became an abstract exploration of the concept of <I>surfacing</I>, as if the voices were emerging from the water, only to be pulled back under, dragged down to unknown depths.
+<P>
+<H2>Technical Overview</H2>
+<P>
+As with <A HREF="line.html">line</A> and <A HREF="space.html">space</A>, the only sound source used was the sample of William S. Burroughs saying "<A HREF="http://www.haint.com/sounds/apocalypse.aiff">Apocalypse</A>." 
+I began the compositional process by using <B>sndwarp</B> to stretch the sample to over a minute in duration, and listened to the stretched sample to identify the different held pitches, pitch contours, and interesting noises. Using SND as a graphic editor, I pinpointed the start and end points in the original sample where the most interesting sounds and pitch contours occured. These values would later be used as inputs to the <B>sndwarp</B> ugen in the main composition.
+<P>
+After identifying the useful places in the sample for timestreching, I constructed an instrument that would allow me to exploit the useful timbres and pitches I had discovered as well as produce an "underwater" sound when needed:
+<UL>
+<LI>The sample is processed by <B>sndwarp</B>. The beginning and ending times of the section of the sample to be timestretched are provided as inputs to the instrument.  The timestretching ratio is automatically calculated from the intended duration of the timestretched sound.
+<LI>As <B>sndwarp</B> reads the sound from a table, the beginning and ending times can be specified such that the pointer moves backwards through the sound; this proved to be useful for obtaining certain pitch contours. 
+<LI><B>sndwarp</B> also allows one to change the pitch of the sound as it is stretched; however, changing the pitch also changes the timbre of the sound, as the formants are shifted as well as the pitch. I used the pitchshifting feature in <B>sndwarp</B> sparingly, within a small enough range to avoid excessive "munchkinization" of the vocal sample. For the most part, I tried to work with pitches that were already present within the original sample, choosing segments of the original sample that contained notes I wanted to use.
+<LI>The number of overlapping windows in <B>sndwarp</B> and the amount of random variations in window size can be specified by the user. I used large numbers of overlapping windows with large amounts of random fluctuations of window size to obtain a thick, swirly sound. As the sample was rather "wet" to begin with, this resulted in a very liquidy timestretched sound, with none of the "stuttering" that can occur with smaller numbers of overlapping windows. This greatly increased the time needed to compute the sound, but the results were worth it - light years beyond what is available with most commercial timestretching techniques.
+<LI>The output of the <B>sndwarp</B> ugen is processed by a simple amplitude envelope to allow the sound to fade in and out smoothly. Longish attack and decay times are used; in the composition, these have staggered onsets, to allow for the overall timbre to smoothly flow from one tonality to another.
+<LI>After amplitude processing, the <B>sndwarp</B> output is sent through several parallel reson filters. Each reson filter's center frequency is controlled by the same envelope that controls the amplitude of the <B>sndwarp</B> output. As the sound rises in volume, the filter frequencies rise, and as the sound dies away, the filter frequencies fall. This is similar to the "envelope filtering" of such effects as the Mutron III. In this application, however, the goal is to generate a more "natural" sound which has an increased amount of high frequency energy at higher volumes.
+</UL>
+At this point, the filtered <B>sndwarp</B> output is sent to one of two destinations: a dry output, and an "underwater" output designed to simulate the sound of "surfacing" from the water. 
+<UL>
+<LI>The "underwater" effect is generated by a combination of <B>deltapi</B> delay lines <B>reson</B> filters. The filtered <B>sndwarp</B> signal is sent through four parallel <B>deltapi</B> interpolating tapped delay lines. Each delay line's tap point is modulated by a seperate <B>oscili</B>-based LFO, running at a different rate. The rate of each LFO's vibrato is scaled by a <B>linseg</B>-based envelope, to gradually double in speed by the duration of the note.
+<LI>The outputs of the delay lines are summed, and sent through four parallel <B>reson</B> filters. The cutoff frequencies of the <B>reson</B> filters are determined by two sources, mixed together. Each <B>reson</B> filter has its center frequency modulated by its own independent low-frequency noise source, based around the <B>randi</B> ugen. The overall speed of the <B>randi</B> generators can be controlled by a parameter in the score - faster speeds produce a "fizzy" sound, while slower speeds yield a deeper underwater sound. In addition, each <B>reson</B> filter's center frequency is controlled by a <B>linseg</B> envelope, so that the center frequency is lower at the beginning, rises to a higher point for the middle of the note, and falls in pitch towards the end of the note.
+<LI>To control the ratio of dry sound to "aquatic" sound, two complimentary envelopes are used to crossfade the dry and aquatic outputs. In addition, the dry envelope is used to control the bandwidth of the <B>reson</B> filters in the "underwater" processing section. As the amount of dry signal increases, the bandwidth of the <B>reson</B> filters increases, resulting in a sound that is less "watery."
+<LI>Both "wet" and dry signals are processed by a global reverberator, with the amount of signal sent to the reverb specified as a score parameter.
+</UL>
+Clearly, the instrument described above has an enormous number of parameters that need to be specified in the score. However, each "note" produces a tremendously thick sound, so only a small number of notes are needed to construct the composition (only 19 notes are called in the score).  I found that the parameters were best selected by hand, as opposed by using an automated score-generation program such as Common Music. 
+<P>
+Once the instrument was constructed, the main obstacle to surmount in completing the composition was the sheer amount of time needed to compile the piece.  This was a frustrating process, to say the least: wait 20-30 minutes for the piece to compile, listen to the results, spend 2 minutes making the required changes in the orchestra or score, wait 20-30 minutes for the piece to recompile, repeat as necessary. Still, I feel that the final results were worth the wait.
+<P>
+<HR>
+<P>
+<I>Questions? Comments? Email me at <A HREF="mailto:costello@seanet.com">costello@seanet.com</A>.
+<P>
+
+</BODY>
+</HTML>

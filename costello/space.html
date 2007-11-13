@@ -1,0 +1,54 @@
+<HTML>
+<HEAD>
+<TITLE>space</TITLE> 
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#ffffff">
+<FONT FACE="Arial, Helvetica">
+<IMG SRC="portfolio.gif" BORDER=0 USEMAP="#portfolio">
+<MAP NAME="portfolio">
+<AREA SHAPE="RECT" ALT="portfolio" COORDS="23,1,152,34" HREF="portfolio.html">
+<AREA SHAPE="RECT" ALT="resume" COORDS="164,0,278,33" HREF="resume.html">
+<AREA SHAPE="RECT" ALT="links" COORDS="289,1,379,31" HREF="links.html">
+<AREA SHAPE="RECT" ALT="home" COORDS="391,1,488,32" HREF="index.html">
+<AREA SHAPE="DEFAULT" NOHREF>
+</MAP>
+<P>
+<H1>space</H1>
+<P>
+<B><A HREF="http://www.haint.com/sounds/space.mp3">space.mp3</A></B> (128 kbps)<BR>
+<A HREF="space.orc">space.orc</A><BR>
+<A HREF="space.sco">space.sco</A><P>
+
+<H2>Inspiration</H2>
+For <B>space</B>, my primary goal was to continue exploring the possibilities in sound modification begun with <A HREF="line.html">line</A> and <A HREF="surface.html">surface</A>.  <B>line</B> had used the "<A HREF=" http://www.haint.com/sounds/apocalypse.aiff">Apocalypse</A>" sample in a very linear manner - the pitch, duration and timbre of the sample were inextricably connected to each other, and modifications to any one of those parameters would result in a change of all three parameters. In <B>surface</B>, I used <B>sndwarp</B> to disassociate pitch and duration. I was able to extend the duration of the sample to whatever length I wanted, without changing the pitch. However, changing the pitch of the note resulted in a change of timbre, as the formant were shifted along with the pitch. For <B>space</B>, my goal was to completely decorrelate these three sonic dimensions - to have independent control over pitch, duration, and timbre.
+<P>
+Beyond this initial goal, I wanted to explore further meanings implied by the term "space."  I thought it would be interesting to explore the spatial dimensions of the soundfield, and attempt to create a sense of three-dimensional space through the use of movement. I had also found some interesting sounds in my initial <B>sndwarp</B> explorations of the "Apocalypse" sample, in the spaces between the various syllables of the word - as the reverberated pitches of each syllable died away, beautiful "tone clusters" could be heard upon extensive timestretching. I wanted to use those sounds in the spaces between the syllables, to create a Ligeti-esque backdrop to my piece. Finally, I wanted the piece as a whole to pay tribute to the "space music" created by German bands in the early 1970's, such as <I>Cluster II</I> by Cluster, <I>Irrlicht</I> by Klaus Schulze, and <I>Phaedra</I> by Tangerine Dream.
+<P>
+<H2>Technical Overview</H2>
+<P>
+Once again, the sole sound source for the piece was a short sample of William S. Burroughs saying the word "<A HREF=" http://www.haint.com/sounds/apocalypse.aiff">Apocalypse</A>." I used three different instruments in the piece to achieve the desired effect. All three of the instruments were based upon granular synthesis, but each instrument uses granular synthesis to obtain different ends.
+<P><B>instr 1</B> is a fairly straightforward implemention of <B>sndwarp</B> for granular timestretching. As in <B>surface</B>, the sections of the waveform to be timestretched are specified in the score. In this case, I used the areas between the syllables in the word "apocalyse." Since the original signal had a heavy amount of reverberation, these areas were full of all sorts of interesting pitches. I used an envelope to control the amount of pitch shifting of these samples. In this application, pitch shifting produced no undesirable effects, as there were no formants present in the area of the sample being shifted.
+<P>
+<B>instr 2</B> uses the <B>fog</B> ugen to implement a homegrown version of PSOLA (Pitch-Synchronous Overlap and Add) timestretching. PSOLA essentially chops up an input signal into tiny grains. Each grain is an exact multiple of the period of the input waveform at that moment from which the grain was derived. The grains are then played back sequentially. The rate of grains per second determines the pitch of the sound. If the playback rate of each individual grain (i.e. the speed at which the grain itself plays, not the spacing between grains) remains the same as the source signal, the formants of the source signal will be preserved. Changing the playback rate of the individual grains allows formant shifting - in the case of the voice, this can alter the apparent sex or age of the source.  
+<UL>
+<LI>Determining the exact period of the source sample proved to be impossible in this case. The reverberant sample played havoc on the pitch-detection scheme used by the linear-predictive coding analysis in Csound. I ended up using a set period size for the entire sample. As William S. Burroughs tends to speak in a monotone, this ended up being reasonably effective.
+<LI>One side effect of the <B>fog</B>-based PSOLA implementation was that the output waveform contained artifacts that were similar to comb filtering. I found that adding a slight degree of random variation to the size of the <B>fog</B> grain helped reduce this "metallic" comb filtration sound.
+<LI>I used four <B>fog</B> ugens in parallel to thicken up the original sound. Each <B>fog</B> was detuned slightly. Random pitch variations, as well as <B>oscili</B>-based vibrato, were used to modulate the pitch of each <B>fog</B> generator. This resulted in a very animated choral sound. In addition, the detuning further reduced the comb filter-esque artifacts in the sound.
+<LI>I used the <I>koct</I> parameter to add a subharmonic component to the vocal sound as the note progressed.  <I>koct</I> is an octavisation parameter, that works by attenuating the volume of every odd-numbered burst. The result sounds similar to another voice, an octave deeper, slowly fading in. My original goal was to recreate the "suboctave" singing of the Gyuto monks and Tuvan throat singers (this type of suboctave singing can also be heard in "Praise God I'm Satisfied" by Blind Willie Johnson). However, the subharmonic added by the <I>koct</I> parameter sounds quite different from this style of suboctave singing. I believe that the Gyuto/Tuvan style suboctave is the result of a chaotic/noisy function that synchronizes with the period of the voice. To be precise, I believe that the sound is produced when the normally pitchless pheonomena known as "vocal fry" is produced at the same time as a sung pitch.  As vocal fry occupies a frequency zone far below most normal pitches, the "vocal fry" syncs to the period of the pitch in such a way as to produce a subharmonic. More work needs to be done on the study of this sound before it can be adequately synthesized in computer music.
+<LI>The outputs of the <B>fog</B> generators are summed, and send into a <B>locsig</B>-based spatializer. The stereo positioning, volume, and pitch of the <B>fog</B> waveforms are controlled by envelopes and random functions, to produce an apparent motion trajectory. As the sound gets "closer," the amplitude increases. As the sound moves farther away, the amplitude decreases, and the amount of reverberated signal increases. The pitch modulations of the signal create a Doppler shift illusion; a rise in pitch suggests that the signal is rapidly moving towards the listener, while a drop in pitch creates the illusion of movement away from the listener.
+</UL>
+<B>instr 3</B>, like <B>instr 2</B>, uses <B>fog</B> to manipulate the source sample. However, whereas <B>instr 2</B> used PSOLA to preserve the timbre of the sound, <B>instr 3</B> uses the sample as a raw waveform for a subtractive synthesis instrument.
+<UL>
+<LI>The initial waveform is derived from 3 parallel <B>fog</B> generators, each of which derives its grains from a relatively small section of the original sample. Each of the <B>fog</B> generators is detuned slightly, to produce a waveform with subtle but complex beat frequencies. No random window sizing is used, as the "metallic" comb filtering sound (which seems to be a side effect of the PSOLA process) is desirable in this case.
+<LI>The <B>fog</B> generators have their pitch modulated by a dual <B>oscili</B> configuration that acts as a gated LFO. The first <B>oscili</B> produces a relatively fast vibrato signal. The second <B>oscili</B> uses a special waveform (which is compiled by a seperate orchestra, and stored in <A HREF=" http://www.haint.com/sounds/angle.aiff">angle.aiff</A>) to modulate the amplitude of vibrato signal on and off. The result is a vibrato sound that "shakes" the frequency of the <B>fog</B> generator, producing a strange siren-type effect.
+<LI>The outputs of the <B>fog</B> generators are summed and sent through two parallel <B>reson</B> filters. The first filter has a relatively narrow bandwidth, and has its center frequency swept from low to high to low again to produce the "filter sweep" sound that is characteristic of the voltage-controlled filters in analog synths. A second <B>reson</B> filter tracks the fundamental frequency of the <B>fog</B> generators; this helps to preserve the low-frequency energy of the sound that would otherwise be lost during the filter sweep.
+<LI>As with <B>instr 2</B>, <B>locsig</B> is used in conjunction with envelopes controlling the pitch of the <B>fog</B> generators to create a sense of spatial motion.
+</UL>
+<P>
+<HR>
+<P>
+<I>Questions? Comments? Email me at <A HREF="mailto:costello@seanet.com">costello@seanet.com</A>.
+<P>
+
+</BODY>
+</HTML>

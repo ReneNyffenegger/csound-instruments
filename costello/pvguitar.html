@@ -1,0 +1,43 @@
+<HTML>
+<HEAD>
+<TITLE>pvguitar</TITLE> 
+</HEAD>
+<BODY TEXT="#000000" BGCOLOR="#ffffff">
+<FONT FACE="Arial, Helvetica">
+<IMG SRC="portfolio.gif" BORDER=0 USEMAP="#portfolio">
+<MAP NAME="portfolio">
+<AREA SHAPE="RECT" ALT="portfolio" COORDS="23,1,152,34" HREF="portfolio.html">
+<AREA SHAPE="RECT" ALT="resume" COORDS="164,0,278,33" HREF="resume.html">
+<AREA SHAPE="RECT" ALT="links" COORDS="289,1,379,31" HREF="links.html">
+<AREA SHAPE="RECT" ALT="home" COORDS="391,1,488,32" HREF="index.html">
+<AREA SHAPE="DEFAULT" NOHREF>
+</MAP>
+<P>
+<H1>pvguitar</H1>
+<P>
+<B><A HREF="http://www.haint.com/sounds/pvguitar.mp3">pvguitar.mp3</A></B> (128 kbps, 512 KB)<BR>
+<A HREF="pvguitar.orc">pvguitar.orc</A><BR>
+<A HREF="pvguitar.sco">pvguitar.sco</A><P>
+
+<H2>Inspiration</H2>
+<B>pvguitar</B> began as a simple experiment with Richard Karpen's <B>pvadd</B> ugen. I was experimenting with various phase vocoder techniques, using an analysis of an acoustic guitar recording. I began to reconstitute the recording on a bin by bin basis. I also started experimenting with the various tunings of bins, pitching certain bins up or down by several octaves. At some point, a rather mysterious sound started to emerge, so I started honing in on certain bins, trying to pinpoint the frequencies I was hearing. The result was a sparse sound that resembled a cross between a marimba and a kalimba, with eerie pipe-like overtones.<P>
+<H2>Technical Overview</H2>
+<P>
+The initial sound source was a recording by John Fahey, that was one of the main "test recordings" I used to fine tune various signal processing techniques. I performed several phase vocoding analyses of the recording, using the Csound utility <B>pvanal</B>. I settled on an analysis window size of 2048 samples, with a window overlapping factor of 8, as this seemed to be the smallest size at which low frequency distortion was avoided.  After previewing the analysis using <B>pvoc</B> (to make sure that the straight resynthesis was effective), I used <B>pvadd</B> to resynthesize a few of the partials. In addition, the pitch transposition feature of <B>pvadd</B> was used to compress the pitch range of the piece, with lower partials transposed upwards in pitch, and higher partials transposed downwards.
+<UL>
+<LI>The sound is composed of the summed outputs of 7 <B>pvadd</B> ugens.
+ I chose bins that would have captured the lowest frequencies of the analysis, as well as some of the higher frequency bins.
+<LI>Several of the lower bins are transposed up in pitch, using the transposition feature of <B>pvadd</B>.  Two of the lower partials are transposed up an octave, while a third lower partial is transposed up two octaves and a major third.  This creates a higher-pitched melodic line, with a major third prominently featured.
+<LI><B>pvadd</B> is also used to transpose the frequencies of the higher bins downwards. Two of the upper bins are transposed down by two octaves, while a third bin is transposed down by an octave. This produces very "metallic" overtones, similar to a percussion part played on a log drum, or a concrete pipe being scraped along the ground.
+<LI>As the recording used for the <B>pvanal</B> analysis was only 30 seconds in length, I repeated the resynthesis to create a 60-second piece. For the repetition of the theme, the 3 lower partials are all transposed downwards by an octave, while the upper partials remain at the same pitches.
+<LI>As the original recording that was used for the phase vocoder analysis ended abruptly, I used the time pointer feature of <B>pvadd</B> to create a backwards effect for the end of each phrase.  A <B>linseg</B> envelope was used as an input to the time pointer. For the first 29 seconds of each phrase, the time pointer moves forward through the analysis, while for the last 3 seconds, the time pointer moves backwards.
+</UL>
+<P>
+<HR>
+<P>
+<I>Questions? Comments? Email me at <A HREF="mailto:costello@seanet.com">costello@seanet.com</A>.
+<P>
+
+</BODY>
+</HTML>
+
