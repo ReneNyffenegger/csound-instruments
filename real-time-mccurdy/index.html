@@ -1,0 +1,428 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN">
+
+<html>
+   <head>
+      <title>
+         RealtimeCsoundExamples
+      </title>
+      <meta name="GENERATOR" content="Arachnophilia 5.2">
+      <meta name="FORMATTER" content="Arachnophilia 5.2">
+   </head>
+
+   <body bgcolor="#ffffff" text="#000000" link="#0000ff" vlink="#800080" alink="#ff0000">
+      <b>Realtime Csound Examples</b>
+      <br>
+      <hr width="95%" align=center>
+      All examples are tested on Csound5. A minimum screen size of 1024x768 is recommended.
+      <br>
+
+      The entire catalogue of 94 example .csd files (minus source sounds, analysis files etc.) can be downloaded 
+      <a href="CsoundRealtimeExamples.zip">here</a>
+      <br>
+
+      or as individual examples as follows:
+      <ul>
+         <li>3D Audio
+         <br>
+         <ul>
+            <li>
+            <a href="3DAudio/hrtfer.csd">hrtfer.csd</a>
+            - Creates binaural 3D effects. Uses an HRTF data file (included with the download or from 
+            <a href="ftp://ftp.cs.bath.ac.uk/pub/dream/utilities/Analysis/HRTFcompact">ftp://ftp.cs.bath.ac.uk/pub/dream/utilities/Analysis/HRTFcompact</a>
+            ) and the sound file 
+            <a href="SourceMaterials/Bounce.wav">Bounce.wav</a>.
+         </ul>
+         <li>Additive Synthesis
+         <br>
+         <ul>
+            <li>
+            <a href="AdditiveSynthesis/HarmonicAdditiveSynthesis1.csd">HarmonicAdditiveSynthesis1.csd</a>
+            - Simple 10 harmonic additive synthesis.
+            <li>
+            <a href="AdditiveSynthesis/HarmonicAdditiveSynthesis2.csd">HarmonicAdditiveSynthesis2.csd</a>
+            - 30 harmonic additive synthesis with additional features .
+            <li>
+            <a href="AdditiveSynthesis/InharmonicAdditiveSynthesis.csd">InharmonicAdditiveSynthesis.csd</a>
+            - 10 partial inharmonic additive synthesis with individual envelopes on eack partial.
+         </ul>
+         <li>Delays
+         <br>
+         <ul>
+            <li>
+            <a href="Delays/01delayw_delayr_deltap.csd">01delayw_delayr_deltap.csd</a>
+            - Demonstration of the delayw, delayr and deltap opcodes to create a simple delay. Uses the sound file 
+            <a href="SourceMaterials/808loop.wav">808loop.wav</a>.
+            <li>
+            <a href="Delays/02delayportamento.csd">02delayportamento.csd</a>
+            - The above example with portamento applied to the delay time parameter to create pitch bending effects. Uses the sound file 
+            <a href="SourceMaterials/808loop.wav">808loop.wav</a>.
+            <li>
+            <a href="Delays/03delayfeedback.csd">03delayfeedback.csd</a>
+            - The above example with the addition of a feedback loop. Uses the sound file 
+            <a href="SourceMaterials/808loop.wav">808loop.wav</a>.
+            <li>
+            <a href="Delays/04delayfiltersinloop.csd">04delayfiltersinloop.csd</a>
+            - The above example with the addition of filters within the feedback loop. Uses the sound file 
+            <a href="SourceMaterials/808loop.wav">808loop.wav</a>.
+            <li>
+            <a href="Delays/05delayflanger.csd">05delayflanger.csd</a>
+            - Demonstration of how to create a flanger effect using a tapped delay with feedback and an LFO. Uses the sound file 
+            <a href="SourceMaterials/808loop.wav">808loop.wav</a>.
+            <li>
+            <a href="Delays/06delayThruZeroFlanger.csd">06delayThruZeroFlanger.csd</a>
+            - Demonstration of how to create a 'through zero' flanger effect. Uses the sound file 
+            <a href="SourceMaterials/808loop.wav">808loop.wav</a>.
+            <li>
+            <a href="Delays/07delayStereoChorus.csd">07delayStereoChorus.csd</a>
+            - Demonstration of how to create a stereo chorus effect using modulated delays.
+            <li>
+            <a href="Delays/08delaySimplePitchShifter.csd">08delaySimplePitchShifter.csd</a>
+            - Demonstration of how to create a simple pitch shifter effect using a modulated delay. Uses the sound file 
+            <a href="SourceMaterials/AndItsAll.wav">AndItsAll.wav</a>.
+            <li>
+            <a href="Delays/09delayCompletedPitchShifter.csd">09delayCompletedPitchShifter.csd</a>
+            - A more refined pitch shifter effect using dual modulated delays. Uses the sound file 
+            <a href="SourceMaterials/AndItsAll.wav">AndItsAll.wav</a>.      
+         </ul>
+         <li>FFT
+         <br>
+         <ul>
+            <li>
+            <a href="FFT/pvoc.csd">pvoc.csd</a>
+            - Demonstration of the pvoc opcode. Uses the analysis files 
+            <a href="SourceMaterials/AndItsAll.pvx">AndItsAll.pvx</a>
+            and 
+            <a href="SourceMaterials/808loopMono.pvx">808loopMono.pvx</a>.
+            <li>
+            <a href="FFT/pvadd.csd">pvadd.csd</a>
+            - Demonstration of the pvadd opcode. Uses the analysis files 
+            <a href="SourceMaterials/AndItsAll.pvx">AndItsAll.pvx</a>
+            and 
+            <a href="SourceMaterials/808loopMono.pvx">808loopMono.pvx</a>.
+         </ul>
+
+         <li>Filters
+         <br>
+         <ul>
+            <li>
+            <a href="Filters/areson.csd">areson.csd</a>
+            - Demonstration of the areson band reject filter opcode. Uses the sound file 
+            <a href="SourceMaterials/Seashore.wav">Seashore.wav</a>.
+            <li>
+            <a href="Filters/atone.csd">atone.csd</a>
+            - Demonstration of the atone high pass filter opcode. Uses the sound file 
+            <a href="SourceMaterials/Seashore.wav">Seashore.wav</a>.
+            <li>
+            <a href="Filters/atonex.csd">atonex.csd</a>
+            - Demonstration of the atonex high pass filter filter opcode. Uses the sound file 
+            <a href="SourceMaterials/Seashore.wav">Seashore.wav</a>.
+            <li>
+            <a href="Filters/bqrez.csd">bqrez.csd</a>
+            - Demonstration of the bqrez multi-mode filter opcode. Uses the sound file 
+            <a href="SourceMaterials/Seashore.wav">Seashore.wav</a>.
+            <li>
+            <a href="Filters/butterbp.csd">butterbp.csd</a>
+            - Demonstration of the butterbp band pass filter opcode. Uses the sound file 
+            <a href="SourceMaterials/Seashore.wav">Seashore.wav</a>.
+            <li>
+            <a href="Filters/butterbr.csd">butterbr.csd</a>
+            - Demonstration of the butterbr band reject filter opcode. Uses the sound file 
+            <a href="SourceMaterials/Seashore.wav">Seashore.wav</a>.
+            <li>
+            <a href="Filters/butterhp.csd">butterhp.csd</a>
+            - Demonstration of the butterhp high pass filter opcode. Uses the sound file 
+            <a href="SourceMaterials/Seashore.wav">Seashore.wav</a>.
+            <li>
+            <a href="Filters/butterlp.csd">butterlp.csd</a>
+            - Demonstration of the butterlp low pass filter opcode. Uses the sound file 
+            <a href="SourceMaterials/Seashore.wav">Seashore.wav</a>.
+            <li>
+            <a href="Filters/clfilt.csd">clfilt.csd</a>
+            - Demonstration of the clfilt multi-mode filter opcode. Uses the sound file 
+            <a href="SourceMaterials/Seashore.wav">Seashore.wav</a>.
+            <li>
+            <a href="Filters/lowpass2.csd">lowpass2.csd</a>
+            - Demonstration of the lowpass2 low pass filter opcode. Uses the sound file 
+            <a href="SourceMaterials/Seashore.wav">Seashore.wav</a>.
+            <li>
+            <a href="Filters/lowres.csd">lowres.csd</a>
+            - Demonstration of the lowres low pass filter opcode. Uses the sound file 
+            <a href="SourceMaterials/Seashore.wav">Seashore.wav</a>.
+            <li>
+            <a href="Filters/lowresx.csd">lowresx.csd</a>
+            - Demonstration of the lowresx low pass filter opcode. Uses the sound file 
+            <a href="SourceMaterials/Seashore.wav">Seashore.wav</a>.
+            <li>
+            <a href="Filters/lpf18.csd">lpf18.csd</a>
+            - Demonstration of the lpf18 low pass filter opcode.
+            <li>
+            <a href="Filters/moogladder.csd">moogladder.csd</a>
+            - Demonstration of the moogladder low pass filter opcode.
+            <li>
+            <a href="Filters/moogvcf.csd">moogvcf.csd</a>
+            - Demonstration of the moogvcf low pass filter opcode.
+            <li>
+            <a href="Filters/reson.csd">reson.csd</a>
+            - Demonstration of the reson band pass filter opcode. Uses the sound file 
+            <a href="SourceMaterials/Seashore.wav">Seashore.wav</a>.
+            <li>
+            <a href="Filters/tbvcf.csd">tbvcf.csd</a>
+            - Demonstration of the tbvcf low pass filter opcode.
+            <li>
+            <a href="Filters/tone.csd">tone.csd</a>
+            - Demonstration of the tone low pass filter opcode. Uses the sound file 
+            <a href="SourceMaterials/Seashore.wav">Seashore.wav</a>.
+            <li>
+            <a href="Filters/tonex.csd">tonex.csd</a>
+            - Demonstration of the tonex low pass filter opcode. Uses the sound file 
+            <a href="SourceMaterials/Seashore.wav">Seashore.wav</a>.
+            <li>
+            <a href="Filters/vlowres.csd">vlowres.csd</a>
+            - Demonstration of the vlowres low pass filter opcode. Uses the sound file 
+            <a href="SourceMaterials/Seashore.wav">Seashore.wav</a>.
+         </ul>
+         <li>FLTK
+         <br>
+         <ul>
+            <li>
+            <a href="FLTK/01FLPanel.csd">01FLPanel.csd</a>
+            - Demonstration of how to create an FLTK panel.
+            <li>
+            <a href="FLTK/02FLSlider.csd">02FLSlider.csd</a>
+            - Demonstration of how to create an FLTK slider.
+            <li>
+            <a href="FLTK/03FLKnob.csd">03FLKnob.csd</a>
+            - Demonstration of how to create an FLTK knob.
+            <li>
+            <a href="FLTK/04FLRoller.csd">04FLRoller.csd</a>
+            - Demonstration of how to create an FLTK roller.
+            <li>
+            <a href="FLTK/05FLtext.csd">05FLtext.csd</a>
+            - Demonstration of how to create a modifiable FLTK number field.
+            <li>
+            <a href="FLTK/06FLjoy.csd">06FLjoy.csd</a>
+            - Demonstration of how to create an FLTK X-Y joystick panel.
+            <li>
+            <a href="FLTK/07FLcount.csd">07FLcount.csd</a>
+            - Demonstration of how to create an FLTK counter.
+            <li>
+            <a href="FLTK/08FLtabsFLgroup.csd">08FLtabsFLgroup.csd</a>
+            - Demonstration of how to create an FLTK tabs. Also introduces the FLgroup and FLgroupEnd.
+            <li>
+            <a href="FLTK/09FLsetVal_i.csd">09FLsetVal_i.csd</a>
+            - Demonstration of how to set the initial value of an FLTK valuator.
+            <li>
+            <a href="FLTK/10FLbutton.csd">10FLbutton.csd</a>
+            - Demonstration of how to create and use FLTK buttons.
+            <li>
+            <a href="FLTK/11FLbox.csd">11FLbox.csd</a>
+            - Demonstration of how to create an FLTK text box.
+            <li>
+            <a href="FLTK/12FLscroll.csd">12FLscroll.csd</a>
+            - Demonstration of how to create FLTK scroll bars.
+            <li>
+            <a href="FLTK/13FLvalue.csd">13FLvalue.csd</a>
+            - Demonstration of how to create an FLTK value readout box.
+            <li>
+            <a href="FLTK/14FLsetColor.csd">14FLsetColor.csd</a>
+            - Demonstration of how to colorize FLTK widgets.
+            <li>
+            <a href="FLTK/MIDI_FLTK_Combined.csd">MIDI_FLTK_Combined.csd</a>
+            - Demonstration of how to simultaneously use implement FLTK and MIDI control of the same parameter.
+            <li>
+            <a href="FLTK/RandomMovingSlider.csd">RandomMovingSlider.csd</a>
+            - An automated FLTK slider is driven by random functions.
+            <li>
+            <a href="FLTK/SliderMultiVariable.csd">SliderMultiVariable.csd</a>
+            - A single slider outputs 3 simultaneous different ranges.
+            <li>
+            <a href="FLTK/SliderNonLinear.csd">SliderNonLinear.csd</a>
+            - An FLTK slider's output is rescaled to provide an irregularly moving output.
+            <li>
+            <a href="FLTK/SlidersHorizontal.csd">SlidersHorizontal.csd</a>
+            - A look at the different horizontal sliders on offer.
+            <li>
+            <a href="FLTK/SlidersVertical.csd">SlidersVertical.csd</a>
+            - A look at the different vertical sliders on offer.
+            <li>
+            <a href="FLTK/Snapshots.csd">Snapshots.csd</a>
+            - A demonstration of how to implement FLTK snapshots. Based on an example written by Gabriel Maldonado. 
+         </ul>
+
+         <li>FM Synthesis   
+         <br>
+         <ul>
+            <li>
+            <a href="FM/01FMSynthesisVibratoToSideBands.csd">01FMSynthesisVibratoToSideBands.csd</a>
+            - Demonstration of how FM synthesis sidebands emerge from an implementation of vibrato upon a sine wave.
+            <li>
+            <a href="FM/02SimpleModulatorCarrier.csd">02SimpleModulatorCarrier.csd</a>
+            - Simple implementation of an FM synthesis carrier-modulator pair.
+            <li>
+            <a href="FM/03ModulatorCarrier.csd">03ModulatorCarrier.csd</a>
+            - A more refined implementation of an FM synthesis carrier-modulator pair that introduces the typical parameters of FM synthesis.
+            <li>
+            <a href="FM/04ModulatorCarrierWithEnvelopes.csd">04ModulatorCarrierWithEnvelopes.csd</a>
+            - An FM synthesis carrier-modulator pair with user definable envlopes on FM index and carrier amplitude. MIDI controllable.
+            <li>
+            <a href="FM/05_2xModulatorCarrierWithEnvelopes.csd">05_2xModulatorCarrierWithEnvelopes.csd</a>
+            - An implementation of a two modulators and a single carrier FM algorithm. MIDI controllable. Includes a file of snapshots.
+            <a href="FM/05_2xModulatorCarrierWithEnvelopes.snap">05_2xModulatorCarrierWithEnvelopes.snap</a>
+         </ul>
+
+         <li>Granular Synthesis
+         <br>
+         <ul>
+            <li>
+            <a href="GranularSynthesis/fof.csd">fof.csd</a>
+            - Simple demonstration of the fof opcode.
+            <li>
+            <a href="GranularSynthesis/fofx6.csd">fofx6.csd</a>
+            - Full demonstration of the fof opcode used to imitate the vocal vowel sounds of various voices. MIDI controllable.
+            <li>
+            <a href="GranularSynthesis/fog.csd">fog.csd</a>
+            - Demonstration of the fog opcode. Uses the sound file 
+            <a href="SourceMaterials/AndItsAll.wav">AndItsAll.wav</a>.
+            <li>
+            <a href="GranularSynthesis/grain3.csd">grain3.csd</a>
+            - Demonstration of the grain3 opcode. Uses the sound file 
+            <a href="SourceMaterials/AndItsAll.wav">AndItsAll.wav</a>.
+            <li>
+            <a href="GranularSynthesis/granule.csd">granule.csd</a>
+            - Demonstration of the granule opcode. Uses the sound file 
+            <a href="SourceMaterials/AndItsAll.wav">AndItsAll.wav</a>.
+            <li>
+            <a href="GranularSynthesis/sndwarp.csd">sndwarp.csd</a>
+            - Demonstration of the sndwarp opcode. Uses the sound file 
+            <a href="SourceMaterials/AndItsAll.wav">AndItsAll.wav</a>.
+            <li>
+            <a href="GranularSynthesis/syncgrain.csd">syncgrain.csd</a>
+            - Demonstration of the syncgrain opcode. Uses the sound file 
+            <a href="SourceMaterials/AndItsAll.wav">AndItsAll.wav</a>.
+            <li>
+            <a href="GranularSynthesis/fof.csd">fof.csd</a>
+            - Demonstration of the fof opcode. Uses the sound files 
+            <a href="SourceMaterials/AndItsAll.wav">AndItsAll.wav</a>
+            and 
+            <a href="SourceMaterials/808loop.wav">808loop.wav</a>.
+         </ul>
+
+         <li>MIDI Synthesizer Models
+         <br>
+         <ul>
+            <li>Coming soon!
+         </ul>
+         <li>MiscellaneousWaveformOscillators
+         <br>
+         <ul>
+            <li>
+            <a href="MiscellaneousWaveformOscillators/buzz.csd">buzz.csd</a>
+            - Demonstration of the buzz opcode.
+            <li>
+            <a href="MiscellaneousWaveformOscillators/gbuzz.csd">gbuzz.csd</a>
+            - Demonstration of the gbuzz opcode.
+            <li>
+            <a href="MiscellaneousWaveformOscillators/vco.csd">vco.csd</a>
+            - Demonstration of the vco opcode.
+            <li>
+            <a href="MiscellaneousWaveformOscillators/vco_with_PWM_LFO_and_LPF.csd">vco_with_PWM_LFO_and_LPF.csd</a>
+            - Demonstration of the vco opcode with the addition of a pulse width modulation LFO and a moogvcf resonant low pass filter.
+         </ul>
+
+         <li>Physical Models
+         <br>
+         <ul>
+            <li>
+            <a href="PhysicalModels/bamboo.csd">bamboo.csd</a>
+            - Demonstration of the bamboo opcode. A physical model of a bamboo shaker.
+            <li>
+            <a href="PhysicalModels/dripwater.csd">dripwater.csd</a>
+            - Demonstration of the dripwater opcode. A physical model of a drip of water.
+            <li>
+            <a href="PhysicalModels/guiro.csd">guiro.csd</a>
+            - Demonstration of the guiro opcode. A physical model of a guiro.
+            <li>
+            <a href="PhysicalModels/sekere.csd">sekere.csd</a>
+            - Demonstration of the sekere opcode. A physical model of a sekere shaker.
+            <li>
+            <a href="PhysicalModels/sleighbells.csd">sleighbells.csd</a>
+            - Demonstration of the sleighbells opcode. A physical model of a sleighbells instrument.
+            <li>
+            <a href="PhysicalModels/tambourine.csd">tambourine.csd</a>
+            - Demonstration of the tambourine opcode. A physical model of a tambourine.
+            <li>
+            <a href="PhysicalModels/wgbow.csd">wgbow.csd</a>
+            - Demonstration of the wgbow opcode. A physical model of a bowed string.
+            <li>
+            <a href="PhysicalModels/wgbowedbar.csd">wgbowedbar.csd</a>
+            - Demonstration of the wgbowedbar opcode. A physical model of a bowed bar.
+            <li>
+            <a href="PhysicalModels/wgclar.csd">wgclar.csd</a>
+            - Demonstration of the wgclar opcode. A physical model of a clarinet.
+            <li>
+            <a href="PhysicalModels/wgflute.csd">wgflute.csd</a>
+            - Demonstration of the wgflute opcode. A physical model of a flute.
+            <li>
+            <a href="PhysicalModels/wgpluck2.csd">wgpluck2.csd</a>
+            - Demonstration of the wgpluck2 opcode. A physical model of a plucked string using the Kerpluss-Strong algorithm.
+            <li>
+            <a href="PhysicalModels/pluck.csd">pluck.csd</a>
+            - Demonstration of the pluck opcode. A physical model of a plucked string using the Kerpluss-Strong algorithm.
+         </ul>
+
+         <li>Reverbs
+         <br>
+         <ul>
+            <li>
+            <a href="Reverbs/babo.csd">babo.csd</a>
+            - Demonstration of the babo 'ball in a box' reverb opcode. Uses the sound file 
+            <a href="SourceMaterials/808loop.wav">808loop.wav</a>.
+            <li>
+            <a href="Reverbs/freeverb.csd">freeverb.csd</a>
+            - Demonstration of the freeverb reverb opcode. Uses the sound file 
+            <a href="SourceMaterials/808loop.wav">808loop.wav</a>.
+            <li>
+            <a href="Reverbs/nreverb.csd">nreverb.csd</a>
+            - Demonstration of the nreverb reverb opcode. Uses the sound file 
+            <a href="SourceMaterials/808loop.wav">808loop.wav</a>.
+            <li>
+            <a href="Reverbs/reverb.csd">reverb.csd</a>
+            - Demonstration of the reverb reverb opcode. Uses the sound file 
+            <a href="SourceMaterials/808loop.wav">808loop.wav</a>.
+            <li>
+            <a href="Reverbs/screverb.csd">screverb.csd</a>
+            - Demonstration of the screverb reverb opcode. Uses the sound file 
+            <a href="SourceMaterials/808loop.wav">808loop.wav</a>.
+         </ul>
+
+         <li>Sound File Playback
+         <br>
+         <ul>
+            <li>
+            <a href="SoundfilePlayback/flooper2.csd">flooper2.csd</a>
+            - Demonstration of the flooper2 looping sound file playback opcode. Uses the sound files 
+            <a href="SourceMaterials/AndItsAll.wav">AndItsAll.wav</a>
+            and 
+            <a href="SourceMaterials/808loop.wav">808loop.wav</a>.
+         </ul>
+
+         <li>Specialized Filters
+         <br>
+         <ul>
+            <li>
+            <a href="SpecializedFilters/Phaser1.csd">Phaser1.csd</a>
+            - Demonstration of the phaser1 complex filtering opcode. Uses the sound file 
+            <a href="SourceMaterials/Seashore.wav">Seashore.wav</a>.
+            <li>
+            <a href="SpecializedFilters/Phaser2.csd">Phaser2.csd</a>
+            - Demonstration of the phaser2 complex filtering opcode. Uses the sound file 
+            <a href="SourceMaterials/Seashore.wav">Seashore.wav</a>.
+         </ul>
+
+      </ul>
+
+      <br>
+      Please report errors and comments to i_mccurdy@hotmail.com
+   </body>
+
+</html>
