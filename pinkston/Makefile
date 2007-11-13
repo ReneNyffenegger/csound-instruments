@@ -2,13 +2,13 @@ include ../../setup.mk
 
 all: $(wavfiles)
 
-convunit.wav: convunit.orc convunit.sco 118.conv
+convunit.wav: convunit.orc convunit.sco 118.con
 
-118.conv: noise.wav
+118.con: noise.wav
 
 adsyn.wav: adsyn.orc adsyn.sco cello.hetro wind.hetro c2a.hetro c2b.hetro c2c.hetro c5.hetro
 
-convolve.wav: domkyr44.conv drottn44.conv oster44.conv thewind.conv frigate.conv noise.conv noisewdg.conv noischor.conv laugh.conv crash.conv flush.conv bigclunk.conv popcorn.conv cello44.conv cellodec.conv cellogls.conv lognoise.conv vowchord.conv bees1.conv
+convolve.wav: domkyr44.con drottn44.con oster44.con thewind.con frigate.con noise.con noisewdg.con noischor.con laugh.con crash.con flush.con bigclunk.con popcorn.con cello44.con cellodec.con cellogls.con lognoise.con vowchord.con bees1.con
 
 drumcomb.wav: drummer.wav
 
@@ -84,25 +84,25 @@ fire1m44.pvx: fire1m44.wav
 tamtam.pvx: tamtam.aif
 highbell.pvx: highbell.aif
 
-domkyr44.conv: domkyr44.wav
-drottn44.conv: drottn44.wav
-oster44.conv: oster44.wav
-thewind.conv: thewind.wav
-frigate.conv: frigate.wav
-noise.conv: noise.wav
-noisewdg.conv: noisewdg.wav
-noischor.conv: noischor.wav
-laugh.conv: laugh.wav
-crash.conv: crash.wav
-flush.conv: flush.wav
-bigclunk.conv: bigclunk.wav
-popcorn.conv: popcorn.wav
-cello44.conv: cello44.wav
-cellodec.conv: cellodec.wav
-cellogls.conv: cellogls.wav
-lognoise.conv: lognoise.wav
-vowchord.conv: vowchord.wav
-bees1.conv: bees1.wav
+domkyr44.con: domkyr44.wav
+drottn44.con: drottn44.wav
+oster44.con: oster44.wav
+thewind.con: thewind.wav
+frigate.con: frigate.wav
+noise.con: noise.wav
+noisewdg.con: noisewdg.wav
+noischor.con: noischor.wav
+laugh.con: laugh.wav
+crash.con: crash.wav
+flush.con: flush.wav
+bigclunk.con: bigclunk.wav
+popcorn.con: popcorn.wav
+cello44.con: cello44.wav
+cellodec.con: cellodec.wav
+cellogls.con: cellogls.wav
+lognoise.con: lognoise.wav
+vowchord.con: vowchord.wav
+bees1.con: bees1.wav
 
 cello.hetro: cello44.wav
 	hetro -f175 -h30 $^ $(SADIR)/$@ $(OUTPUT)
