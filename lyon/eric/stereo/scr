@@ -1,0 +1,5 @@
+fromsf -os -c1 -H pakmix1| pv 44100 2048 16384 1024 512 0 0 0 |fix2float| convert -R44100 -r88200 | tosf  -c1 -R44100 pakmix1.pvtrans.chan1
+fromsf -os -c2 -H pakmix1| pv 44100 2048 16384 1024 512 0 0 0 |fix2float| convert -R44100 -r88200 | tosf  -c1 -R44100 pakmix1.pvtrans.chan2
+interleave pakmix1.pvtrans.chan1 pakmix1.pvtrans.chan2 | tosf -is -R44100 -c2 pakmix1.pvtrans
+rm pakmix1.pvtrans.chan1 pakmix1.pvtrans.chan2
+echo "OUTPUT IN pakmix1.pvtrans"

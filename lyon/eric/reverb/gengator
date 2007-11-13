@@ -1,0 +1,5 @@
+
+gen4 -L2K 0 0 3 .1 1 -3 .2 .4 -3 1 0 > $SFDIR/soundin.50
+gen4 -L2K 0 0 -3 .05 1 -3 .15 .25 -3 .6 0 0 1.0 0 > $SFDIR/soundin.51
+gen4 -L2K 0 0 3 .2 1 -3 .45 .5 -4 .5 0 0 1 0 > $SFDIR/soundin.52
+gen4 -L2K 0 0 -3 .7 1 -3 1 0 > $SFDIR/soundin.53

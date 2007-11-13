@@ -1,0 +1,2 @@
+gen4 -L8K 0 1 -20 1 0 > $SFDIR/soundin.50 ;
+doit imp imp

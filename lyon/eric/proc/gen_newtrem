@@ -1,0 +1,3 @@
+gen1 -L8192 0 0 .1 1 .9 1 1 0 > soundin.50
+gen1 -L8192 0 0 .25 .5 .5 1 .75 .5 1 0 > soundin.51
+gen5 -L8192 0 .5 90Deg 0 1 -.5 90Deg > soundin.52

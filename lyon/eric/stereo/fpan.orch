@@ -1,0 +1,17 @@
+sr=44100
+kr=44100
+ksmps=1
+nchnls = 2
+gipiotwo = 1.570796
+gipp = gipiotwo/2.0
+gippp = gipp*.99
+;i1 0 dur file skip amp seed speed
+instr 1
+ifile = p4
+iskip = p5
+	araw soundin ifile,iskip
+	apan oscili gipiotwo, 1.0/p3, 1
+	aleft =  cos( apan )
+	aright = sin( apan )
+	outs (araw*aleft),(araw*aright)
+endin

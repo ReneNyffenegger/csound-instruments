@@ -1,0 +1,58 @@
+sr=30000
+kr=5000
+ksmps=6
+
+instr 100
+endin
+;i3 0 dur file skip maxfreq minfreq gain speed seed
+instr 1 ; simple flange
+;file skip delay1 delay2
+idstart = p6
+idend = p7
+igain = p8
+idmax = idstart+idend
+	araw soundin p4,p5
+	kdel line idstart,p3,idend
+	adline delayr idmax
+	atap1 deltapi kdel
+		delayw araw
+	asum = (araw+atap1)*igain
+	out asum
+endin
+
+instr 2 ; double flange
+;file skip delay1 delay2
+;i2 0 dur file skip delay1 delay2
+igain = .7
+idstart = p6
+idend = p7
+idmax = idstart+idend
+	araw soundin p4,p5
+	kdel line idstart,p3,idend
+	adline1 delayr idmax
+	atap1 deltapi kdel
+		delayw araw
+	asum1 = atap1+araw
+	adline2 delayr idmax
+	atap2 deltapi kdel
+		delayw asum1
+	asum = (araw+atap2)*igain
+	out asum
+endin
+instr 3 ; random flange
+idmin = 1./p7
+idmax = 1./p6
+iddif = ((idmax-idmin)/2)*.95
+igain = p8
+ispeed = p9
+iseed = p10
+idmax = idmax*2
+	araw soundin p4,p5
+	kdel randi iddif,ispeed,iseed
+	kdel = kdel+iddif+idmin
+	adline delayr idmax
+	atap1 deltapi kdel
+		delayw araw
+	asum = (araw+atap1)*igain
+	out asum
+endin

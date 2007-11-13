@@ -1,0 +1,30 @@
+sr=44100
+kr=4410
+ksmps=10
+nchnls = 2
+
+instr 100
+endin
+;i1 0 dur file skip mindelay maxdelay gain speed seed
+instr 1 ; random flange
+idmin = p6
+idmax = p7
+iddif = ((idmax-idmin)/2)*.95
+igain = p8
+ispeed = p9
+iseed = p10
+iseed2 = iseed/2
+idmax = idmax*2
+	a1 soundin p4,p5
+	kdel randi iddif,ispeed,iseed
+	kdel = kdel+iddif+idmin
+	kdel2 randi iddif,ispeed,iseed2
+	kdel2 = kdel2+iddif+idmin
+	adline delayr idmax
+	atap1 deltapi kdel
+	atap2 deltapi kdel2
+		delayw a1
+	aout1 = (a1+atap1)*igain
+	aout2 = (a1+atap2)*igain
+	outs aout1, aout2
+endin

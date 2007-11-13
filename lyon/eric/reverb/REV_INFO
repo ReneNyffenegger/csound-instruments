@@ -1,0 +1,21 @@
+echo1 - mono -> stereo (single echo with feedback)
+echo2 - mono -> stereo (single echo with feedback)
+rev1 - stereo 2 stereo (very rich) 
+rev2 - mono -> stereo (with panning)
+rev3 - mono -> mono (tight)
+rev4 - stereo -> stereo
+rev5 - mono -> mono (comby)
+rev6 - mono -> stereo (generate scores with rev6.c)
+rev7 - mono -> mono (industrial)
+rev8 - mono or stereo -> stereo (sliding resonance)
+rev9 - mono -> mono (heavy)
+rev10 - stereo -> stereo (very wet)
+rev11 - mono -> stereo (allpass, spatialization)
+
+emon - mono -> stereo (combish distortion)
+stem - stereo -> stereo (same as emon)
+multitap - mono -> stereo (programmable, controlled by multitap.c)
+multitap2 - stereo -> stereo (programmable, controlled by multitap.c)
+
+gator - mono or stereo -> stereo (unusual filtered panning effects)
+(this orc does not work with more recent versions of Csound)

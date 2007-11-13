@@ -1,0 +1,50 @@
+This is a collection of reverberators
+written mostly at UC San Diego during
+1989-1990. The initial idea was for me
+and a friend to write a bunch of reverberators
+and trade them like baseball cards. Unfortunately,
+my friend got into convolution and I was left
+holding the bag. I'm always happy to get Csound
+baseball cards from others however. 
+
+A synopsis of the instruments is given in
+REV_INFO. The most mainstream instruments
+are rev1, rev11, and multitap. The other
+reverberators are a bit more exotic.
+
+I have provided some basic C code to
+generate scores for multitap, rev6,
+and gator2.
+
+Gator is one of my favorite processors
+here. However, you may run into some
+problems with more recent versions of
+Csound. Specifically, the reson generator
+now has a tendency to blow up with center
+frequencies > 1000Hz. If you can get a copy
+of Princeton version 1.1 [10/89] of Csound,
+use it, and you won't run into this problem.
+Otherwise, just don't use resonance frequencies
+above 1000Hz (grimace). Also, Gator was
+initially designed to make use of the CARL
+gen function routines, gen4 in particular.
+You can get CARL from the cmusic distribution
+at ccrma-ftp.stanford.edu if you don't already
+have it. The shell scripts gengator and gengator2
+here create functions needed by gator and gator2.
+I have altered togator.c such that it employs
+the Csound gen5 exponential segment generator to
+create approximations of these functions.  However, 
+I prefer the results from the gen4 functions, so get it 
+if you can.
+
+Since I built these instruments several years
+ago, I'm not sure I can be too instructive about
+the design considerations. However, I would
+be glad to get any feedback on these instruments,
+or any useful modifications you've made. I have
+found these reverberators quite useful over the
+years and hope you do too.
+
+Eric Lyon
+eric@cmlab.sfc.keio.ac.jp

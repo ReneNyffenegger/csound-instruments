@@ -1,0 +1,36 @@
+sr=44100
+kr=4410
+ksmps=10
+nchnls=2
+;1in 2out choruser
+;f1 0 8192 10 1
+;i1 0 dur file skip depth speed1 speed2
+
+		instr 1;	chorus	
+idepth = p6
+imax = idepth*2.5
+id2 = (idepth/2)*.9
+ispeed1 = p7
+ispeed2 = p8
+iphs1 = .1
+iphs2 = .666
+igain = 1.0
+iat = .005
+isust = p3-(2*iat)
+	aenv linseg 0, iat, igain, isust, igain, iat, 0
+
+	a1	soundin p4, p5
+	afr1	oscili id2,ispeed1, 1, iphs1
+	afr1  = afr1 + idepth
+	afr2	oscili id2,ispeed2, 1, iphs2
+	afr2  = afr2 + idepth
+	adel1	delayr imax 
+	acho1	deltapi afr1
+	acho2	deltapi afr2
+		delayw a1
+
+
+	outs acho1*aenv,acho2*aenv
+		endin
+		instr 100
+		endin

@@ -1,0 +1,35 @@
+#include "head"
+;i1 0 dur file skip
+;i2 0 dur gain spaceloc [1.0 = hard right]
+nchnls=2
+;gipiotwo = 2.*atan(1.0)
+gipiotwo = 1.570796
+instr 1
+ifile = p4
+iskip = p5
+	garead soundin p4,p5
+endin
+
+instr 2
+igain = p4
+idelay = p5
+isploc = p6
+ileft = igain * sin( gipiotwo * isploc )
+iright = igain * cos( gipiotwo * isploc )
+	adel delay garead, idelay
+	aleft = adel*ileft
+	aright = adel*iright
+	outs aleft, aright
+
+endin
+
+instr 3
+igain = p4
+isploc = p5
+ileft = igain * sin( gipiotwo * isploc )
+iright = igain * cos( gipiotwo * isploc )
+	aleft = garead*ileft
+	aright = garead*iright
+	outs aleft, aright
+
+endin

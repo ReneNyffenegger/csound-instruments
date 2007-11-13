@@ -1,0 +1,56 @@
+sr=44100
+kr=22050
+ksmps=2
+nchnls=2
+
+instr 1
+iamp = 1.0
+;iatk = .1
+;idk = .1
+;isust = p3 - (iatk+idk)
+
+ipanspeed = p4
+ipanphase = p5
+ioffset = 0
+imult = p11
+
+ix = .125*imult
+ixx = (ioffset*.125)+ix
+idepth = p6
+imax = 2.1*idepth
+id2 = (idepth/2)*.9
+idsp1 = p7
+idsp2 = p8
+iphs1 = p9
+iphs2 = p10
+	amono soundin 1,0
+;FORMAT:
+;f1 0 8192 10 1
+; panspeed phase delayDepth delaySpeed1 delaySpeed2 phs1 phs2
+; pan-bandwidth
+	kfr1	oscil id2,idsp1, 1, iphs1
+	kfr1  = kfr1 + idepth
+	kfr2	oscil id2,idsp2, 1, iphs2
+	kfr2  = kfr2 + idepth
+
+	;aenv linseg 0,iatk,iamp,isust,iamp,idk,0
+	; PAN DATA BLOCK
+	kndx oscili ix, ipanspeed, 1, ipanphase
+	kndx = kndx + ixx
+	kleft tablei kndx,1,1
+	kndx = kndx+.25
+	kright tablei kndx,1,1
+	aleft = amono * kleft
+	aright = amono * kright
+	
+	adel1	delayr imax 
+	asig1	deltapi kfr1
+		delayw aleft
+	adel2	delayr imax 
+	asig2	deltapi kfr2
+		delayw aright
+
+
+	; OUTPUT BLOCK
+	outs asig1, asig2
+endin

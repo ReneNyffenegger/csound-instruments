@@ -1,0 +1,6 @@
+#milder transition states
+#try making wilder functions (from energy files?)
+gen4 -L2K 0 .3 3 .1 1 -3 .2 .7 -3 1 .3 > $SFDIR/soundin.50
+gen4 -L2K 0 .3 -3 .05 1 -3 .15 .25 -3 .6 .2 0 1.0 .3 > $SFDIR/soundin.51
+gen4 -L2K 0 .3 3 .2 1 -3 .45 .5 -4 .5 .1 0 1 .3> $SFDIR/soundin.52
+gen4 -L2K 0 .3 -3 .7 1 -3 1 .3 > $SFDIR/soundin.53

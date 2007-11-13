@@ -1,0 +1,15 @@
+sr=44100
+kr=4410
+ksmps=10
+
+;i1 0 dur freq ampDb
+instr 1
+ifreq = p4
+igain = ampdb( p5 ) * 32767.
+iatk=.3
+idk=.3
+isust=p3-(iatk+idk)
+	kenv linseg 0,iatk,igain,isust,igain,idk,0
+	asig oscil kenv,ifreq,1
+	out asig
+endin

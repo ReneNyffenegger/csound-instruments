@@ -1,0 +1,7 @@
+#include "head"
+;mono to stereo
+nchnls=2
+instr 1
+	a1 soundin p4,p5
+	outs a1,a1
+endin

@@ -1,0 +1,36 @@
+sr=44100
+kr=4410
+ksmps=10
+nchnls=2
+;2in 2out choruser
+
+		instr 1;	chorus	
+idepth = p6
+imax = p6 * 2
+id2 = (idepth/2) * .9
+ispeed1 = p7
+ispeed2 = p8
+ispeed3 = p9
+ispeed4 = p10
+iphs1 = p11
+iphs2 = p12
+iphs3 = p13
+iphs4 = p14
+igain = p15
+iatk = .02
+idk = .05
+isust = p3-(iatk+idk)
+	aenv linseg 0,iatk,igain,isust,igain,idk,0
+	a1	soundin p4, p5
+	afr1	oscil id2,ispeed1, 1, iphs1
+	afr1  = afr1 + idepth
+	afr2	oscil id2,ispeed2, 1, iphs2
+	afr2  = afr2 + idepth
+	adel1	delayr imax 
+	acho1	deltapi afr1
+	acho2	deltapi afr2
+		delayw a1
+	aleft = acho1+(a1*.7)
+	aright = acho2+(a1*.7)
+	outs aleft*aenv,aright*aenv
+	endin

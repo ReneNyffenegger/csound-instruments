@@ -1,0 +1,54 @@
+
+DON
+Based on modular synthesis
+a la Buchla synths et. al.
+
+
+The control programs here
+all have only one parameter-
+duration. Although it is easy
+to change this, and I encourage
+you to try, this release was
+developed with the philosophy
+from some of my earliesst
+work with computer music in which
+the computer is viewed as a
+sort of oracle to feed us
+with information and not
+the other way around. I therefor
+found it refreshing to develop a
+set of instruments with a wide
+variety of behaviors which would
+often surprise me with complex
+results. The organization of 
+this directory is somewhat
+different than my PowerPV
+distribution which is rather
+carefully organized. This is
+not to be deliberately confusing,
+but to provide an environment
+reminiscent of the analog synths
+where you're not quite sure
+where that extra banana plug
+you need went to, and amidst
+a tangled confusion of wires,
+some strange and appealing
+sounds emerge. It is my hope
+that others will build csound
+instruments and control modules
+to interact with the ones provided.
+I hope you'll send me the successful
+ones so I can include them in
+later releases (with proper
+attribution of course).
+
+In some cases, I've made it
+just about impossible to avoid
+severe aliasing. If you use a
+lower sampling rate than 44.1K,
+this can only improve the effect.
+I hope you won't try to change
+this. F.R. Moore once said that
+using aliasing to acheive musical
+effects is like opening a can
+with a Volkswagon.

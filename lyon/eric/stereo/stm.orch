@@ -1,0 +1,14 @@
+#include "head"
+instr 1
+	a1,a2 soundin p4,p5
+	out (a1*p6)+(a2*p6)
+endin
+
+instr 2
+iatk = .02
+idk = .02
+isust = p3-(iatk+idk)
+	aenv linseg 0, iatk, p6, isust, p6, idk, 0
+	a1,a2 soundin p4,p5
+	out (a1*aenv)+(a2*aenv)
+endin

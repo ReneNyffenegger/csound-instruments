@@ -1,0 +1,15 @@
+gen5 -L2K 1 1 0  2 1.2 0  3 .8 0  4 .5 0  5 .7 0  6 .55 0 \
+7 .4 0  8 .3 0  9 .2 0  10 .3 0  11 .4 0  12 .25 0  13 .1 0 \
+14 .05 0 | tosf /scratch/eric/soundin.30
+
+gen5 -L2K 1 .2 0  2 .3 0  3 .4 0  4 .5 0  5 .6 0  6 .5 0 \
+7 .2 0  8 .15 0  9 .1 0  10 .05 0 |tosf /scratch/eric/soundin.31
+
+gen5 -L2K 1 1 0  2 .7 0  3 .35 0  4 .125 0  5 .065 0 |tosf /scratch/eric/soundin.32
+
+gen5 -L2K 1 .2 0  2 .3 0  3 .4 0  4 .3 0  5 .45 0 \
+6 .5 0  7 .55 0  8 .6 0  9 .7 0  10 1 0  11 .8 0  \
+12 .6 0  13 .4 0  14 .2 0 15 .1 0 | tosf /scratch/eric/soundin.33
+
+#gen4 -L2K 0 0 5 .025 1 -10  .5 0 >/snd/eric/soundin.34
+gen4 -L2K 0 0 5 .075 1 -7  .6 0 | tosf /scratch/eric/soundin.34

@@ -1,0 +1,44 @@
+sr=44100
+kr=4410
+ksmps=10
+nchnls=2
+
+instr 1
+iatk = .001
+idk = .1
+isust = p3 - (iatk+idk)
+
+ioffset = 0
+imult = 1.0
+
+ix = .125*imult
+ixx = (ioffset*.125)+ix
+ifunk = p4
+ifunklen = ftlen(ifunk)
+ibaseincr = sr/ifunklen
+ivspeed = p5
+ipanspeed = p6
+iphs1=p7
+ibaseincr = ibaseincr * p10
+ivdepth = p8*ibaseincr
+iamp = p9
+
+
+;FORMAT:
+;f1 0 8192 10 1
+;f50 0 LEN -1 FILE SKIP (one for each file excerpt)
+;i1 0 dur func_num vib_speed pan_speed initphase  vib_depth iamp transp
+;gain
+
+	kdev oscili ivdepth,ivspeed,1
+	kincr = kdev+ibaseincr
+	aweird oscili iamp,kincr,ifunk
+	kenv linseg 0,iatk,iamp,isust,iamp,idk,0
+	aweird = aweird*kenv
+	kndx oscili ix, ipanspeed, 1, iphs1
+	kndx = kndx + ixx
+	kleft tablei kndx,1,1
+	kndx = kndx+.25
+	kright tablei kndx,1,1
+	outs kleft*aweird,kright*aweird;
+endin

@@ -1,0 +1,25 @@
+sr=44100
+kr=4410
+ksmps=10
+nchnls = 2
+;i1 0 dur file skip  left1 left2 gain
+gipihalf = 1.570796
+instr 1
+ifile = p4
+iskip = p5
+ileft1 = p6*gipihalf
+ileft2 = p7*gipihalf
+iamp = p8
+iatk = .0001
+idk = .02
+isust = p3-(idk+iatk)
+idur = 1/p3
+iambit = .99
+	aenv linseg 0,iatk,iamp,isust,iamp,idk,0
+	araw soundin ifile,iskip
+	araw = araw*aenv
+	kpos line ileft1,p3,ileft2
+	kright = cos(kpos)
+	kleft = sin(kpos)
+	outs (araw*kleft),(araw*kright)
+endin

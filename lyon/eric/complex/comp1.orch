@@ -1,0 +1,40 @@
+sr=44100
+kr=2205
+ksmps=20
+nchnls=1
+	giftable = 1
+	giwave = 2
+	giwshape = 3
+	gisquare = 4
+	giamp = 25000.
+	;i1 0 dur fspeed phase dev devsp seed amp envsp
+instr 1
+	ifspeed = p4/ftlen( giftable )	;read speed
+	iph = p5	;freq table phase
+	idev = p6/2	;freq dev
+	idevbase = idev*1.1
+	idevsp = p7	;speed of dev
+	iseed1 = p8
+	iamp = p9*giamp
+	ienvsp = p10
+	iseed2 = p11
+	itransp = p12
+	iflen = ftlen( giwshape )
+	iflen2 = iflen/2
+	ienv = p13 + 3
+	;____________________________________________________
+	kfreq 	oscil 	itransp, ifspeed, giftable, iph
+	;kdev	randi 	idev, idevsp, iseed1
+	;kdev 	= 	(kdev + idev)*kfreq
+	;kfreq	=	kfreq + kdev
+	kfr	port	kfreq, .02
+	aenv1	oscili 	1.0, ienvsp, ienv
+	
+	aosc	oscil 	aenv1, kfr, giwave
+	aws 	tablei 	aosc*iflen2,giwshape,0,iflen2
+	aup	atone	aws*iamp, 30
+		kclean	linseg	0, .02, 1, p3-.04, 1, .02, 0
+	out aup*kclean
+	;out aosc*iamp
+
+endin

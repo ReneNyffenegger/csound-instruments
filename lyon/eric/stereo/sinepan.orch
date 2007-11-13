@@ -1,0 +1,71 @@
+sr=44100
+kr=4410
+ksmps=10
+nchnls = 2
+
+;i1 0 dur file skip amp speed phase
+;linear pan
+instr 1
+ifile = p4
+iskip = p5
+iamp = p6
+ispeed = p7/2.0
+iphs1 = p8
+iphs2 = iphs1+.25
+iatk = .01
+idk = .01
+isust = p3-(idk+iatk)
+	araw soundin ifile,iskip
+	;kenv linseg 0,iatk,iamp,isust,iamp,idk,0
+	;araw = araw*kenv
+	kleft oscili .5, ispeed, 1, iphs1
+	kright oscili .5, ispeed, 1, iphs2
+	kleft = kleft+.5
+	kright = kright+.5
+	outs (araw*kleft),(araw*kright)
+endin
+
+
+;sincos pan
+;f1 0 8192 10 1
+;i2 0 dur file skip amp speed initphase atk dk
+instr 2
+ifile = p4
+iskip = p5
+iamp = p6
+ispeed = p7/2
+iphs1 = p8
+iatk = p9
+idk = p10
+isust = p3-(idk+iatk)
+	araw soundin ifile,iskip
+	kenv linseg 0,iatk,iamp,isust,iamp,idk,0
+	araw = araw*kenv
+	kndx oscili .125, ispeed, 1, iphs1
+	kndx = kndx + .125
+	kleft tablei kndx,1,1
+	kndx = kndx+.25
+	kright tablei kndx,1,1
+
+	outs (araw*kleft),(araw*kright)
+endin
+
+;xpan pan
+;f1 0 8192 10 1
+;i2 0 dur file skip amp speed initphase
+instr 3
+ifile = p4
+iskip = p5
+iamp = p6
+ispeed = p7/2
+iphs1 = p8
+	a1,a2 soundin ifile,iskip
+	kndx oscili .125, ispeed, 1, iphs1
+	kndx = kndx + .125
+	kleft tablei kndx,1,1
+	kndx = kndx+.25
+	kright tablei kndx,1,1
+	asum1 = (a1*kleft)+(a1*kright)
+	asum2 = (a2*kleft)+(a2*kright)
+	outs asum1*iamp,asum2*iamp
+endin

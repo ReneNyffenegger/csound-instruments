@@ -1,0 +1,6 @@
+
+gen4 -L2048 0 1 -5 1 0 > ~eric/sound/soundin.50
+gen4 -L2048 0 0 5 1 1 -5 2 0 > ~eric/sound/soundin.51
+gen4 -L2048 0 0 5 1 1 > ~eric/sound/soundin.52
+gen5 -L8192 0 90Deg .5 1 90Deg -.5 > ~eric/sound/soundin.77
+
