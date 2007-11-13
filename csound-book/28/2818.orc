@@ -12,7 +12,7 @@ instr     2818
   ifreq2    =  1
   ktime     line      0, p3, 1
   kinterp   line      0, p3, 1
-            pvbufread   ktime, "violin.pvc"
-  asig      pvinterp  ktime, ifmod, "marimba.pvc", ifreq1, ifreq2, iamp1, iamp2, kinterp, kinterp
+            pvbufread   ktime, "violin.pvx"
+  asig      pvinterp  ktime, ifmod, "marimba.pvx", ifreq1, ifreq2, iamp1, iamp2, kinterp, kinterp
             out       asig
 endin

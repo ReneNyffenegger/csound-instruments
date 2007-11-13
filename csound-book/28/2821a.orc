@@ -12,7 +12,7 @@ instr     2821
   kamp2     expon     1, p3, 4    
   kinterp   line      0, p3, 1    
   ktime     line      0, p3, 1.15 
-            pvbufread   ktime, "violin.pvc" 
-  asig      pvinterp  ktime, ifmod, "altosax.pvc", ifreq1, ifreq2, kamp1, kamp2, kinterp, kinterp
+            pvbufread   ktime, "violin.pvx" 
+  asig      pvinterp  ktime, ifmod, "altosax.pvx", ifreq1, ifreq2, kamp1, kamp2, kinterp, kinterp
             out       asig    
 endin

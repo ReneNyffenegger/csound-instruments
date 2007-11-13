@@ -10,6 +10,6 @@ instr     2802
   ibeg      =  0    
   iend      =  p4                                 ; p4 = DURATION OF INPUT_SOUND
   ktime     line      iend, p3, ibeg              ; VALUES GO FROM END TO BEGINNING
-  apv       pvoc      ktime, ifreqscale, "hellorcb.pvc", ispecwp
+  apv       pvoc      ktime, ifreqscale, "hellorcb.pvx", ispecwp
             out       apv
 endin

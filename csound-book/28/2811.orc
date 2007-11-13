@@ -13,7 +13,7 @@ instr     2811
 endin                                   ; ...TO ALL OF THE NOTES
                                                   ; ...PRODUCED BY instr 3212
 instr     2812
-  kfreq, kamp  pvread   gktime, "hellorcb.pvc", p4
+  kfreq, kamp  pvread   gktime, "hellorcb.pvx", p4
   amod      oscili    kfreq*gkfmdevscale, kfreq, 1
   acar      oscili    kamp, kfreq+amod, 1 
             out       acar*p5

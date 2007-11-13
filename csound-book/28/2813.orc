@@ -10,6 +10,6 @@ instr     2813    ; LOWPASS FILTERED SPECTRUM
   iend      =  p4
   ispecfn   =  p5   
   ktime     line      0, p3, iend
-  asig      vpvoc     ktime, ifreqscale, "violin.pvc", ispecwp, ispecfn
+  asig      vpvoc     ktime, ifreqscale, "violin.pvx", ispecwp, ispecfn
             out       asig
 endin

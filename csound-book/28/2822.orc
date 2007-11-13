@@ -11,8 +11,8 @@ instr     2822
   kinterp   line      0, p3, 1
   krmsr, krmso, kerr, kcps  lpread                klpctime, "speech1.lpc"
   kfmod     =  kcps/cpspch(9.00)                  ; ...WHICH WILL "SPEAK" WITH
-            pvbufread   kpvtime, "violin.pvc"
-  apv       pvinterp  kpvtime, kfmod, "marimba.pvc", ifreq, ifreq, iamp, 2, kinterp, kinterp
+            pvbufread   kpvtime, "violin.pvx"
+  apv       pvinterp  kpvtime, kfmod, "marimba.pvx", ifreq, ifreq, iamp, 2, kinterp, kinterp
   alpc      lpreson   apv                         ;...THE PITCHES FROM THE LPC
             out       alpc                        ; ...ANALYZED SPEECH!
 endin

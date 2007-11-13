@@ -8,6 +8,6 @@ instr     2814
   iend      =  p4
   ktime     line      0, p3, iend
             ktableseg   p5, p3, p6
-  asig      vpvoc     ktime, 1, "violin.pvc"
+  asig      vpvoc     ktime, 1, "violin.pvx"
             out       asig
 endin      

@@ -10,7 +10,7 @@ instr     2817
   ifmod     =  1
   ktime1    line      0, p3, 2.26
   ktime2    line      2.26, p3, 0
-            pvbufread   ktime1, "hellorcb.pvc"
-  asig      pvcross   ktime2, 1, "hellorcb.pvc", iamp1, iamp2
+            pvbufread   ktime1, "hellorcb.pvx"
+  asig      pvcross   ktime2, 1, "hellorcb.pvx", iamp1, iamp2
             out       asig
 endin

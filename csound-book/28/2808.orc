@@ -9,6 +9,6 @@ instr     2808    ; TIME VARYING PITCH CHANGE
   iend      =  p4
   ktime     line      0, p3, iend
   kfreq     line      .5, p3, 2                   ; COVERING TWO OCTAVES OVER THE DURATION:
-  asig      pvoc      ktime, kfreq, "hellorcb.pvc", ispecwp
+  asig      pvoc      ktime, kfreq, "hellorcb.pvx", ispecwp
             out       asig
 endin

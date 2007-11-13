@@ -8,6 +8,6 @@ instr     2801
   ifreqscale   =      1
   ispecwp   =  0
   ktime     line      0, p3, 1
-  apv       pvoc      ktime, ifreqscale, "violin.pvc", ispecwp
+  apv       pvoc      ktime, ifreqscale, "violin.pvx", ispecwp
             out       apv
 endin

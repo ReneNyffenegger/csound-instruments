@@ -9,6 +9,6 @@ instr     2807    ; DOWN AN OCTAVE
   ispecwp   =  0
   iend      =  p4
   ktime     line      0, p3, iend
-  asig      pvoc      ktime, ifmod, "hellorcb.pvc", ispecwp
+  asig      pvoc      ktime, ifmod, "hellorcb.pvx", ispecwp
             out       asig
 endin

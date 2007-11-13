@@ -7,7 +7,7 @@ instr     2815
   iend      =  p4
   ktime     line      0, p3, iend
             ktableseg   2, p3*.5, 3, p3*.5, 4
-  asig      vpvoc     ktime, 1, "hellorcb.pvc"
+  asig      vpvoc     ktime, 1, "hellorcb.pvx"
             out       asig
 endin
 
