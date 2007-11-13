@@ -1,76 +1,76 @@
-sr 		= 		44100
+  sr        =  44100
 
-kr 		= 		4410
+  kr        =  4410
 
-ksmps 	= 		10
+  ksmps     =  10
 
-nchnls 	= 		2
-
-
-
-garvb	init	0
+  nchnls    =  2
 
 
 
-		instr	141   ; lfo pan - am pulser
+  garvb     init      0
 
-idur	=		p3
 
-iamp	=		ampdb(p4)
 
-ifrq	=		cpspch(p5)
+instr   141   ; lfo pan - am pulser
 
-ifun	=		p6
+  idur      =  p3
 
-iatk	=		p7
+  iamp      =  ampdb(p4)
 
-irel	=		p8
+  ifrq      =  cpspch(p5)
 
-iatkfun	=		p9
+  ifun      =  p6
 
-imodpth	=		p10
+  iatk      =  p7
 
-imodfrq	=		p11
+  irel      =  p8
 
-imodfun	=		p12
+  iatkfun   =  p9
 
-ipanfrq	=		p13	
+  imodpth   =  p10
 
-irvbsnd	=		p14			
+  imodfrq   =  p11
 
-kenv	envlpx	iamp, iatk, idur, irel, iatkfun, .7, .01
+  imodfun   =  p12
 
-kpan	oscil	.5, ipanfrq, 1
+  ipanfrq   =  p13     
 
-klfo	oscil	imodpth, imodfrq, imodfun	
+  irvbsnd   =  p14                     
 
-asig    oscil	klfo*kenv, ifrq, ifun
+  kenv      envlpx    iamp, iatk, idur, irel, iatkfun, .7, .01
 
-kpanlfo	=		kpan+.5
+  kpan      oscil     .5, ipanfrq, 1
 
-       	outs  	asig*kpanlfo, asig*(1-kpanlfo)
+  klfo      oscil     imodpth, imodfrq, imodfun       
 
-garvb	=		garvb+(asig*irvbsnd)
+  asig      oscil     klfo*kenv, ifrq, ifun
 
-		endin
+  kpanlfo   =  kpan+.5
 
-				
+            outs      asig*kpanlfo, asig*(1-kpanlfo)
 
-		instr 	199
+  garvb     =  garvb+(asig*irvbsnd)
 
-idur	=		p3					
+endin
 
-irvbtim	=		p4
+                                
 
-ihiatn	=		p5
+instr   199
 
-arvb	nreverb	garvb, irvbtim, ihiatn
+  idur      =  p3                                      
 
-		outs		arvb, arvb
+  irvbtim   =  p4
 
-garvb	=		0
+  ihiatn    =  p5
 
-		endin
+  arvb      nreverb   garvb, irvbtim, ihiatn
+
+            outs      arvb, arvb
+
+  garvb     =  0
+
+endin
 
 
 

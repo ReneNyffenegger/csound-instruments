@@ -1,72 +1,72 @@
-gacmb	init	0
+  gacmb     init      0
 
-garvb	init	0
+  garvb     init      0
 
-		instr 	137
+instr   137
 
-idur	=		p3
+  idur      =  p3
 
-iamp	=		ampdb(p4)
+  iamp      =  ampdb(p4)
 
-ifrq	=		cpspch(p5)
+  ifrq      =  cpspch(p5)
 
-ifun	=		p6
+  ifun      =  p6
 
-iatk	=		p7
+  iatk      =  p7
 
-irel	=		p8
+  irel      =  p8
 
-irvbsnd	=		p9
+  irvbsnd   =  p9
 
-icmbsnd	=		p10
+  icmbsnd   =  p10
 
-kenv	linen	iamp, iatk, idur, irel
+  kenv      linen     iamp, iatk, idur, irel
 
-asig	loscil	kenv, ifrq, ifun
+  asig      loscil    kenv, ifrq, ifun
 
-		out		asig
+            out       asig
 
-garvb	=		garvb+(asig*irvbsnd)
+  garvb     =  garvb+(asig*irvbsnd)
 
-gacmb	=		gacmb+(asig*icmbsnd)
-
-		endin
-
-
-
-		instr	198
-
-idur	=		p3
-
-itime 	= 		p4
-
-iloop 	= 		p5
-
-kenv	linen	1, .01, idur, .01
-
-acomb 	comb	gacmb, itime, iloop, 0
-
-		out		acomb*kenv
-
-gacmb	=		0
+  gacmb     =  gacmb+(asig*icmbsnd)
 
 endin
 
 
 
-		instr 	199
+instr   198
 
-idur	=		p3					
+  idur      =  p3
 
-irvbtim	=		p4
+  itime     =  p4
 
-ihiatn	=		p5
+  iloop     =  p5
 
-arvb	reverb2	garvb, irvbtim, ihiatn
+  kenv      linen     1, .01, idur, .01
 
-		out		arvb
+  acomb     comb      gacmb, itime, iloop, 0
 
-garvb	=		0
+            out       acomb*kenv
 
-		endin
+  gacmb     =  0
+
+endin
+
+
+
+instr   199
+
+  idur      =  p3                                      
+
+  irvbtim   =  p4
+
+  ihiatn    =  p5
+
+  arvb      reverb2   garvb, irvbtim, ihiatn
+
+            out       arvb
+
+  garvb     =  0
+
+endin
 

@@ -14,17 +14,17 @@
 
 
 
-sr        =         44100
+  sr        =  44100
 
-kr        =         4410
+  kr        =  4410
 
-ksmps     =         10
+  ksmps     =  10
 
-nchnls    =         2
+  nchnls    =  2
 
 
 
-          zakinit 30, 30
+            zakinit   30, 30
 
 
 
@@ -40,27 +40,27 @@ nchnls    =         2
 
 ;---------------------------------------------------------------------------
 
-          instr     3002
+instr     3002
 
-iamp      =         p4                  ; AMPLITUDE
+  iamp      =  p4                                 ; AMPLITUDE
 
-ifqc      =         cpspch(p5)               ; CONVERT TO FREQUENCY
+  ifqc      =  cpspch(p5)                         ; CONVERT TO FREQUENCY
 
-itab1     =         p6                  ; INITIAL TABLE
+  itab1     =  p6                                 ; INITIAL TABLE
 
-imeth     =         p7                  ; DECAY METHOD
+  imeth     =  p7                                 ; DECAY METHOD
 
-ioutch    =         p8                  ; OUTPUT CHANNEL
+  ioutch    =  p8                                 ; OUTPUT CHANNEL
 
-kamp      linseg    0, .002, iamp, p3-.004, iamp, .002, 0  ; DECLICK
+  kamp      linseg    0, .002, iamp, p3-.004, iamp, .002, 0 ; DECLICK
 
-aplk      pluck     kamp, ifqc, ifqc, itab1, imeth         ; PLUCK WAVEGUIDE MODEL
+  aplk      pluck     kamp, ifqc, ifqc, itab1, imeth ; PLUCK WAVEGUIDE MODEL
 
-          zawm      aplk, ioutch                           ; WRITE TO OUTPUT
+            zawm      aplk, ioutch                ; WRITE TO OUTPUT
 
-gifqc     =         ifqc
+  gifqc     =  ifqc
 
-          endin
+endin
 
 ;---------------------------------------------------------------------------
 
@@ -68,39 +68,39 @@ gifqc     =         ifqc
 
 ;---------------------------------------------------------------------------
 
-          instr     3011
+instr     3011
 
-ifqc      =         1/p4                ; RMS CALCULATION FREQUENCY
+  ifqc      =  1/p4                               ; RMS CALCULATION FREQUENCY
 
-ideltm    =         p5                  ; DELAY TIME TO APPLY COMPRESSION TO INITIAL DYNAMICS
+  ideltm    =  p5                                 ; DELAY TIME TO APPLY COMPRESSION TO INITIAL DYNAMICS
 
-itab      =         p6                  ; COMPRESSOR/LIMITER TABLE
+  itab      =  p6                                 ; COMPRESSOR/LIMITER TABLE
 
-ipostgain =         p7                       ; POST GAIN
+  ipostgain =  p7                                 ; POST GAIN
 
-iinch     =         p8                  ; INPUT CHANNEL
+  iinch     =  p8                                 ; INPUT CHANNEL
 
-ioutch    =         p9                  ; OUTPUT CHANNEL
+  ioutch    =  p9                                 ; OUTPUT CHANNEL
 
-kenv      linseg    0, .02, 1, p3-.04, 1, .02, 0  ; AMP ENVELOPE TO DECLICK.
+  kenv      linseg    0, .02, 1, p3-.04, 1, .02, 0 ; AMP ENVELOPE TO DECLICK.
 
-asig      zar       iinch               ; READ INPUT CHANNEL
+  asig      zar       iinch                       ; READ INPUT CHANNEL
 
-kamp      rms       asig, ifqc          ; FIND RMS LEVEL
+  kamp      rms       asig, ifqc                  ; FIND RMS LEVEL
 
-kampn     =         kamp/30000          ; NORMALIZE RMS LEVEL 0-1.
+  kampn     =  kamp/30000                         ; NORMALIZE RMS LEVEL 0-1.
 
-kcomp     tablei    kampn,itab,1,0      ; LOOK UP COMPRESSION VALUE IN TABLE
+  kcomp     tablei    kampn,itab,1,0              ; LOOK UP COMPRESSION VALUE IN TABLE
 
-adel1     delayr    ideltm              ; DELAY FOR THE INPUT DELAY TIME, 1/ifqc/2 IS TYPICAL
+  adel1     delayr    ideltm                      ; DELAY FOR THE INPUT DELAY TIME, 1/ifqc/2 IS TYPICAL
 
-          delayw    asig                ; WRITE TO DELAY LINE
+            delayw    asig                        ; WRITE TO DELAY LINE
 
-acomp     =         kcomp*adel1*ipostgain ; COMPRESS THE DELAYED SIGNAL AND POST GAIN,
+  acomp     =  kcomp*adel1*ipostgain              ; COMPRESS THE DELAYED SIGNAL AND POST GAIN,
 
-          zaw       acomp*kenv, ioutch  ; DECLICK AND WRITE TO OUTPUT CHANNEL
+            zaw       acomp*kenv, ioutch          ; DECLICK AND WRITE TO OUTPUT CHANNEL
 
-          endin
+endin
 
 ;---------------------------------------------------------------------------
 
@@ -112,39 +112,39 @@ acomp     =         kcomp*adel1*ipostgain ; COMPRESS THE DELAYED SIGNAL AND POST
 
 
 
-          instr     3099 ; MIXER
+instr     3099 ; MIXER
 
-asig1     zar       p4
+  asig1     zar       p4
 
-igl1      init      p5*p6
+  igl1      init      p5*p6
 
-igr1      init      p5*(1-p6)
+  igr1      init      p5*(1-p6)
 
-asig2     zar       p7
+  asig2     zar       p7
 
-igl2      init      p8*p9
+  igl2      init      p8*p9
 
-igr2      init      p8*(1-p9)
+  igr2      init      p8*(1-p9)
 
-asig3     zar       p10
+  asig3     zar       p10
 
-igl3      init      p11*p12
+  igl3      init      p11*p12
 
-igr3      init      p11*(1-p12)
+  igr3      init      p11*(1-p12)
 
-asig4     zar       p13
+  asig4     zar       p13
 
-igl4      init      p14*p15
+  igl4      init      p14*p15
 
-igr4      init      p14*(1-p15)
+  igr4      init      p14*(1-p15)
 
-asigl     =         asig1*igl1 + asig2*igl2 + asig3*igl3 + asig4*igl4
+  asigl     =  asig1*igl1 + asig2*igl2 + asig3*igl3 + asig4*igl4
 
-asigr     =         asig1*igr1 + asig2*igr2 + asig3*igr3 + asig4*igr4
+  asigr     =  asig1*igr1 + asig2*igr2 + asig3*igr3 + asig4*igr4
 
-          outs      asigl, asigr
+            outs      asigl, asigr
 
-          zacl      0, 30
+            zacl      0, 30
 
-          endin
+endin
 

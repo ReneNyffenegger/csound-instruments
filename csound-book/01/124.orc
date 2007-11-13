@@ -1,40 +1,40 @@
-		instr	124
+instr   124
 
-idur	=		p3
+  idur      =  p3
 
-iamp	=		ampdb(p4)
+  iamp      =  ampdb(p4)
 
-ifrq	=		cpspch(p5)
+  ifrq      =  cpspch(p5)
 
-ifun	=		p6
+  ifun      =  p6
 
-iatk	=		p7
+  iatk      =  p7
 
-irel	=		p8
+  irel      =  p8
 
-iatkfun	=		p9
+  iatkfun   =  p9
 
-imodp1	=		p10
+  imodp1    =  p10
 
-imodp2	=		p11
+  imodp2    =  p11
 
-imodfr1	=		p12
+  imodfr1   =  p12
 
-imodfr2	=		p13
+  imodfr2   =  p13
 
-imodfun	=		p14				
+  imodfun   =  p14                             
 
-kenv	envlpx	iamp, iatk, idur, irel, iatkfun, .7, .01
+  kenv      envlpx    iamp, iatk, idur, irel, iatkfun, .7, .01
 
-kmodpth	expon	imodp1, idur, imodp2
+  kmodpth   expon     imodp1, idur, imodp2
 
-kmodfrq	line	cpspch(imodfr1), idur, cpspch(imodfr2) 		
+  kmodfrq   line      cpspch(imodfr1), idur, cpspch(imodfr2)          
 
-alfo	oscil	kmodpth, kmodfrq, imodfun	
+  alfo      oscil     kmodpth, kmodfrq, imodfun       
 
-asig   	oscil	alfo, ifrq, ifun
+  asig      oscil     alfo, ifrq, ifun
 
-       	out  	asig*kenv
+            out       asig*kenv
 
-		endin
+endin
 

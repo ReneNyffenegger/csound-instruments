@@ -1,13 +1,13 @@
-sr        =         44100
-kr        =         4410
-ksmps     =         10
-nchnls    =         1
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  1
 
 
-          instr     2708
-iamod     =         p4
-ifmod     =         p5
-ismod     =         p6
-asig      adsyn     iamod, ifmod, ismod, 6 ; "gong_2.het"
-          out       asig
-          endin
+instr     2708
+  iamod     =  p4
+  ifmod     =  p5
+  ismod     =  p6
+  asig      adsyn     iamod, ifmod, ismod, 6      ; "gong_2.het"
+            out       asig
+endin

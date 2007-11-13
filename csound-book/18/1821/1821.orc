@@ -1,54 +1,54 @@
-sr      =      	44100
+  sr        =  44100
 
-kr    	=     	4410
+  kr        =  4410
 
-ksmps  	=     	10
+  ksmps     =  10
 
-nchnls	=		1
-
-
-
-gkpwr	init	0
+  nchnls    =  1
 
 
 
-		instr	1821
+  gkpwr     init      0
 
-igm		=		1.618
 
-imp		=		p4
 
-kln		line	3, p3, 0
+instr   1821
 
-afm1	foscil	imp, p5, 1, p5*igm, kln, 1
+  igm       =  1.618
 
-asig	linen	afm1, 0.01*p3, p3, 0.6*p3
+  imp       =  p4
 
-		out		asig
+  kln       line      3, p3, 0
 
-gkpwr	rms		asig
+  afm1      foscil    imp, p5, 1, p5*igm, kln, 1
 
-		endin	
+  asig      linen     afm1, 0.01*p3, p3, 0.6*p3
 
-								
+            out       asig
 
-		instr	1822	; PULSED NOISE INSTRUMENT
+  gkpwr     rms       asig
 
-klfo	oscil	0.5, 8, 1	
+endin   
 
-klfo1	=		klfo+0.5			; RESCALE [0-1]
+                                                                
 
-anoiz	rand	1	
+instr   1822    ; PULSED NOISE INSTRUMENT
 
-apulse	=		anoiz*klfo1	
+  klfo      oscil     0.5, 8, 1       
 
-kpw		=		p4-gkpwr			; POWER CURVE
+  klfo1     =  klfo+0.5                           ; RESCALE [0-1]
 
-kmp		port	kpw, 0.2			; SMOOTH CURVE
+  anoiz     rand      1       
 
-asig	=		apulse*kmp		
+  apulse    =  anoiz*klfo1     
 
-		out		asig	
+  kpw       =  p4-gkpwr                           ; POWER CURVE
 
-		endin
+  kmp       port      kpw, 0.2                    ; SMOOTH CURVE
+
+  asig      =  apulse*kmp              
+
+            out       asig    
+
+endin
 

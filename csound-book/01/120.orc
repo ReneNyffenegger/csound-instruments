@@ -1,32 +1,32 @@
-		instr	120
+instr   120
 
-idur	=		p3
+  idur      =  p3
 
-iamp	=		ampdb(p4)
+  iamp      =  ampdb(p4)
 
-ifrq	=		cpspch(p5)
+  ifrq      =  cpspch(p5)
 
-ifun	=		p6
+  ifun      =  p6
 
-iatk	=		p7
+  iatk      =  p7
 
-irel	=		p8
+  irel      =  p8
 
-iatkfun	=		p9				
+  iatkfun   =  p9                              
 
-kenv	envlpx	iamp, iatk, idur, irel, iatkfun, .7, .01
+  kenv      envlpx    iamp, iatk, idur, irel, iatkfun, .7, .01
 
-asig3   oscil	kenv, ifrq*.99, ifun
+  asig3     oscil     kenv, ifrq*.99, ifun
 
-asig2   oscil	kenv, ifrq*1.01, ifun
+  asig2     oscil     kenv, ifrq*1.01, ifun
 
-asig1   oscil	kenv, ifrq, ifun
+  asig1     oscil     kenv, ifrq, ifun
 
-amix	=		asig1+asig2+asig3
+  amix      =  asig1+asig2+asig3
 
-       	out  	amix
+            out       amix
 
-       	display	kenv, p3
+            display   kenv, p3
 
-		endin
+endin
 

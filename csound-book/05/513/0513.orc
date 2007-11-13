@@ -1,28 +1,28 @@
-garvb init 0
+  garvb     init      0
 
 
 
-#define	REVERB	#garvb	=	garvb+a1
+#define REVERB  #garvb  =       garvb+a1
 
-			out 	a1#
-
-
-
-	instr	513 ; macro example
-
-a1	oscil	p4, p5, p6
-
-	$REVERB.
-
-	endin
+            out       a1#
 
 
 
-	instr	514 ; macro example
+instr   513 ; macro example
 
-a1	wgpluck2	p8, p4, p5, p6, p7
+  a1        oscil     p4, p5, p6
 
-	$REVERB.
+$REVERB.
 
-	endin
+endin
+
+
+
+instr   514 ; macro example
+
+  a1        wgpluck2  p8, p4, p5, p6, p7
+
+$REVERB.
+
+endin
 

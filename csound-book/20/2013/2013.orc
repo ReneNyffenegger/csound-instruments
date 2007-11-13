@@ -1,20 +1,20 @@
-	instr	2013	; PHONE VOICE SCRAMBLER
+instr   2013    ; PHONE VOICE SCRAMBLER
 
-acarr	oscil	1, 8000, 1	; GEN CARRIER
+  acarr     oscil     1, 8000, 1                  ; GEN CARRIER
 
-amod	soundin	"Hamlet.aif"	; THE FILE TO SCRAMBLE.
+  amod      soundin   "Hamlet.aif"                ; THE FILE TO SCRAMBLE.
 
-a1	tone	amod, 10000	; GENTLE PREFILTER
+  a1        tone      amod, 10000                 ; GENTLE PREFILTER
 
-a2	convolve	a1, "Sharp_8kHz_Lowpass.con"	; SHARP PREFILTER
+  a2        convolve  a1, "Sharp_8kHz_Lowpass.con" ; SHARP PREFILTER
 
-asig	=	a2*acarr	; MODULATE
+  asig      =  a2*acarr                           ; MODULATE
 
-a3	tone	asig, 10000	; GENTLE FILTER
+  a3        tone      asig, 10000                 ; GENTLE FILTER
 
-ascram	convolve	a3, "Sharp_8kHz_Lowpass.con"	; SHARP FILTER
+  ascram    convolve  a3, "Sharp_8kHz_Lowpass.con" ; SHARP FILTER
 
-	out	ascram*0.2999
+            out       ascram*0.2999
 
-	endin
+endin
 

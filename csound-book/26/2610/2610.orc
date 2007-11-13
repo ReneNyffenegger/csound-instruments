@@ -1,18 +1,18 @@
-	instr	2610	; BRIGHT MUSIC DEMOS
+instr   2610    ; BRIGHT MUSIC DEMOS
 
-iscale	=	p4
+  iscale    =  p4
 
-iexcite	=	p5
+  iexcite   =  p5
 
-irespond	=	p6
+  irespond  =  p6
 
-aa	soundin	iexcite
+  aa        soundin   iexcite
 
-ab	convolve	aa, irespond
+  ab        convolve  aa, irespond
 
-ab	diff	ab
+  ab        diff      ab
 
-	out	ab*iscale
+            out       ab*iscale
 
-	endin
+endin
 

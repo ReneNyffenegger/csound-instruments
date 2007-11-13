@@ -1,44 +1,44 @@
-sr      =      	44100
+  sr        =  44100
 
-kr    	=     	4410
+  kr        =  4410
 
-ksmps  	=     	10
+  ksmps     =  10
 
-nchnls	=		1
-
-
-
-gkvib	init	0	
+  nchnls    =  1
 
 
 
-		instr	1913		; VIBRATO
-
-kline	line	p5, p3, p6				; FROM p5 TO p6 IN p3
-
-kvb		oscil	1, kline, 1	
-
-gkvib	=		kvb*0.01				; CHANGE RANGE
-
-		endin		
+  gkvib     init      0       
 
 
 
-		instr	1914
+instr   1913            ; VIBRATO
 
-asig	oscil	p4, p5*(1+gkvib), 1
+  kline     line      p5, p3, p6                  ; FROM p5 TO p6 IN p3
 
-		out		asig
+  kvb       oscil     1, kline, 1     
 
-		endin	
+  gkvib     =  kvb*0.01                           ; CHANGE RANGE
+
+endin           
 
 
 
-		instr	1915
+instr   1914
 
-asig	oscil	p4, p5*(1+gkvib), 2
+  asig      oscil     p4, p5*(1+gkvib), 1
 
-		out		asig
+            out       asig
 
-		endin
+endin   
+
+
+
+instr   1915
+
+  asig      oscil     p4, p5*(1+gkvib), 2
+
+            out       asig
+
+endin
 

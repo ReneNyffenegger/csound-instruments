@@ -1,13 +1,13 @@
 ; 1112.ORC  WAVESHAPER
 ;              (C) RAJMIL FISCHMAN, 1997
-sr      =      	44100
-kr    	=     	4410
-ksmps  	=     	10
-nchnls	=		1
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  1
 
 
 ;---------------------------------------
-        instr 1112              ; BASIC WAVESHAPING INSTRUMENT
+instr 1112              ; BASIC WAVESHAPING INSTRUMENT
 ;-------------------------------; PARAMETER LIST
 ;p4 : AMPLITUDE
 ;p5 : FREQUENCY
@@ -16,10 +16,10 @@ nchnls	=		1
 ;p8 : OSCILLATOR FUNCTION
 ;p9 : WAVESHAPING FUNCTION
 ;-------------------------------
-ioffset =       ftlen(p9)/2-1    ; OFFSET
-kenv    linen   p4, p6, p3, p7   ; ENVELOPE
-ain     oscil   ioffset, p5, p8  ; INPUT 
-awsh    tablei  ain,p9,0,ioffset ; WAVESHAPING VALUE
-        out     kenv*awsh        ; OUTPUT
-        endin
+  ioffset   =  ftlen(p9)/2-1                      ; OFFSET
+  kenv      linen     p4, p6, p3, p7              ; ENVELOPE
+  ain       oscil     ioffset, p5, p8             ; INPUT 
+  awsh      tablei    ain,p9,0,ioffset            ; WAVESHAPING VALUE
+            out       kenv*awsh                   ; OUTPUT
+endin
 

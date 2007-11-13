@@ -1,80 +1,80 @@
-sr	=	44100
+  sr        =  44100
 
-kr	=	44100
+  kr        =  44100
 
-ksmps	=	1	; NEEDED FOR SMOOTH DELAY TIME INTERPOLATION
+  ksmps     =  1                                  ; NEEDED FOR SMOOTH DELAY TIME INTERPOLATION
 
-nchnls	=	2
-
-
-
-gifeed	=	.5
-
-gilp1	=	1/10
-
-gilp2	=	1/23
-
-gilp3	=	1/41
-
-giroll	=	3000
-
-gadrysig	init	0
+  nchnls    =  2
 
 
 
-	instr	2307	; SCALABLE GLOBAL SEND LEVELS
+  gifeed    =  .5
 
-idryamt	=	1-p4
+  gilp1     =  1/10
 
-iwetamt	=	p4
+  gilp2     =  1/23
 
-asndfile	soundin	"hellorcb.aif", 0
+  gilp3     =  1/41
 
-gadrysig	=	gadrysig+asndfile*iwetamt
+  giroll    =  3000
 
-	outs	asndfile*idryamt, asndfile*idryamt
-
-	endin
+  gadrysig  init      0
 
 
 
-	instr	2311	; 2 PARALLEL ALLPASS FILTERS W/ RANDOM DELAY TIMES
+instr   2307    ; SCALABLE GLOBAL SEND LEVELS
 
-atmp	alpass	gadrysig, 1.7, .1
+  idryamt   =  1-p4
 
-aleft	alpass	atmp, 1.01, .07
+  iwetamt   =  p4
 
-atmp	alpass	gadrysig, 1.5, .2
+  asndfile  soundin   "hellorcb.aif", 0
 
-aright	alpass	atmp, 1.33, .05
+  gadrysig  =  gadrysig+asndfile*iwetamt
 
-kdel1	randi	.01, 1, .666
+            outs      asndfile*idryamt, asndfile*idryamt
 
-kdel1	=	kdel1+.1
+endin
 
-addl1	delayr	.3
 
-afeed1	deltapi	kdel1
 
-afeed1	=	afeed1+gifeed*aleft
+instr   2311    ; 2 PARALLEL ALLPASS FILTERS W/ RANDOM DELAY TIMES
 
-	delayw	aleft
+  atmp      alpass    gadrysig, 1.7, .1
 
-kdel2	randi	.01,. 95, .777
+  aleft     alpass    atmp, 1.01, .07
 
-kdel2	=	kdel2+.1
+  atmp      alpass    gadrysig, 1.5, .2
 
-addl2	delayr	.3
+  aright    alpass    atmp, 1.33, .05
 
-afeed2	deltapi	kdel2
+  kdel1     randi     .01, 1, .666
 
-afeed2	=	afeed2+gifeed*aright
+  kdel1     =  kdel1+.1
 
-	delayw	aright
+  addl1     delayr    .3
 
-	outs	aleft, aright
+  afeed1    deltapi   kdel1
 
-gadrysig	=	0
+  afeed1    =  afeed1+gifeed*aleft
 
-	endin
+            delayw    aleft
+
+  kdel2     randi     .01,. 95, .777
+
+  kdel2     =  kdel2+.1
+
+  addl2     delayr    .3
+
+  afeed2    deltapi   kdel2
+
+  afeed2    =  afeed2+gifeed*aright
+
+            delayw    aright
+
+            outs      aleft, aright
+
+  gadrysig  =  0
+
+endin
 

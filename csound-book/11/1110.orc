@@ -1,12 +1,12 @@
 ; 1110.ORC AMPLITUDE MODULATOR
 ;             (C) RAJMIL FISCHMAN, 1997
-sr      =      	44100
-kr    	=     	4410
-ksmps  	=     	10
-nchnls	=		1
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  1
 
 ;--------------------------------------
-        instr 1110      
+instr 1110      
 ;-------------------------------; PARAMETER LIST
 ;p4  : AMPLITUDE
 ;p5  : CARRIER
@@ -16,9 +16,9 @@ nchnls	=		1
 ;p9  : CARRIER FUNCTION TABLE
 ;p10 : MODULATOR TABLE
 ;-------------------------------
-kenv    linen  p4, p6, p3, p7   ; ENVELOPE
-acarr   oscil  1, p5, p9        ; CARRIER
-amod    oscil  1, p8, p10       ; MODULATOR
-aoutm   =      acarr*amod       ; MODULATED SIGNAL
-        out    kenv*aoutm       ; OUTPUT
-        endin
+  kenv      linen     p4, p6, p3, p7              ; ENVELOPE
+  acarr     oscil     1, p5, p9                   ; CARRIER
+  amod      oscil     1, p8, p10                  ; MODULATOR
+  aoutm     =  acarr*amod                         ; MODULATED SIGNAL
+            out       kenv*aoutm                  ; OUTPUT
+endin
