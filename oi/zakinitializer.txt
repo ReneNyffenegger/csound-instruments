@@ -1,0 +1,17 @@
+
+;3  zak initializer
+
+instr 3			;zakinits
+;p4--max scale size
+;p5--sum of number of chord types
+;p6--number of control channels needed
+;p7--number of audio channels needed
+p3=.001
+;also, allocate zak space
+isizek=2*p4*p5	;twice max scale size * sum of number of chord types
+gizktop=isizek	;amount used as arrays
+isizek=isizek+p6	;number of control channels needed out there
+isizea=p7		;number of audio patching channels needed
+gizatop=isizea	;number of audio patching channels 
+zakinit	isizea, isizek
+endin

@@ -1,0 +1,12 @@
+
+instr 8 ;chord proclaimer (for chord proclamation (to ftable4) via the score)
+	;p4=chord code, p5=chord channel 1--3, p6=mode channel
+     ;chord code:
+  ;0 or +ve=natural (selection from mode) modal root.type (.0) (types 0..n)
+  ;-ve= selection from scale: scalar root.type (.00)(types 1..n)
+  ;trailing digit=chord definition table number-10(modal) or -15(scalar)
+;so, the trailing digits may be (.00--.04)if modal and (.000--.004)if scalar
+$doChord(p4'p5'p6)
+p3=0
+endin
+

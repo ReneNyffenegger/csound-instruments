@@ -1,0 +1,12 @@
+;monophonic localizer, i.e., simply output a given zak audio channel with normalization.
+;p4=normalizing factor (if -ve) or the peak amplitude to be normalized (if +ve).
+
+
+#define monoOut(num'ch) #
+instr $num.	
+aout	zar $ch. 
+ifactor=(p4<0?-p4:32758/p4)
+out aout*ifactor
+endin
+#
+

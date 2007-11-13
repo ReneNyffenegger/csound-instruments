@@ -1,0 +1,206 @@
+;FOF French Horn, based on the University of Iowa
+;anechoic chamber recordings, simplified data
+;sample legato phrase:
+
+
+;fofFrenchHorn--  
+;legato tags: 0=single, 1=first, 2=tied, 3=last
+;registers: reg0=6.05--8.06 (9.02);  registers are +/- perfect 5ths from this
+;suggested maximum spectral tremolo depth is 1.0 (spectral tremolo is linked to vibrato)
+;            ST    DUR  LEGATO  db    PCH    PITCH   AMP  PEAK  PEAK    VD GLISS  REG-  PEAK  SPECT PREV  OUT
+;                        TAG                 FROM    TO    AMP  POINT       TO    ISTR  RGSTR TREMD GLISS CH
+;i$fofFhorn   0    1.00   1     85   -8.00   -9.0    np5    6    0.5    .5   0     0     0     0    pp12   0
+;i$fofFhorn   +    0.50   2     85   -7.09    pp6    np5    5    0.5     .   .     .     .     .     .     . 
+;i$fofFhorn   +    0.50   3     85   -7.05    pp6    np5    5    0.5     .   .     .     .     .     .     .
+;i$fofFhorn   +    0.5    0     89   -8.03    pp6    0      3    0.5     .   .     0     .     .     .     .
+
+;modification checklist: 
+;ilowform=effective lowest formant
+;irismin, idecay---probably okay as-is
+;iport (vs. size of change)
+;iatt, idec vs dB and pitch
+;kamp, koct (possibly marcato, drifting portamento, initial squeek) for each of the four cases
+;ijitmin (minimal jitter) jitter details (probability distribution
+;kvibd shape vis a vis expression peak
+;ivibr details and kvibr vis a vis expression peak
+;formant data in the fof statements---magnitudes normalized to 1
+;i suggest dependence on amplitude = ^(interval in oct above lowest formant)
+;modify knorm accordingly
+
+#define fofFhorn(num) #
+instr $num.	
+						;FOF LEGATO INSTRUMENT TEMPLATE
+
+;p4-legato tag: 0=single, 1=first, 2=tied, 3=last
+;p5-dB
+;p6-pitch (odradek notation)
+;p7-previous pitch (for legato)
+;p8-next dB (for legato)
+;p9-dB of swell
+;p10-peak of swell (0--1)
+;p11-vibrato depth (as percentage)
+;p12-gliss to pitch (defaults to no gliss if 0)
+;p13-register
+;p14-peak register
+;p15-fraction of spectral tremolo (1=suggested maximum)
+;p16-last glissando target, always pp12
+;p17-output channel
+
+
+idur=abs(p3)					; main init block
+
+
+
+ilowform=200*(1.5^(p13<p14?p13:p14))	;effective lowest formant
+ilfact=1.5			;min number of cycles of lowest formant per grain
+irismin=.003		;min risetime--- .003--.01?
+;using this to control skirtwidth is  a big question
+idecay=.003
+
+
+$getPitch(p7) 			;former pitch
+ipch1=ioct	
+iicps=icps
+$getPitch(p16)
+ipch1=(p16==0?ipch1:ioct)
+iicps=(p16==0?iicps:icps)
+icpsmax=icps
+$getPitch(p6) 			;initial pitch
+icpsmax=(icpsmax<icps?icps:icpsmax)
+ipch2=ioct	
+iffa=icps*(1.5^(-p13))	;effective frequency at attack
+$getPitch(p12) 
+icpsmax=(icpsmax<icps?icps:icpsmax)
+ipch3=(ioct<1?ipch2:ioct)	;target pitch of glissando
+icps=cpsoct(ipch3)
+iffd=icps*(1.5^(-p13))	;effective frequency at decay
+
+
+iport=0.02		
+
+;ATT/DEC DUE TO PITCH RELATIVE TO REGISTER AND TO DB LEVEL
+iattf table 1-(iffa-85)/215,14,1	;max at 85, min at 85+215=300Hz	shape vs. frequency
+iattf=.05+iattf*(.15-.05)		;max .15,   min .05
+idecf table 1-(iffd-85)/115,14,1	;max at 85, min at 85+115=200Hz
+idecf=.01+idecf*(.35-.01)		;max .35,   min .01
+iatta table 1-p5/96,14,1		;max at 0, min at 96			shape vs. db level
+iatta=.05+iatta*(.15-.05)		;max .15,   min .05
+ideca table p5/96,14,1			;max at 96, min at 0
+ideca=.01+ideca*(.35-.01)		;max .35,   min .01
+iatt=.5*(iatta+iattf)
+idec=.5*(ideca+idecf)
+
+irise=idur*p10					; set swell peak position
+  							; ... (ifall set later)
+idovib=1						; assume we use vibrato
+i1=0						;phase
+
+iswell=ampdb((p9+p5)<0?0:p9+p5)
+isusamp=ampdb(p5)
+inamp=ampdb(p8)
+
+;FOF safegaurds
+
+idurmin=ilfact/ilowform			;min grain duration
+idurmin=(idurmin>(irismin+idecay)?idurmin:irismin+idecay)
+iol=int(1+icpsmax*idurmin)		;min/max grain overlaps
+
+;SHORT NOTE ADJUSTMENT BLOCK
+iadjust=iatt+idec					; long note, we're safe
+if idur >= iadjust igoto safe			; adjust ramp durations for
+iatt=(idur/2)-0.005				; ... short notes, 10msec limit
+idec =iatt						; can't have zero timespan
+iadjust=idur-0.01					; (ensure ilen != 0 for linseg)
+idovib=0						; no vibrato on short notes
+iport=iport/2					; even tighter pitch ramp
+iport=(idur<3*iport?idur/3:iport)		;make sure two portamenti fit easily
+safe:
+ilen=idur-iadjust	 
+
+
+
+
+iext=.05
+if (p4==1) goto first
+if (p4==2) goto tied
+if (p4==3) goto last
+
+		;SINGLE BLOCK
+asplice=1
+kamp linseg 0, iatt*.3, isusamp*.1, iatt*.7, isusamp, ilen, isusamp, idec,0
+koct linseg ipch2,idur,ipch3
+		goto perf
+first:	;FIRST BLOCK
+p3=p3+iext
+idur=p3
+aspl linseg 1,idur-iext,1,iext,0
+asplice table aspl,14,1
+kamp linseg 0, iatt*.3, isusamp*.1, iatt*.7, isusamp, ilen-iext, isusamp, idec,inamp,iext,inamp
+koct linseg ipch2,idur,ipch3
+		goto perf
+tied:		;TIED BLOCK
+p3=p3+iext
+idur=p3
+aspl linseg 0,iext,1,idur-2*iext,1,iext,0
+asplice table aspl,14,1
+kamp linseg isusamp, iatt, isusamp, ilen-iext, isusamp, idec,inamp,iext,inamp
+koct linseg ipch1,iport*.5,(ipch1>ipch2?ipch2-.3:(ipch1+ipch2)*.5),iport*.5,ipch2,idur-iport-iext,ipch3		
+		goto perf
+last:		;LAST BLOCK
+aspl linseg 0,iext,1,idur-iext,1
+asplice table aspl,14,1
+kamp linseg isusamp, iatt*.3, isusamp*.9, iatt*.7, isusamp, ilen, isusamp, idec,0
+koct linseg ipch1,iport*.5,(ipch1>ipch2?ipch2-.3:(ipch1+ipch2)*.5),iport*.5,ipch2,idur-iport,ipch3		
+	
+
+
+;ALL NOTE PERFORMANCE BLOCK
+perf:						; make expression envelope
+; p9 sets peak of expression point, p10 moves it if p10==0 (illegal for linseg)
+irise=(p10>0.?irise:iatt) 		; set maximum accent shape
+ifall=idur-irise
+kreg linseg p13,irise,p14,ifall,p13				;registers
+krmod=1.5^kreg
+kswell linseg 0, irise, iswell-isusamp, ifall, 0		; make swell
+
+
+ijitmin=.005				;minimal jitter  +/1 octs
+if idovib == 0 goto play		; skip vibrato if short note
+;VIBRATO  -17.400, 17.226c per % ~=.01442
+kvibd	linseg	.1, irise, 1, ifall, .5	; VIBRATO
+kvibd	=kvibd*(p11==0?.0001:p11)*.01442		; VIBRATO DEPTH factor
+ivibr1	=		3.5+rnd(.5)	
+ivibr2	=		4+rnd(1)	
+kvrate	linseg	ivibr1, irise, ivibr2, ifall, ivibr1	; TIME-VARYING VIBRATO RATE
+kvib	oscil	kvibd, kvrate, 1,i1	
+kswtrem	linseg 0,irise,.5*p15,ifall,0
+ksw=1-kswtrem*(1+kvib/kvibd)		;relative skirtwidth on (0,1)
+;port ~8.7c, jitter, ~up to 18c, vib, .5%=17c, 1%=35c
+
+;SOUND PRODUCTION
+play:						; make the note
+kjit trirand (kvibd>ijitmin?kvibd:ijitmin)
+kcps=cpsoct(koct+kvib+kjit)
+kamp1	limit (kamp+kswell)/65536,0,1
+
+
+
+kdur=iol/kcps
+
+krismax=(kdur-2*idecay)*.5; this upper limit is empirical
+krismax=(krismax<irismin?irismin:krismax)
+kris=1/((1/krismax)+ksw*((1/irismin)-(1/krismax)))
+
+
+a1	fof	 kamp1*.237,         kcps, 200*krmod, 0, 100*krmod,kris,kdur,idecay, iol+2, 1, 14, idur, i1
+a2	fof	(kamp1^1.170)*.599,  kcps, 450*krmod, 0,  87*krmod,kris,kdur,idecay, iol+2, 1, 14, idur, i1
+a3	fof	(kamp1^2.263)*.139,  kcps, 960*krmod, 0, 180*krmod,kris,kdur,idecay, iol+2, 1, 14, idur, i1
+a4	fof	(kamp1^3.053)*.024,  kcps,1660*krmod, 0, 250*krmod,kris,kdur,idecay, iol+2, 1, 14, idur, i1
+;1.170, 2.263, 3.053=oct intervals from first formant    
+knorm=46000*kamp1/(.237*kamp1+.599*(kamp1^1.17)+.139*(kamp1^2.263)+.024*(kamp1^3.053)+.00001)
+	;32767-> compensation so 96dB=32768--63096*(1/.999)
+zawm (a1+a2+a3+a4)*knorm*asplice,p17
+
+endin
+#	
+

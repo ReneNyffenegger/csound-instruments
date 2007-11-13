@@ -1,0 +1,10 @@
+
+# define Zakinit #03#
+
+;3  zak initializer---allocates and intializes zak space. assumes use
+;				by other instruments
+	;zakinits
+	;p4--max scale size
+	;p5--sum of number of chord types
+	;p6--number of control channels needed
+	;p7--number of audio channels needed

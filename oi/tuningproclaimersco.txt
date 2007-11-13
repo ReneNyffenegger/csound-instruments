@@ -1,0 +1,17 @@
+;tuning tables (5--9)---number of degrees, list of .oct values. E.g.:
+; 17-tone arabic pythagorean
+f5 0 32 -2  17   0.00 0.075 0.150 0.170 0.245 0.320 0.340 0.415 0.490 0.565 0.585 0.660 0.735 0.755 0.830 0.905 0.980 0   
+; al-farabi's 19
+f6 0 32 -2  19   0.00 0.075 0.126 0.170 0.245 0.320 0.340 0.365 0.415  0.490 0.541 0.585  0.660 0.735 0.755 0.799 0.830 0.905 0.956 0
+;basic just 12, 7-limit
+;f7 0 16 -2  12   0.00 0.093122 0.169927 0.222395 0.321930 0.415040 0.485429 0.584965 0.678074 0.777610 0.807357 0.906893  0.
+;Rameau sharp
+;f8 0 16 -2 12  0.00 .0775 .1608333 .2541667 .3216667 .4191667 .485 .5808333 .6666667 .7416667 .8391667 .9025 0
+
+ 
+# define Tuning #04#
+
+;4  tuning proclaimer---proclaims the presiding tuning, as directed 
+;			 	 by the score, onto git.
+	;p4=tuning table number
+

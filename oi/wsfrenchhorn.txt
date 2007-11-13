@@ -1,0 +1,231 @@
+;Waveshaping French Horn, based on the data of Horner and Ayers
+;example legato phrase:
+
+;wsFrenchHorn--
+;registers: reg0=6.05--8.06 (9.02);  registers are +/- perfect 5ths from this
+;the weighting (w) parameters contol the strength of six ctrl functions affecting spectral content (roughly, brightness).
+;dB w---loudness's effect on spectrum, -ve for inverse.  traditionally, this it the major/only ctrl.
+;avib w---anti-vibrato ctrl (i.e., brighter when pitch is lower). -ve for pro-vibrato ctrl.
+;lfo w, lfo i, lfo f---the lfo has a random phase and given initial/final frequencies.  these
+;     are -ve if in Hz and +ve if in periods per duration.
+;rnd w, rnd ctrl---brownish noise. ctrl is the maximum slope (if -ve) or avg slope (if +ve).
+;lin w---a linear ramp, increasing if +ve, decreasing if -ve.
+;           ST   DUR    db  PCH PITCH AMP PEAK PEAK    VD GLISS REG- REG dB  avib lfo rnd pk lin lfo lfo rnd  PREV OUT
+;                                FROM TO  AMP  POINT       TO   ISTR TO   w    w   w   w  w   w  ini fin ctrl GLIS CH
+;i$wsFhorn  0   -0.25   90  9.0  9.0  np4  4    0.5    .5   0    0    0   1    0   0   0  0   0   1   2   8   pp11 1
+;i$wsFhorn  +   -0.25   91  8.5  pp5  np4  3    0.5     .  8.0   .    .   1    0   0   0  0   0   1   2   1   pp11 1
+;i$wsFhorn  +    0.75   90  8.0  pp5  0    4    0.5     .   .    .    .   1    0   0   0  0   0   1   2   1   pp11 1
+
+;modification checklist: 
+;iatt, idec vs dB and pitch
+;iport (vs. size of change)
+;kamp and two versions of koct (possibly marcato, drifting portamento, initial squeek)
+;jitter details
+;kvibd shape vis a vis expression peak
+;ivibr details and kvibr vis a vis expression peak
+;kff (effective freq) must be gaurded against overflowing first table
+;global table names must be changed
+;khp (highest partial) gives the highest partial defined in each table
+;the first table gives relative table numbers vs. effective frequency
+;subsequent tables are transfer functions---lists of magnitude vs. partial number
+;multiple tables (for different effective frequency ranges) are neccesary to simulate formants
+
+;p4-dB
+;p5-pitch (odradek notation)
+;p6-last pitch (=this for ties, singles or firsts)
+;p7-next dB
+;p8-dB of swell
+;p9-peak of swell (0--1)
+;p10-vibrato depth (as percentage)
+;p11-gliss to pitch (defaults to no gliss if 0)
+;p12-register
+;p13-peak register
+;p14-dB-based 	s.e. weight
+;p15-anti-vib  	s.e. weight
+;p16-lfo-based 	s.e. weight
+;p17-random 	s.e. weight
+;p18-peak-related s.e. weight
+;p19-linear 	s.e. weight
+;p20-initial lfo frequency
+;p21-final lfo frequency
+;p22-random s.e. rate control
+;p23-previous gliss, always pp11---used for gliss. in leg.
+;p24-out channel
+
+
+#define wsFhornFT #
+giWSfhorntn1  ftgen 0,0, 512,  -7,  0, 43, 0, 42, 1, 29, 2, 39, 3, 51, 4, 68, 5, 92, 6, 122, 7, 26, 7.9999 ;table vs. effective f--the .9999 aviods an obscure click
+giWSfhorntn10 ftgen 0,0, 8192, 14, .5,  .5,  0, -1, -.019, .119, .244, -.411, -.217, .068, .054, -.059, -.020, .015, .026, -.016, -.007, .007, .003, -.002, 0, .0005, -.001
+giWSfhorntn11 ftgen 0,0, 8192, 14, .5,  .5,  0, -1, -.056, .180, .380, -.311, -.133, .104, .041, -.054, -.031, .021, .030, -.018, -.007, .005, .003, -.002
+giWSfhorntn12 ftgen 0,0, 8192, 14, .5,  .5,  0, -1, -.089, .445, .380, -.185, -.089, .059, .021, -.018, -.009, .006, .008, -.005, -.003
+giWSfhorntn13 ftgen 0,0, 8192, 14, .5,  .5,  0, -1, -.144, .677, .266, -.085, -.058, .039, .016, -.009, -.008, .003
+giWSfhorntn14 ftgen 0,0, 8192, 14, .5,  .5,  0, -1, -.422, .669, .109, -.054, -.045, .013, .023, -.013
+giWSfhorntn15 ftgen 0,0, 8192, 14, .5,  .5,  0, -2, -.854, .352, .074, -.061, -.018
+giWSfhorntn16 ftgen 0,0, 8192, 14, .5,  .5,  0, -2, -.904, .279, .061, -.028
+giWSfhorntn17 ftgen 0,0, 8192, 14, .5,  .5,  0, -3, -.981, .158, .046
+
+#
+
+
+
+#define wsFhorn(num) #
+instr $num.	
+						;LEGATO INSTRUMENT TEMPLATE
+;MAIN INIT BLOCK (ASSUMES TIE)
+isum=abs(p14)+abs(p15)+abs(p16)+abs(p17)+abs(p18)+abs(p19)	;normalization of weights
+p14=p14/isum
+p15=p15/isum
+p16=p16/isum
+p17=p17/isum
+p18=p18/isum
+p19=p19/isum	
+
+idur=abs(p3)					; main init block
+ireg1=p12				;registers
+ireg2=p13
+
+$getPitch(p6) 			;former pitch
+ipch1=ioct	
+$getPitch(p23)
+ipch1=(p23==0?ipch1:ioct)
+$getPitch(p5) 			;initial pitch
+ipch2=ioct	
+iffa=icps*(1.5^(-ireg1))	;effective frequency at attack
+$getPitch(p11) 
+ipch3=(ioct<1?ipch2:ioct)	;target pitch of glissando
+icps=cpsoct(ipch3)
+iffd=icps*(1.5^(-ireg2))	;effective frequency at decay
+
+iport=0.03	+.02*abs(p5-p6)	
+
+;ATT/DEC DUE TO PITCH RELATIVE TO REGISTER
+iatt	=(iffa<85?.20:(iffa>300?.05:.20-.15*(iffa-85)/215))	; ATTACK TIME
+idec	=(iffd<85?.35:(iffd>200?.01:.35-.34*(iffd-85)/115))	; DECAY TIME
+iatt=(iatt+(p4>86?.05:(p4<30?.35:.35-.30*(p4-30)/56)) )/2
+idec=(idec+(p4>96?.35:(p4<60?.01:.01+.34*(p4-60)/30)) )/2	
+
+irise=idur*p9					; set swell peak position
+  							; ... (ifall set later)
+idovib=1						; assume we use vibrato
+							; assume this is a tied note
+
+iswell=p8
+iiamp=p4						;tied note starts at score amp
+isusamp=p4
+inamp=p7
+
+i1=-1							; phase for tied note
+
+itie tival						; TIED NOTE?
+tigoto tie
+
+;INIT BLOCK FOR FIRST OR SINGLE NOTES
+i1=rnd(1)						; first note, reset phase
+iiamp=0						; set start db
+
+
+;SHORT NOTE ADJUSTMENT BLOCK
+tie:
+iadjust=iatt+idec					; long note, we're safe
+if idur >= iadjust igoto doamp		; adjust ramp durations for
+iatt=(idur/2)-0.005				; ... short notes, 10msec limit
+idec =iatt						; can't have zero timespan
+iadjust=idur-0.01					; (ensure ilen != 0 for linseg)
+idovib=0						; no vibrato on short notes
+iport=iport/2					; even tighter pitch ramp
+
+;AMPLITUDE BLOCK (ALL NOTE PERFORMANCE)
+doamp:
+ilen=idur-iadjust	
+it1=(isusamp-iiamp)/3
+it2=(inamp-isusamp)/3
+kamp linseg iiamp, iatt*.2,iiamp+2*it1,iatt*.7,iiamp+2.9*it1,iatt*.1, isusamp, ilen, isusamp, idec*.8,isusamp+.8*it2,idec*.1,isusamp+2*it2,idec*.1, inamp
+adclick linseg (iiamp>1?1:0),.010,1,idur-.020,1,.010,(inamp>1?1:0)
+if (itie == 1) goto pitch			; no chiff on tied notes
+
+;CHIFF (FIRST OR SINGLE NOTE PERFORMANCE) BLOCK
+koct linseg 11*(1.5^ireg1),.02,ipch2,idur-.02,ipch3	;for singles
+
+if (itie==0) goto expr
+
+pitch:			
+;TIED NOTE PERFORMANCE BLOCK
+;PORTAMENTO BLOCK---MODIFY FOR MARCATO
+;i3=(p13==0?1:0)			;guard for glissandi in legato phrases,
+;not used in this horn, but, eg:
+;koct linseg ipch1-(.004*i3), iport, ipch2+(.0055*i3), idur-iport, ipch3-.004
+koct linseg ipch1, iport, ipch2, idur-iport, ipch3
+
+;EXPRESSION BLOCK (ALL NOTE PERFORMANCE BLOCK)
+expr:						; make expression envelope
+; p8 sets peak of expression point, p9 moves it if p9==0 (illegal for linseg)
+irise=(p9>0.?irise:iatt) 		; set maximum accent shape
+ifall=idur-irise
+; make sure a neg p8 does not take amp below zero
+p8=((iswell+isusamp) > 0.0 ? iswell : -isusamp)
+kswell linseg 0, irise, p8, ifall, 0			; make swell
+kreg linseg ireg1, idur, ireg2		;shifting registers
+
+
+;JITTER
+kj1	randi .009,	1/.031, i1
+kj2	randi .009, 1/.111, .3111*i1
+
+
+if idovib == 0 goto play		; skip vibrato if short note
+;VIBRATO
+kvibd	linseg	.7,iatt/2,.1, irise-iatt/2, 1, ifall, .7	; VIBRATO DEPTH ENVELOPE
+kvibd	=kvibd*(p10==0?.01:p10)/100		; VIBRATO DEPTH factor
+ivibr1	=		2+rnd(1)	
+ivibr2	=		4+rnd(1)	
+kvrate	linseg	ivibr1, irise, ivibr2, ifall, ivibr1	; TIME-VARYING VIBRATO RATE
+kvib	oscil	kvibd, kvrate, 1,i1	
+
+;port ~11.4c, jitter, ~up to 14.4, vib, 9 (given)
+
+;SOUND PRODUCTION
+play:						; make the note
+
+kcps=cpsoct(koct+kj1+kj2)*(1+kvib)
+
+kdbb=(p14<0?p14*(-1+ampdb(kamp+kswell)/65536):p14*ampdb(kamp+kswell)/65536)
+kavib=.5*p15*((p15<0?-1:1)-kvib/kvibd)
+klfof line (p20<0?p20/idur:p20),idur,(p21<0?p21/idur:p21)
+klfo oscil .5,klfof,1,i1
+klfo=(klfo+.5)*p16
+kr1 randi .333333,(p22<0?-p22:p22*1.718847)
+kr2 randi .333333,(p22<0?-p22*1.618034:p22*2.781153)
+kr3 randi .333333,(p22<0?-p22*2.618034:p22*4.5)
+krand=p17*(1+kr1+kr2+kr3)*.5
+kpkrel linseg (p18<0?-p18:0),irise,(p18<0?0:p18),ifall,(p18<0?-p18:0)
+klin line (p19<0?-p19:0),idur,(p19<0?0:p19)
+kndx=(kdbb+kavib+klfo+krand+kpkrel+klin)*.999
+
+kff=kcps*(1.5^(-kreg))		;effective frequency, scaled to register
+kff=(kff>511?511:kff)
+ktn tablei kff,giWSfhorntn1
+ktn1=int(ktn)+giWSfhorntn1+1
+ktn2=ktn1+1
+ktn2=(ktn2>giWSfhorntn17?ktn1:ktn2)
+khp=(ktn==0?20:(ktn==1?17:(ktn==2?14:(ktn==3?11:(ktn==4?9:(ktn=5?6:(ktn==7?5:4)))))))+.1
+khp limit khp*kcps,0,.4999*sr
+
+kxfade=frac(ktn)
+
+asin   	oscil   kndx*.5, kcps,    1, i1
+adummy	oscil   .5*ampdb(kamp+kswell)/65536, kcps,    1, i1
+aws1  	tablekt asin, 	ktn1, 	1,.5
+aws2  	tablekt asin, 	ktn2, 	1,.5
+
+asig	= .5*((aws1*(1-kxfade))+(aws2*kxfade))
+
+af butterlp asig,khp,itie
+aout balance af,adummy,10,itie
+
+zawm aout*65536*adclick,p24
+
+;atest=(kvib)*10000
+;zawm atest,p24
+
+endin
+#	

@@ -1,0 +1,29 @@
+
+;extends the note slightly and softly shuts off the given a-rate variable
+; at the end of the note.
+#define silencer(s) #
+;p3=p3+.05
+aMACSIL$s  expseg 1,p3-.03,1,.03,2^(-16)
+$s.=$s.*aMACSIL$s 
+#
+
+;when put at the end of an instrument, it will automatically turnoff the
+; instrument when the given a-rate variable has <1 rms power, after 100ms.
+#define autoShutoff(s) #
+timout .1,p3,MACSOTEST
+kgoto MACNOSO
+MACSOTEST:	kmacpow rms $s
+if (kmacpow<1) kgoto MACASO
+kgoto MACNOSO
+MACASO: turnoff
+MACNOSO:		
+#
+
+;when put at the end of an instrument, it will automatically turnoff the
+; instrument when the given a-rate variable has <1 rms power, after 100ms.
+#define forcedShutoff #
+timout 0,p3,MACNOSO
+turnoff
+MACNOSO:		
+#
+

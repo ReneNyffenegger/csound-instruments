@@ -1,0 +1,7 @@
+
+
+instr 4			;tuning proclaimer---p4=table number
+p3=.001
+git=p4
+endin
+

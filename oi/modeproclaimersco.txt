@@ -1,0 +1,46 @@
+;tables concerning mode
+
+;mode channels---40 triads (0,...,39) of:
+; [(mode selection table number.mode-in-table number (two digits: .00--.99),
+; markov table number (either melodic or harmonic),
+; SD offset (which SD corresponds to MD=0)]
+; perhaps the first 3 refer to the harmonic modes... if you like.
+f2 0 128 -2 20.00 30 0 20.0 30 0 20.0 30 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 20.0 40 0 
+
+;modal definitions (20--29) select modes from scales (givin an SD offest!)
+; index 0=k ---there are k modes in this table, 
+; index 1=n ---they are to be selected from n scalar degrees
+; index 2=m ---each mode is to have m degrees,
+; index 3 onward: k lists of m scalar degree offsets (above keynote)
+;maqam iraq
+f20 0 64 -2  1 17 8  0 2 5 7 9 12 14 16  
+;major 7 out of 12
+;f21 0 64 -2  1 12 7  0 2 4 5 7 9 11  
+;natural minor 7 out of 12
+;f22 0 64 -2  1 12 7  0 2 3 5 7 8 10 
+;the church modes "on C"---0=Ionian, 1=Dorian,       2=Phrygian,     3=Lydian,       4=Mixolydian,   5=Aeolian,      6=Locrian.
+;f20 0 64 -2  7 12 7  0 2 4 5 7 9 11  0 2 3 5 7 9 10  0 1 3 5 7 8 10  0 2 4 6 7 9 11  0 2 4 5 7 9 10  0 2 3 5 7 8 10  0 1 3 5 6 8 10 
+ 
+
+;harmonic mode markov tables (30--39) n lists of n conditional probabilities
+; where index i*n+j=probability of transition from chord i to chord j
+;a circle-of fifthsish progression---not ready for use!
+f30 0 64 -2  4 1 1 0 1 1 1  1 1 1 1 18 1 1  1 1 1 1 1 18 1  1 1 1 1 1 1 18  18 1 1 1 1 1 1  1 18 1 1 1 1 1   2 1 18 1 1 1 1  
+;melodic mode markov tables (40--49) as (30--39) above, with n+1 elements,
+; the (n+1)st indicating a rest
+;a circle-of fifthsish progression---not ready for use!
+f40 0 128 -2  1 1 1 1 1 1 1 1  5 5 1 1 4 1 1 1  0 1 1 1 1 5 1 1  0 1 1 1 1 1 5 1  0 1 1 1 1 1 1 5  0 5 1 1 1 1 1 1  0 1 5 1 1 1 1 1  0 2 1 5 1 1 1 1  
+
+
+# define Mode #06#
+
+
+;6  mode proclaimer---proclaims the presiding modes, as directed 
+;			 	by the score, onto "mode channels" in ftable 2.
+	;p4=mode code: mtn.mit, where mtn=mode definition table number (20--29)
+	;   	and mit=mode-in-table number (two digits, .00,...,.99)
+	;p5=Markov table number, either melodic or harmmonic (30--49)
+	;p6=modulatory scalar degree offset, i.e., MD0=p6 in scalar degrees
+	;p7=mode channel (0--39) on which to proclaim
+	;p8=mode channel---if >p7, proclaims on (p7,p8) inclusive
+;i$Mode 0   0 20.00 30 0  0 4

@@ -1,0 +1,67 @@
+
+instr 21	;strummer
+idest=frac(p1)*100+.0001
+idur=p3		;sounding duration (possibly several)
+idb=p4
+ic=p5-1		;chord channel number-1 {1,2,3}
+iacc=abs(p6)	;accordatura table number
+idir=p6/iacc	;direction (up or down)
+itim=p7		;seconds to traverse fretboard
+ipos=p8		;capo position (several elaborations)
+itilt=p9	;tilt of plectrum effective on [-1,1] bass-treble heavy
+;p10...-->p6... (p5's become assigned pitches)
+
+ic1 tablei 13*ic+1,4	;determine the chord components
+ic2 tablei 13*ic+2,4	
+ic3 tablei 13*ic+3,4	
+ic4 tablei 13*ic+4,4	
+ic5 tablei 13*ic+5,4	
+ic6 tablei 13*ic+6,4	
+
+isclsz tablei 0,git	;scale size
+ispop tablei 0,iacc	;number of strings
+ittop tablei 0,99	;top of table
+tableiw (ittop>4000?0:ittop+(2*ispop)),0,99	;increase it during this note
+
+is=(idir<0?ispop:1)
+p3=itim*ispop/(ispop-1)
+imax=idb	;tilt stuff
+imin=imax-20*abs(itilt)
+imin=(imin<1?1:imin)
+ib=(imax-imin)/(ispop-1)
+it=-1
+string: 	it=it+1
+		is8ve tablei is,iacc
+		issd=int(frac(is8ve)*100+.1)
+		is8ve=int(is8ve)
+		issd=issd+((abs(ipos)%isclsz)*(ipos<0?-1:1));add capo position
+		issd=(issd>0?issd:(issd+50*isclsz)%isclsz)
+		is8ve=is8ve+(int(.001+abs(ipos)/isclsz)*(ipos<0?-1:1))
+		is8ve=(issd>=isclsz?is8ve+1:is8ve)
+		issd=issd%isclsz
+	fret:	if (issd==ic1 || issd==ic2 || issd==ic3) igoto play
+		if (issd==ic4 || issd==ic5 || issd==ic6) igoto play
+		issd=issd+1
+		is8ve=(issd>=isclsz?is8ve+1:is8ve)
+		issd=(issd>=isclsz?0:issd)
+		igoto fret
+	play:	ip=-is8ve-(issd/100)
+		isdb=(itilt<0?imax-((is-1)*ib):imin+((is-1)*ib))
+		tableiw ip,2*it+(ittop+1),99
+		tableiw isdb,2*it+(1+ittop+1),99
+is=(idir<0?is-1:is+1)
+if (is>0 && is<ispop+1) igoto string
+
+ksold init -1
+ks init 0
+ktim line 0,p3,ispop
+ks=int(ktim)
+kt=(ks==ksold?0:1)
+ksold=ks
+kp tablei 2*ks+ittop+1,99
+kdb tablei 2*ks+1+ittop+1,99
+
+
+schedkwhen kt,0,0,idest,0,idur,kdb,kp,p10,p11,p12,p13,p14,p15,p16,p17,p18,p19,p20,p21
+
+endin

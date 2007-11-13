@@ -1,0 +1,11 @@
+
+
+f1 0 8193 10 1		;a sinusoidial pulsation 
+;a cosine for buzzing
+f13 0 16385  9 1 1 90
+;a nice quarter-sigmoid for fofs and splices (and it has to go at 14!):
+f14 0 8192  9 	.25 1 0 
+
+;tables >100 are to be assigned automatically by my instruments themselves
+
+

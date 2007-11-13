@@ -1,0 +1,192 @@
+
+git init 5	;the presiding tuning table number
+
+;Note: see also tuningProclaimer.txt, tuningProclaimerSCO.txt, 
+;		modeProclaimer.txt, modeProclaimerSCO.txt,
+;      	chordProclaimer.txt, chordProclaimerSCO.txt, etc.
+;macro contents:
+;md2sd, sd2md, getPitch, 
+;doChord
+;getPitch is the only one which probably needs "public" scope;
+; i.e., the others are mainly for internal use
+
+
+;given a modal degree d, and modal channel c, 
+; returns the equivalent scalar degree in isd.  
+#define md2sd(d'c) #
+imdef tablei $c*3,2		;mode code for channel c
+imdeftn=int(imdef)		;mode definition table number
+imdefmn=int(frac(imdef)*100+.1)	;mode number within table
+iasssz tablei 1, imdeftn	;assumed scale size
+isclsz tablei 0, git 		;actual scale size
+isz=(iasssz<isclsz?iasssz:isclsz)	;using the lesser is safest, but they should be equal (unless we want to try something fancy)
+imsz tablei 2,imdeftn		;number of degrees in mode
+isdoff1 tablei 3+$d+(imsz*imdefmn),imdeftn	;mode offset (in SDs)
+isdoff2 tablei $c*3+2,2		;modulatory offset (in SDs)
+isd=((isdoff1+isdoff2)<0?isz-((-isdoff1-isdoff2)%isz+.1):int((isdoff1+isdoff2)%isz +.1))	;the SD (scalar degree)
+i8vecorr=int((isdoff1+isdoff2)/isz)
+#
+
+;given a scalar degree s, and modal channel c, 
+; returns the equivalent modal degree in imd.  
+; if no modal degree corresponds exactly, it returns the closest in oct 
+; value, or if two are equal, the higher (i.e., assuming a flattening).
+#define sd2md(s'c) #
+imdef tablei $c*3,2		;mode code for channel c
+imdeftn=int(imdef)		;mode definition table number
+imdefmn=int(frac(imdef)*100+.1)	;mode number within table
+iasssz tablei 1, imdeftn	;assumed scale size
+isclsz tablei 0, git 		;actual scale size
+isz=(iasssz<isclsz?iasssz:isclsz)	;using the lesser is safest, but they should be equal (unless we want to try something fancy)
+imsz tablei 2,imdeftn		;number of degrees in mode
+isdoff2 tablei $c*3+2,2		;modulatory offset (in SDs)
+isd=$s
+isd=(isd-isdoff2+(10*isz))%isz
+isoct tablei isd+1,git
+imd=0
+imindif=10
+imdcl=0
+MDAGAIN$s.$c.:	isd1 tablei (imdefmn*imsz)+imd+3, imdeftn
+		isoct1 tablei isd1+1,git
+		ioctdif=abs(isoct1-isoct)
+		imdcl=(ioctdif<=imindif?imd:imdcl)	;if the test were >, a sharpening would be assumed
+		imindif=(ioctdif<imindif?ioctdif:imindif)
+		imd=imd+1
+		if (imd<imsz)igoto MDAGAIN$s.$c.
+imd=imdcl	;the MD (modal degree)
+#
+
+;given a "general pitch code", returns i8ve, isd, ioct and icps---
+; the octave nuumber, scalar degree, oct value, and Hz value
+;the "general pitch code":  modal if 0 or +ve, scalar if -ve;
+; modal: 8ve.DCC where D is the one-digit modal degree (0,...,9)
+; and CC is the two-digit mode channel (00,...,39) ;
+; scalar: 8ve.DD where DD is the two-digit modal degree (0,...,99)
+; note that scalar degree 00 is inaccesible in 8ve 0.
+;chordal addressing: Coo.c or CooOO.c where C=chord channel number, 
+; oo=dictated 8ve number, ooOO= an acceptable range of 8ve numbers 
+; (inclusive) (one will be chosen at random) and c=chord component 
+; number (1...6) if c=0 or >6, one will be chosen at random.
+#define getPitch(p) #
+if ($p<90) igoto MACNCH$p.
+i8ve1=($p>1000?frac(int($p/100)/100)*100:frac(int($p)/100)*100)
+i8ve2=($p>1000?frac(int($p)/100)*100:i8ve1)
+i8ve=int(rnd(1+i8ve2-i8ve1))+i8ve1
+iMACcc=($p>1000?int(($p/10000) +.1):int(($p/100)+.1))
+iMACcsz tablei (iMACcc-1)*13,4
+icom=int(frac($p)*10+.1)
+icom=(icom<1 || icom>6?int(rnd(iMACcsz)+.999):icom)
+isd tablei (iMACcc-1)*13+icom,4
+igoto MACPDONE$p.
+MACNCH$p.: i8ve=int(abs($p))
+if ($p<0) igoto MACSCL$p.
+imd=int(frac($p)*10+.1)
+imc=int(frac($p*10)*100+.1)
+$md2sd(imd'imc)
+igoto MACPDONE$p.
+MACSCL$p.:		isd=($p<0?int(frac(-$p)*100+.1):isd);conditional because igoto doesn't always work
+MACPDONE$p.:	ioct tablei isd+1,git
+ioct=ioct+i8ve+i8vecorr
+icps=cpsoct(ioct)
+#
+
+
+;given a chord code c, a chord channel cc and a mode channel m, it 
+; decodes the chord (finding the components in SD and oct form) and
+; proclaims this on one of the three chord channels in ftable 4. m is
+; used only if the chord code indicates selection from a mode.
+#define doChord(c'cc'm) #
+if ($c<0) igoto MACscalar$c.
+				;the modal block
+imroot=int($c+.005)		;MD of root
+imtype=int(10*frac($c)+.1)		;modal selection type (0,...,9)
+imtn tablei $m*3,2		
+imint=int(frac(imtn)*100+.1)	;mode-in-table number
+imtn=int(imtn+.001)		;modal definition table number
+imsz tablei 2,imtn		;number of degrees in mode
+icdtn=int(10*frac($c*10)+.1)+10	;chord definition table number
+icd0=imroot	;initializing the components (in MD units). icd0 is the root.
+icd1=imroot
+icd2=imroot
+icd3=imroot
+icd4=imroot
+icd5=imroot
+itloc tablei 1+imtype, icdtn	;location of selection data in icdtn
+icsz tablei itloc,icdtn	;number of components in chord
+icd1 tablei itloc+1,icdtn	;offsets from root defined in table
+icd2 tablei itloc+2,icdtn
+icd3 tablei itloc+3,icdtn
+icd4 tablei itloc+4,icdtn
+icd5 tablei itloc+5,icdtn
+icd1=(icsz>1?(icd1+imroot)%imsz:imroot)		;gaurd against assigning
+icd2=(icsz>2?(icd2+imroot)%imsz:imroot)		;bogus components
+icd3=(icsz>3?(icd3+imroot)%imsz:imroot)		;(assing the root instead).
+icd4=(icsz>4?(icd4+imroot)%imsz:imroot)		;and add the root to the
+icd5=(icsz>5?(icd5+imroot)%imsz:imroot)		;offsets
+$md2sd(icd0'$m)			;convert the MDs to SDs
+icd0=isd
+$md2sd(icd1'$m)
+icd1=isd
+$md2sd(icd2'$m)
+icd2=isd
+$md2sd(icd3'$m)
+icd3=isd
+$md2sd(icd4'$m)
+icd4=isd
+$md2sd(icd5'$m)
+icd5=isd
+tableiw icd0, 1+(($cc-1)*13),4		;proclaims the SDs
+tableiw icd1,1+1+(($cc-1)*13),4
+tableiw icd2,2+1+(($cc-1)*13),4
+tableiw icd3,3+1+(($cc-1)*13),4
+tableiw icd4,4+1+(($cc-1)*13),4
+tableiw icd5,5+1+(($cc-1)*13),4
+tableiw icsz,($cc-1)*13,4		;proclaims the chord size
+igoto MACocts$c.
+
+MACscalar$c.:			;here is the scalar block
+isroot=-int($c+.0005)		;the SD root
+istype=int(frac(-$c)*100+.1)	;the chord type
+isclsz tablei 0,git		;number of degrees in scale
+icdtn=int(10*frac(-$c*100)+.1)+15	;chord definition table number
+itloc tablei istype,icdtn	;location of selection data in table
+icsz tablei itloc,icdtn	;number of components in chord
+icd0=isroot		;initialize components (in SD units)
+icd1=isroot
+icd2=isroot
+icd3=isroot
+icd4=isroot
+icd5=isroot
+icd1 tablei itloc+1,icdtn	;get SD offsets from table
+icd2 tablei itloc+2,icdtn
+icd3 tablei itloc+3,icdtn
+icd4 tablei itloc+4,icdtn
+icd5 tablei itloc+5,icdtn
+icd1=(icsz>1?(icd1+isroot)%isclsz:isroot)	;gaurd against assigning 
+icd2=(icsz>2?(icd2+isroot)%isclsz:isroot)	;bogus components and 
+icd3=(icsz>3?(icd3+isroot)%isclsz:isroot)	;add the root to valid
+icd4=(icsz>4?(icd4+isroot)%isclsz:isroot)	;offsets
+icd5=(icsz>5?(icd5+isroot)%isclsz:isroot)
+tableiw icd0,  1+(($cc-1)*13),4		;proclaim the SDs
+tableiw icd1,1+1+(($cc-1)*13),4
+tableiw icd2,2+1+(($cc-1)*13),4
+tableiw icd3,3+1+(($cc-1)*13),4
+tableiw icd4,4+1+(($cc-1)*13),4
+tableiw icd5,5+1+(($cc-1)*13),4
+tableiw icsz,($cc-1)*13,4		;proclaim the size of the chord
+
+MACocts$c.:
+icd0 tablei icd0+1,git		;convert the SDs to oct units
+icd1 tablei icd1+1,git
+icd2 tablei icd2+1,git
+icd3 tablei icd3+1,git
+icd4 tablei icd4+1,git
+icd5 tablei icd5+1,git
+tableiw icd0,  7+($cc-1)*13,4	;proclaim the components in oct units
+tableiw icd1,1+7+($cc-1)*13,4
+tableiw icd2,2+7+($cc-1)*13,4
+tableiw icd3,3+7+($cc-1)*13,4
+tableiw icd4,4+7+($cc-1)*13,4
+tableiw icd5,5+7+($cc-1)*13,4
+#
+

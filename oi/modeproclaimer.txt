@@ -1,0 +1,22 @@
+
+
+instr 6				;mode proclaimer
+;p4=mode code: mtn.mit, where mtn=mode definition table number (20--29)
+;   	and mit=mode-in-table number (two digits, .00,...,.99)
+;p5=Markov table number, either melodic or harmmonic (30--49)
+;p6=modulatory scalar degree offset, i.e., MD0=p6 in scalar degrees
+;p7=mode channel (0--39) on which to proclaim
+;p8=mode channel---if >p7, proclaims on (p7,p8) inclusive
+
+p3=.001
+again:
+tableiw	p4, 3*p7, 2	;presiding modes stored in table 2
+tableiw	p5, 3*p7+1, 2	
+tableiw	p6, 3*p7+2, 2	
+if (p8>p7) igoto iterate
+goto done
+iterate: p7=p7+1
+	 igoto again
+done:
+endin
+

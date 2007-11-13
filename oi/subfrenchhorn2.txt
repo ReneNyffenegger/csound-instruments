@@ -1,0 +1,259 @@
+;Subtractive French Horn with noise source, based on the 
+;University of Iowa anechoic chamber recordings
+;sample legato phrase:
+
+;subFrenchHorn2--   (noise source)
+;registers: reg0=6.05--8.06 (9.02);  registers are +/- perfect 5ths from this
+;line widths are in units of quartertones.  next pitch is for pre-marcato
+;compression compromises unruly amplitude fluctuations with distortion
+;           ST  DUR   db   PCH  PITCH AMP  PEAK PEAK   VD GLISS REG- LINE  PEAK CMPRS PEAK  NEXT  PREV OUT
+;                               FROM  TO   AMP  POINT      TO   ISTR WIDTH  LW        CMPRS PITCH GLIS CH
+;i$subFhorn2 0  -0.25  76   9.0   7.0  np4   5    0.3   .5   0    0    0.5   .5   1.0   0.5  np5   pp11 0
+;i$subFhorn2 +  -0.75  80   7.3   pp5  np4   5    0.5    .  7.0   .     .    .     <     <    .      .  . 
+;i$subFhorn2 +   0.75  80   7.0   pp5  0     6    0.5    .   0    .     .    .     <     <    .      .  .
+;i$subFhorn2 +   1.25  70   8.4   pp5  0     6    0.5    .   0    .     .    .    1.0   2.0   .      .  .
+
+
+;modification checklist: 
+;set ipeg to effective highest formant
+;imarc=depth of marcato in oct
+;iatt, idec vs dB and pitch
+;iport (vs. size of change)
+;kamp and two versions of koct (possibly marcato, drifting portamento, initial squeek)
+;chiff details under apuff
+;relation of klw (linewidth in quartertones) to kamp and swell (possibly non-linear)
+;kvibd shape vis a vis expression peak
+;ivibr details and kvibr vis a vis expression peak
+;asig toning down in relation to amplitude
+;iff__=formant frequencies
+;a__ include these with formant intesnsities and bandwidths
+
+;p4-dB
+;p5-pitch (odradek notation)
+;p6-last pitch (=this for ties, singles or firsts)
+;p7-next dB
+;p8-dB of swell
+;p9-peak of swell (0--1)
+;p10-vibrato depth (as percentage)
+;p11-gliss to pitch (defaults to no gliss if 0)
+;p12-register
+;p13-line width in quartertones
+;p14-peak linewidth in quartertones
+;p15-compression factor
+;p16-peak compression factor
+;p17-next pitch, for pre-marcato, always np5
+;p18-last gliss, for glis. in leg., always pp11
+;p19-output channel
+
+#define subFhorn2(num) #
+instr $num.	
+						;LEGATO INSTRUMENT TEMPLATE
+;MAIN INIT BLOCK (ASSUMES TIE)
+
+
+idur=abs(p3)					; main init block
+ireg=p12					;registers
+ipeg=octcps(13800*(1.5^ireg))		;effective highest formant
+itop=octcps(sr/2)				;Nyquist
+imarc=.05
+
+
+$getPitch(p6)			;former pitch
+ipch1=ioct
+$getPitch(p18)
+ipch1=(p18==0?ipch1:ioct)
+$getPitch(p5) 			;initial pitch
+ipch2=ioct	
+iffa=icps*(1.5^(-ireg))	;effective frequency at attack
+$getPitch(p11) 
+ipch3=(ioct<1?ipch2:ioct)	;target pitch of glissando
+icps=cpsoct(ipch3)
+iffd=icps*(1.5^(-ireg))	;effective frequency at decay
+$getPitch(p17) 			;next pitch
+ipch4=ioct	
+ipch4=(p7<1?ipch3:(ipch4>ipch3?ipch4:ipch4-imarc))
+;if there's a next pitch, we'll dive below it, if nec.
+
+icps=cpsoct(ipch4)
+iper=1/icps
+p3=p3+(p3>0?(4/sr)+(2*iper):0)	;extend note to let delay line empty out
+aclamp linseg 1,idur,1,iper,0,iper,0	;TO DE-CLICK
+
+iport=0.015	+.02*abs(p5-p6)	
+
+;ATT/DEC DUE TO PITCH RELATIVE TO REGISTER
+iatt	=(iffa<85?.35:(iffa>300?.09:.35-.26*(iffa-85)/215))	; ATTACK TIME
+idec	=(iffd<85?.35:(iffd>200?.01:.35-.34*(iffd-85)/115))	; DECAY TIME
+iatt=(iatt+(p4>86?.03:(p4<70?.45:.45-.42*(p4-70)/16)) )/2
+idec=(idec+(p4>96?.35:(p4<60?.01:.01+.34*(p4-60)/30)) )/2	
+
+irise=idur*p9					; set swell peak position
+  							; ... (ifall set later)
+idovib=1						; assume we use vibrato
+							; assume this is a tied note
+
+iswell=ampdb((p8+p4)<0?0:p8+p4)
+
+iiamp=ampdb(p4)						;tied note starts at score amp
+isusamp=ampdb(p4)
+inamp=ampdb(p7)
+
+
+i1=-1							; phase for tied note
+
+itie tival						; TIED NOTE?
+tigoto tie
+
+;INIT BLOCK FOR FIRST OR SINGLE NOTES
+i1=rnd(1)						; first note, reset phase
+iiamp=0						; set start db
+
+
+;SHORT NOTE ADJUSTMENT BLOCK
+tie:
+iadjust=iatt+idec					; long note, we're safe
+if idur >= iadjust igoto doamp		; adjust ramp durations for
+iatt=(idur/2)-0.005				; ... short notes, 10msec limit
+idec =iatt						; can't have zero timespan
+iadjust=idur-0.01					; (ensure ilen != 0 for linseg)
+idovib=0						; no vibrato on short notes
+iport=iport/2					; even tighter pitch ramp
+iport=(idur<3*iport?idur/3:iport)		;make sure two portamenti fit easily
+
+;AMPLITUDE BLOCK (ALL NOTE PERFORMANCE)
+doamp:
+ilen=idur-iadjust	 
+
+kamp linseg iiamp, iatt*.4, isusamp*(itie==1?.5:.1), iatt*.6, isusamp, ilen, isusamp, idec, inamp
+
+if (itie == 1) goto pitch			; no chiff on tied notes
+
+;CHIFF (FIRST OR SINGLE NOTE PERFORMANCE) BLOCK
+koct linseg ipch2,idur-iport,ipch3,iport,ipch4	;for singles or firsts
+apuff	linseg .25,(2/cpsoct(ipch2))+1/sr,1,1/sr,0,idur,0
+
+if (itie==0) goto expr
+
+pitch:			
+;TIED NOTE PERFORMANCE BLOCK
+;PORTAMENTO BLOCK---MODIFY FOR MARCATO
+
+koct linseg ipch2-(imarc*(ipch2>ipch1?0:1)), iport, ipch2, idur-2*iport, ipch3,iport,ipch4
+
+;EXPRESSION BLOCK (ALL NOTE PERFORMANCE BLOCK)
+expr:						; make expression envelope
+; p8 sets peak of expression point, p9 moves it if p9==0 (illegal for linseg)
+irise=(p9>0.?irise:iatt) 		; set maximum accent shape
+ifall=idur-irise
+
+kswell linseg 0, irise, iswell-isusamp, ifall, 0		; make swell
+klw linseg p13,irise,p14,ifall,p13
+
+
+;JITTER---the noise is jittery enough!
+
+if idovib == 0 goto play		; skip vibrato if short note
+;VIBRATO
+kvibd	linseg	.7,iatt*.5,.1, irise-iatt*.5, 1, ifall, .7	; VIBRATO
+kvibd	=kvibd*(p10==0?.001:p10)/100		; VIBRATO DEPTH factor
+ivibr1	=		4+rnd(1)	
+ivibr2	=		6+rnd(1)	
+kvrate	linseg	ivibr1, irise+.2, ivibr2, ifall-.2, ivibr1	; TIME-VARYING VIBRATO RATE
+kvib	oscil	kvibd, kvrate, 1,i1	
+
+;port ~11.4c, jitter, ~up to 18c, vib, .5%=17c, 1%=35c
+
+
+;SOUND PRODUCTION
+play:						; make the note
+
+kcps=cpsoct(koct)*(1+kvib)
+kamp1	limit	(kamp+kswell)*.5,0,32768
+abreath	rand kamp1,-1
+
+ablue butterhp abreath,kcps,itie
+
+;COMB FILTER
+kg=1-.0867385*klw
+ar1 	delayr	1.125,itie	;no lower than 8Hz
+asig1	deltapi	1/kcps
+	delayw	ablue+kg*asig1
+ar2 	delayr	1.125,itie	;no lower than 8Hz
+asig2	deltapi	1/kcps
+	delayw	asig1+kg*asig2
+
+
+asig3=asig2+apuff*abreath
+
+klp table kamp1/32768,14,1
+klp=klp*(itop-koct)+koct
+asig	tonex	asig3,cpsoct(klp),3,itie
+
+
+
+irmod=1.5^ireg
+;effective formant frequencies
+iff1=196*irmod
+iff2=311*irmod
+iff3=381*irmod
+iff4=474*irmod
+iff5=585*irmod
+iff6=677*irmod
+iff7=775*irmod
+iff8=840*irmod
+iff9=885*irmod
+iff10=991*irmod
+iff11=1058*irmod
+iff12=1478*irmod
+iff13=1584*irmod
+iff14=1700*irmod
+iff15=1780*irmod
+iff16=1900*irmod
+iff17=2025*irmod
+iff18=2094*irmod
+iff19=2178*irmod
+iff20=3665*irmod
+iff21=4686*irmod
+iff22=9970*irmod
+iff23=11306*irmod
+iff24=12716*irmod
+iff25=13800*irmod
+
+a1	reson	asig*34.1*(iff1>sr/2?0:1),iff1,76*irmod,   0,itie
+a2	reson	asig*12.4*(iff2>sr/2?0:1),iff2,102*irmod,  0,itie
+a3	reson	asig*33.3*(iff3>sr/2?0:1),iff3,21*irmod,   0,itie
+a4	reson	asig*86.1*(iff4>sr/2?0:1),iff4,52*irmod,   0,itie
+a5	reson	asig*33.5*(iff5>sr/2?0:1),iff5,52*irmod,   0,itie
+a6	reson	asig*20.6*(iff6>sr/2?0:1),iff6,66*irmod,   0,itie
+a7	reson	asig*26.6*(iff7>sr/2?0:1),iff7,82*irmod,   0,itie
+a8	reson	asig*15.3*(iff8>sr/2?0:1),iff8,52*irmod,   0,itie
+a9	reson	asig*19.8*(iff9>sr/2?0:1),iff9,50*irmod,   0,itie
+a10	reson	asig*13.8*(iff10>sr/2?0:1),iff10,144*irmod,  0,itie
+a11	reson	asig*10.8*(iff11>sr/2?0:1),iff11,23*irmod,  0,itie
+a12	reson	asig*3.60*(iff12>sr/2?0:1),iff12,81*irmod,  0,itie
+a13	reson	asig*1.81*(iff13>sr/2?0:1),iff13,139*irmod, 0,itie
+a14	reson	asig*2.85*(iff14>sr/2?0:1),iff14,43*irmod,  0,itie
+a15	reson	asig*3.50*(iff15>sr/2?0:1),iff15,26*irmod,  0,itie
+a16	reson	asig*1.47*(iff16>sr/2?0:1),iff16,12*irmod,  0,itie
+a17	reson	asig*.744*(iff17>sr/2?0:1),iff17,40*irmod,  0,itie
+a18	reson	asig*.580*(iff18>sr/2?0:1),iff18,78*irmod,  0,itie
+a19	reson	asig*.770*(iff19>sr/2?0:1),iff19,177*irmod, 0,itie
+a20	reson	asig*.077*(iff20>sr/2?0:1),iff20,100*irmod, 0,itie
+a21	reson	asig*.063*(iff21>sr/2?0:1),iff21,187*irmod, 0,itie
+a22	reson	asig*.017*(iff22>sr/2?0:1),iff22,109*irmod, 0,itie
+a23	reson	asig*.013*(iff23>sr/2?0:1),iff23,36*irmod, 0,itie
+a24	reson	asig*.013*(iff24>sr/2?0:1),iff24,14*irmod, 0,itie
+a25	reson	asig*.008*(iff25>sr/2?0:1),iff25,405*irmod,0,itie
+
+
+afs=a1+a2+a3+a4+a5+a6+a7+a8+a9+a10+a11+a12+a13+a14+a15+a16+a17+a18+a19+a20+a21+a22+a23+a24+a25
+
+af	balance	afs,abreath,(idur>.2?(icps>180?10:icps/20):5/idur),itie
+
+kcomp linseg p15,irise,p16,ifall,p15
+kcr=1/kcomp			;1/the desired compression
+al=kamp1*tanh(af/(kcr*(kamp1+500)+.0000001))/tanh(kcomp) ;the 500 acts as a shunt	
+zawm al*aclamp,p19
+
+endin
+#	

@@ -1,0 +1,37 @@
+;tables for the strummer (which also uses chords, etc.):
+
+;accordatura tables (~60--80): index 0=number of "strings", 
+; subsequently, (8ve.SD)s
+; std guitar:
+f60 0 16 -2 6 	6.04  6.09  7.02  7.07  7.11  8.04      0
+;  bass guitar 
+f61 0 16 -2 4 	5.04  5.09  6.02  6.07    0 
+;  neopolitan mandolin 
+f62 0 16 -2 4 	7.07  8.02  8.09  9.04    0 
+
+;table for storing strum data
+f99 0 4096 -2 0
+
+
+
+# define strum #21#
+
+
+;21 strummer---performs a strum (a series of overlapping, sustained notes)
+;			on any other instrument given a chord channel, an
+;			accordatura and other performance parameters.
+;			Note: expects the destination instrument to take
+;			p4=dB and p5=generalized pitch code.
+	;p1=21.xxyyy..., where xx.yyy... is the destination instrument.
+	;p3=sounding duration (of each note)
+	;p4=dB
+	;p5=chord channel number {1,2,3}
+	;p6=accordatura table number
+	;  +ve if strumming up, -ve is strumming down.
+	;p7=seconds in which to traverse fretboard
+	;p8=capo position (may be -ve)
+	;p9=tilt of plectrum effective on [-1,1],
+	;  -1=very bass-heavy, 1=very treble-heavy
+	;p10...-->p6... of destination instrument 
+	;  (the destination's p5's become assigned pitches)
+

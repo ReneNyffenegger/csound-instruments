@@ -1,0 +1,259 @@
+
+
+instr 12	;harmony generator(/chord proclaimer)
+;p4=C.DDdd where C=chord channel on which to proclaim generated chord {1,2,3}
+; and where DD and dd=prefered number of SD steps to separate tones. 
+; if DDdd=0 (i.e., the default), 3 and 4 steps are prefered.
+;p5=R.E where R=the reference chord channel---the new chord will be chosen
+; in reference to that on chord channel R. if R is not {1,2,3} or if R=C,
+; then no chord is used as a referece (i.e., a chord will be chosen freely).
+; and where E=the suitability on [0,1) of tones D steps outside 
+; the bounding chord tones.
+; (e.g., of a melodic 7th above a chord, or another chord rooted there).
+;p6=a demanded chord type.  if 0.T, the modal type T; if N.TT, the scalar
+; type TT; if -ve, the type is uncertain, and will be chosen by the algorithm.
+;p7---p9=M.F where M refers to melody channels which to harmonize 
+; (ignored if -ve) where F [0,1) the importance of that channel.
+;p10=modal chord definition table number (default =10)
+;p11=scalar chord definition table number (default =15)
+
+p3=.001
+;first, calculate some useful numbers
+imctn=(p10<10 || p10>14?10:p10)		;modal chord definition table number
+isctn=(p11<15 || p11>19?15:p11)		;scalar chord definition table number
+isclsz tablei 0,git		;number of degrees in scale
+ithis=int(p4+.09)-1		;destination chord channel-1
+iref=int(p5+.00001)		;reference chord channel-1...
+iref=(iref<1 || iref>3 || iref=ithis+1?-1:iref-1)	;...or -ve if none
+imtn tablei ithis*3,2
+imtn=int(imtn+.01)		;mode table applying to this channel
+imsz tablei 2,imtn		;number of degrees in this mode
+imark tablei (ithis*3)+1,2	;markov table number
+imtpop tablei 0,imctn		;number of modal chord types
+istpop tablei 0,isctn		;number of scalar chord types
+ilc tablei ithis*13+1,4		;root of last chord in SD
+$sd2md(ilc'ithis)	;convert to SD (assuming mode ch=chord ch-1)
+ilc=imd				;root of last chord in MD
+
+itype=(int(p6+.001)>0?int(100*frac(p6)+.1):(p6<0?-1:int(10*frac(p6)+.1)))
+			;type code, modal or scalar, or -1 if uncertain
+imaskpos=(imtpop+istpop)*isclsz	;start of mask area in zk space
+
+iD=(frac(p4)==0?.0304:frac(p4))
+issd1=int(100*iD+.01)		;what are those special distances
+issd2=int(100*frac(iD*100)+.1)
+iE=frac(p5)
+
+;now to load and normalize the basic markov-derived probabilities
+zkcl 0,imaskpos*2
+
+ii=0		;apparently zkcl doesn't work so this zeroes everything
+iter0:	ziw 0,ii
+	ii=ii+1
+	if (ii<imaskpos*2) igoto iter0
+
+ii=0
+isum=0
+iter1:	ip tablei (ilc*imsz)+ii,imark
+	$md2sd(ii'ithis)
+	iloc=isd
+	ziw ip,iloc			;write the p(SD)s to 0..isclsz-1
+	isum=isum+ip			;keeping a running sum
+	ii=ii+1
+	if (ii<imsz) igoto iter1
+ii=0
+iter2:	ip zir ii			;preliminary normalization
+	ziw ip/isum,ii
+	ii=ii+1
+	if (ii<isclsz) igoto iter2	
+;fill the whole of the type area with it
+;i.e., expand the probabilities, one set for every possible chord type
+itmax=(itype<0?imtpop+istpop-1:(int(p6)==0?0:imtpop-1)+itype)
+it=(itype<0?0:itmax)		;init the proposed type loop
+ity3:
+ii=0
+iter3:	ip zir (ii%isclsz)
+	ziw ip,ii+(it*isclsz)
+	ii=ii+1
+	if (ii<isclsz) igoto iter3
+it=it+1
+if (it<itmax) igoto ity3
+ii=0
+iter4:	ip zir ii
+	ziw (p6<0 || itmax==0 ?ip:0),ii
+	ii=ii+1
+if (ii<isclsz) igoto iter4
+
+
+;details of the reference chord
+if (iref<0) igoto skipref
+ir0 tablei iref*13+1,4
+ir1 tablei iref*13+2,4
+ir2 tablei iref*13+3,4
+ir3 tablei iref*13+4,4
+ir4 tablei iref*13+5,4
+ir5 tablei iref*13+6,4
+irsz tablei iref*13,4
+irtop tablei iref*13+irsz,4
+ispec1=((ithis>iref?irtop+issd1:ir0-issd1)+(10*isclsz))%isclsz
+ispec2=((ithis>iref?irtop+issd2:ir0-issd2)+(10*isclsz))%isclsz
+;considerations of type
+it=(itype<0?0:itmax)		;init the proposed type loop
+Refit:	iprotype=(it<imtpop?(it/10)+((imctn-10)/100):-((it-imtpop+1)/100)-((isctn-15)/10));proposed type
+	ii=0			;init the proposed root loop
+Refii: 	$md2sd(ii'ithis)	;construct the proposed chord
+	itry=(iprotype<0?-isd:ii)+iprotype
+	$doChord(itry'ithis+1'ithis)
+	it0 tablei ithis*13+1,4
+	it1 tablei ithis*13+2,4
+	it2 tablei ithis*13+3,4
+	it3 tablei ithis*13+4,4
+	it4 tablei ithis*13+5,4
+	it5 tablei ithis*13+6,4
+	itsz tablei ithis*13,4
+	ittop tablei ithis*13+itsz,4
+	isweet=(ithis<iref?ittop:it0)	;good to = ispec_
+	itest=(ithis<iref?ir0:it0)
+	isd0=(ithis<iref?it0:ir0)
+	isd1=(ithis<iref?it1:ir1)
+	isd2=(ithis<iref?it2:ir2)
+	isd3=(ithis<iref?it3:ir3)
+	isd4=(ithis<iref?it4:ir4)
+	isd5=(ithis<iref?it5:ir5)
+	imval=(ispec1==isweet || ispec2==isweet?iE:0)		;mask values
+	imval=(isd0==itest || isd1==itest || isd2==itest?1:imval)
+	imval=(isd3==itest || isd4==itest || isd5==itest?1:imval)
+	ziw imval,imaskpos+(it*isclsz)+it0
+	ii=ii+1
+	if (ii<imsz) igoto Refii
+it=it+1
+if (it<itmax) igoto Refit
+ii=0			;now apply ref mask
+appRefM:	ip zir ii
+		imval zir ii+imaskpos
+		ziw ip*imval,ii
+		ii=ii+1
+	if (ii<imaskpos) igoto appRefM
+
+
+skipref:			;i should be able to trigger it from here
+;schedule 13,0,1/sr,p7,p8,p9,ithis,itype,itmax,imctn,isctn,imtpop,issd1,issd2,iE,imaskpos
+$forcedShutoff
+endin
+
+instr 13		;the second half of instr12
+
+p3=.001
+;ithis=p7	;it should get these from the triggering inst 12
+;itype=p8
+;itmax=p9
+;imctn=p10
+;isctn=p11
+;imtpop=p12
+;issd1=p13
+;issd2=p14
+;iE=p15
+;imaskpos=p16
+;instead, it has to be scheduled from the score, or the labels don't work
+imctn=(p10<10 || p10>14?10:p10)		;modal chord definition table number
+isctn=(p11<15 || p11>19?15:p11)		;scalar chord definition table number
+isclsz tablei 0,git		;number of degrees in scale
+ithis=int(p4+.09)-1		;destination chord channel-1
+imtpop tablei 0,imctn		;number of modal chord types
+istpop tablei 0,isctn		;number of scalar chord types
+itype=(int(p6)>0?int(100*frac(p6)+.1):(p6<0?-1:int(10*frac(p6)+.1)))
+			;type code, modal or scalar, or -1 if uncertain
+itmax=(itype<0?imtpop+istpop-1:(int(p6)==0?0:imtpop-1)+itype)
+imaskpos=(imtpop+istpop)*isclsz	;start of mask area in zk space
+iD=(frac(p4)==0?.0304:frac(p4))
+issd1=int(100*iD+.01)		;what are those special distances
+issd2=int(100*frac(iD*100)+.1)
+iE=frac(p5)
+;now back to the algorithm
+
+;now do the harmonization part
+imch1=int(p4)	;melody channels which to harmonize (may still be -ve).
+imch2=int(p5)
+imch3=int(p6)
+imf1=frac(p4)	;the importance of each melody channel
+imf2=frac(p5)
+imf3=frac(p6)
+im=1			;step through each possible input melody
+nextMc:	imch=(im==1?imch1:(im==2?imch2:imch3))
+if (imch<0) igoto nullMc
+iF=(im==1?imf1:(im==2?imf2:imf3))
+imd tablei imch,3
+if (imd==0) igoto nullMc	;if a rest
+i8ve=int(imd)
+imd=int(10*frac(imd)+.1)
+immode =imch%40
+$md2sd(imd'immode)
+imd=isd
+iov=(i8ve<7?0:(i8ve>8?2:1))	;assume and equivalent chord register
+iov=(iov>ithis?1:(iov<ithis?-1:(i8ve%2==0?1:-1)));+/- if assumed to be over/under chord
+it=(itype<0?0:itmax)
+itit:	iprotype=(it<imtpop?(it/10)+((imctn-10)/100):-((it-imtpop+1)/100)-((isctn-15)/10));proposed type
+ii=0
+m1c:	$md2sd(ii'ithis)
+	itry2=(iprotype<0?-isd:ii)+iprotype
+	$doChord(itry2'ithis+1'ithis)
+	isd0 tablei ithis*13+1,4
+	isd1 tablei ithis*13+2,4
+	isd2 tablei ithis*13+3,4
+	isd3 tablei ithis*13+4,4
+	isd4 tablei ithis*13+5,4
+	isd5 tablei ithis*13+6,4
+	icsz tablei ithis*13,4
+	ittop tablei ithis*13+icsz,4
+ispec1=(iov>0?(ittop+issd1)%isclsz:(isd0-issd1+(10*isclsz))%isclsz)
+ispec2=(iov>0?(ittop+issd2)%isclsz:(isd0-issd2+(10*isclsz))%isclsz)
+imval=(ispec1==imd || ispec2==imd?iE*iF+1-iF:1-iF)	;mask values
+imval=(isd0==imd || isd1==imd || isd2==imd?1:imval)
+imval=(isd3==imd || isd4==imd || isd5==imd?1:imval)
+ip zir isd0+(it*isclsz)
+ziw imval*ip,isd0+(it*isclsz)
+	ii=ii+1
+	if (ii<imsz) igoto m1c
+it=it+1
+if (it<itmax) igoto itit
+nullMc:	im=im+1
+if (im<4) igoto nextMc
+
+;normalisation
+ii=0
+isum=0
+sum:	ip zir ii
+	isum=isum+ip
+	ii=ii+1
+;print ii,imaskpos,isum
+if (ii<imaskpos) igoto sum
+if (isum==0) igoto cornered
+ii=0
+norm:	ip zir ii
+	ziw ip/isum,ii
+	ii=ii+1
+if (ii<imaskpos) igoto norm
+ii=1				;form cumulative probabilities
+isum zir 0
+acc:	ip zir ii
+	isum=isum+ip
+	ziw isum,ii
+	ii=ii+1
+if (ii<imaskpos) igoto acc
+isweet=rnd(1)			;roll the die
+ii=0
+roll:	ip zir ii
+	if (isweet<ip) igoto done
+	ii=ii+1
+if (ii<imaskpos) igoto roll
+				;now all is in ii
+done:	it0=ii%isclsz		;proposed root in sd
+$sd2md(it0'ithis)
+it=int((ii/isclsz)+.001)
+iprotype=(it<imtpop?(it/10)+((imctn-10)/100):-((it-imtpop+1)/100)-((isctn-15)/10));proposed type
+itry3=(iprotype<0?-it0:imd)+iprotype
+$doChord(itry3'ithis+1'ithis)
+
+cornered:		;do nothing (maybe goto finalis?)
+$forcedShutoff
+endin

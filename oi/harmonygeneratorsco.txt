@@ -1,0 +1,31 @@
+;several files are needed for the harmony generator besides this one---
+;e.g., those dealing with chords, melodies, modes and tunings.
+
+;harmonic mode markov tables (30--39) n lists of n conditional probabilities
+; where index i*n+j=probability of transition from chord i to chord j
+;a circle-of fifthsish progression---not too sophisticated!
+f30 0 64 -2  4 1 1 0 1 1 1  1 1 1 1 18 1 1  1 1 1 1 1 18 1  1 1 1 1 1 1 18  18 1 1 1 1 1 1  1 18 1 1 1 1 1   2 1 18 1 1 1 1  
+
+# define hGen #12#
+
+;12 harmony generator(/chord proc.)---generates and proclaims a chord,
+;						possibly influenced by several 
+;					things: the previous chord and Markov chains
+;				defined by the harmonic mode; up to three pitches
+;			from currently-sounding melodies; other, simultaneously-
+;		sounding chords; demanded chord type; etc., etc., etc.
+	;p4=C.DDdd where C=chord channel on which to proclaim generated chord {1,2,3}
+	; and where DD and dd=prefered number of SD steps to separate tones. 
+	; if DDdd=0 (i.e., the default), 3 and 4 steps are prefered.
+	;p5=R.E where R=the reference chord channel---the new chord will be chosen
+	; in reference to that on chord channel R. if R is not {1,2,3} or if R=C,
+	; then no chord is used as a referece (i.e., a chord will be chosen freely).
+	; and where E=the suitability on [0,1) of tones D steps outside 
+	; the bounding chord tones.
+	; (e.g., of a melodic 7th above a chord, or another chord rooted there).
+	;p6=a demanded chord type.  if 0.T, the modal type T; if N.TT, the scalar
+	; type TT; if -ve, the type is uncertain, and will be chosen by the algorithm.
+	;p7---p9=M.F where M refers to melody channels which to harmonize 
+	; (ignored if -ve) where F [0,1) the importance of that channel.
+	;p10=modal chord definition table number (default =10)
+	;p11=scalar chord definition table number (default =15)

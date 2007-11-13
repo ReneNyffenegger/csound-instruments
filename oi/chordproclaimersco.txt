@@ -1,0 +1,47 @@
+
+;tables concerning chords
+
+;chord proclaimation channels---three, each consisting of:
+; number of components (up to 6) & for each,
+; a list of 6 sd values, & a list of 6 .oct values
+; i.e. they start at 0,13,26; sds at 1,14,27;  octs at 7,20,33
+f4 0 64 -2  1 0 0 0 0 0 0 .0 .0 .0 .0 .0 .0  1 0 0 0 0 0 0 .0 .0 .0 .0 .0 .0  1 0 0 0 0 0 0 .0 .0 .0 .0 .0 .0  
+
+;modal chord definitions (10--14) select chords from a mode: 
+; index 0=number of types,
+; list of table locs (for each type) and, at each location:
+; number of components in chord, a list of steps from the root
+; e.g. 3 2 4 = diatonic triad
+; basic diatonic chords: type 0=triad, 1=7th
+f10 0 64 -2  2  3 6  3 2 4  4 2 4 6	;put more types here
+
+;scalar chord definitions (15--19) select chords from a scale
+; index 0=number of types,
+; a list of table positions pointing to the beginning of each chord,
+; a list of chords, each consisting of:
+; number of components in chord, a list of steps from the root
+; e.g. 3 4 7 = major triad
+;
+;  basic diatonic triads and 7ths from 12
+; 1=major triad, 2=minor triad, 3=diminished triad, 4=augmented triad
+; 5=MM tetrad, 6=Mm tetrad, 7=mM tetrad, 8=mm tetrad
+; 9=dim-M tetrad, 10=dim-m tetrad, 11=aug-M tetrad, 12=aug-m tetrad
+f15 0 128 -2  12  13 16 19 22 25 29 33 37 41 45 49 53      3 4 7  3 3 7  3 3 6  3 4 8  4 4 7 11  4 4 7 10  4 3 7 11  4 3 7 10  4 3 6 10  4 3 6 9  4 4 8 12  4 4 8 11
+
+
+
+
+
+# define Chord #08#
+
+;8  chord proclaimer---proclaims the presiding chords, as directed 
+;			 	by the score, onto "chord channels" in ftable 4.
+	;p4=chord code, p5=chord channel 1--3, p6=mode channel
+	;chord code:
+	;0 or +ve=natural (selection from mode) modal root.type (.0) (types 0..n)
+	;-ve= selection from scale: scalar root.type (.00)(types 1..n)
+	;trailing digit=chord definition table number-10(modal) or -15(scalar)
+	;so, the trailing digits may be (.00--.04)if modal and (.000--.004)if scalar
+
+;i$Chord 0   0  4.10   1  1
+;i$Chord 3   0 -0.031  1  1

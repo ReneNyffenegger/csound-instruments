@@ -1,0 +1,140 @@
+;15 melody generator(/proclaimer)---unfinished!!! doesn't work yet!
+
+;macro for the melody generator
+;converts 8ve & sd into an index in zk-space
+#define od2z(o'd) #
+($d-iasd+1+($o-ia8ve)*isclsz)
+#
+
+
+;macro for the melody generator
+;converts an index in zk-space into an 8ve number
+#define z28(i) #
+(int(($i+iasd-1+.05)/isclsz)+ia8ve)
+#
+
+;macro for the melody generator
+;converts an index in zk-space into an 8ve number
+#define z2sd(i) #
+(($i-1+iasd)%isclsz)
+#
+
+
+instr 15	;melody generator(/proc.)
+;p1=15.XX, where XX is the destination instrument, 0=none (the dest inst
+; must take p5=pitch; this p13->dest p4, this p14->dest p6, etc.
+;p3=ignored
+;p4=melody channel number  (implied mode of mode channel p4%40)
+;p5=tendency mask table number
+;p6=C.F where C=chord channel number 1-3 (0 to ignore chords) 
+; and F=importance of chord masking [0,1); if p6 is -ve, the effect
+; of F is reversed (and chord tones discouraged).
+;p7=SSss.E where SS and ss are the location of sweet spots in <delta> SDs
+; away from the chord and E=their desirability
+;p8=lower range, 8ve.sd
+;p9=upper range, 8ve.sd
+;p10 & p11=melody channels to avoid, none if 0, all if either >119.
+; avoided in terms of proximity (>=ss above) if -ve and in terms of
+; line crossing if +ve.  the decimal part=1-probability of unisons.
+;p12=accent on (-1,1) fit degree; if +ve exaggerates 0th Markovs, if 
+; -ve, disrespects them. on (2,4)---the same behavior but acting on
+; 1st degree Markovs.  if <-1, attempts to guess emphasis from agogic
+; (p3-1 beat) and dynamic (p13-|p12|) accents, acting on 0ths.
+;p13->p4, p14->p6 of destination, etc.
+
+;disposition of zak space: 0=p of rest, (1--imax)=SDs of p8--p9,
+; (imax+1--imax+isclsz) scratch area
+
+idest=frac(p1)*100
+idest=(idest<16?0:idest)	;destination
+imch=p4				;melody channel	
+imode=imch%40			;mode channel
+imark tablei 3*imode+1,2	;markov table number
+itend=p5			;tendency mask table number
+icch=int(abs(p6)+.00000001)-1	;chord channel number-1
+iF=frac(p6)			;importance of chord masking(+-)
+isweet1=100*frac(int(p7)/100)	;i.e., ss
+isweet2=int(p7/100)		;i.e., SS
+iE=frac(p7)			;the sweetness of the above
+ia8=int(p8+.001)		;the range to consider
+ib8=int(p9+.001)
+iaSD=100*frac(p8)
+ibSD=100*frac(p9)
+isclsz tablei 0,git		;size of the scale
+imtn tablei imode*3,2
+imtn=int(imtn+.01)		;mode table applying to this channel
+imsz tablei 2,imtn		;number of degrees in this mode
+icsz tablei 13*icch,4		;number of components in presiding chord
+imax=(ia8==ib8?ibSD-iaSD+1:isclsz*(ib8-ia8)-iaSD+ibSD+1);number of SDs to be considered
+$sd2md(iaSD'imode)
+ia=imd
+$sd2md(ibSD'imode)
+ib=imd
+imdpop=(ia8==ib8?ib-ia+1:imsz*(ib8-ia8)-ia+ib+1);number of MDs to be considered
+iLn table imch,3		;the last note in 8ve.md notation, 0 if a rest
+iLmd=int(frac(iLn)*10+.1)	;the last note in MD notation, 0 if a rest or root---careful!
+;now prepare the markov and tendency tables, if they are unprepared
+;first, the tendency table
+itendsz tablei 0,itend	;number of valid transitions
+ip tablei itendsz+1,itend	;==2 if already prepared
+if (ip>1) igoto skipTprep
+ii=1
+isum=0
+tendSum:	ip tablei ii,itend
+isum=isum+ip
+ii=ii+1
+if (ii<itendsz+1) igoto tendSum
+ii=1
+tendNorm:	ip tablei ii,itend
+tableiw ip/isum,ii,itend
+ii=ii+1
+if (ii<itendsz+1) igoto tendNorm
+tableiw 2,itendsz+1,itend
+skipTprep:
+ip tablei 2+imsz+(imsz+1)^2,imark	;==2 if already prepared
+if (ip>1) igoto skipMprep
+ij=0
+Mouter:
+	ii=0
+	isum=0
+	markSum:ip tablei ii+(ij*(imsz+1)),imark
+		isum=isum+ip
+		ii=ii+1
+	if (ii<imsz+1) igoto markSum
+	ii=0
+	markNorm: ip tablei ii+(ij*(imsz+1)),imark
+		tableiw ip/isum,ii+(ij*(imsz+1)),imark
+		ii=ii+1
+	if (ii<imsz+1) igoto markNorm
+	ij=ij+1
+if (ij<imsz+1) igoto Mouter
+;now, form a table of the implied 0th order chain above the given 1st order chain
+issum=0
+ii=0
+zerothO:isum=0
+	ij=0
+	zerothI:	ip tablei ij*(imsz+1)+ii,imark
+			isum=isum+ip	
+print ii,ij*(imsz+1)+ii,isum	
+			ij=ij+1
+	if (ij<imsz+1) igoto zerothI
+	tableiw isum,ii+(imsz+1)^2,imark
+	issum=issum+isum
+	ii=ii+1
+if (ii<imsz+1) igoto zerothO
+ii=0
+zerothNorm: 	ip tablei ii+(imsz+1)^2,imark
+		tableiw ip/issum,ii+(imsz+1)^2,imark
+		ii=ii+1
+if (ii<imsz+1) igoto zerothNorm
+tableiw 2,2+imsz+(imsz+1)^2,imark
+skipMprep:
+;
+
+
+
+
+
+
+
+endin

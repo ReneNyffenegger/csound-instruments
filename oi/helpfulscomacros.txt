@@ -1,0 +1,10 @@
+
+#define i(in'when'dur'db) #	
+i$in [[$when/$w]+[$slop*~]]  [$dur/$w] [[$db-$att]+[$dbslop*~]] 
+#
+
+#define h(in'when'dur) #
+i$in [$when/$w]  [$dur/$w] 
+#
+
+

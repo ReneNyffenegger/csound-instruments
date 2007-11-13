@@ -1,0 +1,9 @@
+;Clears zak audio patching channels.
+
+
+#define chClear(num) #
+instr $num.	
+zacl 0,gizatop
+endin
+#
+
