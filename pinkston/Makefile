@@ -6,7 +6,7 @@ convunit.wav: convunit.orc convunit.sco 118.con
 
 118.con: noise.wav
 
-adsyn.wav: adsyn.orc adsyn.sco cello.hetro wind.hetro c2a.hetro c2b.hetro c2c.hetro c5.hetro
+adsyn.wav: adsyn.orc adsyn.sco cello.het wind.het c2a.het c2b.het c2c.het c5.het
 
 convolve.wav: domkyr44.con drottn44.con oster44.con thewind.con frigate.con noise.con noisewdg.con noischor.con laugh.con crash.con flush.con bigclunk.con popcorn.con cello44.con cellodec.con cellogls.con lognoise.con vowchord.con bees1.con
 
@@ -20,7 +20,7 @@ pvoc2.wav: wind4.pvx wavest44.pvx eroi.pvx
 
 pvoc3.wav: wind4.pvx wavest44.pvx eroi.pvx cello44.pvx plkpnolp.pvx
 
-rplpc.wav: wind1.lp wind2.lp wind3.lp wind4.lp wind5.lp wind6.lp wind7.lp wind8.lp wind9.lp wind10.lp
+rplpc.wav: wind1.lpc wind2.lpc wind3.lpc wind4.lpc wind5.lpc wind6.lpc wind7.lpc wind8.lpc wind9.lpc wind10.lpc
 
 vpvoc2.wav: crashcym.pvx
 
@@ -32,34 +32,34 @@ gong3.pvx: gong3.aif
 kalimba-low.pvx: kalimba-low.aif
 crashcym.pvx: crashcym.wav
 
-wind1.lp: thewind.wav
+wind1.lpc: thewind.wav
 	lpanal -p 34 -h 500 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
-wind2.lp: thewind.wav
+wind2.lpc: thewind.wav
 	lpanal -p 20 -h 500 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
-wind3.lp: thewind.wav
+wind3.lpc: thewind.wav
 	lpanal -p 32 -h 300 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
-wind4.lp: thewind.wav
+wind4.lpc: thewind.wav
 	lpanal -p 28 -h 500 -P 150 -Q 250 $< $(SADIR)/$@ $(OUTPUT)
 
-wind5.lp: thewind.wav
+wind5.lpc: thewind.wav
 	lpanal -p 24 -h 500 -P 70 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
-wind6.lp: thewind.wav
+wind6.lpc: thewind.wav
 	lpanal -p 26 -h 500 -P 70 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
-wind7.lp: thewind.wav
+wind7.lpc: thewind.wav
 	lpanal -p 28 -h 500 -P 70 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
-wind8.lp: thewind.wav
+wind8.lpc: thewind.wav
 	lpanal -p 26 -h 500 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
-wind9.lp: thewind.wav
+wind9.lpc: thewind.wav
 	lpanal -p 50 -h 400 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
-wind10.lp: thewind.wav
+wind10.lpc: thewind.wav
 	lpanal -p 50 -h 500 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
 cello44.pvx: cello44.wav
@@ -104,22 +104,22 @@ lognoise.con: lognoise.wav
 vowchord.con: vowchord.wav
 bees1.con: bees1.wav
 
-cello.hetro: cello44.wav
+cello.het: cello44.wav
 	hetro -f175 -h30 $^ $(SADIR)/$@ $(OUTPUT)
 
-wind.hetro: thewind.wav
+wind.het: thewind.wav
 	hetro -h50 $^ $(SADIR)/$@ $(OUTPUT)
 
-c2a.hetro: c2.aiff
+c2a.het: c2.aiff
 	hetro -f65 -h60 -M24000 $^ $(SADIR)/$@ $(OUTPUT)
 
-c2b.hetro: c2.aiff
+c2b.het: c2.aiff
 	hetro -f32.7032 -h100 -n512 -M30000 $^ $(SADIR)/$@ $(OUTPUT)
 
-c2c.hetro: c2.aiff
+c2c.het: c2.aiff
 	hetro -f32.7032 -h100 -n1000 -M30000 $^ $(SADIR)/$@ $(OUTPUT)
 
-c5.hetro: c5.aiff
+c5.het: c5.aiff
 	hetro -f261 -h100 -n1000 -M30000 $^ $(SADIR)/$@ $(OUTPUT)
 
 include ../../rules.mk
