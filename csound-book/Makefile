@@ -6,3 +6,9 @@ all:
 	cd $$d && $(MAKE) ; cd .. ;\
 	done
 
+cleanall:
+	for d in $(dirs) ;\
+	do \
+	cd $$d && $(MAKE) cleanall; cd .. ;\
+	done
+
