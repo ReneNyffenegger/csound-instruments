@@ -1,0 +1,934 @@
+ 
+
+<html>
+
+<head>
+
+<!-- #BeginEditable "doctitle" --> 
+
+<title>Csound Section 1</title>
+
+<!-- #EndEditable --> 
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<script language="JavaScript">
+
+<!--
+
+function MM_displayStatusMsg(msgStr) { //v1.0
+
+  status=msgStr;
+
+  document.MM_returnValue = true;
+
+}
+
+
+
+function MM_openBrWindow(theURL,winName,features) { //v2.0
+
+  window.open(theURL,winName,features);
+
+}
+
+//-->
+
+</script>
+
+<meta name="keywords" content="Csound">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#003399" link="#990099" vlink="#990099" alink="#990099" onLoad="">
+
+<h3><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif">Instruments</font></font></h3>
+
+<h3><a name="farm"></a></h3>
+
+<table width="95%" border="0" height="171">
+
+  <tr> 
+
+    <td width="33%"> 
+
+      <table width="100%" border="1">
+
+        <tr> 
+
+          <td><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><b>Jcn 
+
+            Vocoder</b></font></font></font></font></td>
+
+        </tr>
+
+      </table>
+
+    </td>
+
+    <td width="67%" valign="baseline"><img src="jcnVoc.jpg" width="311" height="125"></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="78"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">Here you 
+
+        have a simple FFT based vocoder to show what you can do with just 12 lines 
+
+        of dsp code! It makes use of R.Dobson's streaming opcodes and G.Maldonado's 
+
+        vectorial operators. Just set up the command line and the Modulator&amp;Carrier 
+
+        sources before running it. Possibly buggy as I spent an afternoon to code 
+
+        it. </font></p>
+
+    </td>
+
+  </tr>
+
+  <tr> 
+
+    <td height="42" colspan="2"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="jcnVocoder.zip" onMouseOver="MM_displayStatusMsg('zipped csd file (no MIDI by now)');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font></font></font> 
+
+        <a href="jcnVocoder.zip">download</a></font></p>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<hr noshade>
+
+<h3><a name="toot"></a></h3>
+
+<table width="95%" border="0" height="171">
+
+  <tr> 
+
+    <td width="33%"> 
+
+      <table width="100%" border="1">
+
+        <tr> 
+
+          <td><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><b>JCN 
+
+            Synthesis Tutorial</b></font></font></font></font></td>
+
+        </tr>
+
+      </table>
+
+    </td>
+
+    <td width="67%" valign="baseline"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i><img src="Stut.jpg" width="355" height="298"> 
+
+      </i></font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="78">
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">A hopefully 
+
+        useful support to your Digital Audio Synthesis lessons! Includes GUIs 
+
+        for wavetable, simple FM and basic analog modelling synthesis techniques</font></p>
+
+    </td>
+
+  </tr>
+
+  <tr> 
+
+    <td height="42" colspan="2"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="SynthToot.zip" onMouseOver="MM_displayStatusMsg('zipped csd file (MIDIfied for realtime performance)');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font></font></font> 
+
+        <a href="SynthToot.zip">download</a></font></p>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<hr noshade>
+
+<h3></h3>
+
+<table width="95%" border="0" height="171">
+
+  <tr> 
+
+    <td width="33%"> 
+
+      <table width="100%" border="1">
+
+        <tr> 
+
+          <td><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><b>JCM 
+
+            Strings </b></font></font></font></font></td>
+
+        </tr>
+
+      </table>
+
+    </td>
+
+    <td width="67%" valign="baseline"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i> 
+
+      </i><i><img src="jcm%20strings.jpg" width="246" height="190"></i></font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="78"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">First version 
+
+        of a classic analog string machine based on S. Costello phased string 
+
+        ensemble. It includes a basic string machine coupled to a morpheable (lowpass-bandpass-highpass) 
+
+        12dB filter and a Phaser driven by a Lfo. It also includes a nicely saturated 
+
+        reverb (it's not a FDN reverb...the picture is from an older model):)</font></p>
+
+    </td>
+
+  </tr>
+
+  <tr> 
+
+    <td height="42" colspan="2"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="strphase.zip" onMouseOver="MM_displayStatusMsg('zipped csd file (MIDIfied for realtime performance)');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font></font></font> 
+
+        <a href="strphase.zip">download</a></font></p>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<h3><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a name="voxdream"></a></font> 
+
+</h3>
+
+<hr noshade>
+
+<h3>&nbsp;</h3>
+
+<h3><a name="hammond"></a></h3>
+
+<table width="95%" border="0" height="171">
+
+  <tr> 
+
+    <td width="33%"> 
+
+      <table width="100%" border="1">
+
+        <tr> 
+
+          <td><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><b>DirectHammond 
+
+            v1/v2 </b></font></font></font></font></td>
+
+        </tr>
+
+      </table>
+
+    </td>
+
+    <td width="67%" valign="baseline" colspan="2"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i> 
+
+      </i><i><img src="DirectHammond.jpg" width="320" height="150"></i><a href="lazy.mp3" onMouseOver="MM_displayStatusMsg('mp3 sample / DirectHammond demo');return document.MM_returnValue"><img src="../speaker2.gif" border="0" name="Image1" width="31" height="33"></a></font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="3" height="78"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">A Csound 
+
+        port of Istvan Kaldor&acute;s TinyToneWheels for Sync Modular, this is 
+
+        a Hammond emulator with 2 drawbars, scanner, leslie, distortion, delay, 
+
+        echo and much more. The GUI allows you to control every sound parameter 
+
+        and store your favourite settings as presets. Even has a gain detector 
+
+        to automatically adjust the optimum gain for you. You'll need DirectCsound 
+
+        5.1 at least.</font></p>
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">The sample 
+
+        file was generated in realtime with presets 4&amp;2, playing a bit with 
+
+        the controls.</font></p>
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i>Note</i>: 
+
+        for realtime MIDI input simply replace the -F field with -+K.</font></p>
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><b><font color="#FF3333">New!</font></b> 
+
+        DirectHammond v2 is a newer optimized version much more suitable for realtime 
+
+        performance. I leave the old code just for the interest of the optimization 
+
+        procedures themselves.</font></p>
+
+    </td>
+
+  </tr>
+
+  <tr> 
+
+    <td height="42"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="b5v2.zip" onMouseOver="MM_displayStatusMsg('zipped csd &amp; midi files');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font></font></font> 
+
+        <a href="b5v2.zip">download v2</a> (to render MIDI files)</font></p>
+
+    </td>
+
+    <td height="42"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="b5v2rt.zip" onMouseOver="MM_displayStatusMsg('zipped csd &amp; midi files');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font></font></font> 
+
+      <a href="b5v2rt.zip">download v2</a></font> (for realtime playing)</td>
+
+    <td height="42"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="b5.zip" onMouseOver="MM_displayStatusMsg('zipped csd &amp; midi files');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font></font></font> 
+
+      <a href="b5.zip">download v1 (old code)</a> </font></td>
+
+  </tr>
+
+</table>
+
+<h3><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a name="voxdream"></a></font> 
+
+</h3>
+
+<hr noshade>
+
+<h3>&nbsp;</h3>
+
+<table width="95%" border="0" height="171">
+
+  <tr> 
+
+    <td width="33%"> 
+
+      <table width="100%" border="1">
+
+        <tr> 
+
+          <td><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><b>VoxDream, 
+
+            a tuvan singer</b></font></font></font></font></td>
+
+        </tr>
+
+      </table>
+
+    </td>
+
+    <td width="67%" valign="baseline"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i> 
+
+      </i><i><img src="VoxDream.jpg" width="254" height="154"> </i><a href="bass.mp3" onMouseOver="MM_displayStatusMsg('mp3 sample / SM VoxDream demo');return document.MM_returnValue"><img src="../speaker2.gif" border="0" name="Image1" width="31" height="33"></a></font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="78"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">This <a href="#" onClick="MM_openBrWindow('http://www.mtu-net.ru/syncmodular','','toolbar=yes,location=yes,status=yes,menubar=yes,scrollbars=yes,resizable=yes,width=600,height=450')">Sync 
+
+        Modular</a> instrument emulates a singing male voice using the usual Glottal 
+
+        impulse-&gt;Bank of filters approach. It includes different optional sound 
+
+        sources (Band limited pulse, FM and Digital pulse) plus controls and envelopes 
+
+        for the main timbral parameters. You can smoothly morph from bass to tenor 
+
+        voice, morph the vowel and more! It includes a special formant filter 
+
+        to emulate harmonic (khoomei) singing.</font></p>
+
+      </td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="42"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="bass1.zip" onMouseOver="MM_displayStatusMsg('zipped sme file');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font></font></font> 
+
+        <a href="bass1.zip">download</a> </font></p>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<hr noshade>
+
+<table width="95%" border="0" height="171">
+
+  <tr> 
+
+    <td width="33%"> 
+
+      <table width="100%" border="1">
+
+        <tr> 
+
+          <td><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><b>Gong 
+
+            Explorer </b></font></font></font></font></td>
+
+        </tr>
+
+      </table>
+
+      <a name="gongexplorer"></a></td>
+
+    <td width="67%" valign="baseline"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i><img src="GongExplorer.jpg" width="163" height="122" border="1"> 
+
+      </i><a href="SMgong.mp3" onMouseOver="MM_displayStatusMsg('mp3 sample / SM Gong demo');return document.MM_returnValue"><img src="../speaker2.gif" border="0" name="Image1" width="31" height="33"></a><i> 
+
+      <img src="GongExplorer2.jpg" width="162" height="204"> </i><a href="gong2.mp3" onMouseOver="MM_displayStatusMsg('mp3 sample / SM Gong2 demo (1Mb!)');return document.MM_returnValue"><img src="../speaker2.gif" border="0" name="Image1" width="31" height="33"></a></font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="78"> 
+
+      <p> 
+
+      <blockquote>&nbsp;</blockquote>
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"> A pseudophysical 
+
+        model of a Gong with 4 waveguides, a passive scattering matrix and some 
+
+        nonlinear stuff. This is a <a href="#" onClick="MM_openBrWindow('http://www.mtu-net.ru/syncmodular','','toolbar=yes,location=yes,status=yes,menubar=yes,scrollbars=yes,resizable=yes,width=600,height=450')">Sync 
+
+        Modular</a> instrument. I&acute;ll explore its possibilities before planning 
+
+        a Csound version (much faster in a graphical environtment). By now it 
+
+        is not much different from the existing S.Costello&acute;s Csound implementation.</font></p>
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">Now <b>Gong 
+
+        Explorer 2 available</b>! 8 waveguides, improved control and excitation, 
+
+        bowed mode and much more!</font></p>
+
+    </td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="42"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="GongExplorer.zip" onMouseOver="MM_displayStatusMsg('zipped sme file');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font><i> 
+
+        download instrument </i><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="GongExplorer5.zip" onMouseOver="MM_displayStatusMsg('zipped sme file');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font><i> 
+
+        download version 2</i></font></font></font></font></font></p>
+
+      <p>&nbsp;</p>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<hr noshade>
+
+<table width="95%" border="0" height="171">
+
+  <tr> 
+
+    <td width="33%"> 
+
+      <table width="100%" border="1">
+
+        <tr> 
+
+          <td><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><b>TB303 
+
+            filter as Macro</b></font></font></font></font></td>
+
+        </tr>
+
+      </table>
+
+      
+
+    </td>
+
+    <td width="67%" valign="baseline"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i> 
+
+      </i></font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="78"> 
+
+      <p> 
+
+      <blockquote>&nbsp;</blockquote>
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"> A version 
+
+        of my 3-pole LPF which approximates the tuning and feedback tables with 
+
+        polynomials, thus allowing easy portability and reusability. Not tested 
+
+        its accuracy yet, but it works fine.</font></p>
+
+    </td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="42"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="lpf18.zip" onMouseOver="MM_displayStatusMsg('orc &amp; sco files');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font><i> 
+
+        download code &amp; files (filter.h macro and sequences)</i></font></font></font></p>
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="lpf18.sme">download</a> 
+
+        Sync Modular implementation of the filter.</font></p>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<hr noshade>
+
+<table width="95%" border="0" height="171">
+
+  <tr> 
+
+    <td width="33%"> 
+
+      <table width="100%" border="1">
+
+        <tr> 
+
+          <td><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><b>arpeggiator+TB303</b></font></font></font></font></td>
+
+        </tr>
+
+      </table>
+
+      <a name="arpeggiator+tb303"></a></td>
+
+    <td width="67%" valign="baseline"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="seq303.mp3" onMouseOver="MM_displayStatusMsg('mp3 sample / Acid Neptune');return document.MM_returnValue"><img src="../speaker2.gif" border="0" name="Image1" width="31" height="33"></a><i> 
+
+      </i></font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="78"> 
+
+      <p> 
+
+      <blockquote>&nbsp;</blockquote>
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"> An orchestra-based 
+
+        sequencer driving my Tb303 emulator to get those classical arpeggios (with 
+
+        a bit of acid crazyness at the end).... Some delay and reverb added for 
+
+        better effect. Requires 4.06 at least.</font></p>
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">Please check 
+
+        my standalone Tb303 instrument as I usually add there any new feature 
+
+        and improvement of the emulator. </font></p> 
+
+      <p></p>
+
+    </td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="42"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="seq303.zip" onMouseOver="MM_displayStatusMsg('orc &amp; sco files');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font><i> 
+
+        download code &amp; files (filter.h macro and sequences)</i></font><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"></font></font></font></p>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<hr noshade>
+
+<table width="95%" border="0" height="171">
+
+  <tr> 
+
+    <td width="33%"> 
+
+      <table width="100%" border="1">
+
+        <tr> 
+
+          <td><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><b>Sync 
+
+            </b></font></font></font></font></td>
+
+        </tr>
+
+      </table>
+
+    </td>
+
+    <td width="67%" valign="baseline"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i> 
+
+      </i></font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="78"> 
+
+      <p> 
+
+      <blockquote>&nbsp;</blockquote>
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"> </font><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">Shows 
+
+        how to implement the Sync feature</font><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"> 
+
+        in Csound for analog modelling. My first nearly successful attempt.</font></p>
+
+      <p>&nbsp;</p>
+
+    </td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="42"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="sync.zip" onMouseOver="MM_displayStatusMsg('orc &amp; sco files');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font><i> 
+
+        download code &amp; files</i></font><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"></font></font></font></p>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<hr noshade>
+
+<table width="95%" border="0" height="171">
+
+  <tr> 
+
+    <td width="33%"> 
+
+      <table width="100%" border="1">
+
+        <tr> 
+
+          <td><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><b>Drum 
+
+            machine </b></font></font></font></font></td>
+
+        </tr>
+
+      </table>
+
+    </td>
+
+    <td width="67%" valign="baseline"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i> 
+
+      </i></font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="78"> 
+
+      <p> 
+
+      <blockquote>&nbsp;</blockquote>
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"> </font><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">A 
+
+        pure-Csound drum machine (no samples!) to complement my &quot;analog&quot; 
+
+        Bass Line.</font><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"> 
+
+        It promises to be another long term project. By now, only the Handclaps.</font></p>
+
+      <p>&nbsp;</p>
+
+    </td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="42"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="drumkit1.zip" onMouseOver="MM_displayStatusMsg('orc &amp; sco files');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font><i> 
+
+        download code &amp; files</i></font><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"></font></font></font></p>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<hr noshade>
+
+<p><a name="303"></a></p>
+
+<table width="95%" border="0" height="171">
+
+  <tr> 
+
+    <td width="33%"> 
+
+      <table width="100%" border="1">
+
+        <tr> 
+
+          <td><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><b>TB303 
+
+            bassline emulator</b></font></font></font></font></td>
+
+        </tr>
+
+      </table>
+
+    </td>
+
+    <td width="67%" valign="baseline"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"> 
+
+      <i> <img src="303panelGUI.jpg" width="355" height="108"></i><a href="303emu.mp3" onMouseOver="MM_displayStatusMsg('mp3 sample');return document.MM_returnValue"><img src="../speaker2.gif" border="0" name="Image1" width="31" height="33"></a></font></td>
+
+  </tr>
+
+  <tr>
+
+    <td colspan="2" height="78">
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><b><font color="#FF3333">New!</font></b> 
+
+        a csd file containing a further optimised 303 emulator (working fine at 
+
+        kr=100) making use of the new lpf18 opcode, the score demo and a simple 
+
+        GUI which allows you to choose between pulse, saw and square waves as 
+
+        well as play with the usual controls. Csound Gui rocks!!!<i> (DirectCsound 
+
+        5.10 or later required)</i></font></p>
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="303csd.zip" onMouseOver="MM_displayStatusMsg('csd file');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font><i> 
+
+        download file</i></font></font></font></p>
+
+    </td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="78"> 
+
+      <p> 
+
+      <blockquote>&nbsp;</blockquote>
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"> </font><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">The 
+
+        most recent features include a complete rewrite of the code (!), a redesign 
+
+        of the 18dB filter and an improved legato mechanism, as well as a better 
+
+        accent. </font><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">Unlimited 
+
+        polyphony of course, not just 2 tb&acute;s ;-). It is somewhat more aggressive 
+
+        than an old 303 but with appropiate settings the sound is pretty close. 
+
+        Optionally you can work with my <a href="303cake.zip">Cakewalk pannel</a> 
+
+        to control the knobs, otherwise you can use any hardware-based MIDI controller 
+
+        (ch.1, ctrls 1-fco,2-res,3-envmod,4-decay,5-accent,6-dist,7-pan).</font></p>
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">Listen to 
+
+        the mp3 demo! The MIDI file was generated with Keykit&amp;Excel playing 
+
+        with my Cakewalk pannel in realtime. I tried to push the instrument to 
+
+        its limits of register, timbre and response. Of course it no longer resembles 
+
+        a bass line at very high registers, and you can get some clicks with too 
+
+        fast changing controllers.</font></p>
+
+    </td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="42"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="303.zip" onMouseOver="MM_displayStatusMsg('orc &amp; sco files');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font><i> 
+
+        download code &amp; files</i></font><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"></font></font></font></p>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<hr noshade>
+
+<table width="95%" border="0" height="171">
+
+  <tr> 
+
+    <td width="33%"> 
+
+      <table width="100%" border="1">
+
+        <tr> 
+
+          <td><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><b>the 
+
+            Guitarra place</b></font></font></font></font></td>
+
+        </tr>
+
+      </table>
+
+      <a name="guitars"></a></td>
+
+    <td width="67%" valign="baseline"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="Xguitar2.mp3" onMouseOver="MM_displayStatusMsg('mp3 sample');return document.MM_returnValue"><img src="../speaker2.gif" border="0" name="Image1" width="31" height="33"></a></font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="78">
+
+      <p>A <font face="Verdana, Arial, Helvetica, sans-serif" size="-1">number 
+
+        of Acoustic Guitar models (using commuted waveguide synthesis), a few 
+
+        ones rather realistic but most absolutely weird. </font><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">All 
+
+        are Midi controlled, and the examples use a nice midi file I got from 
+
+        the Yamaha XG demos. More coming soon, hopefully!</font></p>
+
+      </td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="42">
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="guitar1.zip" onMouseOver="MM_displayStatusMsg('orc &amp; sco files');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font></font></font> 
+
+        Tolonen-Smith guitar (based on T.Tolonen PhDT., with a body IR kindly 
+
+        provided by Dr. Julius Smith).</font></p>
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="guitar2.zip" onMouseOver="MM_displayStatusMsg('orc &amp; sco files');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font></font></font> 
+
+        Tolonen-Smith guitar II (some tricks to improve the sound, though still 
+
+        very unnatural).Thick reverb added for better effect.</font></p>
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="guitar3.zip" onMouseOver="MM_displayStatusMsg('orc &amp; sco files');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font></font></font> 
+
+        Guitar3 (a really detuned one)</font></p>
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="guitar4.zip" onMouseOver="MM_displayStatusMsg('orc &amp; sco files');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font></font></font> 
+
+        Guitar4 (strong inharmonicities here)</font></p>
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"> <font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="guitar4.zip" onMouseOver="MM_displayStatusMsg('orc &amp; sco files');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font></font></font> 
+
+        Guitar5 (Gong-like guitar, don&acute;t ask...)</font></p>
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="ks1.zip" onMouseOver="MM_displayStatusMsg('orc &amp; sco files');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font></font></font><b><font color="#FF3333">New!</font></b> 
+
+        Sync Modular implementation. Bowing mode, inharmonicities, plucking point...</font></p>
+
+      </td>
+
+  </tr>
+
+</table>
+
+<hr noshade>
+
+<p>&nbsp;</p>
+
+<p>&nbsp;</p></body>
+
+</html>
+

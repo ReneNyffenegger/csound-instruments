@@ -1,0 +1,706 @@
+ 
+
+<html>
+
+<head>
+
+<!-- #BeginEditable "doctitle" --> 
+
+<title>Csound Section 1</title>
+
+<!-- #EndEditable --> 
+
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+<script language="JavaScript">
+
+<!--
+
+
+
+
+
+
+
+
+
+function MM_displayStatusMsg(msgStr) { //v1.0
+
+  status=msgStr;
+
+  document.MM_returnValue = true;
+
+}
+
+//-->
+
+</script>
+
+<meta name="keywords" content="Csound">
+
+</head>
+
+<body bgcolor="#FFFFFF" text="#003399" link="#990099" vlink="#990099" alink="#990099" onLoad="">
+
+<h3><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif">Processors 
+
+  </font></font></h3>
+
+<table width="95%" border="0" height="171">
+
+  <tr> 
+
+    <td width="33%" height="14"> 
+
+      <table width="100%" border="1">
+
+        <tr> 
+
+          <td><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><b>Jcn 
+
+            MultiFx unit</b></font></font></font></font></td>
+
+        </tr>
+
+      </table>
+
+    </td>
+
+    <td width="67%" valign="baseline" height="14"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"></font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2"> 
+
+      <blockquote> 
+
+        <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">A preliminary 
+
+          release of my new multieffects unit. A huge Csound project! Works as 
+
+          a completely graphical device, based on G.Maldonado's CsoundAV features. 
+
+          No Csound knowledge is needed to run it. Please com back soon to get 
+
+          a more finished release.</font> </p>
+
+        <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><b>NOTE: 
+
+          this multieffects requires quite a beast to run. I test it with a P3 
+
+          1GHz + 384Mb ram.</b></font></p>
+
+        <table border="0" width="90%">
+
+          <tr> 
+
+            <td height="78" width="58%"> 
+
+              <div align="center"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><img src="FxGuis.jpg" width="491" height="256"></font></div>
+
+            </td>
+
+            <td height="78" width="42%"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">GUI 
+
+              for the multieffects and the effects themselves, for realtime parameter 
+
+              control. The effect boxes dynamically show the appropiate GUI for 
+
+              each active effect.</font></td>
+
+          </tr>
+
+          <tr> 
+
+            <td height="78" width="58%"> 
+
+              <div align="center"><img src="FxMenus.jpg" width="300" height="214"></div>
+
+            </td>
+
+            <td height="78" width="42%"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">User 
+
+              can choose among 100 effects, including most of the original Csound 
+
+              processors, and the classic effects from Mikelson and Cook multifxs.<font size="-3"> 
+
+              (THE PRELIMINARY RELEASE HAS ONLY A FEW OF THEM)</font></font></td>
+
+          </tr>
+
+          <tr> 
+
+            <td width="58%"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">Up 
+
+              to 8 simultaneous effects allowed. Free signal routing, even with 
+
+              audio feedback, with a 8x8 matrix (dry signal enters row 1 and output 
+
+              is row 8)</font></td>
+
+            <td width="42%"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">Ability 
+
+              to save machine and effects states as presets for later recall.<font size="-3"> 
+
+              (NOT IN THE PRELIMINARY RELEASE)</font><br>
+
+              And much more... </font></td>
+
+          </tr>
+
+        </table>
+
+      </blockquote>
+
+    </td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="78"> 
+
+      <blockquote> <font face="Verdana, Arial, Helvetica, sans-serif" size="-1">To 
+
+        optimize performance any effect which doesn't send or receive audio is 
+
+        automatically deactivated. You can do this manually too.</font> <font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i>Unfortunately 
+
+        it requires kr=sr in order to perform routing and feedback correctly, 
+
+        which enormously increases cpu demands.</i></font><i><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">This 
+
+        multieffects should work in realtime (PIII 700MHz minimum if working at 
+
+        sr=22050Hz), to allow interactive experimentation with new signal generators. 
+
+        It is not aimed to live performances though, and works internally with 
+
+        mono signals only by now.</font></i><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">If 
+
+        you want something similar, more powerful and expandable, and aimed to 
+
+        live performances, take a look at www.audiomulch.com. However, you'll 
+
+        loose all the Csound processing power. In case you have a nice effect 
+
+        to share, please send it to me and I could consider adding it to the machine.</font></blockquote>
+
+    </td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="42"> 
+
+      <blockquote>
+
+        <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"> <b>Available 
+
+          effects:</b> Cruncher, Direct Convolver, Feigenbaum Ringmod, Morpheable 
+
+          Filter, variable Comb/Allpass, Zoelter's Parametric Eq, R. Bristow Johnson's 
+
+          Eq, BreakBeat Cutter </font></p>
+
+        <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><b>Known 
+
+          issues:</b> A bug (?) in the menu-effect trigger system causes more 
+
+          than occasional Csound crashes when changing effects. I'll look at it 
+
+          when I have some time. I know there's a bug in 4.19 (on which CsoundAv 
+
+          is based) relating expansion of GOTOs number, maybe that's the reason?</font></p>
+
+        <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">Not sure 
+
+          whether the BB Cutter does work as intended...or not. But it rules!</font></p>
+
+        <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">The background 
+
+          bitmap in the Feigenbaum Fx doesn't fit correctly. Not idea why :(</font></p>
+
+        <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">MultiFx.csd 
+
+          is too large. Possibly I'll create a macro for each effect.</font></p>
+
+        <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><b>Files 
+
+          included:</b></font></p>
+
+        <table width="100%" border="0">
+
+          <tr> 
+
+            <td width="29%"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">MultiFx.csd</font></td>
+
+            <td width="71%"><i><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">The 
+
+              main file, includes the Dsp code for all the effects</font></i></td>
+
+          </tr>
+
+          <tr> 
+
+            <td width="29%"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">FxMenus.h</font></td>
+
+            <td width="71%"><i><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">Macro 
+
+              to display the names of the effects to choose</font></i></td>
+
+          </tr>
+
+          <tr> 
+
+            <td width="29%"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">FxContainer.h,FxWidgets.h</font></td>
+
+            <td width="71%"><i><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">Macros 
+
+              to set up and control the GUI for the individual effects </font></i></td>
+
+          </tr>
+
+          <tr> 
+
+            <td width="29%"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">FxUpdtCol.h, 
+
+              FxUpdtCol.h</font></td>
+
+            <td width="71%"><i><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">Macros 
+
+              to handle the signal routing</font></i></td>
+
+          </tr>
+
+          <tr> 
+
+            <td width="29%"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">FxInOut2.h,FxControllers.h</font></td>
+
+            <td width="71%"><i><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">Effect 
+
+              container and macro to handle the routing of the controls</font></i></td>
+
+          </tr>
+
+          <tr> 
+
+            <td width="29%"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">background 
+
+              bitmaps and sound samples</font></td>
+
+            <td width="71%"><i><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"></font></i></td>
+
+          </tr>
+
+        </table>
+
+      </blockquote>
+
+    </td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="42"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i>download 
+
+        csd, macros <font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1">&amp;</font></font> 
+
+        auxiliary files </i><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="MultiFxBETA.zip" onMouseOver="MM_displayStatusMsg('orc &amp; sco files');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font> 
+
+        <i>(tu run it, drag&amp;drop MultiFx.csd on the CsoundAv icon) </i></font></font></font></p>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<hr noshade>
+
+<h3>&nbsp;</h3>
+
+<table width="95%" border="0" height="171">
+
+  <tr> 
+
+    <td width="33%" height="14"> 
+
+      <table width="100%" border="1">
+
+        <tr> 
+
+          <td><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><b>experimental 
+
+            distortion unit</b></font></font></font></font></td>
+
+        </tr>
+
+      </table>
+
+    </td>
+
+    <td width="67%" valign="baseline" height="14"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i><img src="disto.jpg" width="246" height="145"> 
+
+      </i></font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="78"> 
+
+      <p> 
+
+      <blockquote>&nbsp;</blockquote>
+
+      <font face="Verdana, Arial, Helvetica, sans-serif" size="-1"> A rather sophisticated 
+
+      distorter + GUI. Based on an extremely modified tanh() based distortion, 
+
+      it can distort a sine wave into a square, a pulse or even a circle wave, 
+
+      among other shapes. For the curious I've attached a pdf file showing the 
+
+      formula and the transfer function.</font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="42"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i>download 
+
+        code &amp; files</i></font><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="megadist.zip" onMouseOver="MM_displayStatusMsg('orc &amp; sco files');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a> 
+
+        <i>download pdf file</i> <a href="distorter.pdf"><img src="../pdf.gif" width="32" height="32" border="0"></a></font></font></font></p>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<hr noshade>
+
+<table width="95%" border="0" height="171">
+
+  <tr> 
+
+    <td width="33%"> 
+
+      <table width="100%" border="1">
+
+        <tr> 
+
+          <td><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><b>stereo 
+
+            delay with damped cross feedback rotation matrix</b></font></font></font></font></td>
+
+        </tr>
+
+      </table>
+
+    </td>
+
+    <td width="67%" valign="baseline"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i> 
+
+      </i></font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="78"> 
+
+      <p> 
+
+      <blockquote>&nbsp;</blockquote>
+
+      <font face="Verdana, Arial, Helvetica, sans-serif" size="-1"> A simple cross-feedbacked 
+
+      delay whose spreading is controlled by a delay feedback matrix rotation 
+
+      angle. </font> 
+
+      <p></p>
+
+    </td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="42"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i>download 
+
+        code &amp; files</i></font><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="cdelay.zip" onMouseOver="MM_displayStatusMsg('orc &amp; sco files');return document.MM_returnValue"><img src="../zip.gif" width="31" height="32" border="0"></a></font></font></font></p>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<hr noshade>
+
+<table width="95%" border="0" height="171">
+
+  <tr> 
+
+    <td width="33%"> 
+
+      <table width="100%" border="1">
+
+        <tr> 
+
+          <td><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><b>Reverb 
+
+            macro </b></font></font></font></font></td>
+
+        </tr>
+
+      </table>
+
+    </td>
+
+    <td width="67%" valign="baseline"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i> 
+
+      </i></font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="78"> 
+
+      <p> 
+
+      <blockquote>&nbsp;</blockquote>
+
+      <font face="Verdana, Arial, Helvetica, sans-serif" size="-1"> Press <a href="Csound%20Reverbs.html">here</a> 
+
+      to go to my Reverb Collection page. A macro file which contains dozens of 
+
+      Csound reverb algorithms and lots of Impulse Responses to be used with the 
+
+      Csound convolver unit.</font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="42"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"></font></font></p>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<hr noshade>
+
+<table width="95%" border="0" height="171">
+
+  <tr> 
+
+    <td width="33%"> 
+
+      <table width="100%" border="1">
+
+        <tr> 
+
+          <td><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><b>Psycho 
+
+            exciters </b></font></font></font></font></td>
+
+        </tr>
+
+      </table>
+
+    </td>
+
+    <td width="67%" valign="baseline"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i> 
+
+      </i></font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="78"> 
+
+      <p> 
+
+      <blockquote>&nbsp;</blockquote>
+
+      <font face="Verdana, Arial, Helvetica, sans-serif" size="-1">Two different 
+
+      Psychoacoustic enhancers for your collection: an emulation of Steinberg&acute;s 
+
+      Spectralizer and a port of CLM&acute;s Audio Enhancer, and a Sync Modular 
+
+      version with feedback in the waveshaper module to add more harmonics.</font> 
+
+      <p></p>
+
+    </td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="42"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i>download 
+
+        code &amp; files</i><a href="enhance.zip" onMouseOver="MM_displayStatusMsg('orc &amp; sco files');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a> 
+
+        <i>and the Sync module</i> <font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="psichoexciter.zip" onMouseOver="MM_displayStatusMsg('orc &amp; sco files');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font></font></font></font></p>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<hr noshade>
+
+<table width="95%" border="0" height="171">
+
+  <tr> 
+
+    <td width="33%"> 
+
+      <table width="100%" border="1">
+
+        <tr> 
+
+          <td><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><b>Direct 
+
+            convolver unit</b></font></font></font></font></td>
+
+        </tr>
+
+      </table>
+
+    </td>
+
+    <td width="67%" valign="baseline"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i> 
+
+      </i></font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="78"> 
+
+      <p> 
+
+      <blockquote>&nbsp;</blockquote>
+
+      <font face="Verdana, Arial, Helvetica, sans-serif" size="-1">A 64-point 
+
+      convolver unit to use as a variable filter. For <i>Sync Modular</i>. Simply 
+
+      a 64-tap delay line whose coefficients are controlled by a group of LFO's. 
+
+      Just to emulate the recently implemented opcode in Csound (v. 4.12) for 
+
+      direct convolution. This is a very beta release!</font> 
+
+      <p></p>
+
+    </td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="42"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i>download 
+
+        code &amp; files</i></font><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><a href="Dconv%2064.zip" onMouseOver="MM_displayStatusMsg('orc &amp; sco files');return document.MM_returnValue"><img src="../zip.gif" width="32" height="32" border="0"></a></font></font></font></p>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<hr noshade>
+
+<table width="95%" border="0" height="171">
+
+  <tr> 
+
+    <td width="33%"> 
+
+      <table width="100%" border="1">
+
+        <tr> 
+
+          <td><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><font face="Verdana, Arial, Helvetica, sans-serif"><b>Waveguide 
+
+            resonators </b></font></font></font></font></td>
+
+        </tr>
+
+      </table>
+
+    </td>
+
+    <td width="67%" valign="baseline"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i> 
+
+      </i></font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="78"> 
+
+      <p> 
+
+      <blockquote>&nbsp;</blockquote>
+
+      <font face="Verdana, Arial, Helvetica, sans-serif" size="-1">I gave them 
+
+      up. Too much work guys...</font></td>
+
+  </tr>
+
+  <tr> 
+
+    <td colspan="2" height="42"> 
+
+      <p><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"><i>download 
+
+        code &amp; files</i></font><font face="Verdana, Arial, Helvetica, sans-serif" size="-1"></font></font></font></p>
+
+    </td>
+
+  </tr>
+
+</table>
+
+<hr noshade>
+
+<p>&nbsp;</p>
+
+</body>
+
+</html>
+
