@@ -1,0 +1,64 @@
+
+TRAPPED in CONVERT is a "Sonic Mobile."  In it, colorful
+"sound objects" are blown about.  As the piece unfolds,
+these "objects" evolve, grow, transform, and combine to
+evoke magical images and haunting soundscapes which flash
+into view and quickly dissolve away. Since its premiere at
+MIT's Kresge Auditorium in 1979, "Trapped" has received
+many concert and radio performances.  Perhaps, the most
+notable performance was in 1982 at the Lincoln Center's
+Alice Tully Hall.
+
+TRAPPED IN CONVERT (1979 rev. 1986, 1989, 1996) was composed
+on a DEC pdp11-55 computer at the MIT Experimental Music
+Studio in the summer of 1979 using Barry Vercoe's music11
+software synthesis language.  In the summer of 1986, Vercoe
+rewrote his program in the "C" programming language and
+renamed it Csound. At that time, he invited me to redo my
+piece in his new language which was running on a VAX 11-780
+computer at M.I.T.'s newly opened "Media Lab." 	The 1989
+version represents a technological milestone. Whereas the
+previous versions of "Trapped" were created on huge and
+expensive mainframe computers, this version was recreated
+on a standard IBM AT personal computer using Micro
+Technology Unlimited's DIGISOUND-16 digital to analog
+converters.  At the time The Micro Technology Unlimited
+system provided the free-lance sound designer and composer
+state of the art digital audio, and an incredibly
+comprehensive set of synthesis tools via their MS-DOS
+implementation of Barry Vercoe's Csound program - all for
+the price of a single professional quality commercial
+synthesizer.  In 1996, "Trapped" was finally completed.
+These now classic instrument designs were explored in
+real-time using the DSP-based version of Csound which
+Vercoe had developed for Analog Devices, Inc.  Not
+surprisingly, real-time access to all the instrument
+parameters revealed a new set of hidden colors and
+textures.
+
+RICHARD BOULANGER (b.1956) holds a Ph.D.in Computer Music
+from the University of California, San Diego.  Active as a
+composer and performer, Boulanger's works have been played
+and broadcast in Moscow, Japan, Australia, Canada,
+throughout Eastern and Western Europe, and all over the
+United States.  His music is recorded on the NEUMA label. 
+He has received many awards and honors including a
+Fulbright. In composition his principal teachers have been
+Hugo Norden, Joji Yuasa and Roger Reynolds.  In computer
+music, he has collaborated extensively with Barry Vercoe
+and Max Mathews.  Currently Boulanger is a Professor of
+Music Synthesis at the Berklee College of Music in Boston.
+
+"For me, music is a medium through which the inner
+spiritual essence of all things is revealed and shared.
+Compositionally, I am interested in extending the voice  of
+the traditional performer through technological means to
+produce a music which connects with the past, lives in the
+present and speaks to the future.  Educationally, I am
+interested in helping students see technology as the most
+powerful instrument for the exploration, discovery, and
+realization of their essential musical nature - their inner
+voice."
+
+
+

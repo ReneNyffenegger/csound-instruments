@@ -1,0 +1,535 @@
+{
+f1 0 8192 10 1
+f100  0.0  8193 9 .25 1.0  0.0
+f10 0 8193 20 4
+}
+;;-------------------opening section
+f 0 123
+
+p1 const 1
+
+;time
+p2 rnd uni
+   mask [.5 .1] [1 .5]
+
+;dur
+p3 rnd uni
+   mask [10 5] [15 10]
+
+;frq
+p4 range 40 4000
+   quant 164.814 [0 1]
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 seg [4600 2900]
+
+;*********************************************
+
+f 123 128
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 5
+
+;frq
+p4 range 40 4000
+   quant 164.814 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+f 128 133
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 5
+
+;frq
+p4 range 40 4000
+   quant 184.997 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+f 133 138
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 5
+
+;frq
+p4 range 40 4000
+   quant 220 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+f 138 143
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 5
+
+;frq
+p4 range 40 4000
+   quant 195.998 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+f 143 153
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 10
+
+;frq
+p4 range 40 4000
+   quant 261.626 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+f 153 158
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 5
+
+;frq
+p4 range 40 4000
+   quant 246.942 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+f 158 163
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 5
+
+;frq
+p4 range 40 4000
+   quant 261.626 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+f 163 166
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 3
+
+;frq
+p4 range 40 4000
+   quant 293.665 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+f 166 169
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 3
+
+;frq
+p4 range 40 4000
+   quant 329.628 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+f 169 173
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 4
+
+;frq
+p4 range 40 4000
+   quant 261.626 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+f 173 183
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 10
+
+;frq
+p4 range 40 4000
+   quant 220 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+f 183 188
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 5
+
+;frq
+p4 range 40 4000
+   quant 195.998 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+f 188 193
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 5
+
+;frq
+p4 range 40 4000
+   quant 184.997 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+f 193 198
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 5
+
+;frq
+p4 range 40 4000
+   quant 220 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+f 198 203
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 5
+
+;frq
+p4 range 40 4000
+   quant 195.998 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+f 203 213
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 10
+
+;frq
+p4 range 40 4000
+   quant 184.997 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+f 213 220
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 7
+
+;frq
+p4 range 40 4000
+   quant 195.998 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+f 220 227
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 7
+
+;frq
+p4 range 40 4000
+   quant 184.997 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+f 227 234
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 9
+
+;frq
+p4 range 40 4000
+   quant 164.814 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+
+f 236 360
+
+p1 const 1
+
+;time
+p2 rnd uni
+   mask [.1 .5] [.2 1]
+
+;dur
+p3 rnd uni
+   mask [5 15] [10 20]
+
+;frq
+p4 range 40 4000
+   quant 164.814 [1 0] [0 400]
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 seg [2900 4600]
+
+;*********************************************
+
+f 360 367
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 7
+
+;frq
+p4 range 40 4000
+   quant 195.998 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+f 367 375
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 const 7
+
+;frq
+p4 range 40 4000
+   quant 184.997 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300
+
+;*********************************************
+
+f 375 386
+
+p1 const 1
+
+;time
+p2 range .1 .2
+
+;dur
+p3 range 9 15
+
+;frq
+p4 range 40 4000
+   quant 164.814 1
+
+;pan
+p5 rnd beta .6 .6 prec 2
+
+;amp
+p6 const 2300

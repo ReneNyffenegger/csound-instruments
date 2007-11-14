@@ -1,0 +1,28 @@
+<html>
+
+	<head>
+		<meta http-equiv="content-type" content="text/html;charset=iso-8859-1">
+		<title>Beatsystem contibution</title>
+		<meta name="GENERATOR" content="Mozilla/4.04 [en] (Win95; I) [Netscape]">
+	</head>
+
+	<body bgcolor="white">
+		<div align="left">
+			<h1>43. INVADE AREAS WHERE NOTHING'S DEFINITE (1998 Version)</h1>
+			<h2>Derek Pierce aka Beatsystem.&nbsp;</h2>
+			<p>
+			<hr>
+			</p>
+		</div>
+		<h3>1. Introduction</h3>
+		<p>I am currently employed as Senior Music Technician at <a href="http://www.Bathspa.ac.uk">Bath Spa University College.</a>&nbsp; My main interest is in computer music, particularly the use of Csound.&nbsp; When I was asked to contribute a piece, I wanted to produce a work that had something in common with a track from my lastest CD&nbsp; <font color="red">&quot;BEATSYSTEM 2297 &quot;</font>, released September 1997 on EM:T Records. The result is a piece that uses the same source material and similar processes to the similarly named track on the CD. I am particularly interested in the possibilities of granular synthesis - I like the fluid textures it can produce, and the variety of ways in which it can be implemented.</p>
+		<h3>2. Composition</h3>
+		<p>&nbsp;The composition &quot;Invade areas where nothing's definite&quot; uses three different opcodes in csound all of which read the same source file -&nbsp; John Cage speaking the words of the title. The first one I have called a&nbsp; <a href="DynPitch.orc">&quot; Dynamic pitch shift instrument&quot;</a>. This reads a table containing <a href="cage.wav">&quot;cage.wav&quot;</a> at varying speed, producing a lowering of pitch over time. The score for this instrument was generated using the program &quot;CMASK&quot;; this produced the constant grainsize but variable-pitch score that was needed.</p>
+		<p>&nbsp;The second instrument, a <a href="DynGran.orc">&quot; Dynamic Granulation instrument&quot; </a>, uses the <a href="granule.html">granule</a> opcode to produce a granular synthesis texture in which both the gap between the grains and their length vary over time - i.e. the gaps get shorter and so do the lengths. These grains are extracted from the source file, moving only in a forward direction, and written to the new lengthened output. Their length is shortened from .3msec to .002msec over the duration set in p3, i.e. 174 seconds. The gaps between these grains reduce from .2msec to .002msec, again during time p3. A small offset is added so that both channels are slightly different, giving an enhanced stereo image from two mono outputs.<br>
+		Whilst all this takes place another instrument,&nbsp;<a href="SndWarp.orc"> &quot; Soundwarp instrument&quot;</a>, based on Richard Karpen's <a href="sndwarp.html">sndwarp</a> opcode, is busy stretching the 3 second source to 180 seconds. This instrument is copied and the outputs placed in the left and right channels of the final piece. One channel stretches the original slightly less than the other, giving a phasing effect.</p>
+		<p>The combined effect of these three instruments is, I believe, very interesting. There seem to be artifacts produced that enhance the overall perception of the piece. I believe that learning to use Csound is well worth the effort involved as it gives the composer a unique palette with which to construct wonderful soundscapes.</p>
+		<p><a href="mailto:d.pierce@bathspa.ac.uk">d.pierce@bathspa.ac.uk</a><br>
+		<hr>
+	</body>
+
+</html>

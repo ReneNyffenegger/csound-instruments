@@ -1,0 +1,23 @@
+
+
+Magdalena Klapper  was born  in 1973  in  Cracow.  She  has
+graduated from  the Collage  of Music,  the Piano Class. Now
+she is studying Computer Sciences at the Unversity of Mining
+and Metalurgy in Cracow.
+
+Since 1994  she has  been following  the special curriculum
+(the  individual  system  of  studying)  for  he  so  called
+outstanding students.  Apart from  the  strictly  informatic
+subjects she  is also learning sound engineering, synthesis,
+analysis and  digital processing  of  sound,  acoustics  and
+composition -  some of  them at  the  Academy  of  Music  in
+Cracow. In  1994 she started the cooperation with the Studio
+of Electroacoustic  Music in  Academy of Music in Cracow. In
+1995  she   composed  her first  electroacoustic  piece  -
+"Collague", which  is  based  on  noise  modeling.  In  1996
+"adeson TN" was composed, with the usae of FFT synthesis and
+speach processing.  In the same year, during her stay in TU-
+Studio in  Berlin she  composed her new piece - "Tiergarten.
+3rd Level  of Gaiety".  She designs most of sound processing
+algorithms used in her work with Csound programme.
+

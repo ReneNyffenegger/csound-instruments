@@ -1,0 +1,55 @@
+
+John ffitch
+
+John ffitch was definitely born after WWII, in that part of the United
+Kingdom which is God's own county, certainly educated at an East Anglian
+university in the sixties, and despite his long hair and beard, and the
+uncertain spelling of his name, was never a hippie. His entire professional
+career has been as an academic mathematician/computer scientist, and for
+most of that time he has held the Chair of Software Engineering at Bath, a
+subject about which he knows little. His main interests have been in
+Relativity, Planetary Astronomy, Computer Algebra and LISP, but he has been
+known to dabble widely, for example in tank warfare, Latin poetry, arabic
+linguistics, and company management, all with some lack of success.
+Strangely enough he won the Adams Prize for Mathematics 20 years ago.
+Hobbies include maintaining Csound and receiving e-mail.
+
+Drums and Different Canons #1
+
+Prelude; Henon; Gruneberg; Distance; Prelude
+
+The initial idea from which this work spread was a short sequence of notes
+taken from a mapping of the Henon (chaos) differential equation onto pitch
+and duration. Certain themes in it suggested to me a piece, which developed
+into the current manifestation, although it has changed a great deal. The
+title is an echo of the well known quotation from Thoreau and the repetitive
+canon like structure of this differential equation. The work is in three
+movements, the second and third played without a break, with an introductory
+and closing fanfare.
+
+The first movement, the longest, is subtitled Henon, and is a slow statement
+of the main musical material, derived from the Henon equation. It is played
+mainly on a marimba-like instrument, with injections from other timbres,
+triggered by certain events, and taking material from the Torus chaos
+function. An arbitrary limit of 500 events was chosen, the 500th event being
+marked by a different sound.
+
+The second movement was conceived on a mountain in Austria called Gruneberg,
+above the town of Gmunden, which I climbed on a rainy day in September,
+while listening to some Xenakis on a walkman. The score is actually the same
+events as the first movement, but the instruments are drums, played at about
+twice the speed, with much stereo modifications, and there are other
+unstable motions of timbre.
+
+The same score is used for the last movement, but the introduction of
+glissandi changes the mood to a distant memory of Gruneberg. The inspiration
+was a distant view of hills, both from Gruneberg and from my house. It is
+quieter, and I hope more reflective.
+
+The pitches are all taken from an 100ET scale. The piece was realised in a
+mixture of ANSI C and CSound. The work took about 15 months to write, and
+lasts about 7 minutes.
+
+JPff
+12 June 1994
+

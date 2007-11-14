@@ -1,0 +1,21 @@
+
+My name is Matthew Mariano and my piece is entitled "Vestige of Time".  I
+am a fourth semester student here at Berklee College of Music.  I have been
+doing C Sound for four months.  This piece was my final project for my
+C Sound class.  
+	
+Most everything I have been experimenting with found its way into this
+piece.  There are a few instruments in my orchestra that arent used in the
+piece and I never removed from the file.  This is also true with some of my
+functions in the score file.  I suppose I will eventually hunt down which
+aren't used and remove them to streamline my files and the running time of
+the job.  There are also a few init errors in the first of second section
+of the score I never got around to fixing.  With the tight deadlines here I
+had to cut some corners.
+	
+There is a group of sounds I based on the vocal formants given in the
+"Dodge" book.  They aren't extremely realistic but they do produce some
+very nice timbres.  To create them I used a buzz unit generator and
+filtered it with reasonating filters at the formant frequencies and
+adjusted the bandwidth of each.
+
