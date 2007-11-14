@@ -1,0 +1,153 @@
+Juhana,
+
+In my previous mail, I talked about the filter-bank. In this
+mail, I'll deal with the dynamics algorithms (compressors,
+expanders, limiters, etc.)
+
+*** COMPRESSOR ***
+
+Genarally speaking, the traditional compressor concept is
+reducing the overall amplitude of a signal in specific
+moments when this signal is louder than a threshold. For
+now, let's assume we know how to messure the
+not-clearly-defined "signal amplitude" (or "signal
+envelope"). Anyway, the signal envelope is measured in dB,
+and it suppose to represent the "average" amplitude of the
+signal, in a specific moment in time (the concept of signal
+envelope is not obvious, as will be discussed later).
+
+Let's ignore for a while the ATTACK and RELEASE parameters
+usually associated with compression. We have two
+parameters: THRESHOLD and RATIO. Let's assume RATIO=1/10
+and THRESHOLD=-20dB. The "meaning" of these values is that
+whenever the signal envelope is louder than -20dB, it will
+be attenuated. The attenuation is calculated by using the
+following formula (everything is in dB!):
+
+Attenuation=(input_signal_envelope - threshold) * (1 -
+ratio).
+
+in CSOUND, you'll probably write something like:
+
+katten = - (kinenv - ithreshld) * (1 - iratio) aout = ain *
+ampdb(katten)
+
+
+This is called "hard-knee" compression. In "Soft-knee"
+compression, the ratio is a function of
+input_signal_envelope-threshold (usually, the ratio is
+smaller when this value is higher). I won't get into this
+further.
+
+"Real" compressors contains ATTACK and RELEASE parameters.
+The attack parameter enable the user to tell the compressor
+to invoke the compression process gradually (compression is
+fully active after X ms since the input signal crossed the
+threshold. X is the ATTACK parameter value). RELEASE does
+the opposite (the compression process gradually decreased
+after the signal envelope falled from the threshold). This
+is a very brief definition, but I suspect you already know
+what ATTACK and RELEASE are.
+
+Combining the ATTACK and RELEASE parameters into the above
+formula is possible (although it complicate things a little
+bit).
+
+
+Anyway, THERE IS ABSOLUTELY NO OFFICIAL ALGORITHM FOR
+COMPRESSION OR LIMITING. Various products varies, usually
+in the following aspects:
+
+- The way input_signal_envelope is calculated (VERY
+important issue). - The way ATTACK & RELEASE are combined
+into the compression algorithm.
+
+In addition, compression was traditionaly achieved with
+analog hardware. The design and the electric components
+usually yield some side effects (some of them caothic)
+which changed the sound quality, frequently in some
+pleasing ways. In the digital domain, these side effects
+are avoided, for good and bad, unless you try to simulate
+them (voo-doo stuff).
+
+And now, for the most difficult part: how you calculate the
+signal envelope in such a way which would make your
+compressor useful:
+
+
+*** INPUT SIGNAL'S ENVELOPE ***
+
+OK. You need an envelope. The most obvious way to calculate
+the envelope is by using RMS (root mean square). This is a
+good method for many applications, but this is PROBABLY NOT
+A GOOD WAY for compression stuff!
+
+I'll try to describe why. To calculate RMS for a specific
+moment in time, you decide on a window size (in samples).
+You take all the samples in the window sorrounds the
+current sample (if you can "see" the future. Otherwise you
+just look at the last X samples before the specific moment
+in time.) Each sample value is squared (^2). Then all the
+results are summed, and then you perform a square root on
+the total. The result is the RMS value. In CSOUND's RMS
+opcode, you don't explicitly specify the window-size, but
+you specify the cutt-off point of a LPF filter applied on
+the result. If, for example, you use 44,100hZ sampling
+rate, and you want a window size of 4410 samples (a 0.1 sec
+window), use 10Hz cut-off value, etc. This achieves
+MORE-OR-LESS the same results as you get from a 4410
+samples window (I'm simplifying it, I know).
+
+If you use a large-window (of 0.1 sec, for example), the
+envelope will be smooth, but LAZY. For example, if your
+input signal is a one second quiet, followed by a -10dB
+1000hZ sinus which attacks immidietly:
+
+
+-10dB	|------------------
+|
+|
+-96dB ------|
+0sec 1sec ...
+
+... the result of the RMS envelope would be: 
+
+
+-10dB	--------------
+/
+/
+-96dB ...----/
+1 1.1sec
+
+In most of the compressor applications, such a response is by far too-slow.
+
+However, if you use smaller window (of 0.005sec (=500hz),
+for example), the response to the attack will be much
+faster (=better), however, the envelope will be full of
+"ripples" (=nervous small fast changes):
+
+-10dB	-/\/\/\/\/\/\/\/\/\/
+|
+|
+-96dB ...---|
+1
+
+These ripples are so fast they can actually be heard.
+Therefore, if you feed such an envelope to your compressor
+algorithm, these ripples would modulate and distort your
+input sound!
+
+You just can't find a suitable RMS window size, since you
+want a very fast response to attacks in your envelope
+follower, but you don't want these ripples!
+
+There is one exception, though. If you need a
+slow-responding compressor, you can use RMS with a cutt-off
+of 20hZ. Some vintage compressors did that stuff. Such a
+compressor can be used to color your sound more than to
+limit your peaks.
+
+The following CSOUND code is a 1/3 octave spectral
+(multi-band) compressor, which uses this method. Since the
+response is usually slow, there is no need for the ATTACK
+and RELEASE parameters. This is a hard-knee compressor:
