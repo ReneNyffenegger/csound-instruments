@@ -1,6 +1,7 @@
-[no] comajuncosas
-[no] costello
-[no] diffamator
+[grafico] mccurdy
+[grafico] vectro
+[grafico] pavan
+[gui] xscanned
 
 [ok] accci       
 [ok] cook (erros)
@@ -15,20 +16,16 @@
 [ok] risset (erros)
 [ok] rossing (erros)
 [ok] smaragdis (erros)
+[ok] mikelson (erros)
+[ok] oi (tem que processar)
+costello
+diffamator
+maldonado
+varga
+lyon
+dx7
+comajuncosas
 
--lyon
--maldonado
--mccurdy
--mikelson
--nyffenegger
--oi
--spjut
 !compositions
 !varios
 !students
-dx7
-pavan
-udo
-varga
-vectro
-xscanned
