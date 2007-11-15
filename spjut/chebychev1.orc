@@ -11,22 +11,22 @@
 ; harmonics. At that point adsyn or a high-pass filter start looking pretty
 ; appealing.
 
-sr        =         44100
-kr        =         4410
-ksmps     =         10
-nchnls    =         1
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  1
 
-          instr 1
+instr 1
           
-aenv      linseg    0,0.05,1000,p3-.1,1000,0.05,0      ; AMPLITUDE ENVELOPE
-aspc      linseg    0,p3/2,0.5,p3/2,0                  ; SPECTRAL ENVELOPE
-aodd      oscil     aspc,p4,1                          ; ODD HARMONICS
-aodh      table     aodd,2,1,0.5                       ; ODD HARMONICS
-aevn      oscil     aspc,2*p4,1                        ; EVEN HARMS
-aevh      table     aevn,3,1,0.5                       ; EVEN HARMS
+  aenv      linseg    0,0.05,1000,p3-.1,1000,0.05,0 ; AMPLITUDE ENVELOPE
+  aspc      linseg    0,p3/2,0.5,p3/2,0           ; SPECTRAL ENVELOPE
+  aodd      oscil     aspc,p4,1                   ; ODD HARMONICS
+  aodh      table     aodd,2,1,0.5                ; ODD HARMONICS
+  aevn      oscil     aspc,2*p4,1                 ; EVEN HARMS
+  aevh      table     aevn,3,1,0.5                ; EVEN HARMS
 
-          out       aodh+aevh
+            out       aodh+aevh
           
-          display   aodh+aevh,0.02
-          endin
+            display   aodh+aevh,0.02
+endin
                                              

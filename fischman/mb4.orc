@@ -3,12 +3,12 @@
 ;               filter centre frequency and bandwidth
 ;               (c) Rajmil Fischman, 1997
 ;---------------------------------------- 
-sr        =         44100
-kr        =         4410
-ksmps     =         10
-nchnls    =         1
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  1
 
-          instr 4                       
+instr 4                       
 ;----------------------------------------    ; PARAMETER LIST
 ; p4:     SCALING AMPLITUDE FACTOR, SCALES THE FILTER OUTPUT
 ; p5:     OVERALL ATTACK
@@ -26,38 +26,38 @@ nchnls    =         1
 ; p17:    MAXIMUM BANDWIDTH OF BAND-PASS FILTER (% OF CENTRE FREQUENCY)
 ; p18:    BANDWIDTH FUNCTION
 ;--------------------------------------------; INITIALIZATION BLOCK
-idur      =         p3                       ; DURATION
-iampf     =         p4                       ; SCALING AMPLITUDE FACTOR
-iatt      =         p5                       ; OVERALL ATTACK
-idec      =         p6                       ; OVERALL DECAY
-isfcode   =         p7                       ; SOUNDFILE CODE
-isfskip   =         p8                       ; SOUNDFILE SKIP
-ipeamp    =         1.0                      ; PULSATION FREQUENCY AMPLITUDE
-ipfmin    =         p9                       ; MINIMUM PULSATION FREQUENCY
-ipffluc   =         p10-p9                   ; PULSATION FREQUENCY FLUCTUATION
-ipffunc   =         p11                      ; PULSATION FREQUENCY FLUCTUATION FUNCTION
-ipefunc   =         p12                      ; PULSATION ENVELOPE FUNCTION
-icfmin    =         p13                      ; FILTER MINIMUM CENTER FREQUENCY
-icffluc   =         p14-p13                  ; FILTER CENTER FREQUENCY FLUCTUATION
-icffunc   =         p15                      ; FILTER CENTER FEQUENCY FUNCTION
-ibwmin    =         p16                      ; FILTER MINIMUM BANDWITH
-ibwfluc   =         p17-p16                  ; FILTER BANDWIDTH FLUCTUATION
-ibwfunc   =         p18                      ; FILTER BANDWIDTH FUNCTION
-iampbal   =         1                        ; FILTER POWER BALANCING
+  idur      =  p3                                 ; DURATION
+  iampf     =  p4                                 ; SCALING AMPLITUDE FACTOR
+  iatt      =  p5                                 ; OVERALL ATTACK
+  idec      =  p6                                 ; OVERALL DECAY
+  isfcode   =  p7                                 ; SOUNDFILE CODE
+  isfskip   =  p8                                 ; SOUNDFILE SKIP
+  ipeamp    =  1.0                                ; PULSATION FREQUENCY AMPLITUDE
+  ipfmin    =  p9                                 ; MINIMUM PULSATION FREQUENCY
+  ipffluc   =  p10-p9                             ; PULSATION FREQUENCY FLUCTUATION
+  ipffunc   =  p11                                ; PULSATION FREQUENCY FLUCTUATION FUNCTION
+  ipefunc   =  p12                                ; PULSATION ENVELOPE FUNCTION
+  icfmin    =  p13                                ; FILTER MINIMUM CENTER FREQUENCY
+  icffluc   =  p14-p13                            ; FILTER CENTER FREQUENCY FLUCTUATION
+  icffunc   =  p15                                ; FILTER CENTER FEQUENCY FUNCTION
+  ibwmin    =  p16                                ; FILTER MINIMUM BANDWITH
+  ibwfluc   =  p17-p16                            ; FILTER BANDWIDTH FLUCTUATION
+  ibwfunc   =  p18                                ; FILTER BANDWIDTH FUNCTION
+  iampbal   =  1                                  ; FILTER POWER BALANCING
 ;--------------------------------------------; PULSATION
-kpfreq    oscil1    0,ipffluc,idur,ipffunc   ; FREQUENCY VARIATION
-kpfreq    =         ipfmin+kpfreq
-kpenv     oscil     ipeamp,kpfreq,ipefunc    ; ENVELOPE
+  kpfreq    oscil1    0,ipffluc,idur,ipffunc      ; FREQUENCY VARIATION
+  kpfreq    =  ipfmin+kpfreq
+  kpenv     oscil     ipeamp,kpfreq,ipefunc       ; ENVELOPE
 ;--------------------------------------------; OVERALL ENVELOPE
-kenv      linen     iampf,iatt,idur,idec       
-kenv      =         kenv*kpenv               ; MULTIPLY BY PULSATION ENVELOPE
+  kenv      linen     iampf,iatt,idur,idec       
+  kenv      =  kenv*kpenv                         ; MULTIPLY BY PULSATION ENVELOPE
 ;--------------------------------------------; FILTER PARAMETERS
-kcf       oscil1    0,icffluc,idur,icffunc   ; CENTER FREQUENCY
-kcf       =         icfmin+kcf
-kbw       oscil1    0,ibwfluc,idur,ibwfunc   ; bandwidth
-kbw       =         (ibwmin+kbw)*kcf/100.0
+  kcf       oscil1    0,icffluc,idur,icffunc      ; CENTER FREQUENCY
+  kcf       =  icfmin+kcf
+  kbw       oscil1    0,ibwfluc,idur,ibwfunc      ; bandwidth
+  kbw       =  (ibwmin+kbw)*kcf/100.0
 ;--------------------------------------------; PROCESS
-ain       soundin   isfcode,isfskip          ; INPUT SOUNDFILE
-afilt     reson     ain,kcf,kbw,iampbal      ; FILTER
-          out       kenv*afilt               ; OUTPUT
-          endin
+  ain       soundin   isfcode,isfskip             ; INPUT SOUNDFILE
+  afilt     reson     ain,kcf,kbw,iampbal         ; FILTER
+            out       kenv*afilt                  ; OUTPUT
+endin

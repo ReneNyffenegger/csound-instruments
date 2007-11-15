@@ -14,19 +14,19 @@
 
 
 
-sr             =         44100
-kr             =         4410
-ksmps          =         10
-nchnls         =         2
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  2
 
- instr         1
+instr         1
 
- iamp          =         ampdb(p4)               
- ifunc         =         p6
- k1            linen     iamp,.03,p3,.03         
- a1            oscili    k1,p5,ifunc             
-               outs      a1,a1
- endin  
+  iamp      =  ampdb(p4)               
+  ifunc     =  p6
+  k1        linen     iamp,.03,p3,.03         
+  a1        oscili    k1,p5,ifunc             
+            outs      a1,a1
+endin  
  
  
  

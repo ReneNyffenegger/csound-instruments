@@ -1,7 +1,7 @@
-sr	=	44100	 	 
-kr	=	4410	 	 
-ksmps	=	10	 	 
-nchnls	=	2	 	 
+  sr        =  44100            
+  kr        =  4410             
+  ksmps     =  10               
+  nchnls    =  2                
 
 ;===================================================;
 ;Simple chorus instrument based on heterodyning.    ;
@@ -14,17 +14,17 @@ nchnls	=	2
 ;for the positive peak and one for the negative.    ;
 ;RP                                                 ;
 ;===================================================;
- 	 	 	 	 
- 	instr	1	 	 
-;---------------------------------------;initialization block: 				
-ipan	=	p9	 	 
-ilfac	=	sqrt(p9) 	 	 
-irfac	=	sqrt(1-p9)	 	 
-idetune	=	p10			;detune factor in CPS	
-;---------------------------------------;performance block:				
-kgate	linen	p4,p6,p3,p7	 	 
-asig1	oscili	kgate,cpspch(p5),p8		;in tune oscil	 
-asig2	oscili	kgate,cpspch(p5)+idetune,p8	;out of tune oscil	
-asig	=	asig1+asig2		;sum will beat at idetune CPS	
- 	outs	asig*ilfac,asig*irfac	;stereo placement and out	
- 	endin	 	 	 
+                                 
+instr   1                
+;---------------------------------------;initialization block:                          
+  ipan      =  p9               
+  ilfac     =  sqrt(p9)                 
+  irfac     =  sqrt(1-p9)               
+  idetune   =  p10                                ;detune factor in CPS   
+;---------------------------------------;performance block:                             
+  kgate     linen     p4,p6,p3,p7              
+  asig1     oscili    kgate,cpspch(p5),p8         ;in tune oscil   
+  asig2     oscili    kgate,cpspch(p5)+idetune,p8 ;out of tune oscil      
+  asig      =  asig1+asig2                        ;sum will beat at idetune CPS   
+            outs      asig*ilfac,asig*irfac       ;stereo placement and out       
+endin                    

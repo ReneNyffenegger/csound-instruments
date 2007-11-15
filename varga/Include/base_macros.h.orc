@@ -52,98 +52,98 @@
 
 #define ORCHDR(ORCHDRsr'ORCHDRksmps'ORCHDRnchnls) #
 
-sr	=  $ORCHDRsr
-ksmps	=  $ORCHDRksmps
-nchnls	=  $ORCHDRnchnls
+  sr        =  $ORCHDRsr
+  ksmps     =  $ORCHDRksmps
+  nchnls    =  $ORCHDRnchnls
 
 #
 
 /* ----------------------- frequency -> table number ----------------------- */
 
-/* ft: table number (output)		*/
-/* cps: frequency in Hz (input)		*/
-/* tabl: min. table number (input)	*/
+/* ft: table number (output)            */
+/* cps: frequency in Hz (input)         */
+/* tabl: min. table number (input)      */
 
 #define CPS2FNUM(CPS2FNUMft'CPS2FNUMcps'CPS2FNUMtabl) #
 
-$CPS2FNUMft	limit $CPS2MIDI($CPS2FNUMcps), 0, 127
-$CPS2FNUMft	=  int($CPS2FNUMft + ($CPS2FNUMtabl) + 0.5)
+$CPS2FNUMft     limit $CPS2MIDI($CPS2FNUMcps), 0, 127
+$CPS2FNUMft     =  int($CPS2FNUMft + ($CPS2FNUMtabl) + 0.5)
 
 #
 
 /* -------- set note parameters (length, frequency, and amplitude) --------- */
 
-/* xtime: extra time (in seconds)	*/
+/* xtime: extra time (in seconds)       */
 
-/* ilnth: original note length (p3)	*/
-/* icps: note frequency in Hz		*/
-/* iamp: note amplitude			*/
+/* ilnth: original note length (p3)     */
+/* icps: note frequency in Hz           */
+/* iamp: note amplitude                 */
 
 #define NOTEPARAMS(NOTEPARAMSxtime) #
 
-ilnth	=  p3
-p3	=  p3 + ($NOTEPARAMSxtime)
-icps	=  $MIDI2CPS(p4)
-iamp	=  $VELOC2AMP(p5)
+  ilnth     =  p3
+  p3        =  p3 + ($NOTEPARAMSxtime)
+  icps      =  $MIDI2CPS(p4)
+  iamp      =  $VELOC2AMP(p5)
 
 #
 
-/* Set parameters of MIDI note, expand duration, and generate release	*/
-/* envelope								*/
+/* Set parameters of MIDI note, expand duration, and generate release   */
+/* envelope                                                             */
 /* ---------------------------- input args ---------------------------- */
-/* M_NOTEPARM_rel:	release time in seconds (> 0)			*/
-/* M_NOTEPARM_xtim:	extra time in seconds (after release)		*/
+/* M_NOTEPARM_rel:      release time in seconds (> 0)                   */
+/* M_NOTEPARM_xtim:     extra time in seconds (after release)           */
 /* ------------------------- output variables ------------------------- */
-/* ilnth:		note length (-1 as it is unknown)		*/
-/* inote:		note number (0 - 127)				*/
-/* ivel:		velocity (0 - 127)				*/
-/* icps:		note frequency in Hz				*/
-/* iamp:		amplitude (0 - 1)				*/
-/* aenv:		release envelope (linear)			*/
+/* ilnth:               note length (-1 as it is unknown)               */
+/* inote:               note number (0 - 127)                           */
+/* ivel:                velocity (0 - 127)                              */
+/* icps:                note frequency in Hz                            */
+/* iamp:                amplitude (0 - 1)                               */
+/* aenv:                release envelope (linear)                       */
 
 #define M_NOTEPARM(M_NOTEPARM_rel'M_NOTEPARM_xtim) #
 
-ilnth	=  -1				; length is not known
-inote	notnum				; note number
-ivel	veloc				; velocity
-icps	=  $MIDI2CPS(inote)		; frequency
-iamp	=  $VELOC2AMP(ivel)		; amplitude
+  ilnth     =  -1                                 ; length is not known
+  inote     notnum                                ; note number
+  ivel      veloc                                 ; velocity
+  icps      =  $MIDI2CPS(inote)                   ; frequency
+  iamp      =  $VELOC2AMP(ivel)                   ; amplitude
 
 ; release envelope
 
-	xtratim ($M_NOTEPARM_rel) + ($M_NOTEPARM_xtim)
-k_	release
-a_	=  (k_ < 0.5 ? 0 : (1 / (sr * ($M_NOTEPARM_rel))))
-aenv	integ a_
-aenv	limit 1 - aenv, 0, 1
+            xtratim   ($M_NOTEPARM_rel) + ($M_NOTEPARM_xtim)
+  k_        release   
+  a_        =  (k_ < 0.5 ? 0 : (1 / (sr * ($M_NOTEPARM_rel))))
+  aenv      integ     a_
+  aenv      limit     1 - aenv, 0, 1
 
 #
 
-/* Set parameters of score note, expand duration, and generate release	*/
-/* envelope								*/
+/* Set parameters of score note, expand duration, and generate release  */
+/* envelope                                                             */
 /* ---------------------------- input args ---------------------------- */
-/* S_NOTEPARM_rel:	release time in seconds (> 0)			*/
-/* S_NOTEPARM_xtim:	extra time in seconds (after release)		*/
+/* S_NOTEPARM_rel:      release time in seconds (> 0)                   */
+/* S_NOTEPARM_xtim:     extra time in seconds (after release)           */
 /* ------------------------- output variables ------------------------- */
-/* ilnth:		note length in seconds				*/
-/* inote:		note number (0 - 127)				*/
-/* ivel:		velocity (0 - 127)				*/
-/* icps:		note frequency in Hz				*/
-/* iamp:		amplitude (0 - 1)				*/
-/* aenv:		release envelope (linear)			*/
+/* ilnth:               note length in seconds                          */
+/* inote:               note number (0 - 127)                           */
+/* ivel:                velocity (0 - 127)                              */
+/* icps:                note frequency in Hz                            */
+/* iamp:                amplitude (0 - 1)                               */
+/* aenv:                release envelope (linear)                       */
 
 #define S_NOTEPARM(S_NOTEPARM_rel'S_NOTEPARM_xtim) #
 
-ilnth	=  p3				; length
-inote	=  p4				; note number
-ivel	=  p5				; velocity
-icps	=  $MIDI2CPS(inote)		; frequency
-iamp	=  $VELOC2AMP(ivel)		; amplitude
+  ilnth     =  p3                                 ; length
+  inote     =  p4                                 ; note number
+  ivel      =  p5                                 ; velocity
+  icps      =  $MIDI2CPS(inote)                   ; frequency
+  iamp      =  $VELOC2AMP(ivel)                   ; amplitude
 
 ; release envelope
 
-p3	=  (p3 <= 0 ? p3 : (p3 + ($S_NOTEPARM_rel) + ($S_NOTEPARM_xtim)))
-aenv	linseg 1, (ilnth <= 0 ? 3600 : ilnth), 1, ($S_NOTEPARM_rel), 0, 1, 0
+  p3        =  (p3 <= 0 ? p3 : (p3 + ($S_NOTEPARM_rel) + ($S_NOTEPARM_xtim)))
+  aenv      linseg    1, (ilnth <= 0 ? 3600 : ilnth), 1, ($S_NOTEPARM_rel), 0, 1, 0
 
 #
 

@@ -1,7 +1,7 @@
-sr	=	44100
-kr	=	4410
-ksmps	=	10
-nchnls	=	1
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  1
 
 ;===================================================================
 ; Example Convolution Instrument. Uses the impulse file convolve.p6,
@@ -13,19 +13,19 @@ nchnls	=	1
 ; RP
 ;===================================================================
 
-	instr 	1
-iampscl	=	p4		;amplitude scaling factor
-isound	=	p5
-impfile	=	p6
-idelay	=	p7
-idryfac	=	p8
-kcount	init	idelay*kr	;set counter for initial delay
+instr   1
+  iampscl   =  p4                                 ;amplitude scaling factor
+  isound    =  p5
+  impfile   =  p6
+  idelay    =  p7
+  idryfac   =  p8
+  kcount    init      idelay*kr                   ;set counter for initial delay
 loop:
-asound	soundin	isound			;use soundin.p5
-awet	convolve asound*iampscl,impfile	;use convolve.p6
-adry	delay	asound,idelay		;delayed dry signal
-kcount	=	kcount-1		;decrement delay counter
-	if	(kcount > 0) kgoto loop ;discard initial output
-	out	adry*idryfac+awet*(1-idryfac)
-	endin
+  asound    soundin   isound                      ;use soundin.p5
+  awet      convolve  asound*iampscl,impfile      ;use convolve.p6
+  adry      delay     asound,idelay               ;delayed dry signal
+  kcount    =  kcount-1                           ;decrement delay counter
+if      (kcount > 0) kgoto loop                   ;discard initial output
+            out       adry*idryfac+awet*(1-idryfac)
+endin
 

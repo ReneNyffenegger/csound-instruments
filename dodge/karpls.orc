@@ -1,9 +1,9 @@
-sr        =         44100
-kr        =         4410
-sr		=		44100
-kr		=		4410
-ksmps	=		10
-nchnls    =         1
+  sr        =  44100
+  kr        =  4410
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  1
 
 ;=============================================================================
 ;               Karplus Strong Algorithm Demonstration                       
@@ -17,29 +17,30 @@ nchnls    =         1
 ;Study this to see how the basic algorithm works, but use Pluck in real life. 
 ;RP                                                                           
 ;=============================================================================
-          instr     1
+instr     1
 ; ROLL YOUR OWN PLUCK INSTRUMENT
-icps      =         cpspch(p5)               ; DESIRED PITCH IN PCH
-asig      init      0                        ; INITIALIZE asig VARIABLE
-kcount    init      1/icps*kr                ; AND LOOP COUNTER (SEE BELOW)
+  icps      =  cpspch(p5)                         ; DESIRED PITCH IN PCH
+  asig      init      0                           ; INITIALIZE asig VARIABLE
+  kcount    init      1/icps*kr                   ; AND LOOP COUNTER (SEE BELOW)
 
 ;---------------------- USE A DELAY LINE OF LENGTH 1/CPS:
 
-adel      delayr    1/icps                   ; DELAY OF 1/CPS SECONDS
-asig      tone      adel,sr/2                ; FILTER THE OUTPUT
+  adel      delayr    1/icps                      ; DELAY OF 1/CPS SECONDS
+  asig      tone      adel,sr/2                   ; FILTER THE OUTPUT
 
 ;---------------------- BUT AT THE FIRST K, FILL THE DELAY LINE WITH NOISE:
 
-          if        (kcount < 0) kgoto continue ; SKIP OVER AFTER LINE FILLED
-kloop:                                       ; LOOP TO FILL DELAY
-asig      rand      p4,-1                    ; WITH WHITE NOISE
-kcount    =         kcount - 1               ; DECREMENT LOOP COUNTER
+if        (kcount < 0) kgoto continue             ; SKIP OVER AFTER LINE FILLED
+kloop:
+                                       ; LOOP TO FILL DELAY
+  asig      rand      p4,-1                       ; WITH WHITE NOISE
+  kcount    =  kcount - 1                         ; DECREMENT LOOP COUNTER
 ;-----------------------------------------------------------------------------
 
 continue:
-          delayw    asig                     ; DELAY LINE INPUT (ALWAYS GET HERE)
+            delayw    asig                        ; DELAY LINE INPUT (ALWAYS GET HERE)
 
-          if        (kcount >= 0) kgoto kloop ; LOOP ONLY kcount TIMES AT START 
+if        (kcount >= 0) kgoto kloop               ; LOOP ONLY kcount TIMES AT START 
 
-          out       asig
-          endin
+            out       asig
+endin

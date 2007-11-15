@@ -1,6 +1,6 @@
 
 
-instr 10	;melody proclaimer (via score)
+instr 10        ;melody proclaimer (via score)
 ;proclaims melodies' current notes (for use by the melody and harmony 
 ;generators) on 120 channels of table 3---
 ; these correspond to the 40 modal channels 
@@ -17,29 +17,31 @@ instr 10	;melody proclaimer (via score)
 ;if the destination is >0, an event is scheduled with p-fields:
 ;i [destination],p2,p8,p9,[proclaimed pitch],p10...etc
 
-p3=.001
-i8ve=int(abs(p4)+.1)
+  p3        =  .001
+  i8ve      =  int(abs(p4)+.1)
 again:
-imd=int(10*frac(p4)+.1)
-iinm=(p7<0?(p5<40?p5:(p5<80?p5-40:p5-80)):p7)	;ostensibly, the input mode 
+  imd       =  int(10*frac(p4)+.1)
+  iinm      =  (p7<0?(p5<40?p5:(p5<80?p5-40:p5-80)):p7) ;ostensibly, the input mode 
 
 if (p4==0 || (p4>0 && p7<0)) igoto done
 if (p4<0) igoto scalar
 $md2sd(imd'iinm)
 $sd2md(isd'p5)
-igoto done
-scalar:		isd=int(100*frac(-p4)+.2)
-		$sd2md(isd'iinm)
-done:		iproc=i8ve+(imd/10)+(iinm/1000)
-		tableiw iproc,p5,3
-		p5=p5+1
-		if (p6>=p5) igoto again
-idest=int(frac(p1)*100+.1)
-idest=idest+frac(p1*100)
+            igoto     done
+scalar:
+  isd       =  int(100*frac(-p4)+.2)
+$sd2md(isd'iinm)
+done:
+  iproc     =  i8ve+(imd/10)+(iinm/1000)
+            tableiw   iproc,p5,3
+  p5        =  p5+1
+if (p6>=p5) igoto again
+  idest     =  int(frac(p1)*100+.1)
+  idest     =  idest+frac(p1*100)
 
 if (idest<1 || iproc<.1) igoto endit
 
-schedule idest,0,p8,p9,iproc,p10,p11,p12,p13,p14,p15,p16,p17,p18,p19,p20
+            schedule  idest,0,p8,p9,iproc,p10,p11,p12,p13,p14,p15,p16,p17,p18,p19,p20
 endit:
 $forcedShutoff
 endin

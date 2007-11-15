@@ -1,6 +1,6 @@
 
-/* spat.h.orc - spatial stereo macros	*/
-/* Written by Istvan Varga, Aug 2001	*/
+/* spat.h.orc - spatial stereo macros   */
+/* Written by Istvan Varga, Aug 2001    */
 
 #include "spat_def.h.orc"
 #include "Delays.include.orc"

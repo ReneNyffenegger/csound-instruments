@@ -12,35 +12,36 @@
 ;P12 - POINTS TO HATCH TYPE 1 2 OR 3
 ;P13 - SWITCH FOR 1 (SINGLE) OR 2 (DOUBLE) SWEEP
 
-sr        =         44100
-kr        =         4410
-ksmps     =         10
-nchnls    =         1
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  1
 
 instr     1
-k1        line      cpspch(p5), p3, cpspch(p6)    ;UPPER GHOST LINE
-k2        line      cpspch(p7), p3, cpspch(p8)    ;LOWER GHOST LINE
-k3        oscili    k1-32, p9, p13,-1             ;P13: 1. IF SINGLESWEEP IS REQ'D
+  k1        line      cpspch(p5), p3, cpspch(p6)  ;UPPER GHOST LINE
+  k2        line      cpspch(p7), p3, cpspch(p8)  ;LOWER GHOST LINE
+  k3        oscili    k1-32, p9, p13,-1           ;P13: 1. IF SINGLESWEEP IS REQ'D
                                                   ;     2. IF DOUBLESWEEP IS REQ'D: 2 IF DOUBLE SWEEP IS REQ'D
-k4        =         (k1-k2)-k3                    ;INVERSE (DOWN LINE)
-k5        linen     p4, p10, p3, p11              ;ENVELOPE
+  k4        =  (k1-k2)-k3                         ;INVERSE (DOWN LINE)
+  k5        linen     p4, p10, p3, p11            ;ENVELOPE
 
 if p12    = 1       goto uphatch
 if p12    = 2       goto downhatch
 if p12    = 3       goto mixhatch
 
 uphatch:
-a1        oscili    k5, k2+k3, 3, -1
-goto      out
+  a1        oscili    k5, k2+k3, 3, -1
+            goto      out
 
 downhatch:
-a1        oscili    k5, k2+k4, 3, -1
-goto      out
+  a1        oscili    k5, k2+k4, 3, -1
+            goto      out
 
 mixhatch:
-a1        oscili    k5/2, k2+k3, 3, -1
-a2        oscili    k5/2, k2+k4, 3, -1
-a1        = a1+a2
+  a1        oscili    k5/2, k2+k3, 3, -1
+  a2        oscili    k5/2, k2+k4, 3, -1
+  a1        =  a1+a2
 
-out:      out       a1
+out:
+            out       a1
 endin

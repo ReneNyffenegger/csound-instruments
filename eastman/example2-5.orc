@@ -1,18 +1,18 @@
-sr= 44100
-kr = 4410
-ksmps = 10
-nchnls = 2
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  2
 
 instr 1
-asig  soundin  p4, p6    ; read in the soundfile
+  asig      soundin   p4, p6                      ; read in the soundfile
    ; now apply a new envelope to these samples
-kamp  expseg  .005 ,p7  , p5  , p3 - (p7 + p8) , p9 , p8 , .005
+  kamp      expseg    .005 ,p7  , p5  , p3 - (p7 + p8) , p9 , p8 , .005
 
 ; < amp. envelopeasig = asig * kamp
 ; supply a moving stereo pan between left & right channels
 
-kpan oscili  1. ,  p10/p3 , p11    ; panning control signal
-outs  kpan * asig , (1. - kpan) * asig
+  kpan      oscili    1. ,  p10/p3 , p11          ; panning control signal
+            outs      kpan * asig , (1. - kpan) * asig
 endin
 
    ;  score p-fields:

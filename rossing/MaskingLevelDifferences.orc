@@ -21,43 +21,43 @@
 ;*****************************************   HEADER   *************************************************
 
 
-sr             =         44100
-kr             =         4410
-ksmps          =         10
-nchnls         =         2 
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  2 
  
  
- instr         1
+instr         1
 
- iamp          =         ampdb(p4)                          ;P4 = AMPLITUDE IN DB 
- ifunc         =         p5                                 ;P5 = FUNCTION
+  iamp      =  ampdb(p4)                          ;P4 = AMPLITUDE IN DB 
+  ifunc     =  p5                                 ;P5 = FUNCTION
                                                             ;P6 = PANNING FUNCTION FOR SIGNAL
 
- k1            linen     iamp,.02,p3,.02         
- a1            oscili    k1,500,p5        
- k2            oscili    1,p3,p6
- kleft         =         sqrt (k2)
- kright        =         sqrt (1-k2)
- aleft         =         a1 * kleft
- aright        =         a1 * kright
-               outs      aleft,aright 
- endin  
+  k1        linen     iamp,.02,p3,.02         
+  a1        oscili    k1,500,p5        
+  k2        oscili    1,p3,p6
+  kleft     =  sqrt (k2)
+  kright    =  sqrt (1-k2)
+  aleft     =  a1 * kleft
+  aright    =  a1 * kright
+            outs      aleft,aright 
+endin  
 
- instr         2     
+instr         2     
  
- iamp          =         ampdb(p4)                          ;P4 = AMPLITUDE IN DB 
+  iamp      =  ampdb(p4)                          ;P4 = AMPLITUDE IN DB 
                                                             ;P5 = PANNING FUNCTION FOR SIGNAL
 
- k1            linen      iamp,.01,p3,.01
- anoise        randi      k1, .998 * 10010                  ;NOISE WITH A BANDWIDTH FROM 20 - 20KHZ
- a1            oscil      anoise,anoise,1
- k2            oscili    1,p3,p5
- kleft         =         sqrt (k2)
- kright        =         sqrt (1-k2)
- aleft         =         a1 * kleft
- aright        =         a1 * kright
-               outs      aleft,aright 
- endin
+  k1        linen     iamp,.01,p3,.01
+  anoise    randi     k1, .998 * 10010            ;NOISE WITH A BANDWIDTH FROM 20 - 20KHZ
+  a1        oscil     anoise,anoise,1
+  k2        oscili    1,p3,p5
+  kleft     =  sqrt (k2)
+  kright    =  sqrt (1-k2)
+  aleft     =  a1 * kleft
+  aright    =  a1 * kright
+            outs      aleft,aright 
+endin
  
  
  

@@ -16,43 +16,43 @@
 
 
 
-sr             =         44100
-kr             =         4410
-ksmps          =         10
-nchnls         =         1
- instr         1
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  1
+instr         1
 
- iamp          =         ampdb(p4)               
- ifunc         =         p6
+  iamp      =  ampdb(p4)               
+  ifunc     =  p6
  
- k1            linen     iamp,.02,p3,.02         
- a1            oscili    k1,p5,ifunc             
-               out       a1
- endin  
+  k1        linen     iamp,.02,p3,.02         
+  a1        oscili    k1,p5,ifunc             
+            out       a1
+endin  
  
  
  
- instr         2 
+instr         2 
  
- iamp          =         ampdb(p4)
- ifc           =         p5                                      ; CENTER FREQUENCY
+  iamp      =  ampdb(p4)
+  ifc       =  p5                                 ; CENTER FREQUENCY
 
 
- k1            linen     iamp,.02,p3,.02
- anoise        randi     k1, .38 * ifc                           ; NOISE WITH A BANDWIDTH FROM 182.9HZ - 407.1HZ
- a1            oscil     anoise, ifc, 1
-               out       a1
- endin
+  k1        linen     iamp,.02,p3,.02
+  anoise    randi     k1, .38 * ifc               ; NOISE WITH A BANDWIDTH FROM 182.9HZ - 407.1HZ
+  a1        oscil     anoise, ifc, 1
+            out       a1
+endin
  
  
  
- instr         3
+instr         3
  
- iamp          =         ampdb(p4)
- ifc           =         p5                                      ; CENTER FREQUENC   
+  iamp      =  ampdb(p4)
+  ifc       =  p5                                 ; CENTER FREQUENC   
 
- k1            linen     iamp,.02,p3,.02
- anoise        randi     k1, .47 * ifc                           ; NOISE WITH A BANDWIDTH FROM 731.87HZ - 2029.91HZ
- a1            oscil     anoise, ifc,1
-               out       a1 
- endin
+  k1        linen     iamp,.02,p3,.02
+  anoise    randi     k1, .47 * ifc               ; NOISE WITH A BANDWIDTH FROM 731.87HZ - 2029.91HZ
+  a1        oscil     anoise, ifc,1
+            out       a1 
+endin

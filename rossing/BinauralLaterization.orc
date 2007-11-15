@@ -28,92 +28,92 @@
 ; WHEN THE SOURCE IS LOCATED TO ONE SIDE OF THE HEAD.    
 ;*****************************************   HEADER   ********************************************           
 
-sr             =         44100
-kr             =         4410
-ksmps          =         10
-nchnls         =         2
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  2
 
- instr         1
+instr         1
 
- iamp          =         ampdb(p4)                ;P4 = AMPLITUDE IN DB 
- ifreq         =         p5                       ;P5 = FREQUENCY
- ifunc         =         p7                       ;P6 = PANNING FUNCTION FOR SIGNAL
- idur          =         p3                       ;P7 = FUNCTION
+  iamp      =  ampdb(p4)                          ;P4 = AMPLITUDE IN DB 
+  ifreq     =  p5                                 ;P5 = FREQUENCY
+  ifunc     =  p7                                 ;P6 = PANNING FUNCTION FOR SIGNAL
+  idur      =  p3                                 ;P7 = FUNCTION
 
- k1            linen     iamp,0,p3,0         
- a1            oscili    k1,ifreq,ifunc        
- k2            oscili    1,p3,p6
- kleft         =         sqrt (k2)
- kright        =         sqrt (1-k2)
- aleft         =         a1 * kleft
- aright        =         a1 * kright
-               outs      aleft,aright 
- endin  
+  k1        linen     iamp,0,p3,0         
+  a1        oscili    k1,ifreq,ifunc        
+  k2        oscili    1,p3,p6
+  kleft     =  sqrt (k2)
+  kright    =  sqrt (1-k2)
+  aleft     =  a1 * kleft
+  aright    =  a1 * kright
+            outs      aleft,aright 
+endin  
 
- instr         2
+instr         2
 
- iamp          =         ampdb(p4)                ;P4 = AMPLITUDE IN DB 
- ifreq         =         p5                       ;P5 = FREQUENCY
- ifunc         =         p7                       ;P6 = PANNING FUNCTION FOR SIGNAL
- idur          =         p3                       ;P7 = FUNCTION
+  iamp      =  ampdb(p4)                          ;P4 = AMPLITUDE IN DB 
+  ifreq     =  p5                                 ;P5 = FREQUENCY
+  ifunc     =  p7                                 ;P6 = PANNING FUNCTION FOR SIGNAL
+  idur      =  p3                                 ;P7 = FUNCTION
  
- k1            linen     iamp,.02,p3,.02
- a1            oscili    k1,ifreq,ifunc        
- k2            oscili    1,p3,p6
- kleft         =         sqrt (k2)
- kright        =         sqrt (1-k2)
- aleft         =         a1 * kleft
- aright        =         a1 * kright
-               outs      aleft,aright 
- endin  
+  k1        linen     iamp,.02,p3,.02
+  a1        oscili    k1,ifreq,ifunc        
+  k2        oscili    1,p3,p6
+  kleft     =  sqrt (k2)
+  kright    =  sqrt (1-k2)
+  aleft     =  a1 * kleft
+  aright    =  a1 * kright
+            outs      aleft,aright 
+endin  
 
- instr         3
+instr         3
 
- iamp          =         ampdb(p4)                ;P4 = AMPLITUDE IN DB 
- ifreq         =         p5                       ;P5 = FREQUENCY
- ifunc         =         p7                       ;P6 = PANNING FUNCTION FOR SIGNAL
- idur          =         p3                       ;P7 = FUNCTION
+  iamp      =  ampdb(p4)                          ;P4 = AMPLITUDE IN DB 
+  ifreq     =  p5                                 ;P5 = FREQUENCY
+  ifunc     =  p7                                 ;P6 = PANNING FUNCTION FOR SIGNAL
+  idur      =  p3                                 ;P7 = FUNCTION
  
- k1            linen     iamp,.02,p3,.02
- a1            oscili    k1,ifreq,ifunc        
- k2            oscili    1,p3,p6
- kleft         =         sqrt (k2)
- kright        =         sqrt (1-k2)
- aleft         =         a1 * kleft
- aright        =         a1 * kright
-               outs      aleft,aright 
- endin  
+  k1        linen     iamp,.02,p3,.02
+  a1        oscili    k1,ifreq,ifunc        
+  k2        oscili    1,p3,p6
+  kleft     =  sqrt (k2)
+  kright    =  sqrt (1-k2)
+  aleft     =  a1 * kleft
+  aright    =  a1 * kright
+            outs      aleft,aright 
+endin  
               
- instr         4
+instr         4
 
- iamp          =         ampdb(p4)                ;P4 = AMPLITUDE IN DB  
- ifreq         =         p5                       ;P5 = FREQUENCY
- ifunc         =         p7                       ;P6 = PANNING FUNCTION FOR SIGNAL
- idur          =         p3                       ;P7 = FUNCTION
+  iamp      =  ampdb(p4)                          ;P4 = AMPLITUDE IN DB  
+  ifreq     =  p5                                 ;P5 = FREQUENCY
+  ifunc     =  p7                                 ;P6 = PANNING FUNCTION FOR SIGNAL
+  idur      =  p3                                 ;P7 = FUNCTION
  
- k1            expseg    (iamp/2.8125),idur/10,iamp,idur/10,(iamp/2.81285),idur/10,iamp,idur/10,(iamp/2.8125),idur/10,iamp,idur/10,(iamp/2.8125),idur/10,iamp,idur/10,(iamp/2.8125),idur/10,iamp,idur/10,(iamp/2.8125)
- a1            oscili    k1,ifreq,ifunc        
- k2            oscili    1,p3,p6
- kleft         =         sqrt (k2)
- kright        =         sqrt (1-k2)
- aleft         =         a1 * kleft
- aright        =         a1 * kright
-               outs      aleft,aright 
- endin  
- instr         5
+  k1        expseg    (iamp/2.8125),idur/10,iamp,idur/10,(iamp/2.81285),idur/10,iamp,idur/10,(iamp/2.8125),idur/10,iamp,idur/10,(iamp/2.8125),idur/10,iamp,idur/10,(iamp/2.8125),idur/10,iamp,idur/10,(iamp/2.8125)
+  a1        oscili    k1,ifreq,ifunc        
+  k2        oscili    1,p3,p6
+  kleft     =  sqrt (k2)
+  kright    =  sqrt (1-k2)
+  aleft     =  a1 * kleft
+  aright    =  a1 * kright
+            outs      aleft,aright 
+endin  
+instr         5
 
- iamp          =         ampdb(p4)                ;P4 = AMPLITUDE IN DB  
- ifreq         =         p5                       ;P5 = FREQUENCY
- ifunc         =         p7                       ;P6 = PANNING FUNCTION FOR SIGNAL
- idur          =         p3                       ;P7 = FUNCTION
+  iamp      =  ampdb(p4)                          ;P4 = AMPLITUDE IN DB  
+  ifreq     =  p5                                 ;P5 = FREQUENCY
+  ifunc     =  p7                                 ;P6 = PANNING FUNCTION FOR SIGNAL
+  idur      =  p3                                 ;P7 = FUNCTION
  
- k1            expseg    iamp,idur/10,(iamp/2.81285),idur/10,iamp,idur/10,(iamp/2.81285),idur/10,iamp,idur/10,(iamp/2.81285),idur/10,iamp,idur/10,(iamp/2.81285),idur/10,iamp,idur/10,(iamp/2.81285),idur/10,iamp
- a1            oscili    k1,ifreq,ifunc        
- k2            oscili    1,p3,p6
- kleft         =         sqrt (k2)
- kright        =         sqrt (1-k2)
- aleft         =         a1 * kleft
- aright        =         a1 * kright
-               outs      aleft,aright 
- endin  
+  k1        expseg    iamp,idur/10,(iamp/2.81285),idur/10,iamp,idur/10,(iamp/2.81285),idur/10,iamp,idur/10,(iamp/2.81285),idur/10,iamp,idur/10,(iamp/2.81285),idur/10,iamp,idur/10,(iamp/2.81285),idur/10,iamp
+  a1        oscili    k1,ifreq,ifunc        
+  k2        oscili    1,p3,p6
+  kleft     =  sqrt (k2)
+  kright    =  sqrt (1-k2)
+  aleft     =  a1 * kleft
+  aright    =  a1 * kright
+            outs      aleft,aright 
+endin  
 

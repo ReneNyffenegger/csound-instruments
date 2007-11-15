@@ -7,24 +7,24 @@
 ; source:       Dodge(1985), p.92
 ; coded:        jpg 8/92
 
-sr = 44100
-kr  =  441
-ksmps= 100
-nchnls = 1
+  sr        =  44100
+  kr        =  441
+  ksmps     =  100
+  nchnls    =  1
 
 instr 1; *****************************************************************
-idur = p3
-iamp = p4
-ifq1 = p5
-if1  = p6
-ifqr = p7
-irise = .2
-idec  = .3
+  idur      =  p3
+  iamp      =  p4
+  ifq1      =  p5
+  if1       =  p6
+  ifqr      =  p7
+  irise     =  .2
+  idec      =  .3
 
-   kenv  linen    iamp, irise, idur, idec      ; envelope
-   kran  randi    kenv, ifqr                   ; random numbers
-   a1    oscili   kran, ifq1, if1              ; applied to amplitude slot
-         out      a1
+  kenv      linen     iamp, irise, idur, idec     ; envelope
+  kran      randi     kenv, ifqr                  ; random numbers
+  a1        oscili    kran, ifq1, if1             ; applied to amplitude slot
+            out       a1
 
 endin
 

@@ -16,31 +16,31 @@
   ; Amplitude % for 2nd carrier : p17 = opening ; p18 = after p6 ; p19 = before p7
   ; p20 = attack hardness (1. ord)
 
-  sr = 44100
-  kr = 2205
-  ksmps = 20
-  nchnls = 2
+  sr        =  44100
+  kr        =  2205
+  ksmps     =  20
+  nchnls    =  2
 
-  instr 1
-  ipitch = cpspch(p4)
-  amp envlpx p5,  p6,  p3,  p7,  p9,  p8,  .005  ; amplitude envelope
+instr 1
+  ipitch    =  cpspch(p4)
+  amp       envlpx    p5,  p6,  p3,  p7,  p9,  p8,  .005 ; amplitude envelope
 
   ; Random frequency deviation ( for attack noise)
-   iscale =  octcps(ipitch)
-   iscale =  (18-iscale) * .1     ; scalar : c4 = 1.,c5 =.9, c3 = 1.1, etc.
-  k1 expseg .5*p20,  p20*p6,  .003,  p3,  .002
-  k2 expseg 999,  p20*p6,  15
-  krandpitch  randi  k1*ipitch ,  k2
-  kpitch = ipitch + krandpitch            ; pitch
+  iscale    =  octcps(ipitch)
+  iscale    =  (18-iscale) * .1                   ; scalar : c4 = 1.,c5 =.9, c3 = 1.1, etc.
+  k1        expseg    .5*p20,  p20*p6,  .003,  p3,  .002
+  k2        expseg    999,  p20*p6,  15
+  krandpitch   randi  k1*ipitch ,  k2
+  kpitch    =  ipitch + krandpitch                ; pitch
 
   ; Fm index:
-  k2 expseg p14,p6,p15,p3-(p6+p7),p16,p7,.5*p7
+  k2        expseg    p14,p6,p15,p3-(p6+p7),p16,p7,.5*p7
 
-  acar1 foscili amp, kpitch, p10, p11, k2, 100  ; 1st carrier
-  acar2 foscili amp, kpitch, p12, p13, k2, 100  ; 2nd carrier
+  acar1     foscili   amp, kpitch, p10, p11, k2, 100 ; 1st carrier
+  acar2     foscili   amp, kpitch, p12, p13, k2, 100 ; 2nd carrier
    ; The  2nd carrier usually produces  (usually higher frequencies)
    ; signal "kmix" is an envelope that determines the mix of the 2 carriers
-  kmix expseg  p17, p6, p18, p3-(p6+p7), p19, p7, .5*p19
+  kmix      expseg    p17, p6, p18, p3-(p6+p7), p19, p7, .5*p19
 
   ;  COMMENT The next four lines are the normal output of this algorithm :
   ;  COMMENT audio  = (kmix * acar2) + ((1-kmix) * acar1)
@@ -51,11 +51,11 @@
   ; COMMENT The following lines send the output of carrier 1 to the left channel
   ; COMMENT and the output of carrier two to the right channel, so that these
   ; COMMENT two signals can be auditioned independently
-  afilt1 reson acar1, p21, p22, 1        ; formant for carrier 1
-  afilt2 reson acar2, p21, p22, 1        ; same formant for carrier 2
-  audio1 balance (.5 * acar1) +(.5 * afilt1) , acar1
+  afilt1    reson     acar1, p21, p22, 1          ; formant for carrier 1
+  afilt2    reson     acar2, p21, p22, 1          ; same formant for carrier 2
+  audio1    balance   (.5 * acar1) +(.5 * afilt1) , acar1
   ;  restore gain to filtered carrier 1 & carrier 2 signals
-  audio2 balance (.5 * acar2) +(.5 * afilt2) , acar2
-  outs  (1. - kmix) * audio1 , kmix * audio2
-  endin
+  audio2    balance   (.5 * acar2) +(.5 * afilt2) , acar2
+            outs      (1. - kmix) * audio1 , kmix * audio2
+endin
 

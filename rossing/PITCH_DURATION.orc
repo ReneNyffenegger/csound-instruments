@@ -10,21 +10,21 @@
 ;******************************************   HEADER   *********************************************
 
  
- sr            =         44100
- kr            =         4410
- ksmps         =         10
- nchnls        =         1 
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  1 
  
  
- instr         1
+instr         1
  
- idel          =         p6                       ;P4 = AMPLITUDE IN DB                                   
- irel          =         p7                       ;P5 = FREQUENCY
- isus          =         p3 - (idel + irel)       ;P6 = ATTACK OF ENVELOPE
- iamp          =         ampdb(p4)                ;P7 = RELEASE OF ENVELOPE
+  idel      =  p6                                 ;P4 = AMPLITUDE IN DB                                   
+  irel      =  p7                                 ;P5 = FREQUENCY
+  isus      =  p3 - (idel + irel)                 ;P6 = ATTACK OF ENVELOPE
+  iamp      =  ampdb(p4)                          ;P7 = RELEASE OF ENVELOPE
  
- k1            linen     iamp,p6,p3,p7    
- a1            oscili    k1,p5,1             
-               out a1
- endin  
+  k1        linen     iamp,p6,p3,p7    
+  a1        oscili    k1,p5,1             
+            out       a1
+endin  
  

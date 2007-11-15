@@ -9,19 +9,19 @@
 
 
 
-sr             =         44100
-kr             =         4410
-ksmps          =         10
-nchnls         =         2
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  2
 
- instr         1
+instr         1
 
- iamp          =         ampdb(p4)                     ;P4 = AMPLITUDE IN DB
+  iamp      =  ampdb(p4)                          ;P4 = AMPLITUDE IN DB
 
 
- k1            linen     iamp,.01,p3,.01
- anoise        randi     k1, .998 * 10010              ;BROADBAND NOISE 20 - 20KHZ
- asig          oscil     anoise,anoise,1       
-               outs      asig,asig
- endin
+  k1        linen     iamp,.01,p3,.01
+  anoise    randi     k1, .998 * 10010            ;BROADBAND NOISE 20 - 20KHZ
+  asig      oscil     anoise,anoise,1       
+            outs      asig,asig
+endin
  

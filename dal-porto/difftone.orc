@@ -13,35 +13,35 @@
 ; NON-LINEAR PROCESS THAT TAKES PLACE IN OUR INNER EAR.                   ;
 ;=========================================================================;
 
-sr             =         44100     ; SAMPLE RATE
-kr             =         4410                
-ksmps          =         10
-nchnls         =         1         ; NUMBER OF CHANNELS
+  sr        =  44100                              ; SAMPLE RATE
+  kr        =  4410                
+  ksmps     =  10
+  nchnls    =  1                                  ; NUMBER OF CHANNELS
 
 instr          1 
 ;-------------------------------------------------------------------------;
 ; THE FOLLOWING "EXPSEG" CREATES A GLISSANDO FROM C6 TO C7 AND BACK TO C6 ;
 ;-------------------------------------------------------------------------;
-kgliss         expseg    1046.5, p3*.5, 2093, p3*.5, 1046.5      ;P3=DURATION   
+  kgliss    expseg    1046.5, p3*.5, 2093, p3*.5, 1046.5 ;P3=DURATION   
 
 ;-------------------------------------------------------------------------;
 ; THE FOLLOWING "LINEN" IS THE ENVELOPE SHAPE FOR THE NOTES PLAYED        ;
 ;-------------------------------------------------------------------------; 
-  kamp         linen     p4, p3*.025, p3, p3*.05                 ;P4=AMP
+  kamp      linen     p4, p3*.025, p3, p3*.05     ;P4=AMP
 
 ;-------------------------------------------------------------------------;
 ; THE FOLLOWING "OSCILI" IS THE DIGITAL OSCILLATOR THAT PLAYS THE         ;
 ; GLISSANDO                                                               ;
 ;-------------------------------------------------------------------------;    
-agliss         oscili    kamp, kgliss, 1 
+  agliss    oscili    kamp, kgliss, 1 
         
 ;-------------------------------------------------------------------------;
 ; THE FOLLOWING "OSCILI" IS THE DIGITAL OSCILLATOR THAT PLAYS THE LOWER   ;
 ; SUSTAINED NOTE OR "PEDAL" TONE (C6)                                     ;
 ;-------------------------------------------------------------------------;    
-apedal         oscili    kamp, 1046.5, 1
-               out       agliss+apedal
-               endin                         ; END OF INSTRUMENT AND ORCHESTRA
+  apedal    oscili    kamp, 1046.5, 1
+            out       agliss+apedal
+endin                         ; END OF INSTRUMENT AND ORCHESTRA
 
 ;*************************************************************************;
 ; DID YOU HEAR THE LOWER SLIDING QUADRATIC AND CUBIC DIFFERENCE TONES     ;

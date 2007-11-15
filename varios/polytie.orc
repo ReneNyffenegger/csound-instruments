@@ -22,17 +22,17 @@
 ;               David Kirsh
 
 
-sr        =         44100
-kr        =         4410
-ksmps     =         10
-nchnls    =         1
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  1
 
 
 ; Demonstration of portamento between tied notes
 ; This technique could be applied to other parameters and to
 ; non-tied notes with straightforward changes.
-        instr   5           
-inote   =       cpspch(p4)          ; THIS NOTE'S PITCH
+instr   5           
+  inote     =  cpspch(p4)                         ; THIS NOTE'S PITCH
 
     ; If this is not a tied note, then there's no previous
     ; pitch to glide from, so set beginning pitch of
@@ -42,13 +42,13 @@ inote   =       cpspch(p4)          ; THIS NOTE'S PITCH
     ; save it both here and in the tied note case because if
     ; we do it in a common place below, Csound complains about
     ; iprevpitch being used before set.
-        tigoto      tieinit
+            tigoto    tieinit
 
     ; At this point we know we're not in a tied note.
     ; Set beginning and previous pitches to the same thing.
-ibegpitch   =       inote
-iprevpitch  =       inote
-        goto        cont
+  ibegpitch =  inote
+  iprevpitch   =      inote
+            goto      cont
 
 tieinit:
     ; We're in a tied note.
@@ -57,13 +57,13 @@ tieinit:
     ; tied onto the end of.  Save current pitch in case another
     ; note ties onto this one; then we'll be able to portamento
     ; again to that new pitch.
-ibegpitch   =       iprevpitch
-iprevpitch  =       inote
+  ibegpitch =  iprevpitch
+  iprevpitch   =      inote
 
 cont:
     ; Now set up a pitch envelope that moves from the beginning
     ; pitch (as determined above) to this note's nominal pitch.
-kpitchenv   linseg  ibegpitch, .9, inote, abs(p3), inote
+  kpitchenv linseg    ibegpitch, .9, inote, abs(p3), inote
 
     ; Generate a sound using the pitch envelope.  Notice the
     ; last 'buzz' argument (-1), which causes phase
@@ -71,6 +71,6 @@ kpitchenv   linseg  ibegpitch, .9, inote, abs(p3), inote
     ; clicks on tied notes.  (This simple example clicks on
     ; untied notes, though, because there's no amplitude
     ; envelope.)
-a1      buzz    10000, kpitchenv, 6, 1, -1
-        out     a1
-        endin
+  a1        buzz      10000, kpitchenv, 6, 1, -1
+            out       a1
+endin

@@ -1,7 +1,7 @@
-	sr	=	22050
-	kr	=	2205
-	ksmps	=	10
-	nchnls	=	1
+  sr        =  22050
+  kr        =  2205
+  ksmps     =  10
+  nchnls    =  1
 
 ;=============================================================================
 ;               Karplus Strong Algorithm Demonstration                       
@@ -15,32 +15,33 @@
 ;Study this to see how the basic algorithm works, but use Pluck in real life. 
 ;RP                                                                           
 ;=============================================================================
-	instr	1			; roll your own pluck instrument
-iamp	=	p4	
-icps    =       cpspch(p5)              ;desired pitch in PCH
-asig    init    0                       ;initialize asig variable
-kcount  init    1/icps*kr               ;and loop counter (see below)
+instr   1                       ; roll your own pluck instrument
+  iamp      =  p4      
+  icps      =  cpspch(p5)                         ;desired pitch in PCH
+  asig      init      0                           ;initialize asig variable
+  kcount    init      1/icps*kr                   ;and loop counter (see below)
 
 ;---------------------- use a delay line of length 1/cps:
 
-adel    delayr  1/icps			;delay of 1/cps seconds
-asig    tone    adel,sr/2               ;filter the output
+  adel      delayr    1/icps                      ;delay of 1/cps seconds
+  asig      tone      adel,sr/2                   ;filter the output
 
 ;---------------------- but at the first k, fill the delay line with noise:
 
-        if (kcount < 0) kgoto continue  ;skip over after line filled
-kloop:                                  ;loop to fill delay
-asig    rand    iamp,-1                 ;with white noise
-kcount  =       kcount - 1              ;decrement loop counter
+if (kcount < 0) kgoto continue                    ;skip over after line filled
+kloop:
+                                  ;loop to fill delay
+  asig      rand      iamp,-1                     ;with white noise
+  kcount    =  kcount - 1                         ;decrement loop counter
 ;-----------------------------------------------------------------------------
 
 continue:
-        delayw  asig                    ;delay line input (always get here)
+            delayw    asig                        ;delay line input (always get here)
 
-        if      (kcount >= 0) kgoto kloop ;loop only kcount times at start 
+if      (kcount >= 0) kgoto kloop                 ;loop only kcount times at start 
 
-        out     asig
-        endin
+            out       asig
+endin
 
 ;==================================================================
 ; Instrument 2 is also a straightforward implementation of K/S. 
@@ -49,26 +50,26 @@ continue:
 ; the delay line ring. Sounds almost exactly the same. RP.
 ;==================================================================
 
-	instr	2
-iamp	=	p4
-icps    =       cpspch(p5)              ;desired pitch in PCH
+instr   2
+  iamp      =  p4
+  icps      =  cpspch(p5)                         ;desired pitch in PCH
 
-	timout	1/icps,p3,skipover	;skip noise generation after 1 cycle
-anoise	rand	iamp
-	kgoto	continue
+            timout    1/icps,p3,skipover          ;skip noise generation after 1 cycle
+  anoise    rand      iamp
+            kgoto     continue
 skipover:
-anoise	=	0			;zero noise variable after 1 cycle
+  anoise    =  0                                  ;zero noise variable after 1 cycle
 continue:
 
 ;---------------------- use a delay line of length 1/cps:
 
-adel    delayr  1/icps			;delay of 1/cps seconds
-asig    tone    adel,sr/2               ;filter the output
+  adel      delayr    1/icps                      ;delay of 1/cps seconds
+  asig      tone      adel,sr/2                   ;filter the output
 
-        delayw  asig+anoise             ;feed back asig into delay line
+            delayw    asig+anoise                 ;feed back asig into delay line
 
-        out     asig
-        endin
+            out       asig
+endin
 
 ;=================================================================
 ; This is a more interesting instrument, with additional features.
@@ -82,29 +83,29 @@ asig    tone    adel,sr/2               ;filter the output
 ; with alters the color of the sound. RP
 ;=================================================================
 
-	instr	3	
-iamp1	=	p4
-icps    =       cpspch(p5)              ;desired pitch in PCH
-irise	=	p6
-idecay	=	p7
-iamp2	=	(p8 == 0 ? 1 : p8)	;amp of sustained noise
-isust	=	(p8 == 0 ? 0 : p3)	;dur for sustained noise
-ifc	=	p9			;lowpass cutoff freq
-ifindec	=	(p10 == 0 ? .2 : p10)	;final decay of overall env
+instr   3       
+  iamp1     =  p4
+  icps      =  cpspch(p5)                         ;desired pitch in PCH
+  irise     =  p6
+  idecay    =  p7
+  iamp2     =  (p8 == 0 ? 1 : p8)                 ;amp of sustained noise
+  isust     =  (p8 == 0 ? 0 : p3)                 ;dur for sustained noise
+  ifc       =  p9                                 ;lowpass cutoff freq
+  ifindec   =  (p10 == 0 ? .2 : p10)              ;final decay of overall env
 
 ;---------------------- generate the gated noise excitation signal
-agate	expseg	1,irise,iamp1,idecay,iamp2,isust,iamp2
-anoise	rand	agate			;gated noise excitation
-	if	(ifc == 0) goto skip	;skip if no filtering wanted
-anoise	butterlp	anoise,ifc	;filter the noise
+  agate     expseg    1,irise,iamp1,idecay,iamp2,isust,iamp2
+  anoise    rand      agate                       ;gated noise excitation
+if      (ifc == 0) goto skip                      ;skip if no filtering wanted
+  anoise    butterlp  anoise,ifc                  ;filter the noise
 skip:
 
 ;---------------------- use a delay line of length 1/cps:
 
-adel    delayr  1/icps			;delay of 1/cps seconds
-asig    tone    adel,sr/2               ;filter the output
+  adel      delayr    1/icps                      ;delay of 1/cps seconds
+  asig      tone      adel,sr/2                   ;filter the output
 
-        delayw  asig+anoise		;feed back asig into delay line
-asig	linen	asig,.001,p3,ifindec
-        out     asig
-        endin
+            delayw    asig+anoise                 ;feed back asig into delay line
+  asig      linen     asig,.001,p3,ifindec
+            out       asig
+endin

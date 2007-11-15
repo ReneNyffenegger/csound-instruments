@@ -6,20 +6,20 @@
 ;   p11 = Function number controlling change in a. m. %
 ;   p12 = Function number for modulating oscillator
 
-sr = 44100
-kr = 2205
-ksmps = 20
-nchnls = 1
+  sr        =  44100
+  kr        =  2205
+  ksmps     =  20
+  nchnls    =  1
 
 instr 1
-ipitch = cpspch(p4)
-kenv  linen  p5,  p6,  p3,  p7            ; amplitude envelope
+  ipitch    =  cpspch(p4)
+  kenv      linen     p5,  p6,  p3,  p7           ; amplitude envelope
 ; amplitude modulation :
-    kmod oscili (p10 - p9),  1/p3,  p11  ; difference between 1st & 2nd a. m. %
-       kmod = kenv * (kmod + p9)             ; % of signal to be amp. modulated
-       knomod = kenv - kmod                  ; % of signal NOT amp. modulated
-    ampmod  oscili  kmod, ipitch * p8, p12   ; modulating oscillator
+  kmod      oscili    (p10 - p9),  1/p3,  p11     ; difference between 1st & 2nd a. m. %
+  kmod      =  kenv * (kmod + p9)                 ; % of signal to be amp. modulated
+  knomod    =  kenv - kmod                        ; % of signal NOT amp. modulated
+  ampmod    oscili    kmod, ipitch * p8, p12      ; modulating oscillator
 
-audio  oscili  ampmod + knomod, ipitch , 1   ; carrier oscillator
-    out audio
+  audio     oscili    ampmod + knomod, ipitch , 1 ; carrier oscillator
+            out       audio
 endin

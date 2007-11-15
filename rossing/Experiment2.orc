@@ -18,24 +18,24 @@
 ; WITH VERY SMALL VALUES. LISTENER SHOULD WEAR HEADPHONES VS. USING A SPEAKER SYSTEM.
 ;*****************************************   HEADER   ********************************************           
 
-sr             =         44100
-kr             =         4410
-ksmps          =         10
-nchnls         =         2
- instr         1
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  2
+instr         1
 
- iamp          =         ampdb(p4)                     ;P4 = AMPLITUDE IN DB 
- ifreq         =         p5                            ;P5 = FREQUENCY
- ifunc         =         p7                            ;P6 = PANNING FUNCTION FOR SIGNAL
- idur          =         p3                            ;P7 = FUNCTION
+  iamp      =  ampdb(p4)                          ;P4 = AMPLITUDE IN DB 
+  ifreq     =  p5                                 ;P5 = FREQUENCY
+  ifunc     =  p7                                 ;P6 = PANNING FUNCTION FOR SIGNAL
+  idur      =  p3                                 ;P7 = FUNCTION
 
- k1            linen     iamp,0,p3,0         
- a1            oscili    k1,ifreq,ifunc        
- k2            oscili    1,p3,p6
- kleft         =         sqrt (k2)
- kright        =         sqrt (1-k2)
- aleft         =         a1 * kleft
- aright        =         a1 * kright
-               outs      aleft,aright 
- endin  
+  k1        linen     iamp,0,p3,0         
+  a1        oscili    k1,ifreq,ifunc        
+  k2        oscili    1,p3,p6
+  kleft     =  sqrt (k2)
+  kright    =  sqrt (1-k2)
+  aleft     =  a1 * kleft
+  aright    =  a1 * kright
+            outs      aleft,aright 
+endin  
 

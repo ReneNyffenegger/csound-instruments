@@ -1,6 +1,6 @@
 
 /* Delays.include.orc - compatibility macros for .orc files using */
-/* DeltapiHQ / Deltap3A (now replaced by deltapx opcode)	  */
+/* DeltapiHQ / Deltap3A (now replaced by deltapx opcode)          */
 
 /* initialization macro */
 
@@ -14,7 +14,7 @@
 
 #define DeltapiHQ #
 
-a_	deltapx a_1_, 8
+  a_        deltapx   a_1_, 8
 
 #
 
@@ -22,7 +22,7 @@ a_	deltapx a_1_, 8
 
 #define Deltap3A #
 
-a_	deltapx a_1_, 4
+  a_        deltapx   a_1_, 4
 
 #
 

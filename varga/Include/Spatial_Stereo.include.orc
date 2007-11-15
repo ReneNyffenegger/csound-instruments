@@ -1,6 +1,6 @@
 
-/* SpatStereo, SpatStereoDyn, and SpatStereoDynHQ - macros simulating	*/
-/* a pair of microphones						*/
+/* SpatStereo, SpatStereoDyn, and SpatStereoDynHQ - macros simulating   */
+/* a pair of microphones                                                */
 
 #define SpatStereo #
 

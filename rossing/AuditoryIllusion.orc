@@ -15,26 +15,26 @@
 ; PERCEIVED AS BEING HEARD AT THE EAR THAT FEEDS THE DOMINANT HEMISPHERE (DEUTSCH, 1975).              
 ;*****************************************   HEADER   ********************************************           
 
-sr             =         44100
-kr             =         4410
-ksmps          =         10
-nchnls         =         2
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  2
 
- instr         1
+instr         1
 
- iamp          =         ampdb(p4)                ;P4 = AMPLITUDE IN DB 
- ifreq         =         p5                       ;P5 = FREQUENCY
+  iamp      =  ampdb(p4)                          ;P4 = AMPLITUDE IN DB 
+  ifreq     =  p5                                 ;P5 = FREQUENCY
                                                   ;P6 = PANNING FUNCTION FOR SIGNAL
 
- k1            linen     iamp,.05,p3,.05         
- a1            oscili    k1,ifreq,1             
- k2            oscili    1,p3,p6
- kleft         =         sqrt (k2)
- kright        =         sqrt (1-k2)
- aleft         =         a1 * kleft
- aright        =         a1 * kright
-               outs      aleft,aright 
- endin  
+  k1        linen     iamp,.05,p3,.05         
+  a1        oscili    k1,ifreq,1             
+  k2        oscili    1,p3,p6
+  kleft     =  sqrt (k2)
+  kright    =  sqrt (1-k2)
+  aleft     =  a1 * kleft
+  aright    =  a1 * kright
+            outs      aleft,aright 
+endin  
 
 
               

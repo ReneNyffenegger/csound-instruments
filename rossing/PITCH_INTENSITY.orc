@@ -11,19 +11,19 @@
  
 ;******************************************   HEADER   *******************************************  
  
- sr            =         44100
- kr            =         4410
- ksmps         =         10
- nchnls        =         1 
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  1 
  
  
- instr         1
+instr         1
  
- iamp          =         ampdb(p4)           ;P4 = AMPLITUDE IN DB                                    
- iamp          =         ampdb(p4)                
+  iamp      =  ampdb(p4)                          ;P4 = AMPLITUDE IN DB                                    
+  iamp      =  ampdb(p4)                
  
  
- k1            linen     iamp,.05,p3,.05         
- a1            oscili    k1,p5,1             
-               out       a1
- endin  
+  k1        linen     iamp,.05,p3,.05         
+  a1        oscili    k1,p5,1             
+            out       a1
+endin  

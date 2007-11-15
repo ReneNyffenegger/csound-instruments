@@ -1,7 +1,7 @@
 ;--- transp.orc ---
-sr=44100
-kr=4410
-ksmps=10
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
 
 ; here is the format for the function table
 ; which will hold your soundfile:
@@ -27,14 +27,14 @@ ksmps=10
 ; score line format:
 ; i1 0 dur increment
 instr 1
-	ifile = 1
-	ifunc = 2
-	itl = ftlen(ifile)
-	iop = 1/p3
-	iincr = (sr/itl) * p4
+  ifile     =  1
+  ifunc     =  2
+  itl       =  ftlen(ifile)
+  iop       =  1/p3
+  iincr     =  (sr/itl) * p4
 
-	asig oscili 1.0,iincr,ifile	
-	out asig
+  asig      oscili    1.0,iincr,ifile     
+            out       asig
 endin
 
 ;--- cut here ---

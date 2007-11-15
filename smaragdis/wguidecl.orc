@@ -1,53 +1,53 @@
-sr        =         44100
-kr        =         4410
-ksmps     =         10
-nchnls    =         2
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  2
 
 
-          instr 1
+instr 1
                     ;SORT OF KARPLUS-STRONG STRING
 
-idamp     =         5000
-ipitch    =         440
-iperiod   =         1000/ipitch
-isc       =         100
-afeed     init      0
+  idamp     =  5000
+  ipitch    =  440
+  iperiod   =  1000/ipitch
+  isc       =  100
+  afeed     init      0
 
-aimpl     oscilx    10000, ipitch, 1, 1
+  aimpl     oscilx    10000, ipitch, 1, 1
      
-arefl     tone      aimpl + afeed, idamp
-aout      atone     arefl, idamp
-afeed     vdelay    arefl, iperiod, 1000
-          outs      aout*isc, aout*isc
-          endin
+  arefl     tone      aimpl + afeed, idamp
+  aout      atone     arefl, idamp
+  afeed     vdelay    arefl, iperiod, 1000
+            outs      aout*isc, aout*isc
+endin
 
-          instr 2
+instr 2
                     ;WAVEGUIDE PLUCKED STRING
 
-idamp     =         4000
-ipitch    =         440
-isc       =         50
-aright    init      0
-aleft     init      0
+  idamp     =  4000
+  ipitch    =  440
+  isc       =  50
+  aright    init      0
+  aleft     init      0
 
 ;SIMPLE WAVEGUIDE PLUCKED STRING MODEL.  NOT WORTH LOOKING OVER!
 
-aimpl     oscilx    10000, ipitch/2, 1, 1         ;INITIAL STATE OF STRING 
-aimpr     oscilx    10000, ipitch/2, 2, 1
+  aimpl     oscilx    10000, ipitch/2, 1, 1       ;INITIAL STATE OF STRING 
+  aimpr     oscilx    10000, ipitch/2, 2, 1
 
 ;kpitch   oscil     ipitch, 1/p3, 3
-kpitch    =         ipitch
+  kpitch    =  ipitch
 
-anrefl    tone      aimpl - aright, idamp         ;REFLECT ON NUT
-aoutn     atone     anrefl, idamp                 ;PICK SOUND FROM NUT
-aleft     vdelay    anrefl, 500/kpitch, 1000 ;GO TO BRIDGE
-abrefl    tone      aimpr - aleft, idamp          ;REFLECT ON BRIDGE
-aoutb     atone     abrefl, idamp                 ;PICK SOUND FROM BRIDGE
-aright    vdelay    abrefl, 500/kpitch, 1000 ;GO BACK TO THE NUT
-          outs      aoutn*isc, aoutb*isc
-          endin
+  anrefl    tone      aimpl - aright, idamp       ;REFLECT ON NUT
+  aoutn     atone     anrefl, idamp               ;PICK SOUND FROM NUT
+  aleft     vdelay    anrefl, 500/kpitch, 1000    ;GO TO BRIDGE
+  abrefl    tone      aimpr - aleft, idamp        ;REFLECT ON BRIDGE
+  aoutb     atone     abrefl, idamp               ;PICK SOUND FROM BRIDGE
+  aright    vdelay    abrefl, 500/kpitch, 1000    ;GO BACK TO THE NUT
+            outs      aoutn*isc, aoutb*isc
+endin
 
-          instr 3
+instr 3
                     ;WAVEGUIDE CLARINET 
 
 ; INTERESTING POINTS IN THE EXTENDED CSOUND IMPLEMENTATION:
@@ -72,29 +72,29 @@ aright    vdelay    abrefl, 500/kpitch, 1000 ;GO BACK TO THE NUT
 
 ;         INIT SECTION
 
-idamp     =         1200                          ;DETERMINES BRIGHTNESS OF CLARINET
-ipitch    =         4*cpspch( p4)                 ;PITCH (SOMETHING'S WRONG HERE! BUT IT WORKS)
-ipmax     =         10                                 ;MAX MOUTH PRESSURE
-ivol      =         1000                          ;BRING TO AUDIBLE LEVEL FACTOR
-apbp      init      0                                  ;INIT THE RETURNING PRESSURE WAVE
+  idamp     =  1200                               ;DETERMINES BRIGHTNESS OF CLARINET
+  ipitch    =  4*cpspch( p4)                      ;PITCH (SOMETHING'S WRONG HERE! BUT IT WORKS)
+  ipmax     =  10                                 ;MAX MOUTH PRESSURE
+  ivol      =  1000                               ;BRING TO AUDIBLE LEVEL FACTOR
+  apbp      init      0                           ;INIT THE RETURNING PRESSURE WAVE
 
 ;         CONTROL SECTION
-apm       linseg    0, p3/2, ipmax, p3/8, 0, 3*p3/8, 0      ;MOUTH PRESSURE
+  apm       linseg    0, p3/2, ipmax, p3/8, 0, 3*p3/8, 0 ;MOUTH PRESSURE
 
 ;apm      linseg    0, .2, ipmax, .5, ipmax/2, p3-.7, 0
 
-am        =         .01                                ;EMBROCHURE/REED STIFFNESS FACTOR
+  am        =  .01                                ;EMBROCHURE/REED STIFFNESS FACTOR
 ;am       linseg    .05, .02,.02, p3-.02, .02 
 
-krand     rand      1                                  ;RANDOM ELEMENT
-krand     port      krand, 1/kr
-apm       =         apm - (krand * ipmax)/10
+  krand     rand      1                           ;RANDOM ELEMENT
+  krand     port      krand, 1/kr
+  apm       =  apm - (krand * ipmax)/10
 
-kvs       line      0, p3, 1                      ;SIMPLE TIME VARYING VIBRATO
-kpitch    oscil     kvs*p6, kvs*5, 4
+  kvs       line      0, p3, 1                    ;SIMPLE TIME VARYING VIBRATO
+  kpitch    oscil     kvs*p6, kvs*5, 4
 ;kbend    oscil     1000, 1/p3, p5
-kbend     =         0
-kpitch    =         ipitch - kpitch + kbend + krand * 50
+  kbend     =  0
+  kpitch    =  ipitch - kpitch + kbend + krand * 50
 ;agrowl   oscil     apm, .5, 5                         ;GROWLING
 ;apm      =         agrowl
 
@@ -109,15 +109,15 @@ kpitch    =         ipitch - kpitch + kbend + krand * 50
 ; arefl:       Reflected pressure wave at bell
 ; aout:             Output from bell
 
-apdp      =         2*apbp - apm
-atr       =         1 - am*(apdp - ipmax)
+  apdp      =  2*apbp - apm
+  atr       =  1 - am*(apdp - ipmax)
 ;atr      reed      apdp, ipmax, am          ;MY REED OPCODE (NOT USED NOW)
-apbm      =         apm/2 + atr * apdp/2          ;START FROM REED
+  apbm      =  apm/2 + atr * apdp/2               ;START FROM REED
 
-abell     vdelay    apbm, 500/kpitch, 1000        ;GO TO BELL
-arefl     tone      -abell, idamp                 ;DAMP/REFLECT ON BELL
-aout      atone     abell, idamp                  ;GET OUT OF BELL
-apbp      vdelay    arefl, 500/kpitch, 1000       ;GO BACK TO REED
+  abell     vdelay    apbm, 500/kpitch, 1000      ;GO TO BELL
+  arefl     tone      -abell, idamp               ;DAMP/REFLECT ON BELL
+  aout      atone     abell, idamp                ;GET OUT OF BELL
+  apbp      vdelay    arefl, 500/kpitch, 1000     ;GO BACK TO REED
 
-          outs      aout*ivol, aout*ivol          ;GIVE IT TO ME!
-          endin
+            outs      aout*ivol, aout*ivol        ;GIVE IT TO ME!
+endin

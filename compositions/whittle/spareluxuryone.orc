@@ -34,9 +34,9 @@
 ;-----------------------------------------------------------------------------
                     ;
                     ; Initialisation of orchestra
-     sr = 44100          ;
-     kr =  4410          ; Make K rate finer so the doppler works nicely.
-     ksmps = 10          ; 
+  sr        =  44100                              ;
+  kr        =  4410                               ; Make K rate finer so the doppler works nicely.
+  ksmps     =  10                                 ; 
                     ; Tests show that with a single instrument of
                     ; 1, 50, 90 95 and 100, a 486DX33 (running 
                     ; CS.EXE 386 635,390 bytes 13-11-94)
@@ -58,53 +58,53 @@
 ;    kr =  4410
 ;    ksmps = 10
 
-     nchnls = 2
+  nchnls    =  2
                     ; - - - - - - -
                     ;
                     ; Initalise global variables:
 
-gidelmax init  0.3       ; Maximum delay time for all delays.
+  gidelmax  init      0.3                         ; Maximum delay time for all delays.
 
 
-gal  init      0         ; Left and right head mix accumulators.
-gar  init 0         ;
+  gal       init      0                           ; Left and right head mix accumulators.
+  gar       init      0                           ;
 
-gkhx init 0         ; X location of head.
-gkhy init 0         ; Y location of head.
-gkha init 0         ; Angle of rotation of head 0 - 2pi ACW.
+  gkhx      init      0                           ; X location of head.
+  gkhy      init      0                           ; Y location of head.
+  gkha      init      0                           ; Angle of rotation of head 0 - 2pi ACW.
 
-gkhxl     init 0         ; X position of left ear.
-gkhyl     init 0         ; Y position of left ear.
-gkhxr     init 0         ; X position of right ear.
-gkhyr     init 0         ; Y position of right ear.
-gkhxf     init 0         ; X position of front reference point.
-gkhyf     init 0         ; Y position of front reference point.
-gkhxb     init 0         ; X position of rear reference point.
-gkhyb     init 0         ; Y position of rear reference point.
+  gkhxl     init      0                           ; X position of left ear.
+  gkhyl     init      0                           ; Y position of left ear.
+  gkhxr     init      0                           ; X position of right ear.
+  gkhyr     init      0                           ; Y position of right ear.
+  gkhxf     init      0                           ; X position of front reference point.
+  gkhyf     init      0                           ; Y position of front reference point.
+  gkhxb     init      0                           ; X position of rear reference point.
+  gkhyb     init      0                           ; Y position of rear reference point.
 
                     ;
                     ; Initialise 16 global audio mixing global 
                     ; variables - gvars.
                     ;    
                     ; Outputs of Major 7th chords
-ga0  init 0         
-ga1  init 0    
-ga2  init 0    
-ga3  init 0    
+  ga0       init      0         
+  ga1       init      0    
+  ga2       init      0    
+  ga3       init      0    
                     ; Outputs of flangers
-ga4  init 0    
-ga5  init 0    
-ga6  init 0    
-ga7  init 0    
+  ga4       init      0    
+  ga5       init      0    
+  ga6       init      0    
+  ga7       init      0    
 
-ga8  init 0    
-ga9  init 0    
-ga10 init 0    
-ga11 init 0    
-ga12 init 0    
-ga13 init 0    
-ga14 init 0    
-ga15 init 0    
+  ga8       init      0    
+  ga9       init      0    
+  ga10      init      0    
+  ga11      init      0    
+  ga12      init      0    
+  ga13      init      0    
+  ga14      init      0    
+  ga15      init      0    
 
 ;----------------------------------------------------------------------------
 ;
@@ -141,55 +141,64 @@ ga15 init 0
 ;
 ;-----------------------------------------------------------------------------
                     ;
-     instr     1         ;
+instr     1         ;
                     ;
-a1   oscili    p5, p4, p6     ; Basic oscillator.
+  a1        oscili    p5, p4, p6                  ; Basic oscillator.
                     ;
                     ; EG with exponential decay.
                     ;
                     
-kenv envlpx    1, p8, p3, p9, 50, 1, 0.006   
+  kenv      envlpx    1, p8, p3, p9, 50, 1, 0.006   
                     
-klfo oscil     p11, 1/p10, 1  ; Tremolo depth and frequency, sine table.
+  klfo      oscil     p11, 1/p10, 1               ; Tremolo depth and frequency, sine table.
                     ;
                     ; Now to decide where the output will go to.
-if   p7 == 0 goto out0   ;
-if   p7 == 1 goto out1   ;
-if   p7 == 2 goto out2   ;
-if   p7 == 3 goto out3   ;
-if   p7 == 4 goto out4   ;
-if   p7 == 5 goto out5   ;
-if   p7 == 6 goto out6   ;
-if   p7 == 7 goto out7   ;
+if   p7 == 0 goto out0                            ;
+if   p7 == 1 goto out1                            ;
+if   p7 == 2 goto out2                            ;
+if   p7 == 3 goto out3                            ;
+if   p7 == 4 goto out4                            ;
+if   p7 == 5 goto out5                            ;
+if   p7 == 6 goto out6                            ;
+if   p7 == 7 goto out7                            ;
 
-out0: ga0 =    ga0 + (a1 * (kenv * (1 + klfo) ) )
-     goto done
+out0:
+  ga0       =  ga0 + (a1 * (kenv * (1 + klfo) ) )
+            goto      done
 
-out1: ga1 =    ga1 + (a1 * (kenv * (1 + klfo) ) )
-     goto done
+out1:
+  ga1       =  ga1 + (a1 * (kenv * (1 + klfo) ) )
+            goto      done
 
-out2: ga2 =    ga2 + (a1 * (kenv * (1 + klfo) ) )
-     goto done
+out2:
+  ga2       =  ga2 + (a1 * (kenv * (1 + klfo) ) )
+            goto      done
 
-out3: ga3 =    ga3 + (a1 * (kenv * (1 + klfo) ) )
-     goto done
+out3:
+  ga3       =  ga3 + (a1 * (kenv * (1 + klfo) ) )
+            goto      done
 
-out4: ga4 =    ga4 + (a1 * (kenv * (1 + klfo) ) )
-     goto done
+out4:
+  ga4       =  ga4 + (a1 * (kenv * (1 + klfo) ) )
+            goto      done
 
-out5: ga5 =    ga5 + (a1 * (kenv * (1 + klfo) ) )
-     goto done
+out5:
+  ga5       =  ga5 + (a1 * (kenv * (1 + klfo) ) )
+            goto      done
 
-out6: ga6 =    ga6 + (a1 * (kenv * (1 + klfo) ) )
-     goto done
+out6:
+  ga6       =  ga6 + (a1 * (kenv * (1 + klfo) ) )
+            goto      done
 
-out7: ga7 =    ga7 + (a1 * (kenv * (1 + klfo) ) )
+out7:
+  ga7       =  ga7 + (a1 * (kenv * (1 + klfo) ) )
 
-done:     k1 = 0              ; Dummy - compiler crashes if the label has no
+done:
+  k1        =  0                                  ; Dummy - compiler crashes if the label has no
                     ; code to keep it company.
 
 
-     endin
+endin
 
 
 
@@ -209,61 +218,70 @@ done:     k1 = 0              ; Dummy - compiler crashes if the label has no
 ;
 ;-----------------------------------------------------------------------------
 
-     instr     50
+instr     50
 
-adum delayr    0.1       ; Maximum delay - don't use output.
+  adum      delayr    0.1                         ; Maximum delay - don't use output.
 
                     ; Make an LFO table 1 = sine
                     ; With the range of the parameter 8.
-klfo oscili p8, 1/p7, 1
+  klfo      oscili    p8, 1/p7, 1
 
                     ; Get input sound.
-if   p9 == 3 goto in3    ;
-if   p9 == 2 goto in2    ;
-if   p9 == 1 goto in1    ;
+if   p9 == 3 goto in3                             ;
+if   p9 == 2 goto in2                             ;
+if   p9 == 1 goto in1                             ;
                     ;
 
-in0: a1 =      ga0 
-     goto done1
+in0:
+  a1        =  ga0 
+            goto      done1
 
-in1: a1 =      ga1 
-     goto done1
+in1:
+  a1        =  ga1 
+            goto      done1
 
-in2: a1 =      ga2 
-     goto done1
+in2:
+  a1        =  ga2 
+            goto      done1
 
-in3: a1 =      ga3 
+in3:
+  a1        =  ga3 
 
                     ; Get variable delay sound
 
-done1: a2 deltapi p4 * (1 + klfo)
+done1:
+  a2        deltapi   p4 * (1 + klfo)
 
                     ; Mix output into specified ga4 to ga7.
                     ;
-if   p10 == 7 goto out7  ;
-if   p10 == 6 goto out6  ;
-if   p10 == 5 goto out5  ;
+if   p10 == 7 goto out7                           ;
+if   p10 == 6 goto out6                           ;
+if   p10 == 5 goto out5                           ;
                     ;
 
-out4: ga4 = ga4 + (a1 * (1 - p5) ) + (a2 * p5) 
-     goto      done2
+out4:
+  ga4       =  ga4 + (a1 * (1 - p5) ) + (a2 * p5) 
+            goto      done2
 
-out5: ga5 = ga5 + (a1 * (1 - p5) ) + (a2 * p5) 
-     goto      done2
+out5:
+  ga5       =  ga5 + (a1 * (1 - p5) ) + (a2 * p5) 
+            goto      done2
 
-out6: ga6 = ga6 + (a1 * (1 - p5) ) + (a2 * p5) 
-     goto      done2
+out6:
+  ga6       =  ga6 + (a1 * (1 - p5) ) + (a2 * p5) 
+            goto      done2
 
-out7: ga7 = ga7 + (a1 * (1 - p5) ) + (a2 * p5) 
+out7:
+  ga7       =  ga7 + (a1 * (1 - p5) ) + (a2 * p5) 
 
                     ; Get input from specifed source ga0 to ga3
 
 done2:    
                     ; Write the input signal plus feedback
                     ; value into the delay line.
-     delayw    a1 + (a2 * p6)
+            delayw    a1 + (a2 * p6)
                     ; End of delay section   
-     endin
+endin
 
 
 
@@ -290,21 +308,21 @@ done2:
                     ; to a particular location, and then the values
                     ; will remain until another instance changes 
                     ; them.  
-     instr     90
+instr     90
                     ; Create a 0 to 1 ramp for the duration of the
                     ; instrument's time.
                     ;
-kpath     phasor    1/p3
+  kpath     phasor    1/p3
                     ; Use this to interpolate between starting
                     ; and ending values for X, Y and R.
                     ;
                     ; kprem = remainder of what is left of path 
                     ; towards 1.
-kprem = 1-kpath
+  kprem     =  1-kpath
 
-gkhx =  p4 * kprem + p7 * kpath
-gkhy =  p5 * kprem + p8 * kpath
-gkhr = (p6 * kprem + p9 * kpath) * 6.28318   
+  gkhx      =  p4 * kprem + p7 * kpath
+  gkhy      =  p5 * kprem + p8 * kpath
+  gkhr      =  (p6 * kprem + p9 * kpath) * 6.28318   
 
 
                     ; - - - - - 
@@ -322,22 +340,22 @@ gkhr = (p6 * kprem + p9 * kpath) * 6.28318
                     ; twice, but it takes the FPU a long time to 
                     ; calculate it, so just do them once and 
                     ; assign them to a variable.
-kksin =    sin(gkha)
-kkcos =    cos(gkha)
+  kksin     =  sin(gkha)
+  kkcos     =  cos(gkha)
 
-kdevxr    = kkcos * 0.25                          
+  kdevxr    =  kkcos * 0.25                          
                     ; Calculate the X location of the left and 
                     ; right ears.
-gkhxl     = gkhx - kdevxr          
-gkhxr     = gkhx + kdevxr          
+  gkhxl     =  gkhx - kdevxr          
+  gkhxr     =  gkhx + kdevxr          
                     ; Now do likewise for Y.
 
                     ; Right ear goes plus as angle goes ACW, this
                     ; means that the Y deviation increases.
-kdevyr    = kksin * 0.25                          
+  kdevyr    =  kksin * 0.25                          
 
-gkhyl     = gkhy - kdevyr          
-gkhyr     = gkhy + kdevyr          
+  gkhyl     =  gkhy - kdevyr          
+  gkhyr     =  gkhy + kdevyr          
                     ; Now do similar for the F and B reference
                     ; points which are 0.209 forward and back of 
                     ; central point between the ears.
@@ -349,19 +367,19 @@ gkhyr     = gkhy + kdevyr
                     ; between the ears and the F or B points of
                     ; 0.325.
 
-kdevxf    = kksin * -0.209                        
+  kdevxf    =  kksin * -0.209                        
                     ; kdevxf goes negative (to the left) as the
                     ; head is rotated ACW.
-gkhxf     = gkhx + kdevxf          
-gkhxb     = gkhx - kdevxf          
+  gkhxf     =  gkhx + kdevxf          
+  gkhxb     =  gkhx - kdevxf          
                     ;
-kdevyf    = kkcos * 0.209 
+  kdevyf    =  kkcos * 0.209 
 
-gkhyf     = gkhy + kdevyf          
-gkhyb     = gkhy - kdevyf          
+  gkhyf     =  gkhy + kdevyf          
+  gkhyb     =  gkhy - kdevyf          
 
 
-     endin
+endin
 
 
 
@@ -446,24 +464,28 @@ gkhyb     = gkhy - kdevyf
 ;
 ;-----------------------------------------------------------------------------
                     ;---------------------------------------------
-     instr     95        ;
+instr     95        ;
                     ;
                     ; Get sound source.
                     ; Select from input ga4 to ga7.
-if   p4 == 7 goto in7    ;
-if   p4 == 6 goto in6    ;
-if   p4 == 5 goto in5    ;
+if   p4 == 7 goto in7                             ;
+if   p4 == 6 goto in6                             ;
+if   p4 == 5 goto in5                             ;
                     ;
-in4: as = ga4 
-     goto      done1
+in4:
+  as        =  ga4 
+            goto      done1
 
-in5: as = ga5
-     goto      done1
+in5:
+  as        =  ga5
+            goto      done1
 
-in6: as = ga6
-     goto      done1
+in6:
+  as        =  ga6
+            goto      done1
 
-in7: as = ga7
+in7:
+  as        =  ga7
                     
 
                     ; Code above here generates an audio source
@@ -482,14 +504,15 @@ in7: as = ga7
                     ; oscillators ready for an anticlockwise
                     ; rotation starting at East (3 o'clock)
                     
-done1: kx oscili p9, 1/p10, 1, (p11 + 0.25)
-kx   = kx + p8
+done1:
+  kx        oscili    p9, 1/p10, 1, (p11 + 0.25)
+  kx        =  kx + p8
 
-ky   oscili p13, 1/p14, 1, p15
-ky   = ky + p12
+  ky        oscili    p13, 1/p14, 1, p15
+  ky        =  ky + p12
 
-kz   oscili p17, 1/p18, 1, p19
-kz   = kz + p16          
+  kz        oscili    p17, 1/p18, 1, p19
+  kz        =  kz + p16          
                     ;
                     ; So now we have signal as, at locations
                     ; kx, ky and kz.
@@ -510,17 +533,17 @@ kz   = kz + p16
                     ; X difference in postions between source and
                     ; left ear.  Likewise for other ear and 
                     ; reference points, and for Y as well.
-kdifxl    = kx - gkhxl
-kdifxr    = kx - gkhxr        
+  kdifxl    =  kx - gkhxl
+  kdifxr    =  kx - gkhxr        
 
-kdifxf    = kx - gkhxf
-kdifxb    = kx - gkhxb
+  kdifxf    =  kx - gkhxf
+  kdifxb    =  kx - gkhxb
 
-kdifyl    = ky - gkhyl        
-kdifyr    = ky - gkhyr        
+  kdifyl    =  ky - gkhyl        
+  kdifyr    =  ky - gkhyr        
 
-kdifyf    = ky - gkhyf
-kdifyb    = ky - gkhyb
+  kdifyf    =  ky - gkhyf
+  kdifyb    =  ky - gkhyb
                     ; - - - - - -
                     ;
                     ; Now we want to determine the delay times 
@@ -537,16 +560,16 @@ kdifyb    = ky - gkhyb
                     ;
                     ; We need the Z difference squared for the 
                     ; following Pythagoras stuff
-kzsq = kz * kz
+  kzsq      =  kz * kz
 
-kdell     = sqrt ( kdifxl * kdifxl + kdifyl * kdifyl + kzsq)     
-kdelr     = sqrt ( kdifxr * kdifxr + kdifyr * kdifyr + kzsq)     
+  kdell     =  sqrt ( kdifxl * kdifxl + kdifyl * kdifyl + kzsq)     
+  kdelr     =  sqrt ( kdifxr * kdifxr + kdifyr * kdifyr + kzsq)     
 
                     ; Now do likewise for the front point and the
                     ; back.
 
-kdelf     = sqrt ( kdifxf * kdifxf + kdifyf * kdifyf + kzsq)     
-kdelb     = sqrt ( kdifxb * kdifxb + kdifyb * kdifyb + kzsq)     
+  kdelf     =  sqrt ( kdifxf * kdifxf + kdifyf * kdifyf + kzsq)     
+  kdelb     =  sqrt ( kdifxb * kdifxb + kdifyb * kdifyb + kzsq)     
                     ;
                     ; All these delays are positive values.
                     ;
@@ -559,9 +582,9 @@ kdelb     = sqrt ( kdifxb * kdifxb + kdifyb * kdifyb + kzsq)
                     ; have an extra delay added for the left ear
                     ; because of the path around the head.
 
-kdeldiffl = kdell - kdelf
+  kdeldiffl =  kdell - kdelf
                     ; Likewise for right ear.
-kdeldiffr = kdelr - kdelf
+  kdeldiffr =  kdelr - kdelf
 
                     ; Calculate the delay difference between 
                     ; the left ear and the "B" point, for
@@ -570,16 +593,16 @@ kdeldiffr = kdelr - kdelf
                     ; and therefore the sound is coming from 
                     ; behind the head, and must have its high 
                     ; frequencies attenuated.
-kdeldifbl = kdell - kdelb
+  kdeldifbl =  kdell - kdelb
                     ; Likewise for right ear.
-kdeldifbr = kdelr - kdelb
+  kdeldifbr =  kdelr - kdelb
 
                     ; - - - - - - 
                     ;    
                     ; Establish a delay line with the maximum 
                     ; length.  Use a dummy variable to keep 
                     ; compiler happy.
-adum delayr    gidelmax  ;
+  adum      delayr    gidelmax                    ;
                     ; We write the stuff into it later, and
                     ; get stuff out of it with deltapi.
                     ; 
@@ -622,8 +645,8 @@ adum delayr    gidelmax  ;
                     ; Make the CPU costly calculation of 
                     ; delay time happen at the control rate - not 
                     ; audio rate.
-kdeldifftl = kdeldiffl - 0.15
-kdeldifftr = kdeldiffr - 0.15
+  kdeldifftl   =      kdeldiffl - 0.15
+  kdeldifftr   =      kdeldiffr - 0.15
                     ; With a 0.325 range in the difference in 
                     ; delay times between ear and F reference 
                     ; point, these values could go to +0.14 when 
@@ -636,8 +659,8 @@ kdeldifftr = kdeldiffr - 0.15
                
                     ;       True: False
 
-aleft     deltapi   (kdell + (kdeldifftl < 0 ? 0: (kdeldifftl * kdeldifftl * 8) ) )/ 1000
-aright    deltapi   (kdelr + (kdeldifftr < 0 ? 0: (kdeldifftr * kdeldifftr * 8) ) )/ 1000
+  aleft     deltapi   (kdell + (kdeldifftl < 0 ? 0: (kdeldifftl * kdeldifftl * 8) ) )/ 1000
+  aright    deltapi   (kdelr + (kdeldifftr < 0 ? 0: (kdeldifftr * kdeldifftr * 8) ) )/ 1000
 
                     ; Note - starting at a delay difference of
                     ; 0.15 implies an angle of 63.5 degrees from 
@@ -648,7 +671,7 @@ aright    deltapi   (kdelr + (kdeldifftr < 0 ? 0: (kdeldifftr * kdeldifftr * 8) 
                     ; See the Csound manual on how the deltapi
                     ; lines must be sandwiched between the 
                     ; delayr and delayw lines.
-delayw    as             
+            delayw    as             
                     ;
                     ; - - - - - - -
                     ;
@@ -673,8 +696,8 @@ delayw    as
                     ;
                     ; Try to power of 1.5 instead.
 
-aleft     = aleft  * (100 / (sqrt (kdell * kdell * kdell) ) + 0.01)
-aright    = aright * (100 / (sqrt (kdelr * kdelr * kdelr) ) + 0.01)
+  aleft     =  aleft  * (100 / (sqrt (kdell * kdell * kdell) ) + 0.01)
+  aright    =  aright * (100 / (sqrt (kdelr * kdelr * kdelr) ) + 0.01)
 
                     ; Now to process these delayed sounds for 
                     ; the volume and frequency responses of the
@@ -715,8 +738,8 @@ aright    = aright * (100 / (sqrt (kdelr * kdelr * kdelr) ) + 0.01)
                     ;
                     ; True :  False     
 
-aleft  = aleft  * (kdeldifbl < -0.209 ? 1 : 0.791 - kdeldifbl )
-aright = aright * (kdeldifbr < -0.209 ? 1 : 0.791 - kdeldifbr )
+  aleft     =  aleft  * (kdeldifbl < -0.209 ? 1 : 0.791 - kdeldifbl )
+  aright    =  aright * (kdeldifbr < -0.209 ? 1 : 0.791 - kdeldifbr )
 
                     ; (For max speed, this could be added to the
                     ; pair of equations above.)
@@ -731,15 +754,15 @@ aright = aright * (kdeldifbr < -0.209 ? 1 : 0.791 - kdeldifbr )
 
                     ;True: False
 
-kfiltl = 1 - (kdeldifbl < 0.1 ? 0: ((kdeldifbl - 0.1) * 1.78) )
-kfiltr = 1 - (kdeldifbr < 0.1 ? 0: ((kdeldifbr - 0.1) * 1.78) )
+  kfiltl    =  1 - (kdeldifbl < 0.1 ? 0: ((kdeldifbl - 0.1) * 1.78) )
+  kfiltr    =  1 - (kdeldifbr < 0.1 ? 0: ((kdeldifbr - 0.1) * 1.78) )
 
 
-aleftlow  tone aleft,     3000 * kfiltl
-aleftlow  tone aleftlow,  4500 * kfiltl
+  aleftlow  tone      aleft,     3000 * kfiltl
+  aleftlow  tone      aleftlow,  4500 * kfiltl
      
-arightlow tone aright,    3000 * kfiltr
-arightlow tone arightlow, 4500 * kfiltr
+  arightlow tone      aright,    3000 * kfiltr
+  arightlow tone      arightlow, 4500 * kfiltr
 
                     ; Add low frequencies, plus gain adjusted                   ; high freqencies, and accumulate the final 
                     ; sound to the global binaural mix variables.
@@ -752,11 +775,11 @@ arightlow tone arightlow, 4500 * kfiltr
                     ; kdeldifbx is 0.325
                     ;
                     ;                              True : False       
-gal = gal + aleftlow  +  (aleft  - aleftlow)  * (kdeldifbl < 0 ? 1 : 1 - kdeldifbl * kdeldifbl * 6.6)   
-gar = gar + arightlow +  (aright - arightlow) * (kdeldifbr < 0 ? 1 : 1 - kdeldifbr * kdeldifbr * 6.6)  
+  gal       =  gal + aleftlow  +  (aleft  - aleftlow)  * (kdeldifbl < 0 ? 1 : 1 - kdeldifbl * kdeldifbl * 6.6)   
+  gar       =  gar + arightlow +  (aright - arightlow) * (kdeldifbr < 0 ? 1 : 1 - kdeldifbr * kdeldifbr * 6.6)  
 
 
-     endin
+endin
 
 
 
@@ -770,24 +793,28 @@ gar = gar + arightlow +  (aright - arightlow) * (kdeldifbr < 0 ? 1 : 1 - kdeldif
 ;-----------------------------------------------------------------------------
 
                     ;---------------------------------------------
-     instr     98        ;
+instr     98        ;
                     ;
                     ; Get sound source.
                     ; Select from input ga4 to ga7.
-if   p4 == 7 goto in7    ;
-if   p4 == 6 goto in6    ;
-if   p4 == 5 goto in5    ;
+if   p4 == 7 goto in7                             ;
+if   p4 == 6 goto in6                             ;
+if   p4 == 5 goto in5                             ;
                     ;
-in4: as = ga4 
-     goto      done1
+in4:
+  as        =  ga4 
+            goto      done1
 
-in5: as = ga5
-     goto      done1
+in5:
+  as        =  ga5
+            goto      done1
 
-in6: as = ga6
-     goto      done1
+in6:
+  as        =  ga6
+            goto      done1
 
-in7: as = ga7
+in7:
+  as        =  ga7
 
                     ; Code above here generates an audio source
                     ; in local variable as.
@@ -795,11 +822,12 @@ in7: as = ga7
                     ;- - - - - - 
                     ; Add to the global binaural mix variables.
 
-done1: gal = gal + as
-gar  = gar + as
+done1:
+  gal       =  gal + as
+  gar       =  gar + as
 
 
-     endin
+endin
 
 ;-----------------------------------------------------------------------------
 ;
@@ -812,27 +840,27 @@ gar  = gar + as
 ;-----------------------------------------------------------------------------
                     ; Must be high instrument number so it is 
                     ; executed last.
-     instr     100       
+instr     100       
 
                     ; Do the output mixing with 1 LSB of dither and
                     ; a scaling factor for each channel.
 
-adith     rand 0.5
+  adith     rand      0.5
 
-     outs gal * p4 + adith, gar * p4 - adith
+            outs      gal * p4 + adith, gar * p4 - adith
 
                     ; Clear global mix variables for next cycle.
-gal  =    0    
-gar  =    0    
+  gal       =  0    
+  gar       =  0    
                     ; Clear gax for next cycle.
-ga0  =    0    
-ga1  =    0    
-ga2  =    0    
-ga3  =    0    
-ga4  =    0    
-ga5  =    0    
-ga6  =    0    
-ga7  =    0    
+  ga0       =  0    
+  ga1       =  0    
+  ga2       =  0    
+  ga3       =  0    
+  ga4       =  0    
+  ga5       =  0    
+  ga6       =  0    
+  ga7       =  0    
 ;ga8 =    0    
 ;ga9 =    0    
 ;ga10     =    0    
@@ -842,4 +870,4 @@ ga7  =    0
 ;ga14     =    0    
 ;ga15     =    0    
 
-     endin
+endin

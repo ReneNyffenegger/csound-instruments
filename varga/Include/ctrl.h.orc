@@ -14,8 +14,8 @@
 
 #define M_CTRLINIT(MCTLI_zofs'MCTLI_chn'MCTLI_ctrl'MCTLI_val) #
 
-	ctrlinit $MCTLI_chn, $MCTLI_ctrl, $MCTLI_val
-	ziw $MCTLI_val, int($MCTLI_zofs + $MCTLI_chn * 128 + $MCTLI_ctrl - 127.5)
+            ctrlinit  $MCTLI_chn, $MCTLI_ctrl, $MCTLI_val
+            ziw       $MCTLI_val, int($MCTLI_zofs + $MCTLI_chn * 128 + $MCTLI_ctrl - 127.5)
 
 #
 
@@ -30,8 +30,8 @@
 
 #define M_CTRL(MCTL_zofs'MCTL_chn'MCTL_ctrl) #
 
-k_	ctrl7 $MCTL_chn, $MCTL_ctrl, 0, 127
-	zkw int(k_ + 0.5), int($MCTL_zofs + $MCTL_chn * 128 + $MCTL_ctrl - 127.5)
+  k_        ctrl7     $MCTL_chn, $MCTL_ctrl, 0, 127
+            zkw       int(k_ + 0.5), int($MCTL_zofs + $MCTL_chn * 128 + $MCTL_ctrl - 127.5)
 
 #
 
@@ -47,10 +47,10 @@ k_	ctrl7 $MCTL_chn, $MCTL_ctrl, 0, 127
 
 #define M_CTRL0(MCTL0_zofs'MCTL0_chn'MCTL0_ctrl) #
 
-k_	ctrl7 $MCTL0_chn, $MCTL0_ctrl, 0, 127
-k__	zkr int($MCTL0_zofs + $MCTL0_chn * 128 + $MCTL0_ctrl - 127.5)
-k_	=  (k_ < 0.5 ? k__ : int(k_ + 0.5))
-	zkw k_, int($MCTL0_zofs + $MCTL0_chn * 128 + $MCTL0_ctrl - 127.5)
+  k_        ctrl7     $MCTL0_chn, $MCTL0_ctrl, 0, 127
+  k__       zkr       int($MCTL0_zofs + $MCTL0_chn * 128 + $MCTL0_ctrl - 127.5)
+  k_        =  (k_ < 0.5 ? k__ : int(k_ + 0.5))
+            zkw       k_, int($MCTL0_zofs + $MCTL0_chn * 128 + $MCTL0_ctrl - 127.5)
 
 #
 
@@ -63,9 +63,9 @@ k_	=  (k_ < 0.5 ? k__ : int(k_ + 0.5))
 
 #define INTERP_K(INTK_kr'INTK_itim) #
 
-k_		phasor 1 / ($INTK_itim)
-k_		trigger 1 - k_, 0.5, 0
-$INTK_kr	tlineto $INTK_kr, $INTK_itim, k_
+  k_        phasor    1 / ($INTK_itim)
+  k_        trigger   1 - k_, 0.5, 0
+$INTK_kr        tlineto $INTK_kr, $INTK_itim, k_
 
 #
 
@@ -80,7 +80,7 @@ $INTK_kr	tlineto $INTK_kr, $INTK_itim, k_
 
 #define Z_CTRL(ZCTL_kr'ZCTL_zofs'ZCTL_chn'ZCTL_ctrl) #
 
-$ZCTL_kr	zkr int($ZCTL_zofs + $ZCTL_chn * 128 + $ZCTL_ctrl - 127.5)
+$ZCTL_kr        zkr int($ZCTL_zofs + $ZCTL_chn * 128 + $ZCTL_ctrl - 127.5)
 
 #
 
@@ -98,7 +98,7 @@ $ZCTL_kr	zkr int($ZCTL_zofs + $ZCTL_chn * 128 + $ZCTL_ctrl - 127.5)
 
 #define Z_CTRLI(ZCTLI_kr'ZCTLI_zofs'ZCTLI_chn'ZCTLI_ctrl'ZCTLI_itim) #
 
-$ZCTLI_kr	zkr int($ZCTLI_zofs + $ZCTLI_chn * 128 + $ZCTLI_ctrl - 127.5)
+$ZCTLI_kr       zkr int($ZCTLI_zofs + $ZCTLI_chn * 128 + $ZCTLI_ctrl - 127.5)
 $INTERP_K($ZCTLI_kr'$ZCTLI_itim)
 
 #
@@ -111,7 +111,7 @@ $INTERP_K($ZCTLI_kr'$ZCTLI_itim)
 
 #define PITCHBEND(PBEND_kr'PBEND_range'PBEND_itim) #
 
-$PBEND_kr	cpsmidib $PBEND_range
+$PBEND_kr       cpsmidib $PBEND_range
 $INTERP_K($PBEND_kr'$PBEND_itim)
 
 #
@@ -124,7 +124,7 @@ $INTERP_K($PBEND_kr'$PBEND_itim)
 
 #define POLYAFT(POLYAFT_kr'POLYAFT_note'POLYAFT_itim) #
 
-$POLYAFT_kr	polyaft $POLYAFT_note, 0, 127
+$POLYAFT_kr     polyaft $POLYAFT_note, 0, 127
 $INTERP_K($POLYAFT_kr'$POLYAFT_itim)
 
 #

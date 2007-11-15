@@ -1,15 +1,15 @@
-sr = 44100
-kr = 44100
-ksmps = 1
-		
+  sr        =  44100
+  kr        =  44100
+  ksmps     =  1
+                
 ;macro includes
-#include"PITCHC~1.TXT"	;pitch converters
-#include"WSFREN~1.TXT"	;waveshaping French horn 
-#include"SUBFRE~1.TXT"	;sbutractive French horn (pitched source)
-#include"SUBFRE~2.TXT"	;subtractive French horn (noise source)
-#include"FOFFRE~1.TXT"	;fof French horn 
-#include"MONOOUT.TXT"	;monophonic output
-#include"CHCLEAR.TXT"	;channel clearer
+#include"PITCHC~1.TXT"  ;pitch converters
+#include"WSFREN~1.TXT"  ;waveshaping French horn 
+#include"SUBFRE~1.TXT"  ;sbutractive French horn (pitched source)
+#include"SUBFRE~2.TXT"  ;subtractive French horn (noise source)
+#include"FOFFRE~1.TXT"  ;fof French horn 
+#include"MONOOUT.TXT"   ;monophonic output
+#include"CHCLEAR.TXT"   ;channel clearer
 
 
 ;gloabal variables here
@@ -18,9 +18,9 @@ ksmps = 1
 $wsFhornFT
 
 ;other includes go here
-#include"ZAKINI~1.TXT"	;the zak initializer
-#include"TUNING~1.TXT"	;the tuning proclaimer
-#include"MODEPR~1.TXT"	;the mode proclaimer
+#include"ZAKINI~1.TXT"  ;the zak initializer
+#include"TUNING~1.TXT"  ;the tuning proclaimer
+#include"MODEPR~1.TXT"  ;the mode proclaimer
 
 
 

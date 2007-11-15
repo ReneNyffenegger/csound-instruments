@@ -27,18 +27,18 @@
               
 ;*********************************   HEADER   *********************************           
 
-sr             =         44100
-kr             =         4410
-ksmps          =         10
-nchnls         =         2
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  2
 
- instr         1
+instr         1
 
- iamp          =         ampdb(p4)               
- k1            linen     iamp,.01,p3,.01
- a1            oscili    k1,p5,1             
-               outs      a1,a1
- endin  
+  iamp      =  ampdb(p4)               
+  k1        linen     iamp,.01,p3,.01
+  a1        oscili    k1,p5,1             
+            outs      a1,a1
+endin  
 
 
               

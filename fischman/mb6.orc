@@ -1,102 +1,104 @@
-; MB6.ORC		 Filters the output of any soundfile (file code SOUNDIN.NNN)
-;			 with time-varying pulsation frequency, 
-;			 filter centre frequency and bandwidth.
-;			 Spatializes the output and applies Doppler shift
-;			 (c) Rajmil Fischman, 1997
+; MB6.ORC                Filters the output of any soundfile (file code SOUNDIN.NNN)
+;                        with time-varying pulsation frequency, 
+;                        filter centre frequency and bandwidth.
+;                        Spatializes the output and applies Doppler shift
+;                        (c) Rajmil Fischman, 1997
 ;---------------------------------------- 
-sr		=		44100
-kr		=		4410
-ksmps	=		10
-nchnls	=		2
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  2
 
-		instr 6					
-;----------------------------------------	;PARAMETER LIST
-; p4:	SCALING AMPLITUDE FACTOR, SCALES THE FILTER OUTPUT
-; p5:	OVERALL ATTACK
-; p6:	OVERALL DECAY
-; p7:	SOUNDFILE CODE
-; p8:	SOUNDFILE SKIP
-; p9:	MINIMUM PULSATION FREQUENCY
-; p10:	MAXIMUM PULSATION FREQUENCY
-; p11:	PULSATION FREQUENCY FLUCTUATION FUNCTION
-; p12:	PULSATION ENVELOPE FUNCTION
-; p13:	MINIMUM CENTRE FREQUENCY OF BAND-PASS FILTER
-; p14:	MAXIMUM CENTRE FREQUENCY OF BAND-PASS FILTER
-; p15:	CENTRE FREQUENCY FUNCTION
-; p16: 	MINIMUM BANDWIDTH OF BAND-PASS FILTER (% OF CENTRE FREQUENCY)
-; p17:	MAXIMUM BANDWIDTH OF BAND-PASS FILTER (% OF CENTRE FREQUENCY)
-; p18:	BANDWIDTH FUNCTION
-; p19:	MAXIMUM PAN	BEYOND LEFT SPEAKER < -1
-;					LEFT SPEAKER = -1
-;					BETWEEN SPEAKERS <1 AND > -1
-;					RIGHT SPEAKER = 1
-;					BEYOND RIGHT SPEAKER = -1
-; p20:	PAN FUNCTION
+instr 6                                 
+;----------------------------------------       ;PARAMETER LIST
+; p4:   SCALING AMPLITUDE FACTOR, SCALES THE FILTER OUTPUT
+; p5:   OVERALL ATTACK
+; p6:   OVERALL DECAY
+; p7:   SOUNDFILE CODE
+; p8:   SOUNDFILE SKIP
+; p9:   MINIMUM PULSATION FREQUENCY
+; p10:  MAXIMUM PULSATION FREQUENCY
+; p11:  PULSATION FREQUENCY FLUCTUATION FUNCTION
+; p12:  PULSATION ENVELOPE FUNCTION
+; p13:  MINIMUM CENTRE FREQUENCY OF BAND-PASS FILTER
+; p14:  MAXIMUM CENTRE FREQUENCY OF BAND-PASS FILTER
+; p15:  CENTRE FREQUENCY FUNCTION
+; p16:  MINIMUM BANDWIDTH OF BAND-PASS FILTER (% OF CENTRE FREQUENCY)
+; p17:  MAXIMUM BANDWIDTH OF BAND-PASS FILTER (% OF CENTRE FREQUENCY)
+; p18:  BANDWIDTH FUNCTION
+; p19:  MAXIMUM PAN     BEYOND LEFT SPEAKER < -1
+;                                       LEFT SPEAKER = -1
+;                                       BETWEEN SPEAKERS <1 AND > -1
+;                                       RIGHT SPEAKER = 1
+;                                       BEYOND RIGHT SPEAKER = -1
+; p20:  PAN FUNCTION
 ;--------------------------------------------;INITIALIZATION BLOCK
-idur		=		p3					; DURATION
-iampf	=		p4					; SCALING AMPLITUDE FACTOR
-iatt		=		p5					; OVERALL ATTACK
-idec		=		p6					; OVERALL DECAY
-isfcode	=		p7					; SOUNDFILE CODE
-isfskip	=		p8					; SOUNDFILE SKIP
-ipeamp	=		1.0					; PULSATION FREQUENCY AMPLITUDE
-ipfmin	=		p9					; MINIMUM PULSATION FREQUENCY
-ipffluc	=		p10-p9				; PULSATION FREQUENCY FLUCTUATION
-ipffunc	=		p11					; PULSATION FREQUENCY FLUCTUATION FUNCTION
-ipefunc	=		p12					; PULSATION ENVELOPE FUNCTION
-icfmin	=		p13					; FILTER MINIMUM CENTER FREQUENCY
-icffluc	=		p14-p13				; FILTER CENTER FREQUENCY FLUCTUATION
-icffunc 	=		p15					; FILTER CENTRE FEQUENCY FUNCTION
-ibwmin	=		p16					; FILTER MINIMUM BANDWITH
-ibwfluc	=		p17-p16				; FILTER BANDWIDTH FLUCTUATION
-ibwfunc	=		p18					; FILTER BANDWIDTH FUNCTION
-iampbal	=		1					; FILTER POWER BALANCING
+  idur      =  p3                                 ; DURATION
+  iampf     =  p4                                 ; SCALING AMPLITUDE FACTOR
+  iatt      =  p5                                 ; OVERALL ATTACK
+  idec      =  p6                                 ; OVERALL DECAY
+  isfcode   =  p7                                 ; SOUNDFILE CODE
+  isfskip   =  p8                                 ; SOUNDFILE SKIP
+  ipeamp    =  1.0                                ; PULSATION FREQUENCY AMPLITUDE
+  ipfmin    =  p9                                 ; MINIMUM PULSATION FREQUENCY
+  ipffluc   =  p10-p9                             ; PULSATION FREQUENCY FLUCTUATION
+  ipffunc   =  p11                                ; PULSATION FREQUENCY FLUCTUATION FUNCTION
+  ipefunc   =  p12                                ; PULSATION ENVELOPE FUNCTION
+  icfmin    =  p13                                ; FILTER MINIMUM CENTER FREQUENCY
+  icffluc   =  p14-p13                            ; FILTER CENTER FREQUENCY FLUCTUATION
+  icffunc   =  p15                                ; FILTER CENTRE FEQUENCY FUNCTION
+  ibwmin    =  p16                                ; FILTER MINIMUM BANDWITH
+  ibwfluc   =  p17-p16                            ; FILTER BANDWIDTH FLUCTUATION
+  ibwfunc   =  p18                                ; FILTER BANDWIDTH FUNCTION
+  iampbal   =  1                                  ; FILTER POWER BALANCING
 ;--------------------------------------------; PULSATION
-kpfreq	oscil1	0,ipffluc,idur,ipffunc	; FREQUENCY VARIATION
-kpfreq	=		ipfmin+kpfreq
-kpenv	oscil	ipeamp,kpfreq,ipefunc	; ENVELOPE
+  kpfreq    oscil1    0,ipffluc,idur,ipffunc      ; FREQUENCY VARIATION
+  kpfreq    =  ipfmin+kpfreq
+  kpenv     oscil     ipeamp,kpfreq,ipefunc       ; ENVELOPE
 ;--------------------------------------------; OVERALL ENVELOPE
-kenv		linen	iampf,iatt,idur,idec	  
-kenv		=		kenv*kpenv			; MULTIPLY BY PULSATION ENVELOPE
+  kenv      linen     iampf,iatt,idur,idec      
+  kenv      =  kenv*kpenv                         ; MULTIPLY BY PULSATION ENVELOPE
 ;--------------------------------------------; FILTER PARAMETERS
-kcf		oscil1	0,icffluc,idur,icffunc	; CENTER FREQUENCY
-kcf		=		icfmin+kcf
-kbw		oscil1	0,ibwfluc,idur,ibwfunc	; BANDWIDTH
-kbw		=		(ibwmin+kbw)*kcf/100.0
+  kcf       oscil1    0,icffluc,idur,icffunc      ; CENTER FREQUENCY
+  kcf       =  icfmin+kcf
+  kbw       oscil1    0,ibwfluc,idur,ibwfunc      ; BANDWIDTH
+  kbw       =  (ibwmin+kbw)*kcf/100.0
 ;--------------------------------------------; PROCESS
-ain		soundin	isfcode,isfskip		; INPUT SOUNDFILE
-afilt 	reson	ain,kcf,kbw,iampbal		; FILTER
+  ain       soundin   isfcode,isfskip             ; INPUT SOUNDFILE
+  afilt     reson     ain,kcf,kbw,iampbal         ; FILTER
 ;--------------------------------------------; PANNING
-imaxpan	=		p19					; MAXIMUM PAN
-ipfreq	=		p20					; PAN FREQUENCY
-ipanfunc	=		p21					; PAN FUNCTION TABLE
-isr2	 	=		sqrt(2.0)				; SQUARE ROOT OF 2 (FOR PANNING)
-isr2b2	=		isr2/2.0				; HALF OF SQUARE ROOT OF 2 (FOR PANNING)
-kpan		oscili	imaxpan,ipfreq,ipanfunc	; PANNING TRAJECTORY
-		if		kpan<-1 kgoto beyondl	; CHECK FOR PAN BEYOND LEFT SPEAKER
-		if		kpan>1 kgoto beyondr	; CHECK FOR PAN BEYOND RIGHT SPEAKER
+  imaxpan   =  p19                                ; MAXIMUM PAN
+  ipfreq    =  p20                                ; PAN FREQUENCY
+  ipanfunc  =  p21                                ; PAN FUNCTION TABLE
+  isr2      =  sqrt(2.0)                          ; SQUARE ROOT OF 2 (FOR PANNING)
+  isr2b2    =  isr2/2.0                           ; HALF OF SQUARE ROOT OF 2 (FOR PANNING)
+  kpan      oscili    imaxpan,ipfreq,ipanfunc     ; PANNING TRAJECTORY
+if              kpan<-1 kgoto beyondl             ; CHECK FOR PAN BEYOND LEFT SPEAKER
+if              kpan>1 kgoto beyondr              ; CHECK FOR PAN BEYOND RIGHT SPEAKER
 ;--------------------------------------------; PAN BETWEEN SPEAKERS
-ktemp	=		sqrt(1+kpan*kpan)
-kpleft	=		isr2b2*(1-kpan)/ktemp
-kpright	=		isr2b2*(1+kpan)/ktemp
-		kgoto	donepan
-beyondl:								; PAN BEYOND LEFT SPEAKER
-kpleft	=		2.0/(1+kpan*kpan)
-kpright	=		0
-		kgoto	donepan
-beyondr:								; PAN BEYOND RIGHT SPEAKER
-kpleft	=		0
-kpright	=		2.0/(1+kpan*kpan)
+  ktemp     =  sqrt(1+kpan*kpan)
+  kpleft    =  isr2b2*(1-kpan)/ktemp
+  kpright   =  isr2b2*(1+kpan)/ktemp
+            kgoto     donepan
+beyondl:
+                                                                ; PAN BEYOND LEFT SPEAKER
+  kpleft    =  2.0/(1+kpan*kpan)
+  kpright   =  0
+            kgoto     donepan
+beyondr:
+                                                                ; PAN BEYOND RIGHT SPEAKER
+  kpleft    =  0
+  kpright   =  2.0/(1+kpan*kpan)
 donepan:
 ;--------------------------------------------; DOPPLER SHIFT (FROM CSOUND MANUAL)
-ihspeakd	=		5.0					; HALF OF THE DISTANCE BETWEEN SPEAKERS (M)
-isndsp	=		331.45				; SOUND SPEED IN AIR (M/SEC)
-impandel	=		imaxpan*ihspeakd/isndsp	; MAXIMUM PAN DELAY
+  ihspeakd  =  5.0                                ; HALF OF THE DISTANCE BETWEEN SPEAKERS (M)
+  isndsp    =  331.45                             ; SOUND SPEED IN AIR (M/SEC)
+  impandel  =  imaxpan*ihspeakd/isndsp            ; MAXIMUM PAN DELAY
 
-kpdel	=		kpan*ihspeakd/isndsp	; FIND PAN DELAY
-adump	delayr	impandel				; SET MAXIMUM
-aout		deltapi	abs(kpdel)			; TAP DELAY ACCORDING TO PAN
-		delayw	afilt				; DELAY SIGNAL
+  kpdel     =  kpan*ihspeakd/isndsp               ; FIND PAN DELAY
+  adump     delayr    impandel                    ; SET MAXIMUM
+  aout      deltapi   abs(kpdel)                  ; TAP DELAY ACCORDING TO PAN
+            delayw    afilt                       ; DELAY SIGNAL
 ;--------------------------------------------; OUTPUT
-		outs		kenv*kpleft*aout,kenv*kpright*aout
-		endin
+            outs      kenv*kpleft*aout,kenv*kpright*aout
+endin

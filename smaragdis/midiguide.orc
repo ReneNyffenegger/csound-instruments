@@ -1,53 +1,53 @@
 
-sr        =         44100
-kr        =         4410
-ksmps     =         10
-nchnls    =         2
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  2
 
-          instr 1
+instr 1
                     ;SORT OF KARPLUS-STRONG STRING
 
-idamp     =         5000
-ipitch    cpsmidib
-iperiod   =         1000.0/ipitch
-isc       =         100
-afeed     init      0
+  idamp     =  5000
+  ipitch    cpsmidib  
+  iperiod   =  1000.0/ipitch
+  isc       =  100
+  afeed     init      0
 
-aimpl     oscilx    10000, ipitch, 1, 1
+  aimpl     oscilx    10000, ipitch, 1, 1
      
-arefl     tone      aimpl + afeed, idamp
-aout atone          arefl, idamp
-afeed     vdelay    arefl, iperiod, 1000
-          outs      aout*isc, aout*isc
-          endin
+  arefl     tone      aimpl + afeed, idamp
+  aout      atone     arefl, idamp
+  afeed     vdelay    arefl, iperiod, 1000
+            outs      aout*isc, aout*isc
+endin
 
-          instr 2
+instr 2
                     ;WAVEGUIDE PLUCKED STRING
 
-idamp     =         4000
-ipitch    =         440
-isc       =         50
-aright    init      0
-aleft     init      0
+  idamp     =  4000
+  ipitch    =  440
+  isc       =  50
+  aright    init      0
+  aleft     init      0
 
      ;Simple waveguide plucked string model.  Not worth looking over!
 
-aimpl     oscilx    10000, ipitch/2, 1, 1         ;Initial state of string 
-aimpr     oscilx    10000, ipitch/2, 2, 1
+  aimpl     oscilx    10000, ipitch/2, 1, 1       ;Initial state of string 
+  aimpr     oscilx    10000, ipitch/2, 2, 1
 
 ;kpitch   oscil     ipitch, 1/p3, 3
-kpitch    =         ipitch
+  kpitch    =  ipitch
 
-anrefl    tone      aimpl - aright, idamp         ;Reflect on nut
-aoutn     atone     anrefl, idamp                 ;Pick sound from nut
-aleft     vdelay    anrefl, 500/kpitch, 1000      ;Go to bridge
-abrefl    tone      aimpr - aleft, idamp          ;Reflect on bridge
-aoutb     atone     abrefl, idamp                 ;Pick sound from bridge
-aright    vdelay    abrefl, 500/kpitch, 1000      ;Go back to the nut
-          outs      aoutn*isc, aoutb*isc
-          endin
+  anrefl    tone      aimpl - aright, idamp       ;Reflect on nut
+  aoutn     atone     anrefl, idamp               ;Pick sound from nut
+  aleft     vdelay    anrefl, 500/kpitch, 1000    ;Go to bridge
+  abrefl    tone      aimpr - aleft, idamp        ;Reflect on bridge
+  aoutb     atone     abrefl, idamp               ;Pick sound from bridge
+  aright    vdelay    abrefl, 500/kpitch, 1000    ;Go back to the nut
+            outs      aoutn*isc, aoutb*isc
+endin
 
-          instr 3
+instr 3
                     ;WAVEGUIDE CLARINET 
 
      ; Interesting points in the extended Csound implementation:
@@ -72,35 +72,35 @@ aright    vdelay    abrefl, 500/kpitch, 1000      ;Go back to the nut
 
      ;    INIT SECTION
 
-idamp     =         1500                               ;Determines brightness of clarinet
-ipmax     =         10                                 ;Max mouth pressure
-ivol      =         1000                               ;Bring to audible level factor
-apbp      init      0                                  ;Init the returning pressure wave
+  idamp     =  1500                               ;Determines brightness of clarinet
+  ipmax     =  10                                 ;Max mouth pressure
+  ivol      =  1000                               ;Bring to audible level factor
+  apbp      init      0                           ;Init the returning pressure wave
 
      ;    CONTROL SECTION
-ipitch    cpsmidi
+  ipitch    cpsmidi   
 
-kpm       midictrl  10, 0, ipmax
-kpm       =         ipmax
-apm       =              kpm
-apm       tone      apm, 2
+  kpm       midictrl  10, 0, ipmax
+  kpm       =  ipmax
+  apm       =  kpm
+  apm       tone      apm, 2
 
-am        =         .01                                ;Embrochure/reed stiffness factor
-km        midictrl  8, 0.005, .03
-am        =         km
+  am        =  .01                                ;Embrochure/reed stiffness factor
+  km        midictrl  8, 0.005, .03
+  am        =  km
 
-krand     rand      1                                  ;Random element
-krand     port      krand, 1/kr
-apm       =         apm - (krand * ipmax)/10
+  krand     rand      1                           ;Random element
+  krand     port      krand, 1/kr
+  apm       =  apm - (krand * ipmax)/10
 
-kvs       midictrl  1, 0, 1                            ;Simple time varying vibrato
-kpitch    oscil     kvs*3, kvs*7, 4
-kbend     =         0
-kpitch    =         ipitch - kpitch; + kbend + krand * 50
+  kvs       midictrl  1, 0, 1                     ;Simple time varying vibrato
+  kpitch    oscil     kvs*3, kvs*7, 4
+  kbend     =  0
+  kpitch    =  ipitch - kpitch                    ; + kbend + krand * 50
 
-kgr       midictrl  11, 0, 1
-agrowl    oscil     apm * kgr, 20, 5                   ;Growling
-apm       =         apm * (1 - kgr) + agrowl
+  kgr       midictrl  11, 0, 1
+  agrowl    oscil     apm * kgr, 20, 5            ;Growling
+  apm       =  apm * (1 - kgr) + agrowl
 
      ;         WAVEGUIDE STARTS HERE
      ;
@@ -113,14 +113,14 @@ apm       =         apm * (1 - kgr) + agrowl
      ; arefl:            Reflected pressure wave at bell
      ; aout:             Output from bell
 
-apdp      =         2*apbp - apm
-atr       =         1 - am*(apdp - ipmax)
-apbm      =         apm/2 + atr * apdp/2               ;Start from reed
+  apdp      =  2*apbp - apm
+  atr       =  1 - am*(apdp - ipmax)
+  apbm      =  apm/2 + atr * apdp/2               ;Start from reed
      
-abell     vdelay    apbm, 500/kpitch, 1000             ;Go to bell
-arefl     tone      -abell, idamp                      ;Damp/reflect on bell
-aout      atone     abell, idamp                       ;Get out of bell
-apbp      vdelay    arefl, 500/kpitch, 1000            ;Go back to reed
+  abell     vdelay    apbm, 500/kpitch, 1000      ;Go to bell
+  arefl     tone      -abell, idamp               ;Damp/reflect on bell
+  aout      atone     abell, idamp                ;Get out of bell
+  apbp      vdelay    arefl, 500/kpitch, 1000     ;Go back to reed
 
-          outs      aout*ivol, aout*ivol               ;Give it to me!
-          endin
+            outs      aout*ivol, aout*ivol        ;Give it to me!
+endin

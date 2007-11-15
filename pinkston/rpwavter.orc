@@ -1,25 +1,25 @@
-	sr	=	44100
-	kr	=	4410
-	ksmps	=	10
-	nchnls	=	1
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  1
 ;===========================================================================;
 ; Example Wave Terrain Synthesis instrument. This directly implements the   ;
 ; Mitsuhashi orbiting formula (JAES 30:10), also utilized by Boronovo and   ;
 ; Haus (CMJ 10:3). The method used to implement a 2D table lookup here was  ;
-; borrowed from Jon Nelson's Wave Terrain Csound instruments.    	    ;
-; Russell Pinkston, 2-12-99             				    ;
+; borrowed from Jon Nelson's Wave Terrain Csound instruments.               ;
+; Russell Pinkston, 2-12-99                                                 ;
 ;===========================================================================;
-	instr 	1
+instr   1
 ;============================================================================
 ; This implements a 2-dimensional table access: F(x,y). It uses the formulas 
 ; given in Boronovo and Haus for calculating the x and y values:
-; 	x = 2fxt + Px + Ix(t)sin(2piFxt + Qx)
-; 	y = 2fyt + Py + Iy(t)sin(2piFyt + Qy)
+;       x = 2fxt + Px + Ix(t)sin(2piFxt + Qx)
+;       y = 2fyt + Py + Iy(t)sin(2piFyt + Qy)
 ; where 
-;	fx, fy, Fx, Fy are frequencies
-;	Px, Py, Qx, Qy are initial phase values
-;	Ix(t), Iy(t) are "time-dependent orbital parameters," which means
-;		the amplitudes of the sine waves which produce eliptical
+;       fx, fy, Fx, Fy are frequencies
+;       Px, Py, Qx, Qy are initial phase values
+;       Ix(t), Iy(t) are "time-dependent orbital parameters," which means
+;               the amplitudes of the sine waves which produce eliptical
 ;               motion through the 3D table.
 ;
 ; Notes:
@@ -70,86 +70,86 @@
 ;
 ; Russell Pinkston, 2/12/99
 ;=======================================================================================
-isinefn	=	1
-iamp	=	p4	;peak overall amplitude
-ifx	=	p5	;basic linear x movement frequency
-ify	=	p6	;basic linear y movement frequency
-iFx	=	p7	;sinusoidal x movement frequency
-iFy	=	p8	;sinusoidal y movement frequency
-iIx	=	p9	;pk index (amplitude) of x sine wave
-iIy	=	p10	;pk index (amplitude) of y sine wave
-ixfn	=	p11	;x function	
-iyfn	=	p12	;y function
-ixifn	=	p13	;x sin index control function
-iyifn	=	p14	;y sin index control function 
-iPx	=	p15	;initial phase for linear x motion
-iPy	=	p16	;initial phase for linear y motion
-iQx	=	p17	;initial phase for sinusoidal x motion
-iQy	=	p18	;initial phase for sinusoidal y motion
-kenv	linen	iamp,.1,p3,.2		;overall amplitude envelope
-aphx	phasor	ifx,iPx			;basic x frequency
-aphx	=	aphx-.5			;offset for table midpoint
-aphy	phasor	ify,iPy			;basic y frequency
-aphy	=	aphy-.5 		;offset for table midpoint
-ksinxi	oscil1i	0,iIx/2,p3,ixifn	;vary Ix dynamically
-ksinyi	oscil1i	0,iIy/2,p3,iyifn	;vary Iy dynamically
-asinx	oscili	ksinxi,iFx,isinefn,iQx	;x sine wave
-asiny	oscili	ksinyi,iFy,isinefn,iQy	;y sine wave
+  isinefn   =  1
+  iamp      =  p4                                 ;peak overall amplitude
+  ifx       =  p5                                 ;basic linear x movement frequency
+  ify       =  p6                                 ;basic linear y movement frequency
+  iFx       =  p7                                 ;sinusoidal x movement frequency
+  iFy       =  p8                                 ;sinusoidal y movement frequency
+  iIx       =  p9                                 ;pk index (amplitude) of x sine wave
+  iIy       =  p10                                ;pk index (amplitude) of y sine wave
+  ixfn      =  p11                                ;x function     
+  iyfn      =  p12                                ;y function
+  ixifn     =  p13                                ;x sin index control function
+  iyifn     =  p14                                ;y sin index control function 
+  iPx       =  p15                                ;initial phase for linear x motion
+  iPy       =  p16                                ;initial phase for linear y motion
+  iQx       =  p17                                ;initial phase for sinusoidal x motion
+  iQy       =  p18                                ;initial phase for sinusoidal y motion
+  kenv      linen     iamp,.1,p3,.2               ;overall amplitude envelope
+  aphx      phasor    ifx,iPx                     ;basic x frequency
+  aphx      =  aphx-.5                            ;offset for table midpoint
+  aphy      phasor    ify,iPy                     ;basic y frequency
+  aphy      =  aphy-.5                            ;offset for table midpoint
+  ksinxi    oscil1i   0,iIx/2,p3,ixifn            ;vary Ix dynamically
+  ksinyi    oscil1i   0,iIy/2,p3,iyifn            ;vary Iy dynamically
+  asinx     oscili    ksinxi,iFx,isinefn,iQx      ;x sine wave
+  asiny     oscili    ksinyi,iFy,isinefn,iQy      ;y sine wave
 ; offset index to table midpoint; use normalized index; set wrap flag on
-asigx	tablei	.5+aphx+asinx,ixfn,1,0,1	
-asigy	tablei	.5+aphy+asiny,iyfn,1,0,1
-asig	=	asigx*asigy*kenv	;multiply outputs and rescale
-out	asig	
-	endin
+  asigx     tablei    .5+aphx+asinx,ixfn,1,0,1        
+  asigy     tablei    .5+aphy+asiny,iyfn,1,0,1
+  asig      =  asigx*asigy*kenv                   ;multiply outputs and rescale
+            out       asig    
+endin
 
 ;=======================================================================;
-; Variant of instrument 1 which adds LFOs to the x & y sine wave index	;
-; control variables, ksinxi and ksinyi. RP	    			;
+; Variant of instrument 1 which adds LFOs to the x & y sine wave index  ;
+; control variables, ksinxi and ksinyi. RP                              ;
 ;=======================================================================;
 
-	instr 	2
-isinefn	=	1
-iamp	=	p4	;peak overall amplitude
-ifx	=	p5	;basic linear x movement frequency
-ify	=	p6	;basic linear y movement frequency
-iFx	=	p7	;sinusoidal x movement frequency
-iFy	=	p8	;sinusoidal y movement frequency
-iIx	=	p9	;pk index (amplitude) of x sine wave
-iIy	=	p10	;pk index (amplitude) of y sine wave
-ixfn	=	p11	;x function	
-iyfn	=	p12	;y function
-ixifn	=	p13	;x sin index control function
-iyifn	=	p14	;y sin index control function 
-iPx	=	p15	;initial phase for linear x motion
-iPy	=	p16	;initial phase for linear y motion
-iQx	=	p17	;initial phase for sinusoidal x motion
-iQy	=	p18	;initial phase for sinusoidal y motion
-iVIx	=	p19	;x LFO vib width factor (0 - 1)
-iVIy	=	p20	;y LFO vib width factor (0 - 1)
-iLFOxHz	=	p21	;x LFO vib rate
-iLFOyHz	=	p22	;y LFO vib rate
-kenv	linen	iamp,.1,p3,.2		;overall amplitude envelope
-aphx	phasor	ifx,iPx			;basic x frequency
-aphx	=	aphx-.5			;offset for table midpoint
-aphy	phasor	ify,iPy			;basic y frequency
-aphy	=	aphy-.5 		;offset for table midpoint
-ksinxi	oscil1i	0,iIx/2,p3,ixifn	;vary Ix dynamically
-ksinyi	oscil1i	0,iIy/2,p3,iyifn	;vary Iy dynamically
-kxLFO	oscili	iVIx,iLFOxHz,isinefn	;x LFO
-kyLFO	oscili	iVIy,iLFOyHz,isinefn	;y LFO
-ksinxi	=	ksinxi*(1 + kxLFO)	;apply xLFO to x Index
-ksinyi	=	ksinyi*(1 + kyLFO)	;apply yLFO to y Index
-asinx	oscili	ksinxi,iFx,isinefn,iQx	;x sine wave
-asiny	oscili	ksinyi,iFy,isinefn,iQy	;y sine wave
+instr   2
+  isinefn   =  1
+  iamp      =  p4                                 ;peak overall amplitude
+  ifx       =  p5                                 ;basic linear x movement frequency
+  ify       =  p6                                 ;basic linear y movement frequency
+  iFx       =  p7                                 ;sinusoidal x movement frequency
+  iFy       =  p8                                 ;sinusoidal y movement frequency
+  iIx       =  p9                                 ;pk index (amplitude) of x sine wave
+  iIy       =  p10                                ;pk index (amplitude) of y sine wave
+  ixfn      =  p11                                ;x function     
+  iyfn      =  p12                                ;y function
+  ixifn     =  p13                                ;x sin index control function
+  iyifn     =  p14                                ;y sin index control function 
+  iPx       =  p15                                ;initial phase for linear x motion
+  iPy       =  p16                                ;initial phase for linear y motion
+  iQx       =  p17                                ;initial phase for sinusoidal x motion
+  iQy       =  p18                                ;initial phase for sinusoidal y motion
+  iVIx      =  p19                                ;x LFO vib width factor (0 - 1)
+  iVIy      =  p20                                ;y LFO vib width factor (0 - 1)
+  iLFOxHz   =  p21                                ;x LFO vib rate
+  iLFOyHz   =  p22                                ;y LFO vib rate
+  kenv      linen     iamp,.1,p3,.2               ;overall amplitude envelope
+  aphx      phasor    ifx,iPx                     ;basic x frequency
+  aphx      =  aphx-.5                            ;offset for table midpoint
+  aphy      phasor    ify,iPy                     ;basic y frequency
+  aphy      =  aphy-.5                            ;offset for table midpoint
+  ksinxi    oscil1i   0,iIx/2,p3,ixifn            ;vary Ix dynamically
+  ksinyi    oscil1i   0,iIy/2,p3,iyifn            ;vary Iy dynamically
+  kxLFO     oscili    iVIx,iLFOxHz,isinefn        ;x LFO
+  kyLFO     oscili    iVIy,iLFOyHz,isinefn        ;y LFO
+  ksinxi    =  ksinxi*(1 + kxLFO)                 ;apply xLFO to x Index
+  ksinyi    =  ksinyi*(1 + kyLFO)                 ;apply yLFO to y Index
+  asinx     oscili    ksinxi,iFx,isinefn,iQx      ;x sine wave
+  asiny     oscili    ksinyi,iFy,isinefn,iQy      ;y sine wave
 ; offset index to table midpoint; use normalized index; set wrap flag on
-asigx	tablei	.5+aphx+asinx,ixfn,1,0,1	
-asigy	tablei	.5+aphy+asiny,iyfn,1,0,1
-asig	=	asigx*asigy*kenv	;multiply outputs and rescale
-out	asig	
-	endin
+  asigx     tablei    .5+aphx+asinx,ixfn,1,0,1        
+  asigy     tablei    .5+aphy+asiny,iyfn,1,0,1
+  asig      =  asigx*asigy*kenv                   ;multiply outputs and rescale
+            out       asig    
+endin
 ;========================================================================;
-; 		Alternative Wave Terrain Synthesis instrument. 		 ;
-;									 ;
+;               Alternative Wave Terrain Synthesis instrument.           ;
+;                                                                        ;
 ; This instrument utilizes the same orbiting formula as the previous one ;
 ; (Mitsuhashi), but it implements a true two-dimensional array lookup    ;
 ; F(x,y). It assumes the array is stored in memory the same way it would ;
@@ -158,66 +158,66 @@ out	asig
 ; locations 10-19, etc. Since Csound makes no provision for this, the    ;
 ; array must be accessed as if it had only one dimension, using table.   ;
 ; The actual dimensions (m, n) of the array must be known (we cannot use ;
-; a normalized index), and the raw table index calculated as follows: 	 ;
-;									 ;
+; a normalized index), and the raw table index calculated as follows:    ;
+;                                                                        ;
 ; index = x * n + y                                                      ;
-; 									 ;
-; where:								 ;
-;	m and n are the dimensions of a 2D array F(m,n)			 ;
-;	x and y are the raw indices to that array F(x,y)		 ;
-;	0 <= x < m and 0 <= y < n					 ;
-;									 ;
-; Note that since the orbiting formulas can produces values for x and y	 ;
+;                                                                        ;
+; where:                                                                 ;
+;       m and n are the dimensions of a 2D array F(m,n)                  ;
+;       x and y are the raw indices to that array F(x,y)                 ;
+;       0 <= x < m and 0 <= y < n                                        ;
+;                                                                        ;
+; Note that since the orbiting formulas can produces values for x and y  ;
 ; that are outside the array bounds, we must manually "wrap" them, indi- ;
 ; vidually. The trick to doing this is to convert them to phasors (vals  ;
-; between 0 and 1), using tables containing ramp functions. The phasors	 ;
+; between 0 and 1), using tables containing ramp functions. The phasors  ;
 ; can then be converted to raw table indices by rescaling them to the    ;
-; actual array dimensions. (See below.)	 				 ;
-;									 ;
+; actual array dimensions. (See below.)                                  ;
+;                                                                        ;
 ; The advantage of this implementation is that it assumes nothing about  ;
 ; the contents of the array. (The previous instrument assumed the array  ;
-; had been generated by multiplying two vectors.) The disadvantage is 	 ;
+; had been generated by multiplying two vectors.) The disadvantage is    ;
 ; that you have to create the wave terrain function manually. I.e., you  ;
-; can't fill it using stock Csound gen subroutines.	 		 ;
-; Russell Pinkston, 2-18-99             				 ;
+; can't fill it using stock Csound gen subroutines.                      ;
+; Russell Pinkston, 2-18-99                                              ;
 ;========================================================================;
 
-	instr 	3
+instr   3
 
-isinefn	=	1
-irampfn	=	8	;linear function from 0 - 1
-iamp	=	p4	;peak overall amplitude
-ifx	=	p5	;basic linear x movement frequency
-ify	=	p6	;basic linear y movement frequency
-iFx	=	p7	;sinusoidal x movement frequency
-iFy	=	p8	;sinusoidal y movement frequency
-iIx	=	p9	;pk index (amplitude) of x sine wave
-iIy	=	p10	;pk index (amplitude) of y sine wave
-iwtfn	=	p11	;2D Wave Terrain Function
-ixydim	=	p12	;assume x, y dimensions the same
-ixifn	=	p13	;x sin index control function
-iyifn	=	p14	;y sin index control function 
-iPx	=	p15	;initial phase for linear x motion
-iPy	=	p16	;initial phase for linear y motion
-iQx	=	p17	;initial phase for sinusoidal x motion
-iQy	=	p18	;initial phase for sinusoidal y motion
-kenv	linen	iamp,.1,p3,.2		;overall amplitude envelope
-aphx	phasor	ifx,iPx			;basic x frequency
-aphx	=	aphx-.5			;offset for table midpoint
-aphy	phasor	ify,iPy			;basic y frequency
-aphy	=	aphy-.5 		;offset for table midpoint
-ksinxi	oscil1i	0,iIx/2,p3,ixifn	;vary Ix dynamically
-ksinyi	oscil1i	0,iIy/2,p3,iyifn	;vary Iy dynamically
-asinx	oscili	ksinxi,iFx,isinefn,iQx	;x sine wave
-asiny	oscili	ksinyi,iFy,isinefn,iQy	;y sine wave
-ax	=	.5+aphx+asinx		;offset to function midpoint
-ay	=	.5+aphy+asiny		;create normalized ax, ay
-axphs	tablei	ax,irampfn,1,0,1	;convert x to a phasor
-ayphs	tablei	ay,irampfn,1,0,1	;convert y to a phasor
-axraw	=	axphs*ixydim		;convert axphs to raw index
-ayraw	=	ayphs*ixydim		;convert ayphs to raw index
-aindex	=	axraw*ixydim+ayraw	;convert to 1D table index
-asig	table	aindex,iwtfn		;raw table lookup
-asig	=	asig*kenv		;envelope/rescale
-	out	asig	
-	endin
+  isinefn   =  1
+  irampfn   =  8                                  ;linear function from 0 - 1
+  iamp      =  p4                                 ;peak overall amplitude
+  ifx       =  p5                                 ;basic linear x movement frequency
+  ify       =  p6                                 ;basic linear y movement frequency
+  iFx       =  p7                                 ;sinusoidal x movement frequency
+  iFy       =  p8                                 ;sinusoidal y movement frequency
+  iIx       =  p9                                 ;pk index (amplitude) of x sine wave
+  iIy       =  p10                                ;pk index (amplitude) of y sine wave
+  iwtfn     =  p11                                ;2D Wave Terrain Function
+  ixydim    =  p12                                ;assume x, y dimensions the same
+  ixifn     =  p13                                ;x sin index control function
+  iyifn     =  p14                                ;y sin index control function 
+  iPx       =  p15                                ;initial phase for linear x motion
+  iPy       =  p16                                ;initial phase for linear y motion
+  iQx       =  p17                                ;initial phase for sinusoidal x motion
+  iQy       =  p18                                ;initial phase for sinusoidal y motion
+  kenv      linen     iamp,.1,p3,.2               ;overall amplitude envelope
+  aphx      phasor    ifx,iPx                     ;basic x frequency
+  aphx      =  aphx-.5                            ;offset for table midpoint
+  aphy      phasor    ify,iPy                     ;basic y frequency
+  aphy      =  aphy-.5                            ;offset for table midpoint
+  ksinxi    oscil1i   0,iIx/2,p3,ixifn            ;vary Ix dynamically
+  ksinyi    oscil1i   0,iIy/2,p3,iyifn            ;vary Iy dynamically
+  asinx     oscili    ksinxi,iFx,isinefn,iQx      ;x sine wave
+  asiny     oscili    ksinyi,iFy,isinefn,iQy      ;y sine wave
+  ax        =  .5+aphx+asinx                      ;offset to function midpoint
+  ay        =  .5+aphy+asiny                      ;create normalized ax, ay
+  axphs     tablei    ax,irampfn,1,0,1            ;convert x to a phasor
+  ayphs     tablei    ay,irampfn,1,0,1            ;convert y to a phasor
+  axraw     =  axphs*ixydim                       ;convert axphs to raw index
+  ayraw     =  ayphs*ixydim                       ;convert ayphs to raw index
+  aindex    =  axraw*ixydim+ayraw                 ;convert to 1D table index
+  asig      table     aindex,iwtfn                ;raw table lookup
+  asig      =  asig*kenv                          ;envelope/rescale
+            out       asig    
+endin

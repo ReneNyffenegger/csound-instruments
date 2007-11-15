@@ -12,10 +12,10 @@
 ; WHILE.  IT MAY BE BEST TO PUT THIS JOB IN WHILE YOU'RE OUT TO LUNCH!    ;
 ;=========================================================================;
 
-sr             =         44100
-kr             =         4410
-ksmps          =         10
-nchnls         =         1
+  sr        =  44100
+  kr        =  4410
+  ksmps     =  10
+  nchnls    =  1
 
 instr          1
 
@@ -23,20 +23,20 @@ instr          1
 ; THE FOLLOWING "EXPSEG" CREATES THE GLISSANDO                            ;
 ;-------------------------------------------------------------------------;
 
-kgliss         expseg    p4, p3/2, p5, p3/2, p4
+  kgliss    expseg    p4, p3/2, p5, p3/2, p4
 ; P3=DURATION  P4=BOTTOM PITCH OF GLISS  P5=TOP PITCH OF GLISS
 
 ;-------------------------------------------------------------------------;
 ; THE FOLLOWING "EXPSEG" IS THE ENVELOPE SHAPE FOR ALL 501 OSCILLATORS    ;
 ;-------------------------------------------------------------------------;
 
-  kamp         expseg    .01, .1, 400, 27.9-(p2), 400, 2, 1
+  kamp      expseg    .01, .1, 400, 27.9-(p2), 400, 2, 1
 
 ;-------------------------------------------------------------------------;
 ; THE FOLLOWING "OSCILI" IS THE AUDIO OSCILLATOR THAT PLAYS THE GLISSANDO ;
 ; FOR ALL 501 OSCILLATORS                                                 ;
 ;-------------------------------------------------------------------------;
 
-agliss         oscili    kamp, kgliss, 1
-               out       agliss         ; SEND AUDIO SIGNAL TO CHANNEL 1
-               endin                    ; END OF INSTRUMENT AND ORCHESTRA
+  agliss    oscili    kamp, kgliss, 1
+            out       agliss                      ; SEND AUDIO SIGNAL TO CHANNEL 1
+endin                    ; END OF INSTRUMENT AND ORCHESTRA

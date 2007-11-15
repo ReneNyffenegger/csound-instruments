@@ -21,49 +21,49 @@
 ; frequency, the entire table will always be read from beginning to 
 ; end at exactly the same rate, regardless of the phasor frequency.
 
-sr	=	22050
-kr	=	2205
-ksmps	=	10
-nchnls	=	1
+  sr        =  22050
+  kr        =  2205
+  ksmps     =  10
+  nchnls    =  1
 
-	instr 	1	;basic pulser instrument w/random pitches
-isinefn	=	1	;audio wave shape func
-igatefn	=	2	;envelope (gating) func
-imaxamp	=	20	;highest value table index will have
-imaxhz	=	20	;fastest rate of pulsing
-iminhz	=	2	;slowest rate of pulsing
-icent	=	octpch(p5)
-imaxrnd	=	2
-kplshz	linseg	imaxhz,p3/2,iminhz,p3/2,imaxhz	;pulse freq control
-aphase	phasor	kplshz	;changing pulse freq
-aindex	=	aphase*imaxamp/kplshz	;change phase amp inv of freq
-agate	tablei	aindex,igatefn,1	;the gate
-kpitch	randh	imaxrnd,kplshz		;get random pitch offset
-asig	oscili	agate,cpsoct(icent+kpitch),isinefn	;the sound
-	out	asig*p4
-	endin
+instr   1       ;basic pulser instrument w/random pitches
+  isinefn   =  1                                  ;audio wave shape func
+  igatefn   =  2                                  ;envelope (gating) func
+  imaxamp   =  20                                 ;highest value table index will have
+  imaxhz    =  20                                 ;fastest rate of pulsing
+  iminhz    =  2                                  ;slowest rate of pulsing
+  icent     =  octpch(p5)
+  imaxrnd   =  2
+  kplshz    linseg    imaxhz,p3/2,iminhz,p3/2,imaxhz ;pulse freq control
+  aphase    phasor    kplshz                      ;changing pulse freq
+  aindex    =  aphase*imaxamp/kplshz              ;change phase amp inv of freq
+  agate     tablei    aindex,igatefn,1            ;the gate
+  kpitch    randh     imaxrnd,kplshz              ;get random pitch offset
+  asig      oscili    agate,cpsoct(icent+kpitch),isinefn ;the sound
+            out       asig*p4
+endin
 
-	instr 	2	;pulser with contstrained random pitches
-isinefn	=	1	;audio wave shape func
-igatefn	=	2	;envelope (gating) func
-imaxamp	=	20	;highest value table index will have
-imaxhz	=	20	;fastest rate of pulsing
-iminhz	=	2	;slowest rate of pulsing
-imaxrnd	=	7.999	;almost 8, but not quite
-ipitfn	=	3	;table of acceptable intervals
-klast	init	0	;variable to remember our last pitch with
-kplshz	linseg	imaxhz,p3/2,iminhz,p3/2,imaxhz	;pulse freq control
-aphase	phasor	kplshz	;changing pulse freq
-aindex	=	aphase*imaxamp/kplshz	;change phase amp inv of freq
-agate	tablei	aindex,igatefn,1	;the gate
-kpitno	randh	imaxrnd,kplshz
-kpitch	table	kpitno,ipitfn,0,0,1
+instr   2       ;pulser with contstrained random pitches
+  isinefn   =  1                                  ;audio wave shape func
+  igatefn   =  2                                  ;envelope (gating) func
+  imaxamp   =  20                                 ;highest value table index will have
+  imaxhz    =  20                                 ;fastest rate of pulsing
+  iminhz    =  2                                  ;slowest rate of pulsing
+  imaxrnd   =  7.999                              ;almost 8, but not quite
+  ipitfn    =  3                                  ;table of acceptable intervals
+  klast     init      0                           ;variable to remember our last pitch with
+  kplshz    linseg    imaxhz,p3/2,iminhz,p3/2,imaxhz ;pulse freq control
+  aphase    phasor    kplshz                      ;changing pulse freq
+  aindex    =  aphase*imaxamp/kplshz              ;change phase amp inv of freq
+  agate     tablei    aindex,igatefn,1            ;the gate
+  kpitno    randh     imaxrnd,kplshz
+  kpitch    table     kpitno,ipitfn,0,0,1
 ;A problem to solve: how can we avoid repeating the same pitch
 ; with this instrument? The following doesn't work, we learned,
 ; because we need to check on each new random number, not every k.
 ;
-;kpitch	=	(kpitch == klast ? kpitch - 1 : kpitch)
-;klast	=	kpitch
-asig	oscili	agate,cpspch(p5+kpitch),isinefn	;the sound
-	out	asig*p4
-	endin
+;kpitch =       (kpitch == klast ? kpitch - 1 : kpitch)
+;klast  =       kpitch
+  asig      oscili    agate,cpspch(p5+kpitch),isinefn ;the sound
+            out       asig*p4
+endin

@@ -8,7 +8,7 @@ instr     2904
   isublev   =  0.4                                ; LEVEL OF SUB OCTAVE SIGNAL
   istl      =  0.4                                ; SCHMIDTT TRIGGER LEVEL FOR SQUARE WAVE
   iincr     =  sr/8                               ; USED FOR INCREMENTING DIVIDE BY 2 COUNTER
-  ain       soundin   "guitar.wav"               ; THE SOUND FILE TO BE PROCESSED
+  ain       soundin   "guitar.wav"                ; THE SOUND FILE TO BE PROCESSED
   alpf      butterlp  ain,700                     ; 700 Hz LPF
   kpwr      rms       alpf
   ahigh     table     (alpf-istl*kpwr)/5000+16,2
