@@ -7,7 +7,7 @@
 ; remeber that csound will only hold upto 20 files in memory before it
 ; causes a segmentation fault.
 
-f1 0 8192 10 1
+f1  0 8192  10    1  
 
 ; -negative values specify positions on the left 
 ; -positive values specify positions on the right
@@ -18,8 +18,8 @@ f1 0 8192 10 1
 
 
 ;                   AZIMUTH        ELEVATION
-i1	0	1.4		   0			0
-i2	1.2	1.6		   0		   	0
+i1  0  1.4    0      0    
+i2  1.2       1.6    0      0    
 
 ;i1	3	1.4		  -90		0
 ;i2	4.2	1.6		   90		0

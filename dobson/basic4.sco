@@ -25,11 +25,11 @@
 ;basic4.sco
 ; add third slurred note, and try varied amps too 
 
-f1 0 1024 10 1
+f1  0 1024  10    1  
 ;neg p3 for a held note, NB: MUST use abs(p3) in orc! 
-i1 0 -4 20000 333 pp5	;held note, but p3 still controls envelope
+i1  0  -4     20000  333    pp5         ;held note, but p3 still controls envelope
 ; the slurred note: amp is what the main note will have got to, 
-i1 2 -2 10000 523 pp5	; special env for this
-i1 3 1 7500 415 pp5
+i1  2  -2     10000  523    pp5         ; special env for this
+i1  3  1      7500   415    pp5
 e
 

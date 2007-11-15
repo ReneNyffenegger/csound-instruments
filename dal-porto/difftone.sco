@@ -1,7 +1,7 @@
 ; DIFFTONE.SCO (COMPUTER SCORE FOR GENERATING "DIFFERENCE" TONES)
 ; BY MARK DAL PORTO          
 
-f1 0 512 10 1                 ; USES GEN10 TO COMPUTE A SINE WAVE
+f1  0 512   10    1                     ; USES GEN10 TO COMPUTE A SINE WAVE
 
 ;=========================================================================;
 ; THE FOLLOWING INSTRUMENT USES 2 OSCILLATORS - ONE CREATES A GLISSANDO   ;
@@ -11,7 +11,7 @@ f1 0 512 10 1                 ; USES GEN10 TO COMPUTE A SINE WAVE
 ;=========================================================================;
 
 ; INSTRUMENT    START    DURATION    VOLUME
-          
-i1               0         20        15000   
+
+i1  0  20     15000   
 
 e                             ; INDICATES THE END OF THE SCORE

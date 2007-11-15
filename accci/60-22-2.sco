@@ -5,8 +5,8 @@
 
 ; score ******************************************************************
 ;         idur
-i1    0     5  ; forward up
-i2    5    10  ; and backwards down
+i1  0  5                                ; forward up
+i2  5  10                               ; and backwards down
 e
 
 

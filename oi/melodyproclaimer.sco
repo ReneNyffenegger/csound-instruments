@@ -4,7 +4,7 @@
 ; current note in 8ve.md notation, mode corresponding to above +n40, 
 ; i.e., mode 0 applies to melody channels 0,40,80; 1 to 1,41,81, etc.
 ; 0.0 signifies a rest
-f3 0 128 -2 0 0 0 
+f3  0 128   -2    0     0     0   
 
 # define Melody #10#
 

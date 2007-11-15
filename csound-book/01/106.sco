@@ -2,13 +2,13 @@
 
 
 
-f 4  0 0    1   "sing.aif" 0 4 0
+f 4 0 0     1     "sing.aif"  0     4     0   
 
 
 
 ;inst	start	duration
 
-i 106     	0      15
+i 106  0      15   
 
 
 

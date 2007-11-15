@@ -1,8 +1,8 @@
 ; TEST SCORE FOR FM EXPERIMENTS
 ;
 
-f0 30
+f0  30
 
 ; SINE TABLE
-f1 0 8192 10 1
+f1  0 8192  10    1  
 

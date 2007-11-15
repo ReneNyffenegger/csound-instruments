@@ -43,10 +43,10 @@
 ;CONTROL FUNCTIONS
 ;DURATION (THE LARGER, THE MORE SPARSE, E.G. >50 MSEC.)
 ;f11 0 512 -7 20 256 50  256 20                   ;[see p4 of instr1]
-f11 0 512 -7 10 256 100 256 10
+f11 0 512   -7    10    256   100   256   10
 ;DELAY (THE SMALLER, THE MORE FUSED, DETACHED WHEN >50 MSEC.)
 ;f12 0 512 -7 10  256 10 256 10                   ;[see p5]
-f12 0 512 -7 50 256 10 256 50
+f12 0 512   -7    50    256   10    256   50
 ;*******************
 ;DURATION DEVIATION (DURATIONAL IRREGULARITY)
 ;f13 0 512 -7 10 512 5                            ;[see p6]
@@ -55,25 +55,25 @@ f12 0 512 -7 50 256 10 256 50
 ;f13 0 512 -7 100 256 1 256 100
 ;ERROR MESSAGES WHEN 200 IN P6, MUST BE INIT VALUE = 100
 ;f13 0 512 -7 100 256 200 50
-f13 0 512 -7 50 512 1
+f13 0 512   -7    50    512   1 
 ;********************
 ;RISE TIME
-f14 0 512 -7 2  512 2                             ;[see p7]
+f14 0 512   -7    2     512   2         ;[see p7]
 ;FREQUENCY
 ;f15 0 512 -7 50  256 100 256 150                 ;[see p8]
-f15 0 512 -7 30 256 300 256 50 ;p8=30
+f15 0 512   -7    30    256   300   256   50 ;p8=30
 ;FREQUENCY DEVIATION
 ;f16 0 512 -7 100 256 200 256 400                 ;[see p9]
-f16 0 512 -7 50 100 100 412 400                   ;QUICKLY TO 100 HZ, THEN MORE SLOWLY TO 400 HZ
+f16 0 512   -7    50    100   100   412   400 ;QUICKLY TO 100 HZ, THEN MORE SLOWLY TO 400 HZ
 ;PHASE
-f17 0 512 -7 0 512 0                              ;[see p10]
+f17 0 512   -7    0     512   0         ;[see p10]
 ;GLOBAL ENVELOPE
-f18 0 512 7 0   64  1  384  1  64 0               ;[see p11]
+f18 0 512   7     0     64    1     384   1     64    0 ;[see p11]
 ;SMOOTHING FUNCTION
-f19 0 1025 8  0 256 0.1 256 0.5 256 0.9 257 1
+f19 0 1025  8     0     256   0.1   256   0.5   256   0.9   257   1 
 ;WAVEFORMS DETERMINE SOUND COLOR!
 ;f1 0 1024  10 1                                  ;THE USUAL
-f1 0 1024 10 1 .5 .3 .1                           ;"SINE2". A LITTLE DULL
+f1  0 1024  10    1     .5    .3    .1  ;"SINE2". A LITTLE DULL
 ;f1 0 1024 10 0 .01 1 0 5 0                       ;"SINE3", [STRONG 3RD & 5TH PARTIAL], SILVERY
 ;f1 0 1024 9 .25 1 90                             ;COSINE, INTERESTING DENSE SOUND
 ;SCORE PROPER
@@ -81,13 +81,13 @@ f1 0 1024 10 1 .5 .3 .1                           ;"SINE2". A LITTLE DULL
 ;p1 p2  p3   p4     p5     p6     p7     p8     p9     p10    p11    
 ;         dur    del    rndd   prt    rndf   freq   phas   ifun   
 ;i1  0   1    50      10     10      2     50    100     0      1
-i1  0    3    100      50    50      2     30    50     0      1
+i1  0  3      100    50     50     2      30     50     0      1    
 ;---------------------------------------------------------------------
 ;         dur_f  del_f  rndd_f prt_f    rndf_f    freq_f phas_f amp_f
-i11 0   3    11     12     13     14    15      16     17     18
+i11 0  3      11     12     13     14     15     16     17     18  
 ;---------------------------------------------------------------------
 ;        AMPSCALE
-i21 0   3    24000
+i21 0  3      24000
 ;FOR COSINE
 ;i21 0 3 16000
 e

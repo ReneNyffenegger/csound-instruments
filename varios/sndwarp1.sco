@@ -1,5 +1,5 @@
-f71 0   65536 -1  "speech1.aif" 0 4 0 ;soundfile
-f81 0   512    20 1         ;Hamming Window
+f71 0 65536 -1    "speech1.aif"     0     4     0 ;soundfile
+f81 0 512   20    1                     ;Hamming Window
 ;p4 AMPLITUDE SCALING OF SAMP
 ;p5 STARTING TIME FACTOR
 ;p6 ENDING TIME FACTOR
@@ -9,4 +9,4 @@ f81 0   512    20 1         ;Hamming Window
 ;p10    RAND WINDOW SIZE BW (IN SAMPS)
 ;p11    DENS OF OVERLAPPING WINDOWS
 
-i1 0  4  1  1  1  1  1  2000  200   10
+i1  0  4      1      1      1      1      1      2000   200    10 

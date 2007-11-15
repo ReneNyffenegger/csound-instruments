@@ -26,7 +26,7 @@
 ; No Reverb
 ;-------------------------------------------------------------------------------
 ;   Sta  Dur  Amp  Pitch  SoundIn  OutCh
-i2  0.0  2.7  0.0  .5     12       1
+i2  0.0       2.7    0.0    .5     12     1   
 
 ; Small Room Reverb
 ;    Sta  Dur  Amp  InCh
@@ -42,18 +42,18 @@ i2  0.0  2.7  0.0  .5     12       1
 
 ; 2D Echos
 ;    Sta  Dur  Amp  EarX  EarY  SourceX  SourceY  WallX  WallY  InCh  OutCh1  OutCh2
-i17  0.0  3.5  8    10    13    58       24       80     120    1     2       3
+i17 0.0       3.5    8      10     13     58     24     80     120    1      2      3    
 
 ;Large Room Reverb
 ;    Sta  Dur  Amp  InCh  Decay  Densty1  Densty2  PreFilt  HiPass  LoPass  OutCh
-i27  0.0  4.0  .3   2     1.50   .80      1.4      10000    5100    200     4
-i27  0.0  4.0  .3   3     1.52   .82      1.5      10100    5000    210     5
+i27 0.0       4.0    .3     2      1.50   .80    1.4    10000  5100   200    4  
+i27 0.0       4.0    .3     3      1.52   .82    1.5    10100  5000   210    5  
 
 
 ; Reverb Mixer
 ;    Sta  Dur  Amp  InCh1  InCh2
-i91  0    4.0  1    4      5
+i91 0  4.0    1      4      5    
 
 ; Clear Zak
 ;    Sta  Dur
-i99  0.0  4.0
+i99 0.0       4.0   

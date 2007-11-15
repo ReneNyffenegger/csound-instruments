@@ -4,70 +4,70 @@
 ;-------------------------------------------------------------------
 ; GEN functions
 ;-------------------------------------------------------------------
-f0  50         ; Continue running for midi data input.
+f0  50                                  ; Continue running for midi data input.
 
 ; Sine
-f1  0   16384  10   1 .02 .01
-f2  0   16384  10   1 0 .2 0 .1 0 .05 0 .02
+f1  0 16384 10    1     .02   .01
+f2  0 16384 10    1     0     .2    0     .1    0     .05   0     .02 
 
 ; Rotating Speaker Filter Envelopes
 ; Deflectors Removed
-f13   0    1024   8  .2    440 .4 72 1 72 .4  440 .2
-f14   0    1024   8  .4    320 .6 64 1 256 1   64  .6 320 .4
+f13 0 1024  8     .2    440   .4    72    1     72    .4    440   .2
+f14 0 1024  8     .4    320   .6    64    1     256   1     64    .6    320   .4
 ; With Deflectors
-f3   0    1024   8  .95 24 .85 24 1 24 .85 24 1 24 .85 248 .9  72 .8 72 1 72 .8  72 .9 248 .85 24 1 24 .85 24 1 24 .85 24 .95
-f4   0    1024   8  .95 48 .85 96 .75 240 .8 64 1 128 1 64 .8 240 .75 96 .85 48 .95
+f3  0 1024  8     .95   24    .85   24    1     24    .85   24    1     24    .85   248   .9    72    .8    72    1 72 .8 72 .9 248 .85 24 1 24 .85 24 1 24 .85 24 .95
+f4  0 1024  8     .95   48    .85   96    .75   240   .8    64    1     128   1     64    .8    240   .75   96    .85 48 .95
 
 ; Distortion Tables
 ; Slight Distortion
-f5 0 8192   8 -.8 336 -.78  800 -.7 5920 .7  800 .78 336 .8
+f5  0 8192  8     -.8   336   -.78  800   -.7   5920  .7    800   .78   336   .8
 ; Heavy Distortion
 ;f5 4 8192   8 -.8 336 -.76 3000 -.7 1520 .7 3000 .76 336 .8
 
 ; Central Shaft Table
-f7 0 256    7  0  256  1
+f7  0 256   7     0     256   1 
 
 ; Score
 ;-------------------------------------------------------------------
 ;  Tone Wheel Organ
 ; Initializes global variables and drawbars.
 ;       Speed SubFund Sub3rd Fund 2nd 3rd 4th 5th 6th 8th  KeyClick(0-70)  2ndPerc  3rdPerc
-i1 0  1 1      8       8     8    0   0   0   0   0   0    0               0        0
-i1 18 1 1      6       8     8    6   0   0   0   0   0    1               1        0
-i1 32 1 1      8       8     5    3   2   4   5   8   8    10              0        0
+i1  0  1      1      8      8      8      0      0      0      0      0      0      0      0      0    
+i1  18 1      1      6      8      8      6      0      0      0      0      0      1      1      0    
+i1  32 1      1      8      8      5      3      2      4      5      8      8      10     0      0    
 
 ; Rotating Speaker start/stop
 ;ins  sta  dur  speed
-i2    0    2     1
-i2    +    2     10
-i2    .    4     1
-i2    .    2     10
-i2    .    2     1
-i2    .    4     10
-i2    .    2     1
-i2    .    2     10
-i2    .    2     1
-i2    .    4     10
-i2    .    2     1
-i2    .    2     10
-i2    .    2     1
-i2    .    4     10
-i2    .    2     1
-i2    .    2     10
-i2    .    2     1
-i2    .    4     10
-i2    .    2     1
-i2    .    2     10
-i2    .    2     1
-i2    .    4     10
+i2  0  2      1    
+i2  +  2      10   
+i2  .  4      1    
+i2  .  2      10   
+i2  .  2      1    
+i2  .  4      10   
+i2  .  2      1    
+i2  .  2      10   
+i2  .  2      1    
+i2  .  4      10   
+i2  .  2      1    
+i2  .  2      10   
+i2  .  2      1    
+i2  .  4      10   
+i2  .  2      1    
+i2  .  2      10   
+i2  .  2      1    
+i2  .  4      10   
+i2  .  2      1    
+i2  .  2      10   
+i2  .  2      1    
+i2  .  4      10   
 
 ; Rotor Organ Instrument 3 is controlled by MIDI
 
 ;   3 Different Rotating Speakers (i6 must be used or it won't reset the organ)
 ;   Start  Dur   Offset  Sep
-i4    0    50.2  .5     .1
-i5    0    50.2  .2     .12
-i6    0    50.2  .6     .095
+i4  0  50.2   .5     .1  
+i5  0  50.2   .2     .12 
+i6  0  50.2   .6     .095
 
 
 ;Popular Settings (from the Hammond Leslie FAQ)

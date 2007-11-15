@@ -1,10 +1,10 @@
-f1 0 8192 10 1
+f1  0 8192  10    1  
 
-t 0 400
+t       0       400   
 
 ; Instrument 1 initializes pitches for use in portamento instruments.
 ;  Start Dur Pitch2 Pitch3
-i1 0     1   7.09   10.00
+i1  0  1      7.09   10.00
 
 ; Epicycloid
 ;   Start Dur  Amp    Frqc   A    B    Hole
@@ -17,7 +17,7 @@ i1 0     1   7.09   10.00
 ;i2   0     2  24000    7.09   5.6  .4    1.8
 ;i2   0     2  24000   7.09   4     5    .6
 
-i4   0    16  10000    7.00   4    5
+i4  0  16     10000  7.00   4      5    
 
 
 ; Hypocycloid

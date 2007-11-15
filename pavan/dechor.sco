@@ -8,7 +8,7 @@
 ;p7       =         DECAY TIME [s]
 ;p8       =         DE-CORRELATION LEVEL (0-1) [1=MAXIMUM]
 ;         START     DUR   AMP PAN ATT  DEC  LEV
-i1        0         30    1   .5  .05  .05   1
+i1  0  30     1      .5     .05    .05    1  
 
 
 ;LUCA PAVAN                              E-MAIL: pavan@panservice.it

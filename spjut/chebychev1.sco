@@ -1,7 +1,7 @@
-f1 0 8192 10 1
-f2 0 4097 13 1 1 0 5 0 4 0 3 0 2 0 1 ; THE ODD HARMONICS
-f3 0 4097 13 1 1 0 4 0 3 0 2         ; THE EVEN HARMONICS
-i1 0 0.5 220
+f1  0 8192  10    1  
+f2  0 4097  13    1     1     0     5     0     4     0     3     0     2     0     1 ; THE ODD HARMONICS
+f3  0 4097  13    1     1     0     4     0     3     0     2 ; THE EVEN HARMONICS
+i1  0  0.5    220
 
 ;The display command is just to prove that the instrument works. Comment it
 ;out for real use.

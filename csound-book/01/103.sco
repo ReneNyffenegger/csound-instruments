@@ -2,13 +2,13 @@
 
 
 
-f 1  0 4096 10   1    
+f 1 0 4096  10    1    
 
 
 
 ;inst	start	duration
 
-i 103  		0       3
+i 103  0      3    
 
 
 
