@@ -1,4 +1,4 @@
-include ../../../setup.mk
+include ../../setup.mk
 
 all: $(wavfiles)
 
@@ -142,4 +142,4 @@ boy.con: boy.aif
 wmtell.con: wmtell.aif
 	cvanal -b0.000 -d0.000 $< $(SADIR)/$@ $(OUTPUT)
 
-include ../../../rules.mk
+include ../../rules.mk

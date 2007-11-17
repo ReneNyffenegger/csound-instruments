@@ -1,0 +1,6 @@
+* identação uniforme
+* todos instrumentos em controle de versão
+* compilação fácil (com make)
+** gera arquivos de análise automaticamente
+** gera wav automaticamente
+** lista dependências

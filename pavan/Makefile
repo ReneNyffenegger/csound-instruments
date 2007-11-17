@@ -1,5 +1,5 @@
-include ../../../setup.mk
+include ../../setup.mk
 
 all: $(wavfiles)
 
-include ../../../rules.mk
+include ../../rules.mk
