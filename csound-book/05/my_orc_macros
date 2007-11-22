@@ -1,1 +1,1 @@
-; my_orc_macros#define	REVERB(A)	#garvb	=	garvb+($A.*.2)##define DELAY(A)   #gacmb	=	gacmb+($A.*.3)##define BASBST(A)	#gabas	=	gabas+($A.*.5)#
+; my_orc_macros#define	REVERB(A)	#garvb	=	garvb+($A.*.2)##define DELAY(A)   #gacmb	=	gacmb+($A.*.3)##define BASBST(A)	#gabas	=	gabas+($A.*.5)#

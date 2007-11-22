@@ -1,1 +1,1 @@
-;... my_bassoon#define	BASSOON(I)	#	instr $I.k1	linen	p4, .01, p3, .1	a1	oscil	k1, p5, p6	outs	a1, a1	endin	#
+;... my_bassoon#define	BASSOON(I)	#	instr $I.k1	linen	p4, .01, p3, .1	a1	oscil	k1, p5, p6	outs	a1, a1	endin	#
