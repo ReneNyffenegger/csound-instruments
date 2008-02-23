@@ -1,0 +1,31 @@
+----------- 0 -----------
+FLvalue 0 0 1 0 ""
+FLvalue 0 0 1 0 ""
+FLvalue 0 0 1 0 ""
+FLvalue 0 0 1 0 ""
+FLslider 1 -4 4 0 "Slider A"
+FLslider 1 1 10 0 "Slider B"
+FLslider 0 0 1 0 "Slider C"
+FLslider 0 0 1 0 "Slider D"
+FLbox 0 0 1 0 "store"
+FLbox 0 0 1 0 "load"
+FLbox 0 0 1 0 "G
+r
+o
+u
+p
+ 
+1"
+FLbutton 1 0 1 0 "1"
+FLbutton 1 0 1 0 "2"
+FLbutton 1 0 1 0 "3"
+FLbutton 1 0 1 0 "4"
+FLbutton 0 0 1 0 "1"
+FLbutton 0 0 1 0 "2"
+FLbutton 0 0 1 0 "3"
+FLbutton 0 0 1 0 "4"
+FLknob 1 -4 4 0 "Knob A"
+FLknob 1 1 10 0 "Knob B"
+FLknob 0 0 1 0 "Knob C"
+FLknob 0 0 1 0 "Knob D"
+---------------------------
