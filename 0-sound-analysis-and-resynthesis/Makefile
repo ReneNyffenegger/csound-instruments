@@ -2,6 +2,54 @@ include ../../setup.mk
 
 all: $(wavfiles)
 
+karpen-2801.wav: violin.pvx
+karpen-2802.wav: hellorcb.pvx
+karpen-2803.wav: hellorcb.pvx
+karpen-2804.wav: marimba.pvx
+karpen-2805.wav: hellorcb.pvx
+karpen-2806.wav: hellorcb.pvx
+karpen-2807.wav: hellorcb.pvx
+karpen-2808.wav: hellorcb.pvx
+# erro na glibc
+karpen-2809.wav: hellorcb.pvx
+karpen-2810.wav: hellorcb.pvx
+karpen-2810.wav: hellorcb.pvx
+karpen-2811.wav: hellorcb.pvx
+karpen-2813.wav: violin.pvx
+karpen-2814.wav: violin.pvx
+karpen-2815.wav: hellorcb.pvx
+karpen-2816.wav: hellorcb.pvx
+karpen-2816.wav: violin.pvx
+karpen-2817.wav: hellorcb.pvx
+karpen-2817.wav: hellorcb.pvx
+karpen-2818.wav: violin.pvx
+karpen-2818.wav: marimba.pvx
+karpen-2821a.wav: violin.pvx
+karpen-2821a.wav: altosax.pvx
+karpen-2821.wav: violin.pvx
+karpen-2821.wav: altosax.pvx
+karpen-2822.wav: violin.pvx
+karpen-2822.wav: marimba.pvx
+karpen-2822.wav: speech1.lpc
+
+altosax.pvx: altosax.aif
+	pvanal -n 1024 -w 4 $< $(SADIR)/$@ $(OUTPUT)
+
+hellorcb.pvx: hellorcb.aif
+	pvanal -n 1024 -w 4 $< $(SADIR)/$@ $(OUTPUT)
+
+marimba.pvx: marimba.aif
+	pvanal -n 1024 -w 4 $< $(SADIR)/$@ $(OUTPUT)
+
+violin.pvx: violin.aif
+	pvanal -n 1024 -w 4 $< $(SADIR)/$@ $(OUTPUT)
+
+speech1.lpc: speech1.aif
+	lpanal -p 50 -h 400 -P 100 -Q 2000 $^ $(SADIR)/$@ $(OUTPUT)
+
+
+######################################################################
+
 pinkston-convunit.wav: pinkston-convunit.orc pinkston-convunit.sco 118.con
 
 118.con: noise.wav
