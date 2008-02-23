@@ -2,6 +2,14 @@ include ../../setup.mk
 
 all: $(wavfiles)
 
+accci-60-22-1.wav:  accci-60-22-1.orc accci-60-22-1.sco santur1.pvx
+accci-60-22-1b.wav: accci-60-22-1b.orc accci-60-22-1b.sco speech1.pvx
+accci-60-22-1c.wav: accci-60-22-1c.orc accci-60-22-1c.sco snap1.pvx
+accci-60-22-2.wav:  accci-60-22-2.orc accci-60-22-2.sco santur1.pvx
+accci-60-22-3.wav:  accci-60-22-3.orc accci-60-22-3.sco santur1.pvx
+accci-60-23-1.wav:  accci-60-23-1.orc accci-60-23-1.sco santur1.pvx
+accci-60-23-2.wav:  accci-60-23-2.orc accci-60-23-2.sco speech1.pvx
+
 karpen-2801.wav: violin.pvx
 karpen-2802.wav: hellorcb.pvx
 karpen-2803.wav: hellorcb.pvx
