@@ -2,10 +2,10 @@ f01 0 513   7     0     513   1
 f02 0 513   7     1     513   0 
 f03 0 513   1     "pvoctest.fun"    0     4     0   
 ;
-;Interpolate between pvoc."wind4.pvx" (thewind) and pvoc.906 (wavest44)
+;Interpolate between pvoc."thewind4.pvx" (thethewind) and pvoc.906 (wavest44)
 ;Both use frame size 1024 and overlap 8.
 ;nn	st	dur	pvfn1	len1	pvfn2	len2	amp1	amp2	frq1	frq2
-i3  0  8      "wind4.pvx"   1.67   "wavest44.pvx"       16.81  0      1      0      1    
+i3  0  8      "thewind4.pvx"   1.67   "wavest44.pvx"       16.81  0      1      0      1    
 ;	ampscl1	ampscl2	frqscl1	frqscl2	ifmod	ifmfn
                         0       0       0       0       0       0     
 f0  9

@@ -21,7 +21,7 @@ s
 ;Analysis frame size = 128, overlap = 4
 ;Note poor quality with this frame size
 ;nn	st	dur	.nnn	length	tpfn	ipshift	ispecwarp
-i1  0  1.67   "wind2.pvx"   1.67   1      0      0    
+i1  0  1.67   "thewind2.pvx"   1.67   1      0      0    
 i1  2  1.67   .      .      2    
 i1  4  3.33   .      .      1    
 i1  7.5       .8    

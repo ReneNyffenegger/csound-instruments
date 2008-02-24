@@ -14,22 +14,22 @@ klapper-2730.wav: glass_1.het
 klapper-2731.wav: gong1_1.het
 
 a3_1.het: a3.aif
-	hetro -f 100 -h 50 $^ $(SADIR)/$@ $(OUTPUT)
+	@hetro -f 100 -h 50 $^ $(SADIR)/$@ $(OUTPUT)
 
 a3_2.het: a3.aif
-	hetro -f 200 -h 40 $^ $(SADIR)/$@ $(OUTPUT)
+	@hetro -f 200 -h 40 $^ $(SADIR)/$@ $(OUTPUT)
 
 glass_1.het: glass.aif
-	hetro -f 100 -h 50 $^ $(SADIR)/$@ $(OUTPUT)
+	@hetro -f 100 -h 50 $^ $(SADIR)/$@ $(OUTPUT)
 
 glass_2.het: glass.aif
-	hetro -f 200 -h 40 $^ $(SADIR)/$@ $(OUTPUT)
+	@hetro -f 200 -h 40 $^ $(SADIR)/$@ $(OUTPUT)
 
 gong1_1.het: gong1.aif
-	hetro -f 100 -h 50 $^ $(SADIR)/$@ $(OUTPUT)
+	@hetro -f 100 -h 50 $^ $(SADIR)/$@ $(OUTPUT)
 
 gong1_2.het: gong1.aif
-	hetro -f 200 -h 40 $^ $(SADIR)/$@ $(OUTPUT)
+	@hetro -f 200 -h 40 $^ $(SADIR)/$@ $(OUTPUT)
 
 klapper-2709.orc: a3_1.lpc
 klapper-2710.orc: a3_1.lpc
@@ -56,19 +56,19 @@ klapper-2730.orc: glass_1.lpc
 klapper-2731.orc: gong1_1.lpc
 
 a3_1.lpc: a3.aif
-	lpanal -p 50 -h 400 -P 100 -Q 2000 $^ $(SADIR)/$@ $(OUTPUT)
+	@lpanal -p 50 -h 400 -P 100 -Q 2000 $^ $(SADIR)/$@ $(OUTPUT)
 
 a3_2.lpc: a3.aif
-	lpanal -p 40 -h 200 -P 100 -Q 2000 $^ $(SADIR)/$@ $(OUTPUT)
+	@lpanal -p 40 -h 200 -P 100 -Q 2000 $^ $(SADIR)/$@ $(OUTPUT)
 
 glass_1.lpc: glass.aif
-	lpanal -p 50 -h 400 -P 100 -Q 2000 $^ $(SADIR)/$@ $(OUTPUT)
+	@lpanal -p 50 -h 400 -P 100 -Q 2000 $^ $(SADIR)/$@ $(OUTPUT)
 
 gong1_1.lpc: gong1.aif
-	lpanal -p 50 -h 400 -P 100 -Q 2000 $^ $(SADIR)/$@ $(OUTPUT)
+	@lpanal -p 50 -h 400 -P 100 -Q 2000 $^ $(SADIR)/$@ $(OUTPUT)
 
 gong2_1.lpc: gong1.aif # erro gauss
-	lpanal -p 40 -h 200 -P 100 -Q 2000 $^ $(SADIR)/$@ $(OUTPUT)
+	@lpanal -p 40 -h 200 -P 100 -Q 2000 $^ $(SADIR)/$@ $(OUTPUT)
 
 accci-60-22-1.wav:  accci-60-22-1.orc accci-60-22-1.sco santur1.pvx
 accci-60-22-1b.wav: accci-60-22-1b.orc accci-60-22-1b.sco speech1.pvx
@@ -86,9 +86,9 @@ karpen-2805.wav: hellorcb.pvx
 karpen-2806.wav: hellorcb.pvx
 karpen-2807.wav: hellorcb.pvx
 karpen-2808.wav: hellorcb.pvx
-export MALLOC_CHECK_=0
+#export MALLOC_CHECK_=0
 karpen-2809.wav: hellorcb.pvx #  *** glibc detected *** csound: double free or corruption (!prev): 0x08160bd0 
-export MALLOC_CHECK_=3
+#export MALLOC_CHECK_=3
 karpen-2810.wav: hellorcb.pvx
 karpen-2810.wav: hellorcb.pvx
 karpen-2811.wav: hellorcb.pvx
@@ -110,26 +110,26 @@ karpen-2822.wav: marimba.pvx
 karpen-2822.wav: speech1.lpc
 
 altosax.pvx: altosax.aif
-	pvanal -n 1024 -w 4 $< $(SADIR)/$@ $(OUTPUT)
+	@pvanal -n 1024 -w 4 $< $(SADIR)/$@ $(OUTPUT)
 
 hellorcb.pvx: hellorcb.aif
-	pvanal -n 1024 -w 4 $< $(SADIR)/$@ $(OUTPUT)
+	@pvanal -n 1024 -w 4 $< $(SADIR)/$@ $(OUTPUT)
 
 marimba.pvx: marimba.aif
-	pvanal -n 1024 -w 4 $< $(SADIR)/$@ $(OUTPUT)
+	@pvanal -n 1024 -w 4 $< $(SADIR)/$@ $(OUTPUT)
 
 violin.pvx: violin.aif
-	pvanal -n 1024 -w 4 $< $(SADIR)/$@ $(OUTPUT)
+	@pvanal -n 1024 -w 4 $< $(SADIR)/$@ $(OUTPUT)
 
 speech1.lpc: speech1.aif #gauss: ill-conditioned
-	lpanal -p 50 -h 400 -P 100 -Q 2000 $^ $(SADIR)/$@ $(OUTPUT)
+	@lpanal -p 50 -h 400 -P 100 -Q 2000 $^ $(SADIR)/$@ $(OUTPUT)
 
 
 ######################################################################
 
-pinkston-convunit.wav: pinkston-convunit.orc pinkston-convunit.sco 118.con
+pinkston-convunit.wav: pinkston-convunit.orc pinkston-convunit.sco noise.con
 
-118.con: noise.wav
+noise.con: noise.wav
 
 pinkston-adsyn.wav: pinkston-adsyn.orc pinkston-adsyn.sco cello.het wind.het c2a.het c2b.het c2c.het c5.het
 
@@ -137,15 +137,15 @@ pinkston-convolve.wav: domkyr44.con drottn44.con oster44.con thewind.con frigate
 
 # *** glibc detected *** csound: double free or corruption (!prev): 0x08161bb8 ***
 # por isso separei a score em duas
-pinkston-pvoc1a.wav: pinkston-pvoc1.orc pinkston-pvoc1a.sco wind1.pvx wind2.pvx
-	@csound -g -o $@ $(wordlist 1, 2, $^)
+pinkston-pvoc1a.wav: pinkston-pvoc1.orc pinkston-pvoc1a.sco thewind1.pvx thewind2.pvx
+	@csound -g -o $@ $(wordlist 1, 2, $^) $(OUTPUT)
 
-pinkston-pvoc1b.wav: pinkston-pvoc1.orc pinkston-pvoc1a.sco wind3.pvx wind4.pvx fire1m44.pvx
-	@csound -g -o $@ $(wordlist 1, 2, $^)
+pinkston-pvoc1b.wav: pinkston-pvoc1.orc pinkston-pvoc1a.sco thewind3.pvx thewind4.pvx fire1m44.pvx
+	@csound -g -o $@ $(wordlist 1, 2, $^) $(OUTPUT)
 
-pinkston-pvoc2.wav: wind4.pvx wavest44.pvx eroi.pvx
+pinkston-pvoc2.wav: thewind4.pvx wavest44.pvx eroi.pvx
 
-pinkston-pvoc3.wav: wind4.pvx wavest44.pvx eroi.pvx cello44.pvx plkpnolp.pvx
+pinkston-pvoc3.wav: thewind4.pvx wavest44.pvx eroi.pvx cello44.pvx plkpnolp.pvx
 
 pinkston-lpc.wav: wind1.lpc wind2.lpc wind3.lpc wind4.lpc wind5.lpc wind6.lpc wind7.lpc wind8.lpc wind9.lpc wind10.lpc
 
@@ -156,57 +156,60 @@ pinkston-vpvoc1.wav: crashcym.pvx
 pinkston-pvadd.wav: gong3.pvx kalimba-low.pvx
 
 gong3.pvx: gong3.aif
+
 kalimba-low.pvx: kalimba-low.aif
+
 crashcym.pvx: crashcym.wav
 
 wind1.lpc: thewind.wav
-	lpanal -p 34 -h 500 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
+	@lpanal -p 34 -h 500 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
 wind2.lpc: thewind.wav
-	lpanal -p 20 -h 500 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
+	@lpanal -p 20 -h 500 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
 wind3.lpc: thewind.wav
-	lpanal -p 32 -h 300 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
+	@lpanal -p 32 -h 300 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
 wind4.lpc: thewind.wav
-	lpanal -p 28 -h 500 -P 150 -Q 250 $< $(SADIR)/$@ $(OUTPUT)
+	@lpanal -p 28 -h 500 -P 150 -Q 250 $< $(SADIR)/$@ $(OUTPUT)
 
 wind5.lpc: thewind.wav
-	lpanal -p 24 -h 500 -P 70 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
+	@lpanal -p 24 -h 500 -P 70 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
 wind6.lpc: thewind.wav
-	lpanal -p 26 -h 500 -P 70 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
+	@lpanal -p 26 -h 500 -P 70 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
 wind7.lpc: thewind.wav
-	lpanal -p 28 -h 500 -P 70 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
+	@lpanal -p 28 -h 500 -P 70 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
 wind8.lpc: thewind.wav
-	lpanal -p 26 -h 500 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
+	@lpanal -p 26 -h 500 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
 wind9.lpc: thewind.wav
-	lpanal -p 50 -h 400 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
+	@lpanal -p 50 -h 400 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
 wind10.lpc: thewind.wav
-	lpanal -p 50 -h 500 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
+	@lpanal -p 50 -h 500 -P 100 -Q 200 $< $(SADIR)/$@ $(OUTPUT)
 
 cello44.pvx: cello44.wav
 plkpnolp.pvx: plkpnolp.wav
 wavest44.pvx: wavest44.wav
 eroi.pvx: eroi.wav
 
-wind1.pvx: thewind.wav
-	pvanal -n 256 -w 4 $< $(SADIR)/$@ $(OUTPUT)
+thewind1.pvx: thewind.wav
+	@pvanal -n 256 -w 4 $< $(SADIR)/$@ $(OUTPUT)
 
-wind2.pvx: thewind.wav
-	pvanal -n 128 -w 4 $< $(SADIR)/$@ $(OUTPUT) 
+thewind2.pvx: thewind.wav
+	@pvanal -n 128 -w 4 $< $(SADIR)/$@ $(OUTPUT) 
 
-wind3.pvx: thewind.wav
-	pvanal -n 1024 -w 4 $< $(SADIR)/$@ $(OUTPUT)
+thewind3.pvx: thewind.wav
+	@pvanal -n 1024 -w 4 $< $(SADIR)/$@ $(OUTPUT)
 
-wind4.pvx: thewind.wav
+thewind4.pvx: thewind.wav
+	@pvanal -n 1024 -w 4 $< $(SADIR)/$@ $(OUTPUT)
 
 fire1m44.pvx: fire1m44.wav
-	pvanal -n 1024 -w 4 $< $(SADIR)/$@ $(OUTPUT)
+	@pvanal -n 1024 -w 8 $< $(SADIR)/$@ $(OUTPUT)
 
 tamtam.pvx: tamtam.aif
 highbell.pvx: highbell.aif
@@ -232,21 +235,21 @@ vowchord.con: vowchord.wav
 bees1.con: bees1.wav
 
 cello.het: cello44.wav
-	hetro -f175 -h30 $^ $(SADIR)/$@ $(OUTPUT)
+	@hetro -f175 -h30 $^ $(SADIR)/$@ $(OUTPUT)
 
 wind.het: thewind.wav
-	hetro -h50 $^ $(SADIR)/$@ $(OUTPUT)
+	@hetro -h50 $^ $(SADIR)/$@ $(OUTPUT)
 
 c2a.het: c2.aiff
-	hetro -f65 -h60 -M24000 $^ $(SADIR)/$@ $(OUTPUT)
+	@hetro -f65 -h60 -M24000 $^ $(SADIR)/$@ $(OUTPUT)
 
 c2b.het: c2.aiff
-	hetro -f32.7032 -h100 -n512 -M30000 $^ $(SADIR)/$@ $(OUTPUT)
+	@hetro -f32.7032 -h100 -n512 -M30000 $^ $(SADIR)/$@ $(OUTPUT)
 
 c2c.het: c2.aiff
-	hetro -f32.7032 -h100 -n1000 -M30000 $^ $(SADIR)/$@ $(OUTPUT)
+	@hetro -f32.7032 -h100 -n1000 -M30000 $^ $(SADIR)/$@ $(OUTPUT)
 
 c5.het: c5.aiff
-	hetro -f261 -h100 -n1000 -M30000 $^ $(SADIR)/$@ $(OUTPUT)
+	@hetro -f261 -h100 -n1000 -M30000 $^ $(SADIR)/$@ $(OUTPUT)
 
 include ../../rules.mk
