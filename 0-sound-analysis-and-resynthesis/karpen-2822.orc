@@ -10,7 +10,8 @@ instr     2822
   klpctime  line      0, p3, 7.6                  ; ...THE MARIMBA-VIOLIN MORPH
   kinterp   line      0, p3, 1
   krmsr, krmso, kerr, kcps  lpread                klpctime, "speech1.lpc"
-  kfmod     =  kcps/cpspch(9.00)                  ; ...WHICH WILL "SPEAK" WITH
+  ;kfmod     =  kcps/cpspch(9.00)                  ; ...WHICH WILL "SPEAK" WITH
+  kfmod     =  .5  ;; eu nao sei qual a ideia original, mas sempre da que a transp e muito baixa
             pvbufread   kpvtime, "violin.pvx"
   apv       pvinterp  kpvtime, kfmod, "marimba.pvx", ifreq, ifreq, iamp, 2, kinterp, kinterp
   alpc      lpreson   apv                         ;...THE PITCHES FROM THE LPC

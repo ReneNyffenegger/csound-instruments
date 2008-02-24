@@ -19,8 +19,8 @@ f5  0 129   9     .25   1     90
 ;lp.100: 34 poles, hop 500, 100 Hz to 200 Hz
 ;nn	st	dur	cpsscl	iamp	lpstrt	lpend	lpc.nn	
 i01 0  5      1      1      0      1.67   "wind1.lpc"
-;	xfadefn	ivoice	inoise
-                        5       .001    .025
+;	xfadefn	ivoice	inoise inatten
+                        5       .001    .025 1
 ;lp.101: 20 poles, hop 500, 100 Hz to 200 Hz
 i01 +  .      .      .      .      .      "wind2.lpc"
 ;lp.102: 32 poles, hop 300, 100 Hz to 200 Hz
@@ -36,7 +36,8 @@ i01 +  .      .      .      .      .      "wind7.lpc"
 ;lp.107: 26 poles, hop 500, 100 Hz to 200 Hz
 i01 +  .      .      .      .      .      "wind8.lpc"
 ;lp.111: 50 poles, hop 400, 100 Hz to 200 Hz
-i01 +  .      .      .      .      .      "wind9.lpc"
+; erro de lpread timpnt < 0
+;i01 +  .      .      .      .      .      "wind9.lpc"
 ;lp.112: 50 poles, hop 500, 100 Hz to 200 Hz
 i01 +  .      .      .      ."wind10.lpc"
 s

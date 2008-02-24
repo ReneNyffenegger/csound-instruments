@@ -67,7 +67,7 @@ glass_1.lpc: glass.aif
 gong1_1.lpc: gong1.aif
 	lpanal -p 50 -h 400 -P 100 -Q 2000 $^ $(SADIR)/$@ $(OUTPUT)
 
-gong2_1.lpc: gong1.aif
+gong2_1.lpc: gong1.aif # erro gauss
 	lpanal -p 40 -h 200 -P 100 -Q 2000 $^ $(SADIR)/$@ $(OUTPUT)
 
 accci-60-22-1.wav:  accci-60-22-1.orc accci-60-22-1.sco santur1.pvx
@@ -86,8 +86,9 @@ karpen-2805.wav: hellorcb.pvx
 karpen-2806.wav: hellorcb.pvx
 karpen-2807.wav: hellorcb.pvx
 karpen-2808.wav: hellorcb.pvx
-# erro na glibc
-karpen-2809.wav: hellorcb.pvx
+export MALLOC_CHECK_=0
+karpen-2809.wav: hellorcb.pvx #  *** glibc detected *** csound: double free or corruption (!prev): 0x08160bd0 
+export MALLOC_CHECK_=3
 karpen-2810.wav: hellorcb.pvx
 karpen-2810.wav: hellorcb.pvx
 karpen-2811.wav: hellorcb.pvx
@@ -120,7 +121,7 @@ marimba.pvx: marimba.aif
 violin.pvx: violin.aif
 	pvanal -n 1024 -w 4 $< $(SADIR)/$@ $(OUTPUT)
 
-speech1.lpc: speech1.aif
+speech1.lpc: speech1.aif #gauss: ill-conditioned
 	lpanal -p 50 -h 400 -P 100 -Q 2000 $^ $(SADIR)/$@ $(OUTPUT)
 
 
@@ -134,7 +135,13 @@ pinkston-adsyn.wav: pinkston-adsyn.orc pinkston-adsyn.sco cello.het wind.het c2a
 
 pinkston-convolve.wav: domkyr44.con drottn44.con oster44.con thewind.con frigate.con noise.con noisewdg.con noischor.con laugh.con crash.con flush.con bigclunk.con popcorn.con cello44.con cellodec.con cellogls.con lognoise.con vowchord.con bees1.con
 
-pinkston-pvoc1.wav: wind1.pvx wind2.pvx wind3.pvx wind4.pvx fire1m44.pvx
+# *** glibc detected *** csound: double free or corruption (!prev): 0x08161bb8 ***
+# por isso separei a score em duas
+pinkston-pvoc1a.wav: pinkston-pvoc1.orc pinkston-pvoc1a.sco wind1.pvx wind2.pvx
+	@csound -g -o $@ $(wordlist 1, 2, $^)
+
+pinkston-pvoc1b.wav: pinkston-pvoc1.orc pinkston-pvoc1a.sco wind3.pvx wind4.pvx fire1m44.pvx
+	@csound -g -o $@ $(wordlist 1, 2, $^)
 
 pinkston-pvoc2.wav: wind4.pvx wavest44.pvx eroi.pvx
 
