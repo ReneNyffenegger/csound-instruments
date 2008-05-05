@@ -1,9 +1,8 @@
 instr 1
   idur      =  p3
   ifile     =  p6
-  ktransp   =  p7
-  ispecenv  =  p8  
+  itransp   =  p7
   ktime     line      p4, idur, p5
-  aout      pvoc      ktime, ktransp, ifile, ispecenv
+  aout      pvoc      ktime, itransp, ifile
             out       aout
 endin

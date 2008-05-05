@@ -1,9 +1,9 @@
 instr 1
-  idur      =  p3
-  ifile     =  p6
-  ktransp   =  p7
-  ispecenv  =  p8  
-  ktime     linseg    0,idur/6,1.1,idur/6,1.2,idur/24,1.3,3*idur/24,1.6,idur/2,5
-  aout      pvoc      ktime, ktransp, ifile, ispecenv
+  ifile     =  p4
+  itransp   =  p5
+  ktime     linseg    0.89, 0.67, 1.56, 0, 0.14, 0.21, 0.35, 0, 0.00, 0.14, 0.14, 0, 0.49, 0.27, 0.76, 0, 0.76, 0.13, 0.89, 0, 0.35, 0.14, 0.49, 0, 3.46, 0.08, 3.54, 0, 3.14, 0.32, 3.46, 0, 2.86, 0.18, 3.04, 0, 3.04, 0.10, 3.14, 0, 2.71, 0.13, 2.84, 0, 3.57, 0.61, 4.22
+  aout      pvoc      ktime, itransp, ifile
             out       aout
 endin
+
+
