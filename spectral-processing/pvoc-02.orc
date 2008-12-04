@@ -1,9 +1,11 @@
 instr 1
-  ifile     =  p4
-  itransp   =  p5
-  ktime     linseg    0.89, 0.67, 1.56, 0, 0.14, 0.21, 0.35, 0, 0.00, 0.14, 0.14, 0, 0.49, 0.27, 0.76, 0, 0.76, 0.13, 0.89, 0, 0.35, 0.14, 0.49, 0, 3.46, 0.08, 3.54, 0, 3.14, 0.32, 3.46, 0, 2.86, 0.18, 3.04, 0, 3.04, 0.10, 3.14, 0, 2.71, 0.13, 2.84, 0, 3.57, 0.61, 4.22
-  aout      pvoc      ktime, itransp, ifile
-            out       aout
+  ifile   =       p4
+  itransp =       p5
+  ktime   linseg  p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16, \
+                  p17,p18,p19,p20,p21,p22,p23,p24,p25,p26, \
+                  p27,p28,p29,p30,p31,p32,p33,p34,p35,p36, \
+                  p37,p38,p39,p40,p41,p42,p43,p44,p45,p46, \
+                  p47,p48,p49,p50,p51,p52
+  aout    pvoc    ktime, itransp, ifile
+          out     aout
 endin
-
-

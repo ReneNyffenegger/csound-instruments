@@ -1,0 +1,33 @@
+accci;http://www.music.buffalo.edu/hiller/accci/
+comajuncosas;http://www.csounds.com/jmc/index.htm
+cook;http://www.csounds.com/cook/
+costello;csbook
+mccurdy;http://csounds.com/rtcat
+mikelson;csbook;versão menor em http://www.csounds.com/mikelson
+nyffenegger;http://www.adp-gmbh.ch/csound/index.html
+oi;http://members.fortunecity.com/odradek5/pp/csound/index.html
+pavan;csbook; versão menor em http://www.csounds.com/pavan
+pinkston;http://ems.music.utexas.edu/dwnld
+scanned;http://www.csounds.com/scanned/toot
+spjut;csbook|http://www.csounds.com/spjut/
+udo;http://www.csounds.com/udo/
+varga;http://www.csounds.com/istvan/
+lyon;csbook;página em http://arcana.dartmouth.edu/~eric
+eastman;csbook|http://ecmc.rochester.edu/ecmc/docs/allan.cs/
+keller;csbook
+hamel;csbook;link web quebrado
+dx7;http://www.parnasse.com/dx72csnd.shtml
+maldonado;http://www.csounds.com/maldonado/
+dodge;csbook
+risset;csbook
+smaragdis;csbook
+dx7-pinkston-varo;csbook
+noorden;csbook
+rossing;csbook
+dobson;csbook
+varios;csbook
+students;csbook
+compositions;csbook
+diffamator;http://www.csounds.com/resources/Diffamator-0.91.zip
+vectro;http://giorgiozucco.altervista.org/software/VECTROSYNTH9.1.zip
+xscanned;http://giorgiozucco.altervista.org/software/XScanned0.9.zip
